@@ -18,6 +18,7 @@ dependencies:
   url_launcher: ^6.3.2
   firebase_crashlytics: ^5.0.7
   firebase_analytics: ^12.1.2
+  firebase_core: ^4.4.0
 
 dev_dependencies:
   flutter_test:
@@ -41,9 +42,21 @@ flutter:
   uses-material-design: true
 
   fonts:
+    - family: Saira Stencil One
+      fonts:
+        - asset: assets/fonts/SairaStencilOne-Regular.ttf
+
     - family: Bungee
       fonts:
         - asset: assets/fonts/Bungee-Regular.ttf
+
+    - family: Days One
+      fonts:
+        - asset: assets/fonts/DaysOne-Regular.ttf
+
+    - family: Silkscreen
+      fonts:
+        - asset: assets/fonts/Silkscreen-Regular.ttf
 
   assets:
     - assets/icon/

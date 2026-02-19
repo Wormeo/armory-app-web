@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, unused_element_parameter, unused_element, non_constant_identifier_names, curly_braces_in_flow_control_structures, use_build_context_synchronously, deprecated_member_use
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'firebase_options.dart';
+import 'package:armory_app/themes.dart';
+import 'dart:ui';
+import 'package:flutter/scheduler.dart';
 
 const String globalNgrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
 
@@ -71,30 +76,39 @@ final RegExp _prestigeRegex = RegExp(r'\s*\(PRESTIGE\)', caseSensitive: false);
 final RegExp _akimboRegex = RegExp(r'\s*AKIMBO', caseSensitive: false);
 final RegExp _codeRegex = RegExp(r'^[A-Z]\d{2}-');
 
+final ValueNotifier<double> masterBorderNotifier = ValueNotifier(0.0);
+late AnimationController masterBorderController;
+
+class GlobalTickerProvider implements TickerProvider {
+  @override
+  Ticker createTicker(TickerCallback onTick) => Ticker(onTick);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  masterBorderController = AnimationController(
+    vsync: GlobalTickerProvider(),
+    duration: const Duration(seconds: 3),
+  )..addListener(() {
+      masterBorderNotifier.value = masterBorderController.value;
+    })..repeat();
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   if (defaultTargetPlatform != TargetPlatform.linux || kIsWeb) {
     try {
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
-      
-      FlutterError.onError = (errorDetails) {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      };
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     } catch (e) {
       debugPrint("Firebase init failed: $e");
     }
-  } else {
-    debugPrint("🖥️ Running on Linux: Firebase features are disabled.");
   }
 
-  runApp(const MyApp());
+  final themeController = ThemeController();
+
+  await themeController.loadSavedTheme();
+  
+  runApp(MyApp(themeController: themeController));
 }
 
 class CombatRating {
@@ -136,7 +150,6 @@ class WeaponStats {
   final String hitscanRange;
   final String? shotRange;
   
-  // Add this line so the rating has a home!
   CombatRating? combatRating; 
 
   WeaponStats({
@@ -148,7 +161,7 @@ class WeaponStats {
     required this.range2,
     required this.hitscanRange,
     this.shotRange,
-    this.combatRating, // And add it here
+    this.combatRating,
   });
 }
 
@@ -186,31 +199,89 @@ class MetaWeapon {
           : null,
       game: json['game'] ?? "",
       classType: json['class_type'] ?? "",
-      weaponImage: imageEntry?['weapon_image'], // Check if this is 'weapon_image' in your JSON
-      gameImage: imageEntry?['game_image'],   // Check if this is 'game_image' in your JSON
+      weaponImage: imageEntry?['weapon_image'],
+      gameImage: imageEntry?['game_image'],
     );
   }
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final ThemeController themeController;
+  const MyApp({super.key, required this.themeController});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: const Color.fromRGBO(2, 91, 207, 1),
-        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
-        useMaterial3: true,
-      ),
-      home: const LoadingScreen(),
+    return ListenableBuilder(
+      listenable: themeController,
+      builder: (context, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: themeController.activeTheme.themeData,
+          home: LoadingScreen(themeController: themeController), 
+        );
+      },
     );
   }
 }
 
+class ArmoryGradientBorder extends StatelessWidget {
+  final Widget child;
+  final List<Color> gradientColors;
+  final double strokeWidth;
+  final double borderRadius;
+
+  const ArmoryGradientBorder({
+    super.key,
+    required this.child,
+    required this.gradientColors,
+    this.strokeWidth = 2.0,
+    this.borderRadius = 12.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: _GradientPainter(
+        strokeWidth: strokeWidth,
+        radius: borderRadius,
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class _GradientPainter extends CustomPainter {
+  final double strokeWidth;
+  final double radius;
+  final Gradient gradient;
+
+  _GradientPainter({required this.strokeWidth, required this.radius, required this.gradient});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect rect = Offset.zero & size;
+    final Paint paint = Paint()
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke
+      ..shader = gradient.createShader(rect);
+
+    final RRect rrect = RRect.fromRectAndRadius(rect, Radius.circular(radius));
+    canvas.drawRRect(rrect, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
 class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({super.key});
+  final ThemeController themeController;
+  
+  const LoadingScreen({super.key, required this.themeController});
 
   @override
   State<LoadingScreen> createState() => _LoadingScreenState();
@@ -224,7 +295,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    // We start immediately now.
     _performPreload();
   }
 
@@ -269,7 +339,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   } catch (e, stack) {
     debugPrint("Background Sync Preload Error: $e");
     FirebaseCrashlytics.instance.recordError(e, stack, reason: 'Sync Preload Failed');
-    // Ensure we transition even if it fails so the user isn't stuck
     _dataReady = true;
     _checkTransition();
   }
@@ -303,6 +372,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           pageBuilder: (context, anim, secAnim) => MyHomePage(
             preloadedData: _loadedWeapons,
             initialPremiumStatus: _isPremiumUser,
+            themeController: widget.themeController,
           ),
           transitionsBuilder: (context, anim, secAnim, child) {
             return FadeTransition(opacity: anim, child: child);
@@ -333,45 +403,81 @@ class _LoadingScreenState extends State<LoadingScreen> {
 class MyHomePage extends StatefulWidget {
   final List<Weapon> preloadedData;
   final bool initialPremiumStatus;
-  const MyHomePage({super.key, required this.preloadedData, required this.initialPremiumStatus});
+  final ThemeController themeController;
+
+  const MyHomePage({
+    super.key, 
+    required this.preloadedData, 
+    required this.initialPremiumStatus,
+    required this.themeController,
+  });
+  
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 enum ConnectionStatus { connected, tunnelIssue, offline }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin, WidgetsBindingObserver {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   List<Weapon> _loadedWeapons = [];
   List<Weapon> displayList = [];
   bool _isPremiumUser = false;
-  bool _dataReady = true;
+  final _dataReady = true;
 
   ConnectionStatus _connectionStatus = ConnectionStatus.offline;
   Timer? _statusTimer;
   final String _ngrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
 
-  Widget _SearchField({required Function(String) onChanged}) {
-  return Padding(
-    padding: const EdgeInsets.all(12.0),
-    child: TextField(
-      onChanged: onChanged,
-      autofocus: false, // STOPS THE AUTO-OPEN
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: "SEARCH WEAPONS...",
-        hintStyle: const TextStyle(color: Colors.white24, fontFamily: 'Bungee', fontSize: 12),
-        prefixIcon: const Icon(Icons.search, color: Colors.cyanAccent),
-        filled: true,
-        fillColor: Colors.white.withOpacity(0.05),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+  Widget _SearchField({required Function(String) onChanged, required ThemeController themeController}) {
+  final activeTheme = themeController.activeTheme;
+  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+  final bool isHolographic = activeTheme.isHolographic;
+  final bool isSimple = activeTheme.useWhiteSearch;
+
+  Color inputTextColor = isSimple ? Colors.white : activeTheme.themeData.colorScheme.primary;
+  Color borderColor = isSimple ? Colors.white : activeTheme.themeData.colorScheme.primary.withOpacity(0.3);
+
+  Widget textField = TextField(
+    onChanged: onChanged,
+    autofocus: false,
+    style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: 'Days One'), 
+    decoration: InputDecoration(
+      hintText: "SEARCH WEAPONS...",
+      hintStyle: TextStyle(
+        color: Colors.white.withOpacity(0.6), fontSize: 12
+      ),
+      prefixIcon: Icon(Icons.search, color: inputTextColor),
+      filled: true,
+      fillColor: activeTheme.themeData.colorScheme.surface.withOpacity(0.8),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: (isAnemone || isHolographic) ? BorderSide.none : BorderSide(color: borderColor),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: (isAnemone || isHolographic) ? BorderSide.none : BorderSide(color: borderColor, width: 2),
       ),
     ),
   );
+
+  return Padding(
+    padding: const EdgeInsets.all(12.0),
+    child: isHolographic
+      ? _InternalAnimatedBorder(
+          colors: activeTheme.refractionColors,
+          child: textField,
+        )
+      : isAnemone 
+          ? ArmoryGradientBorder(
+              gradientColors: activeTheme.borderGradient,
+              borderRadius: 12,
+              strokeWidth: 2,
+              child: textField,
+            )
+          : textField,
+  );
 }
 
-// 2. Fix the Black Screen: Ensure displayList is ready
 @override
 void initState() {
   super.initState();
@@ -379,17 +485,6 @@ void initState() {
   
   displayList = List.from(widget.preloadedData); 
   _isPremiumUser = widget.initialPremiumStatus;
-  
-  // 1. Initialize the Controller
-  _pulseController = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 2),
-  )..repeat(reverse: true);
-
-  // 2. INITIALIZE THE ANIMATION (The missing piece)
-  _pulseAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
-    CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-  );
 
   _loadStoredCredentials();
   _loadFavorites();
@@ -435,56 +530,71 @@ void initState() {
   }
 }
 
-  Widget _buildStatusIndicator() {
-    Color statusColor;
-    String statusText;
-    
-    switch (_connectionStatus) {
-      case ConnectionStatus.connected:
-        statusColor = Colors.greenAccent;
-        statusText = "SYSTEM ONLINE";
-        break;
-      case ConnectionStatus.tunnelIssue:
-        statusColor = Colors.amberAccent;
-        statusText = "CORE UNREACHABLE";
-        break;
-      case ConnectionStatus.offline:
-        statusColor = Colors.redAccent;
-        statusText = "LINK OFFLINE";
-        break;
-    }
-
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-            color: statusColor,
-            shape: BoxShape.circle,
-            boxShadow: [BoxShadow(color: statusColor, blurRadius: 4)],
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          statusText,
-          style: TextStyle(
-            fontFamily: 'Bungee',
-            fontSize: 7,
-            color: statusColor.withOpacity(0.8),
-            letterSpacing: 1.2,
-          ),
-        ),
-      ],
-    );
+Widget _buildStatusIndicator() {
+  Color statusColor;
+  String statusText;
+  
+  switch (_connectionStatus) {
+    case ConnectionStatus.connected:
+      statusColor = Colors.greenAccent;
+      statusText = "SYSTEM ONLINE";
+      break;
+    case ConnectionStatus.tunnelIssue:
+      statusColor = Colors.amberAccent;
+      statusText = "CORE UNREACHABLE";
+      break;
+    case ConnectionStatus.offline:
+      statusColor = Colors.redAccent;
+      statusText = "LINK OFFLINE";
+      break;
   }
+
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Container(
+        width: 6,
+        height: 6,
+        decoration: BoxDecoration(
+          color: statusColor,
+          shape: BoxShape.circle,
+          boxShadow: [BoxShadow(color: statusColor, blurRadius: 4)],
+        ),
+      ),
+      const SizedBox(width: 8),
+      Stack(
+        children: [
+          Text(
+            statusText,
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+              fontSize: 7,
+              letterSpacing: 1.2,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 1.2
+                ..color = Colors.black,
+            ),
+          ),
+          Text(
+            statusText,
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+              fontSize: 7,
+              color: statusColor.withOpacity(0.9),
+              letterSpacing: 1.2,
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
 @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _statusTimer?.cancel();
-    _pulseController.dispose();
     _idController.dispose();
     _pinController.dispose();
     super.dispose();
@@ -515,24 +625,21 @@ void _runBootSequence() async {
   await Future.delayed(const Duration(milliseconds: 500));
   if (!mounted) return;
 
-  // 1. Initial Check Snackbar
   ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(
-      content: Text("VERIFYING DATA INTEGRITY...", style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 12)),
+   SnackBar(
+      content: Text("VERIFYING DATA INTEGRITY...", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color: Theme.of(context).colorScheme.primary, fontSize: 12)),
       backgroundColor: Colors.black,
       duration: Duration(seconds: 1),
     ),
   );
 
-  // 2. Run Sync
   bool updateFound = await _syncData();
 
   if (updateFound) {
     if (mounted) {
-      // 3. NEW: Notify user that the download/processing has started
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("DOWNLOADING LATEST PATCH...", style: TextStyle(fontFamily: 'Bungee', color: Colors.amberAccent, fontSize: 12)),
+        SnackBar(
+          content: Text("DOWNLOADING LATEST PATCH...", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color: Colors.amberAccent, fontSize: 12)),
           backgroundColor: Colors.black,
           duration: Duration(seconds: 2),
         ),
@@ -545,8 +652,8 @@ void _runBootSequence() async {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("PATCH COMPLETE. SYSTEM UPDATED.", style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 12)),
+       SnackBar(
+          content: Text("PATCH COMPLETE. SYSTEM UPDATED.", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color:Theme.of(context).colorScheme.primary, fontSize: 12)),
           backgroundColor: Colors.black,
           duration: Duration(seconds: 2),
         ),
@@ -554,17 +661,204 @@ void _runBootSequence() async {
     }
 
   } else {
-    // 4. No update needed
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("SYSTEM UP TO DATE.", style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 12)),
+        SnackBar(
+          content: Text("SYSTEM UP TO DATE.", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color: Theme.of(context).colorScheme.primary, fontSize: 12)),
           backgroundColor: Colors.black,
           duration: Duration(seconds: 2),
         ),
       );
     }
   }
+}
+
+void _showThemePickerDialog() {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "ThemePicker",
+    barrierColor: Colors.black.withOpacity(0.7),
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (context, anim1, anim2) {
+  return Scaffold(
+    backgroundColor: Colors.transparent,
+    body: Center(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.75,
+            decoration: BoxDecoration(
+              color: const Color(0xFF121212),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: Colors.white10),
+            ),
+
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 25),
+                  child: Text(
+                    "INTERFACE THEME",
+                    style: TextStyle(
+                      fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                      color: Colors.white,
+                      fontSize: 18,
+                      letterSpacing: 2,
+                    ),
+                  ),
+                ),
+
+                Expanded(
+                  child: _buildThemeCategoryRows(), 
+                ),
+                
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("CLOSE", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color: Colors.white54)),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+    },
+    transitionBuilder: (context, anim1, anim2, child) {
+      return ScaleTransition(
+        scale: CurvedAnimation(parent: anim1, curve: Curves.easeOutBack),
+        child: child,
+      );
+    },
+  );
+}
+
+Widget _buildThemeCategoryRows() {
+  return ListView(
+    padding: const EdgeInsets.only(bottom: 30),
+    children: [
+      _buildCategoryHeader("SIMPLE"),
+      _buildThemeRow(ThemeCategory.simple),
+      
+      const SizedBox(height: 20),
+      _buildCategoryHeader("ANEMONE"),
+      _buildThemeRow(ThemeCategory.anemone),
+      
+      const SizedBox(height: 20),
+      _buildCategoryHeader("HOLOGRAPHIC"),
+      _buildThemeRow(ThemeCategory.premium),
+    ],
+  );
+}
+
+Widget _buildCategoryHeader(String title) {
+  return Center(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'Days One',
+          color: Colors.white70,
+          fontSize: 12,
+          letterSpacing: 1.5,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildThemeRow(ThemeCategory category) {
+  final categoryThemes = ThemeController.allThemes
+      .where((t) => t.category == category)
+      .toList();
+
+  if (categoryThemes.isEmpty) return const SizedBox.shrink();
+
+  return SizedBox(
+    height: 135,
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      clipBehavior: Clip.none,
+      itemCount: categoryThemes.length,
+      itemBuilder: (context, index) {
+        final theme = categoryThemes[index];
+        bool isActive = widget.themeController.activeTheme.id == theme.id;
+        bool isLocked = theme.category == ThemeCategory.premium && !_isPremiumUser;
+
+        return GestureDetector(
+          onTap: isLocked ? null : () {
+            HapticFeedback.lightImpact();
+            widget.themeController.setTheme(theme);
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            width: 105, 
+            height: 105,
+            margin: const EdgeInsets.only(right: 15),
+            decoration: BoxDecoration(
+              gradient: theme.pickerGradient != null 
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: isActive 
+                          ? theme.pickerGradient!.map((c) => c.withOpacity(0.9)).toList()
+                          : theme.pickerGradient!.map((c) => c.withOpacity(0.3)).toList(),
+                    ) 
+                  : null,
+              color: theme.pickerGradient == null 
+                  ? (isActive ? theme.themeData.primaryColor.withOpacity(0.4) : theme.pickerBoxColor)
+                  : null,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: isActive ? theme.themeData.primaryColor : theme.pickerBorderColor,
+                width: isActive ? 2.5 : 1,
+              ),
+              boxShadow: isActive ? [
+                BoxShadow(
+                  color: (theme.pickerGradient?.first ?? theme.themeData.primaryColor).withOpacity(0.5),
+                  blurRadius: 12,
+                  spreadRadius: 2,
+                )
+              ] : [],
+            ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Text(
+                      theme.name.toUpperCase(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Days One',
+                        fontSize: 10,
+                        letterSpacing: 1.1,
+                        color: isLocked ? Colors.white24 : Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                if (isLocked)
+                   const Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Icon(Icons.lock_outline, color: Colors.amberAccent, size: 14),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    ),
+  );
 }
 
 
@@ -587,7 +881,7 @@ Future<bool> _syncData() async {
         int localVersion = prefs.getInt('key_$fileName') ?? 0;
 
         if (remoteVersion > localVersion) {
-          didUpdate = true; // We found an update!
+          didUpdate = true;
           
           final fileResponse = await http.get(
             Uri.parse("$globalNgrokUrl/cdn/$fileName"),
@@ -636,37 +930,57 @@ Future<void> _checkConnection() async {
 }
 
   final List<String> mainListChips = ["Multiplayer", "Warzone", "Rebirth", "Warzone Prestige", "Special", "Zombies", "Endgame", "Akimbo", "Single"];
-  
-  // Premium Verification State
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
 
  Set<String> _favorites = {};
 
  void _showPatchNotes(BuildContext context) {
+  final primary = Theme.of(context).colorScheme.primary;
+  final bodyFont = Theme.of(context).textTheme.bodyLarge?.fontFamily;
+
   final List<String> notes = [
-    "!features",
-    "loadout viewer with search function",
-    "randomizer with exclusion zone and params",
-    "augment tree",
-    "favouriting of loadouts",
-    "functioning login system for premium members",
-    "meta picks with elegant card display and selectors",
-    "hotfix tunnel for immediate tuning updates",
-    "functional connection status on home screen",
-    "auto checking and updating of weapon data on boot"
+    "!FEATURES",
+    "ADVANCED LOADOUT VIEWER + GLOBAL SEARCH",
+    "RANDOMIZER ENGINE WITH EXCLUSION ZONE AND CUSTOMIZATION PARAMS",
+    "CARD STYLE AUGMENT TREE AND META DASHBOARD",
+    "FAVOURITE WEAPON INDEXING",
+    "FUNCTIONING LOGIN SYSTEM FOR PREMIUM MEMBERS",
+    "!NEW IN V0.9.5",
+    "THEME SELECTOR",
+    "!QOL FEATURES",
+    "HOTFIX TUNNEL FOR REAL-TIME DATA TUNING",
+    "LIVE NETWORK DIAGNOSTIC STATUS ON HOME SCREEN",
+    "AUTO-SYNCS WEAPON DATA ON APP LAUNCH"
   ];
 
-showDialog(
+  showDialog(
     context: context,
     builder: (context) => AlertDialog(
       backgroundColor: const Color(0xFF0D0D0D),
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.cyanAccent, width: 1),
+        side: BorderSide(color: primary),
         borderRadius: BorderRadius.circular(12),
       ),
-      title: const Text("SYSTEM UPDATES | BETA V0.8.3 - XEON",
-          style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 14)),
+      title: Stack(
+        children: [
+          Text(
+            "SYSTEM UPDATES | BETA V0.9.5 - XEON",
+            style: TextStyle(
+              fontFamily: bodyFont,
+              fontSize: 14,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 2.5
+                ..color = Colors.black,
+            ),
+          ),
+          Text(
+            "SYSTEM UPDATES | BETA V0.9.5 - XEON",
+            style: TextStyle(fontFamily: bodyFont, color: primary, fontSize: 14),
+          ),
+        ],
+      ),
       content: SizedBox(
         width: double.maxFinite,
         child: ListView.builder(
@@ -674,22 +988,38 @@ showDialog(
           itemCount: notes.length,
           itemBuilder: (context, i) {
             String line = notes[i];
-            bool shouldCenter = line.startsWith('!');
-
-            if (shouldCenter) {
-              line = line.substring(1);
-            }
+            bool isHeader = line.startsWith('!');
+            if (isHeader) line = line.substring(1);
 
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(
-                shouldCenter ? line : "> $line",
-                textAlign: shouldCenter ? TextAlign.center : TextAlign.left,
-                style: TextStyle(
-                  color: shouldCenter ? Colors.cyanAccent : Colors.white70,
-                  fontSize: shouldCenter ? 12 : 11,
-                  fontFamily: 'Bungee',
-                ),
+              child: Stack(
+                alignment: isHeader ? Alignment.center : Alignment.centerLeft,
+                children: [
+
+                  Text(
+                    isHeader ? line : "> $line",
+                    textAlign: isHeader ? TextAlign.center : TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: bodyFont,
+                      fontSize: isHeader ? 12 : 11,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = isHeader ? 2.0 : 1.5
+                        ..color = Colors.black,
+                    ),
+                  ),
+
+                  Text(
+                    isHeader ? line : "> $line",
+                    textAlign: isHeader ? TextAlign.center : TextAlign.left,
+                    style: TextStyle(
+                      color: isHeader ? primary : Colors.white70,
+                      fontSize: isHeader ? 12 : 11,
+                      fontFamily: bodyFont,
+                    ),
+                  ),
+                ],
               ),
             );
           },
@@ -698,8 +1028,29 @@ showDialog(
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("ACKNOWLEDGE",
-              style: TextStyle(color: Colors.cyanAccent, fontFamily: 'Bungee', fontSize: 10)),
+          child: Stack(
+            children: [
+              Text(
+                "ACKNOWLEDGE",
+                style: TextStyle(
+                  fontFamily: bodyFont,
+                  fontSize: 10,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2.0
+                    ..color = Colors.black,
+                ),
+              ),
+              Text(
+                "ACKNOWLEDGE",
+                style: TextStyle(
+                  color: primary,
+                  fontFamily: bodyFont,
+                  fontSize: 10,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
@@ -793,7 +1144,7 @@ void _sortDisplayList() {
       }
     }
   } catch (e) {
-    // ignore: use_build_context_synchronously
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("SERVER UNREACHABLE: Check ngrok tunnel"), 
@@ -808,22 +1159,22 @@ void _sortDisplayList() {
   }
 
   void _showBugReportDialog() {
-  final TextEditingController _bugController = TextEditingController();
+  final TextEditingController bugController = TextEditingController();
 
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
       backgroundColor: const Color(0xFF1A1A1A),
-      title: const Text("ARMORY BUG REPORT", 
-        style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 14)),
+      title: Text("ARMORY BUG REPORT", 
+        style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, color: Theme.of(context).colorScheme.primary, fontSize: 14)),
       content: TextField(
-        controller: _bugController,
+        controller: bugController,
         maxLines: 3,
         style: const TextStyle(color: Colors.white, fontSize: 13),
         decoration: InputDecoration(
           hintText: "Describe the issue and how it occurred if applicable.",
-          hintStyle: TextStyle(color: Colors.cyanAccent),
-          enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyanAccent)),
+          hintStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)),
           focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
         ),
       ),
@@ -833,10 +1184,10 @@ void _sortDisplayList() {
           child: const Text("CANCEL", style: TextStyle(color: Colors.grey)),
         ),
         ElevatedButton(
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.cyanAccent),
+          style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
           onPressed: () async {
-            if (_bugController.text.isNotEmpty) {
-              final note = _bugController.text;
+            if (bugController.text.isNotEmpty) {
+              final note = bugController.text;
 
               await FirebaseAnalytics.instance.logEvent(
                 name: 'dev_symptom_report',
@@ -863,8 +1214,10 @@ void _sortDisplayList() {
 @override
 Widget build(BuildContext context) {
   double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+  final activeTheme = widget.themeController.activeTheme;
+
   return Scaffold(
-    backgroundColor: Colors.black,
+    backgroundColor: Theme.of(context).colorScheme.surface,
     resizeToAvoidBottomInset: false, 
     drawer: _buildSettingsDrawer(),
     appBar: AppBar(
@@ -880,21 +1233,38 @@ Widget build(BuildContext context) {
       title: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            "THE ARMORY", 
-            style: TextStyle(
-              fontFamily: 'Bungee', 
-              fontSize: 20,
-              letterSpacing: 4.0, 
-              color: Colors.white
-            )
+          Stack(
+            children: [
+              Text(
+                "THE ARMORY",
+                style: TextStyle(
+                  fontFamily: 'Days One',
+                  fontSize: 20,
+                  letterSpacing: 4.0,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 3.0
+                    ..color = Colors.black,
+                ),
+              ),
+
+              Text(
+                "THE ARMORY",
+                style: const TextStyle(
+                  fontFamily: 'Days One',
+                  fontSize: 20,
+                  letterSpacing: 4.0,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 4),
           _buildStatusIndicator(),
         ],
-      ), 
+      ),
       centerTitle: true, 
-      backgroundColor: Colors.black.withOpacity(0.7), 
+      backgroundColor: Theme.of(context).colorScheme.surface.withOpacity(0.7), 
       elevation: 0
     ),
 
@@ -902,10 +1272,9 @@ Widget build(BuildContext context) {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Stack(
         children: [
-          // 1. Background Image
           Positioned.fill(
             child: Image.network(
-              "https://res.cloudinary.com/dctlpj7fg/image/upload/f_auto,q_auto/v1745431924/Armory_Bot_Background_1080_idegb5.jpg",
+              activeTheme.backgroundUrl,
               fit: BoxFit.cover,
               cacheWidth: 1080, 
               filterQuality: FilterQuality.low,
@@ -914,11 +1283,10 @@ Widget build(BuildContext context) {
             ),
           ),
 
-          // 2. Main Content
           SafeArea(
             child: Column(
               children: [
-                _SearchField(onChanged: search),
+                _SearchField(onChanged: search, themeController: widget.themeController),
                 Expanded(
                   child: RepaintBoundary(
                     child: ListView.builder(
@@ -932,6 +1300,7 @@ Widget build(BuildContext context) {
                             mainListChips: mainListChips, 
                             isPremium: _isPremiumUser,
                             isFavorite: _favorites.contains(displayList[index].name),
+                            themeController: widget.themeController, 
                             onFavorite: () {
                               HapticFeedback.mediumImpact();
                               _toggleFavorite(displayList[index].name);
@@ -949,20 +1318,37 @@ Widget build(BuildContext context) {
           if (!_dataReady)
             Container(
               color: Colors.black54,
-              child: const Center(
+              child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CircularProgressIndicator(color: Colors.cyanAccent),
-                    SizedBox(height: 16),
-                    Text(
-                      "SYNCHRONIZING DATA...",
-                      style: TextStyle(
-                        fontFamily: 'Bungee',
-                        color: Colors.cyanAccent,
-                        fontSize: 12,
-                        letterSpacing: 1.5,
-                      ),
+                    CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
+                    const SizedBox(height: 16),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Text(
+                          "SYNCHRONIZING DATA...",
+                          style: TextStyle(
+                            fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                            fontSize: 12,
+                            letterSpacing: 1.5,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 2.0
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "SYNCHRONIZING DATA...",
+                          style: TextStyle(
+                            fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 12,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -975,24 +1361,47 @@ Widget build(BuildContext context) {
 }
 
 Widget _buildSettingsDrawer() {
+  final themeController = widget.themeController;
+  final activeTheme = themeController.activeTheme;
+  final theme = Theme.of(context);
+  final bool isHolographic = activeTheme.isHolographic;
+
   return Drawer(
-    backgroundColor: const Color(0xFF0D0D0D),
+    elevation: 0,
+    backgroundColor: theme.colorScheme.surface,
     child: Column(
       children: [
-        // 1. Header Section with responsive height
         SafeArea(
           bottom: false,
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,
-            child: const Center(
-              child: Text(
-                "THE ARMORY DRAWER",
-                style: TextStyle(
-                  fontFamily: 'Bungee',
-                  color: Colors.white,
-                  fontSize: 16,
-                  letterSpacing: 1.2,
-                ),
+            child: Center(
+              child: Stack(
+                children: [
+
+                  Text(
+                    "THE ARMORY DRAWER",
+                    style: TextStyle(
+                      fontFamily: 'Days One',
+                      fontSize: 16,
+                      letterSpacing: 1.2,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 2.5
+                        ..color = Colors.black,
+                    ),
+                  ),
+
+                  Text(
+                    "THE ARMORY DRAWER",
+                    style: TextStyle(
+                      fontFamily: 'Days One',
+                      color: isHolographic ? theme.colorScheme.primary : Colors.white,
+                      fontSize: 16,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -1000,63 +1409,46 @@ Widget _buildSettingsDrawer() {
         
         const Divider(color: Colors.white10, height: 3),
 
-        // 2. Main Scrollable Content
         Expanded(
           child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             children: [
               const SizedBox(height: 20),
-
-              // AEGIS PROTOCOL BOX
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(0, 255, 255, 0.05),
-                  border: Border.all(color: Colors.cyanAccent.withOpacity(0.3), width: 1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    FadeTransition(
-                      opacity: _pulseAnimation,
-                      child: const Icon(Icons.shield_rounded, color: Colors.cyanAccent, size: 24),
-                    ),
-                    const SizedBox(width: 15),
-                    const Text(
-                      "AEGIS PROTOCOL: ACTIVE",
-                      style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-
+              _buildAegisBox(activeTheme, theme),
               const SizedBox(height: 15),
 
-              // RANDOMIZER BUTTON
               _buildDrawerButton(
                 label: "RANDOMIZER",
                 icon: Icons.cached_rounded,
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const RandomLoadoutScreen())),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RandomLoadoutScreen(themeController: widget.themeController))),
               ),
-              
               const SizedBox(height: 15),
 
-              // AUGMENT TREE BUTTON
               _buildDrawerButton(
                 label: "AUGMENT TREE",
                 icon: Icons.hub_rounded,
                 onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AugmentTreeScreen())),
               ),
-
               const SizedBox(height: 15),
 
-              // META BUTTON
               _buildDrawerButton(
                 label: "META PICKS",
-                icon: Icons.assessment_rounded, // Looks like a chart/ranking
+                icon: Icons.assessment_rounded,
                 onTap: () {
                   HapticFeedback.heavyImpact();
-                  _showMetaDashboard(); // We'll build this next
+                  _showMetaDashboard();
+                },
+              ),
+              const SizedBox(height: 15),
+
+              _buildDrawerButton(
+                label: "THEMES",
+                icon: Icons.palette_rounded,
+                customColor: theme.colorScheme.primary, 
+                onTap: () {
+                  HapticFeedback.mediumImpact();
+                  Navigator.pop(context);
+                  _showThemePickerDialog(); 
                 },
               ),
               
@@ -1064,15 +1456,11 @@ Widget _buildSettingsDrawer() {
               const Divider(color: Colors.white10, thickness: 1),
               const SizedBox(height: 20),
 
-              // CONDITIONAL USER SECTION
-              _isPremiumUser
-                ? _buildPremiumSection()
-                : _buildAuthSection(),
+              _isPremiumUser ? _buildPremiumSection() : _buildAuthSection(),
             ],
           ),
         ),
 
-        // 3. Bottom Pinned Section
         const Divider(color: Colors.white10, height: 1),
         _buildMinorDrawerTile(
           label: "REPORT A BUG",
@@ -1103,47 +1491,184 @@ Widget _buildSettingsDrawer() {
   );
 }
 
+Widget _buildAegisBox(ArmoryTheme activeTheme, ThemeData theme) {
+  final bool isHolographic = activeTheme.isHolographic;
+  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+
+  Widget boxContent = Container(
+    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+    decoration: BoxDecoration(
+      color: theme.colorScheme.surface, 
+      borderRadius: BorderRadius.circular(12),
+      border: (isHolographic || isAnemone) ? null : Border.all(
+        color: theme.colorScheme.primary.withOpacity(0.5), 
+        width: 1,
+      ),
+    ),
+    child: Row(
+      children: [
+        Icon(Icons.shield_rounded, color: theme.colorScheme.primary, size: 24),
+        const SizedBox(width: 15),
+        Stack(
+          children: [
+            Text(
+              "AEGIS PROTOCOL : ACTIVE",
+              style: TextStyle(
+                fontFamily: 'Days One', 
+                fontSize: 12,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3
+                  ..color = Colors.black,
+              ),
+            ),
+
+            Text(
+              "AEGIS PROTOCOL : ACTIVE",
+              style: const TextStyle(
+                fontFamily: 'Days One', 
+                color: Colors.white, 
+                fontSize: 12,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  if (isHolographic) {
+    return _InternalAnimatedBorder(
+      colors: activeTheme.refractionColors,
+      child: boxContent,
+    );
+  } else if (isAnemone) {
+    return ArmoryGradientBorder(
+      gradientColors: activeTheme.borderGradient,
+      borderRadius: 12,
+      child: boxContent,
+    );
+  }
+  return boxContent;
+}
+
 Widget _buildMinorDrawerTile({required String label, required IconData icon, required VoidCallback onTap}) {
   return ListTile(
     dense: true, 
     visualDensity: VisualDensity.compact,
     leading: Icon(icon, color: Colors.white24, size: 18),
-    title: Text(
-      label, 
-      style: const TextStyle(
-        fontFamily: 'Bungee', 
-        fontSize: 9, 
-        color: Colors.white24, 
-        letterSpacing: 1.1
-      )
+    title: Stack(
+      children: [
+
+        Text(
+          label, 
+          style: TextStyle(
+            fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+            fontSize: 9, 
+            letterSpacing: 1.1,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 1.6
+              ..color = Colors.black,
+          )
+        ),
+
+        Text(
+          label, 
+          style: TextStyle(
+            fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+            fontSize: 9, 
+            color: Theme.of(context).colorScheme.primary, 
+            letterSpacing: 1.1
+          )
+        ),
+      ],
     ),
     onTap: onTap,
   );
 }
 
-Widget _buildDrawerButton({required String label, required IconData icon, required VoidCallback onTap}) {
-  return SizedBox(
-    width: double.infinity,
-    height: 55, 
-    child: OutlinedButton(
-      onPressed: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: Colors.cyanAccent.withOpacity(0.5)),
-        backgroundColor: Colors.cyanAccent.withOpacity(0.02),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FadeTransition(opacity: _pulseAnimation, child: Icon(icon, size: 20, color: Colors.cyanAccent)),
-          const SizedBox(width: 12),
-          Text(label, style: const TextStyle(fontFamily: 'Bungee', fontSize: 12, color: Colors.white, letterSpacing: 1.5)),
-        ],
+Widget _buildDrawerButton({
+  required String label,
+  required IconData icon,
+  required VoidCallback onTap,
+  Color? customColor,
+}) {
+  final activeTheme = widget.themeController.activeTheme;
+  final theme = Theme.of(context);
+  final bool isHolographic = activeTheme.isHolographic;
+  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+  
+  final Color effectiveColor = customColor ?? theme.colorScheme.primary;
+
+  Widget boxContent = Container(
+    padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+    decoration: BoxDecoration(
+      color: theme.colorScheme.surface, 
+      borderRadius: BorderRadius.circular(12),
+      border: (isHolographic || isAnemone) ? null : Border.all(
+        color: effectiveColor.withOpacity(0.5), 
+        width: 1,
       ),
     ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center, 
+      children: [
+        Icon(icon, color: effectiveColor, size: 20),
+        const SizedBox(width: 15),
+        Stack(
+          children: [
+            Text(
+              label.toUpperCase(),
+              style: TextStyle(
+                fontFamily: 'Days One', 
+                fontSize: 12,
+                letterSpacing: 1.5,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3
+                  ..color = Colors.black,
+              ),
+            ),
+
+            Text(
+              label.toUpperCase(),
+              style: const TextStyle(
+                fontFamily: 'Days One', 
+                color: Colors.white, 
+                fontSize: 12,
+                letterSpacing: 1.5,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+
+  Widget themedButton;
+  if (isHolographic) {
+    themedButton = _InternalAnimatedBorder(
+      colors: activeTheme.refractionColors,
+      child: boxContent,
+    );
+  } else if (isAnemone) {
+    themedButton = ArmoryGradientBorder(
+      gradientColors: activeTheme.borderGradient,
+      borderRadius: 12,
+      strokeWidth: 2,
+      child: boxContent,
+    );
+  } else {
+    themedButton = boxContent;
+  }
+
+  return GestureDetector(
+    onTap: () {
+      HapticFeedback.lightImpact();
+      onTap();
+    },
+    child: themedButton,
   );
 }
 
@@ -1151,7 +1676,7 @@ Widget _buildPremiumSection() {
   return Column(
     children: [
       Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         decoration: BoxDecoration(
           color: const Color.fromRGBO(255, 191, 0, 0.05),
           border: Border.all(color: Colors.amberAccent.withOpacity(0.3), width: 1),
@@ -1159,12 +1684,36 @@ Widget _buildPremiumSection() {
         ),
         child: Row(
           children: [
-            FadeTransition(opacity: _pulseAnimation, child: const Icon(Icons.stars_rounded, color: Colors.amberAccent, size: 24)),
+            const Icon(Icons.stars_rounded, color: Colors.amberAccent, size: 24),
             const SizedBox(width: 15),
-            const Text("PREMIUM STATUS: ACTIVE", style: TextStyle(fontFamily: 'Bungee', color: Colors.amberAccent, fontSize: 12)),
+            Stack(
+              children: [
+                Text(
+                  "PREMIUM STATUS: ACTIVE", 
+                  style: TextStyle(
+                    fontFamily: 'Days One', 
+                    fontSize: 11,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2.5
+                      ..color = Colors.black,
+                  )
+                ),
+
+                Text(
+                  "PREMIUM STATUS: ACTIVE", 
+                  style: const TextStyle(
+                    fontFamily: 'Days One', 
+                    color: Colors.amberAccent, 
+                    fontSize: 11,
+                  )
+                ),
+              ],
+            ),
           ],
         ),
       ),
+      const SizedBox(height: 5),
       TextButton(
         onPressed: () async {
           final prefs = await SharedPreferences.getInstance();
@@ -1175,24 +1724,54 @@ Widget _buildPremiumSection() {
             _pinController.clear();
           });
         },
-        child: const Text("TERMINATE SESSION", style: TextStyle(color: Colors.redAccent, fontSize: 10, fontWeight: FontWeight.bold)),
+        child: Stack(
+          children: [
+            Text(
+              "TERMINATE SESSION", 
+              style: TextStyle(
+                fontSize: 10, 
+                letterSpacing: 1.1,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 1.8
+                  ..color = Colors.black,
+              )
+            ),
+
+            const Text(
+              "TERMINATE SESSION", 
+              style: TextStyle(
+                color: Colors.redAccent, 
+                fontSize: 10, 
+                letterSpacing: 1.1,
+              )
+            ),
+          ],
+        ),
       ),
     ],
   );
 }
 
 Widget _buildAuthSection() {
+  final primaryColor = Theme.of(context).colorScheme.primary;
+  final bodyFont = Theme.of(context).textTheme.bodyLarge?.fontFamily;
+
   return Column(
     children: [
       TextField(
         controller: _idController,
-        style: const TextStyle(color: Colors.cyanAccent, fontFamily: 'Bungee', fontSize: 13),
+        style: TextStyle(color: primaryColor, fontFamily: bodyFont, fontSize: 13),
         decoration: InputDecoration(
-          labelText: "DISCORD USER ID",
-          labelStyle: const TextStyle(fontSize: 10, color: Colors.cyanAccent),
-          prefixIcon: const Icon(Icons.person_search, color: Colors.cyanAccent), // Fits "ID"
-          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyanAccent.withOpacity(0.3))),
-          focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyanAccent)),
+          label: Stack(
+            children: [
+              Text("DISCORD USER ID", style: TextStyle(fontSize: 10, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 1.5..color = Colors.black)),
+              Text("DISCORD USER ID", style: TextStyle(fontSize: 10, color: primaryColor)),
+            ],
+          ),
+          prefixIcon: Icon(Icons.person_search, color: primaryColor),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: primaryColor.withOpacity(0.3))),
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: primaryColor)),
         ),
       ),
 
@@ -1203,28 +1782,61 @@ Widget _buildAuthSection() {
         keyboardType: TextInputType.number, 
         obscureText: true,
         maxLength: 6,
-        style: const TextStyle(color: Colors.cyanAccent, fontFamily: 'Bungee', fontSize: 13),
+        style: TextStyle(color: primaryColor, fontFamily: bodyFont, fontSize: 13),
         decoration: InputDecoration(
-          labelText: "SECRET PIN",
-          labelStyle: const TextStyle(fontSize: 10, color: Colors.cyanAccent),
-          prefixIcon: const Icon(Icons.lock_outline, color: Colors.cyanAccent), // Keep the lock
+          label: Stack(
+            children: [
+              Text("SECRET PIN", style: TextStyle(fontSize: 10, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 1.5..color = Colors.black)),
+              Text("SECRET PIN", style: TextStyle(fontSize: 10, color: primaryColor)),
+            ],
+          ),
+          prefixIcon: Icon(Icons.lock_outline, color: primaryColor),
           counterStyle: const TextStyle(color: Colors.white38), 
-          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyanAccent.withOpacity(0.3))),
-          focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.cyanAccent)),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: primaryColor.withOpacity(0.3))),
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: primaryColor)),
         ),
       ),
+      
       const SizedBox(height: 30),
+
       ElevatedButton(
         onPressed: _verifyPremium,
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.cyanAccent, foregroundColor: Colors.black, minimumSize: const Size(double.infinity, 45)),
-        child: const Text("AUTHENTICATE", style: TextStyle(fontWeight: FontWeight.bold)),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryColor, 
+          foregroundColor: Colors.black, 
+          minimumSize: const Size(double.infinity, 45)
+        ),
+        child: Stack(
+          children: [
+            Text(
+              "AUTHENTICATE",
+              style:
+              TextStyle(
+                foreground: Paint()..
+                style = PaintingStyle.stroke
+                ..strokeWidth = 3
+                ..color = Colors.black)),
+
+            Text("AUTHENTICATE", style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+          ],
+        ),
       ),
+      
       const SizedBox(height: 15),
+
       OutlinedButton.icon(
         onPressed: () => launchUrl(Uri.parse('https://buy.stripe.com/dRm6oH6BFamr8Xe2CddUY00'), mode: LaunchMode.externalApplication),
-        icon: const Icon(Icons.shopping_cart_outlined, size: 16),
-        label: const Text("BUY PREMIUM"),
-        style: OutlinedButton.styleFrom(foregroundColor: Colors.amberAccent, side: const BorderSide(color: Colors.amberAccent), minimumSize: const Size(double.infinity, 45)),
+        icon: const Icon(Icons.shopping_cart_outlined, size: 16, color: Colors.amberAccent),
+        label: Stack(
+          children: [
+            Text("BUY PREMIUM", style: TextStyle(foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 1.5..color = Colors.black)),
+            const Text("BUY PREMIUM", style: TextStyle(color: Colors.amberAccent)),
+          ],
+        ),
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Colors.amberAccent), 
+          minimumSize: const Size(double.infinity, 45)
+        ),
       ),
     ],
   );
@@ -1237,6 +1849,7 @@ class WeaponListItem extends StatelessWidget {
   final bool isPremium;
   final bool isFavorite;
   final VoidCallback onFavorite;
+  final ThemeController themeController;
 
   const WeaponListItem({
     super.key,
@@ -1245,20 +1858,68 @@ class WeaponListItem extends StatelessWidget {
     required this.isPremium,
     required this.isFavorite,
     required this.onFavorite,
+    required this.themeController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFF141414).withOpacity(0.9),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    final activeTheme = themeController.activeTheme;
+    final theme = Theme.of(context);
+    final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+    final bool isHolographic = activeTheme.isHolographic;
+
+    Widget cardContent = Card(
+      color: theme.colorScheme.surface.withOpacity(0.6),
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: (isAnemone || isHolographic)
+            ? BorderSide.none
+            : BorderSide(
+                color: theme.colorScheme.primary.withOpacity(0.3),
+                width: 1,
+              ),
+      ),
       child: ListTile(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (c) => DetailScreen(weapon: weapon, isPremiumUser: isPremium))),
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (c) => DetailScreen(
+                      weapon: weapon,
+                      isPremiumUser: isPremium,
+                      themeController: themeController,
+                    ))),
         leading: _SmartImage(url: weapon.gameLogoUrl, width: 40),
-        title: Text(weapon.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Padding(padding: const EdgeInsets.only(top: 8),
-        child: SingleChildScrollView(scrollDirection: Axis.horizontal,
-        child: Row(children: mainListChips.map((m) => _StatusChip(label: m, isActive: weapon.builds.containsKey(m))).toList()))),
+
+        title: Stack(
+          children: [
+            Text(
+              weapon.name,
+              style: TextStyle(
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3
+                  ..color = Colors.black,
+              ),
+            ),
+            Text(
+              weapon.name,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: mainListChips
+                  .map((m) => _StatusChip(
+                      label: m, isActive: weapon.builds.containsKey(m)))
+                  .toList(),
+            ),
+          ),
+        ),
         trailing: IconButton(
           icon: Icon(
             isFavorite ? Icons.star : Icons.star_border,
@@ -1269,7 +1930,30 @@ class WeaponListItem extends StatelessWidget {
             onFavorite();
           },
         ),
-      )
+      ),
+    );
+
+    Widget finalWidget = cardContent;
+
+    if (isHolographic) {
+      finalWidget = StatefulBuilder(builder: (context, setState) {
+        return _InternalAnimatedBorder(
+          colors: activeTheme.refractionColors,
+          child: cardContent,
+        );
+      });
+    } else if (isAnemone) {
+      finalWidget = ArmoryGradientBorder(
+        gradientColors: activeTheme.borderGradient,
+        strokeWidth: 2,
+        borderRadius: 12,
+        child: cardContent,
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      child: finalWidget,
     );
   }
 }
@@ -1277,7 +1961,15 @@ class WeaponListItem extends StatelessWidget {
 class DetailScreen extends StatefulWidget {
   final Weapon weapon;
   final bool isPremiumUser;
-  const DetailScreen({super.key, required this.weapon, required this.isPremiumUser});
+  final ThemeController themeController; 
+
+  const DetailScreen({
+    super.key, 
+    required this.weapon, 
+    required this.isPremiumUser,
+    required this.themeController,
+  });
+
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
@@ -1301,6 +1993,10 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final activeTheme = widget.themeController.activeTheme;
+    final theme = Theme.of(context);
+    final bool isHolographic = activeTheme.isHolographic;
+    
     final currentBuild = flatBuilds[selectedIndex];
     final bool isSokol = widget.weapon.name.toUpperCase().contains("SOKOL 545");
     
@@ -1311,21 +2007,69 @@ class _DetailScreenState extends State<DetailScreen> {
     final hasStats = displayStats != null;
 
     return Scaffold(
+      backgroundColor: theme.colorScheme.surface,
+      extendBodyBehindAppBar: true, 
       appBar: AppBar(
-        title: Text(widget.weapon.name, style: const TextStyle(fontWeight: FontWeight.bold)), 
-        backgroundColor: Colors.black,
+        title: Stack(
+          children: [
+            Text(
+              widget.weapon.name.toUpperCase(),
+              style: TextStyle(
+                fontFamily: 'Days One',
+                fontSize: 18,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2.5
+                  ..color = Colors.black,
+              ),
+            ),
+            Text(
+              widget.weapon.name.toUpperCase(),
+              style: const TextStyle(
+                fontFamily: 'Days One',
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ), 
+        backgroundColor: theme.colorScheme.surface.withOpacity(0.8),
+        elevation: 0,
         actions: [
-          // 2. FIRE MODE TOGGLE (Only shows if it's Sokol and Stats are enabled)
           if (hasStats && showStats && isSokol)
             _buildFireModeToggle(),
 
           if (hasStats) ...[
             if (widget.isPremiumUser) ...[
-              const Center(child: Text("STATS", style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.cyanAccent, letterSpacing: 1))),
+              Center(
+                child: Stack(
+                  children: [
+                    Text(
+                      "STATS",
+                      style: TextStyle(
+                        fontSize: 10,
+                        letterSpacing: 1,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "STATS",
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: theme.colorScheme.primary,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Switch(
                 value: showStats, 
                 onChanged: (v) => setState(() => showStats = v),
-                activeColor: Colors.cyanAccent,
+                activeColor: theme.colorScheme.primary,
               ),
             ] else ...[
               IconButton(
@@ -1341,67 +2085,129 @@ class _DetailScreenState extends State<DetailScreen> {
           ]
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          _ImageHeader(url: widget.weapon.imageUrl),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-            child: Wrap(
-              spacing: 8.0, 
-              runSpacing: 8.0, 
-              alignment: WrapAlignment.center,
-              children: List.generate(flatBuilds.length, (index) {
-                final b = flatBuilds[index];
-                bool sel = selectedIndex == index;
-                return GestureDetector(
-                  onTap: () => setState(() {
-                    selectedIndex = index;
-                    if (flatBuilds[index].stats == null) showStats = false;
-                  }),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: sel 
-                        ? (b.category == "Special" ? Colors.purple : b.category.contains("Prestige") ? const Color(0xFFFFD700) : const Color.fromRGBO(2, 91, 207, 1)) 
-                        : Colors.white.withOpacity(0.05),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: sel ? Colors.white : Colors.white12),
-                    ),
-                    child: Text(
-                      (b.modName ?? b.category).toUpperCase(), 
-                      style: TextStyle(
-                        fontSize: 10, 
-                        fontWeight: FontWeight.bold, 
-                        color: sel && b.category.contains("Prestige") ? Colors.black : Colors.white
-                      )
-                    ),
-                  ),
-                );
-              }),
+          Positioned.fill(
+            child: Image.network(
+              activeTheme.backgroundUrl,
+              fit: BoxFit.cover,
+              color: Colors.black.withOpacity(isHolographic ? 0.5 : 0.7),
+              colorBlendMode: BlendMode.darken,
             ),
           ),
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+
+          SafeArea(
+            child: Column(
               children: [
-                // 3. UPDATED: Pass displayStats so Combat Rating badge updates on toggle
-                if (hasStats) 
-                  _CombatRatingDisplay(stats: displayStats),
-
-                // 4. UPDATED: Pass displayStats so raw numbers update on toggle
-                if (showStats && hasStats && widget.isPremiumUser) 
-                  _PremiumStatCard(stats: displayStats),
-
-                if (currentBuild.modName != null) 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 12), 
-                    child: Center(child: Text(currentBuild.modName!.toUpperCase(), style: const TextStyle(color: Colors.purpleAccent, fontWeight: FontWeight.w900, letterSpacing: 1.2)))
-                  ),
+                _ImageHeader(url: widget.weapon.imageUrl),
                 
-                ...currentBuild.buildCodes.map((c) => _BuildCodeBox(code: c, weaponName: widget.weapon.name, mode: currentBuild.category)),
-                const SizedBox(height: 10),
-                ...currentBuild.attachments.map((att) => _AttachmentTile(text: att, isStarred: currentBuild.starredAttachments.contains(att))),
-                if (currentBuild.specialtyValue != null) _SpecialtyBox(value: currentBuild.specialtyValue!),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                  child: Wrap(
+                    spacing: 8.0, 
+                    runSpacing: 8.0, 
+                    alignment: WrapAlignment.center,
+                    children: List.generate(flatBuilds.length, (index) {
+                      final b = flatBuilds[index];
+                      bool sel = selectedIndex == index;
+
+                      Color activeColor = b.category == "Special" 
+                          ? Colors.purpleAccent 
+                          : (b.category.contains("Prestige") ? const Color(0xFFFFD700) : theme.colorScheme.primary);
+
+                      return GestureDetector(
+                        onTap: () => setState(() {
+                          selectedIndex = index;
+                          if (flatBuilds[index].stats == null) showStats = false;
+                        }),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: sel ? activeColor : theme.colorScheme.surface.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: sel ? Colors.white : theme.colorScheme.primary.withOpacity(0.2)
+                            ),
+                          ),
+                          child: Stack(
+                            children: [
+
+                              Text(
+                                (b.modName ?? b.category).toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontFamily: 'Days One',
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 1.5
+                                    ..color = sel ? Colors.white : Colors.black,
+                                ),
+                              ),
+
+                              Text(
+                                (b.modName ?? b.category).toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontFamily: 'Days One',
+                                  color: sel ? Colors.black : Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+                
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    children: [
+                      if (hasStats) _CombatRatingDisplay(stats: displayStats),
+                      if (showStats && hasStats && widget.isPremiumUser) _PremiumStatCard(stats: displayStats),
+
+                      if (currentBuild.modName != null) 
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 12), 
+                          child: Center(
+                            child: Stack(
+                              children: [
+                                Text(
+                                  currentBuild.modName!.toUpperCase(),
+                                  style: TextStyle(
+                                    letterSpacing: 1.2,
+                                    foreground: Paint()
+                                      ..style = PaintingStyle.stroke
+                                      ..strokeWidth = 2.0
+                                      ..color = Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  currentBuild.modName!.toUpperCase(),
+                                  style: TextStyle(
+                                    color: theme.colorScheme.primary,
+                                    letterSpacing: 1.2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      
+                      ...currentBuild.buildCodes.map((c) => _BuildCodeBox(code: c, weaponName: widget.weapon.name, mode: currentBuild.category)),
+                      const SizedBox(height: 10),
+                      
+                      ...currentBuild.attachments.map((att) => _AttachmentTile(
+                        text: att, 
+                        isStarred: currentBuild.starredAttachments.contains(att),
+                        themeController: widget.themeController
+                      )),
+                      
+                      if (currentBuild.specialtyValue != null) _SpecialtyBox(value: currentBuild.specialtyValue!),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -1410,36 +2216,143 @@ class _DetailScreenState extends State<DetailScreen> {
     );
   }
 
-  Widget _buildFireModeToggle() {
-    return Center(
-      child: GestureDetector(
-        onTap: () {
-          HapticFeedback.lightImpact();
-          setState(() => isFastMode = !isFastMode);
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-          margin: const EdgeInsets.only(right: 8),
-          decoration: BoxDecoration(
-            color: isFastMode ? Colors.redAccent.withOpacity(0.2) : Colors.greenAccent.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(4),
-            border: Border.all(color: isFastMode ? Colors.redAccent : Colors.greenAccent),
-          ),
-          child: Text(
-            isFastMode ? "FAST FIRE" : "SLOW FIRE",
-            style: TextStyle(
-              color: isFastMode ? Colors.redAccent : Colors.greenAccent,
-              fontSize: 9,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Bungee'
-            ),
-          ),
+  Widget _ImageHeader({required String url}) {
+    return Container(
+      height: 150,
+      width: double.infinity,
+      color: Colors.transparent,
+      child: Center(
+        child: Image.network(
+          url,
+          fit: BoxFit.contain,
+          
+          scale: 0.75,
         ),
       ),
     );
   }
+
+  Widget _buildFireModeToggle() {
+  final theme = Theme.of(context);
+  final accentColor = isFastMode ? Colors.redAccent : Colors.greenAccent;
+  final label = isFastMode ? "FAST FIRE" : "SLOW FIRE";
+
+  return Center(
+    child: GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        setState(() => isFastMode = !isFastMode);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          color: accentColor.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(4),
+          border: Border.all(color: accentColor),
+        ),
+        child: Stack(
+          children: [
+
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 9,
+                fontFamily: theme.textTheme.bodyLarge?.fontFamily,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2.0
+                  ..color = Colors.black,
+              ),
+            ),
+
+            Text(
+              label,
+              style: TextStyle(
+                color: accentColor,
+                fontSize: 9,
+                fontFamily: theme.textTheme.bodyLarge?.fontFamily,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
+Widget _AttachmentTile({required String text, required bool isStarred, required ThemeController themeController}) {
+  final activeTheme = widget.themeController.activeTheme;
+  final theme = activeTheme.themeData;
+  final bool isHolographic = activeTheme.isHolographic;
+  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+
+  Widget tileContent = Container(
+    margin: isAnemone || isHolographic ? EdgeInsets.zero : const EdgeInsets.only(bottom: 8),
+    decoration: BoxDecoration(
+      color: theme.colorScheme.surface.withOpacity(0.7),
+      borderRadius: BorderRadius.circular(10),
+      border: (isAnemone || isHolographic) ? null : Border.all(
+        color: theme.colorScheme.primary.withOpacity(0.15),
+      ),
+    ),
+    child: ListTile(
+      dense: true,
+      leading: Icon(
+        isStarred ? Icons.star : Icons.check_circle,
+        color: isStarred ? Colors.amber : theme.colorScheme.primary,
+        size: 20,
+      ),
+      title: Stack(
+        children: [
+          Text(
+            text.toUpperCase(),
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 13,
+              letterSpacing: 0.5,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3
+                ..color = Colors.black,
+            ),
+          ),
+          Text(
+            text.toUpperCase(),
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white, 
+              fontSize: 13, 
+              letterSpacing: 0.5
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  if (isHolographic) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: _InternalAnimatedBorder(
+        colors: activeTheme.refractionColors,
+        child: tileContent,
+      ),
+    );
+  } else if (isAnemone) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: ArmoryGradientBorder(
+        gradientColors: activeTheme.borderGradient,
+        borderRadius: 10,
+        child: tileContent,
+      ),
+    );
+  }
+
+  return tileContent;
+}
+}
 
 class _PremiumStatCard extends StatelessWidget {
   final WeaponStats stats;
@@ -1452,47 +2365,82 @@ class _PremiumStatCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.cyanAccent.withOpacity(0.02),
-        border: Border.symmetric(horizontal: BorderSide(color: Colors.cyanAccent.withOpacity(0.1))),
+Widget build(BuildContext context) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 20),
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      border: Border.symmetric(
+        horizontal: BorderSide(color: Theme.of(context).colorScheme.primary.withOpacity(0.1))
       ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Text("ADVANCED WEAPON STATS", 
-              style: TextStyle(color: Colors.cyanAccent.withOpacity(0.5), fontWeight: FontWeight.bold, fontSize: 10, letterSpacing: 2)),
+    ),
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Stack(
+            children: [
+              Text(
+                "ADVANCED WEAPON STATS",
+                style: TextStyle(
+                  fontSize: 10,
+                  letterSpacing: 2,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 3
+                    ..color = Colors.black,
+                ),
+              ),
+
+              Text(
+                "ADVANCED WEAPON STATS",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 10,
+                  letterSpacing: 2,
+                ),
+              ),
+            ],
           ),
+        ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 12, left: 4, right: 4),
+            padding: const EdgeInsets.only(top: 4, bottom: 12, left: 4, right: 4),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (_hasData(stats.ttk1))
-                  Expanded(child: Center(child: _StatItem(label: "TTK RANGE 1", value: stats.ttk1))),
+                  Expanded(
+                    child: Center(
+                      child: _StatItem(
+                        label: _hasData(stats.ttk2) 
+                            ? "TTK < ${stats.range2}" 
+                            : "TTK RANGE 1", 
+                        value: stats.ttk1
+                      )
+                    )
+                  ),
 
                 if (_hasData(stats.ttk2))
                   Expanded(
                     child: Center(
                       child: _StatItem(
-                        label: (stats.range2 != "-" && stats.range2.isNotEmpty) ? "TTK >${stats.range2}" : "LONG TTK", 
+                        label: (stats.range2 != "-" && stats.range2.isNotEmpty) 
+                            ? "TTK > ${stats.range2}" 
+                            : "LONG TTK", 
                         value: stats.ttk2
                       ),
                     ),
                   ),
 
                 Expanded(child: Center(child: _StatItem(label: "ADS SPEED", value: stats.adsSpeed))),
-                Expanded(child: Center(child: _StatItem(label: "BULLET VELOCITY", value: stats.bulletVelocity))),
-                Expanded(child: Center(child: _StatItem(label: "SHOTS TO KILL", value: stats.shotsToKill))),
+                Expanded(child: Center(child: _StatItem(label: "VELOCITY", value: stats.bulletVelocity))),
+                Expanded(child: Center(child: _StatItem(label: "HITS TO KILL", value: stats.shotsToKill))),
                 
                 if (!_hasData(stats.ttk2) && _hasData(stats.range2))
-                   Expanded(child: Center(child: _StatItem(label: "DROP", value: stats.range2))),
+                  Expanded(child: Center(child: _StatItem(label: "DROP", value: stats.range2))),
 
-                Expanded(child: Center(child: _StatItem(label: "HITSCAN RANGE", value: stats.hitscanRange))),
+                Expanded(child: Center(child: _StatItem(label: "HITSCAN", value: stats.hitscanRange))),
 
                 if (stats.shotRange != null && _hasData(stats.shotRange))
                   Expanded(child: Center(child: _StatItem(label: "SNIPER", value: stats.shotRange!))),
@@ -1514,15 +2462,55 @@ class _StatItem extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(value, 
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: Colors.white, height: 1.0),
-          overflow: TextOverflow.ellipsis,
+        Stack(
+          children: [
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: 9,
+                height: 1.0,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 3
+                  ..color = Colors.black,
+              ),
+            ),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 10,
+                color: Colors.white,
+                height: 1.0,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 2),
-        Text(label.toUpperCase(), 
-          style: const TextStyle(color: Colors.cyanAccent, fontSize: 8, fontWeight: FontWeight.bold),
-          overflow: TextOverflow.ellipsis,
-        ),
+      Stack(
+        children: [
+
+          Text(
+            label.toUpperCase(),
+            style: TextStyle(
+              fontSize: 9,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3,
+              color: null,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+
+          Text(
+            label.toUpperCase(),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 9,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      )
       ],
     );
   }
@@ -1547,8 +2535,10 @@ class _SpecialtyBox extends StatelessWidget {
 }
 
 class _StatusChip extends StatelessWidget {
-  final String label; final bool isActive;
+  final String label; 
+  final bool isActive;
   const _StatusChip({required this.label, required this.isActive});
+
   @override
   Widget build(BuildContext context) {
     Color activeColor = const Color.fromRGBO(2, 91, 207, 1);
@@ -1556,7 +2546,39 @@ class _StatusChip extends StatelessWidget {
     if (label == "Akimbo") activeColor = Colors.orange;
     if (label == "Single") activeColor = Colors.green;
     if (label.contains("Prestige")) activeColor = const Color(0xFFFFD700);
-    return Container(margin: const EdgeInsets.only(right: 6), padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: isActive ? activeColor.withOpacity(0.2) : Colors.transparent, borderRadius: BorderRadius.circular(4), border: Border.all(color: isActive ? activeColor.withOpacity(0.5) : Colors.white10)), child: Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: isActive ? Colors.white : Colors.white10)));
+
+    return Container(
+      margin: const EdgeInsets.only(right: 6), 
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), 
+      decoration: BoxDecoration(
+        color: isActive ? activeColor.withOpacity(0.2) : Colors.transparent, 
+        borderRadius: BorderRadius.circular(4), 
+        border: Border.all(color: isActive ? activeColor.withOpacity(0.5) : Colors.white10)
+      ), 
+      child: Stack(
+        children: [
+
+          Text(
+            label, 
+            style: TextStyle(
+              fontSize: 9, 
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 1.5
+                ..color = isActive ? Colors.black : Colors.transparent
+            )
+          ),
+
+          Text(
+            label, 
+            style: TextStyle(
+              fontSize: 9, 
+              color: isActive ? Colors.white : Colors.white10
+            )
+          ),
+        ],
+      )
+    );
   }
 }
 
@@ -1565,16 +2587,85 @@ class _ImageHeader extends StatelessWidget {
   const _ImageHeader({required this.url});
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [Container(height: 180, width: double.infinity, alignment: Alignment.center, child: _SmartImage(url: url, width: 300)), Positioned.fill(child: Container(decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.transparent, Colors.black.withOpacity(0.9)]))))]);
+    return Stack(children: [
+      Container(height: 180,
+      width: double.infinity,
+      alignment: Alignment.center,
+        child: _SmartImage(
+          url: url,
+          width: 300
+          )),
+        Positioned.fill(
+          child:
+            Container(
+              decoration:
+                BoxDecoration(
+                  gradient:
+                    LinearGradient(
+                      begin:
+                        Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.transparent, Colors.black.withOpacity(0.9)]))))]);
   }
 }
 
 class _BuildCodeBox extends StatelessWidget {
   final String code, weaponName, mode;
   const _BuildCodeBox({required this.code, required this.weaponName, required this.mode});
+
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: const EdgeInsets.symmetric(vertical: 4), child: InkWell(onTap: () { Clipboard.setData(ClipboardData(text: code)); ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$weaponName code copied!"), behavior: SnackBarBehavior.floating, backgroundColor: const Color.fromRGBO(2, 91, 207, 1))); }, child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: Colors.cyanAccent.withOpacity(0.05), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.cyanAccent.withOpacity(0.2))), child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Icon(Icons.copy, size: 16, color: Colors.cyanAccent), const SizedBox(width: 10), Text(code, style: const TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold))]))));
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: InkWell(
+        onTap: () {
+          Clipboard.setData(ClipboardData(text: code));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("$weaponName code copied!"),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: primaryColor,
+            ),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: primaryColor.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: primaryColor.withOpacity(0.2)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.copy, size: 16, color: primaryColor),
+              const SizedBox(width: 10),
+              Stack(
+                children: [
+                  Text(
+                    code,
+                    style: TextStyle(
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 3
+                        ..color = Colors.black,
+                    ),
+                  ),
+                  Text(
+                    code,
+                    style: TextStyle(
+                      color: primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -1591,15 +2682,15 @@ class _SmartImage extends StatelessWidget {
 }
 
 class RandomLoadoutScreen extends StatefulWidget {
-  const RandomLoadoutScreen({super.key});
+  final ThemeController themeController;
+  const RandomLoadoutScreen({super.key, required this.themeController});
 
   @override
   State<RandomLoadoutScreen> createState() => _RandomLoadoutScreenState();
 }
 
 class _RandomLoadoutScreenState extends State<RandomLoadoutScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _pulseController;
-  late Animation<double> _pulseAnimation;
+
   final Random _rng = Random(); 
   
   List<dynamic> _allWeaponData = [];
@@ -1609,8 +2700,6 @@ class _RandomLoadoutScreenState extends State<RandomLoadoutScreen> with SingleTi
   int _amount = 1;
   List<Map<String, dynamic>> _generatedLoadouts = [];
   String _selectedMode = 'WARZONE';
-
-  // --- EXCLUSION ZONE STATE ---
   bool _isExclusionZoneActive = false;
   List<String> _excludedGames = [];
   final List<String> _gameKeys = ["MW2", "MW3", "BO6", "BO7", "CW", "MW19"];
@@ -1618,17 +2707,10 @@ class _RandomLoadoutScreenState extends State<RandomLoadoutScreen> with SingleTi
   @override
   void initState() {
     super.initState();
-    _pulseController = AnimationController(duration: const Duration(seconds: 2), vsync: this)..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(_pulseController);
     _loadSettings();
     _loadCADData();
   }
 
-  @override
-  void dispose() {
-    _pulseController.dispose();
-    super.dispose();
-  }
 
   Future<void> _loadSettings() async {
   final prefs = await SharedPreferences.getInstance();
@@ -1687,7 +2769,7 @@ Future<void> _saveSettings() async {
   void _generate() {
     if (!_isRandomWeapon && _selectedWeapon == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("PLEASE SELECT A WEAPON SYSTEM", style: TextStyle(fontFamily: 'Bungee', fontSize: 10)))
+      SnackBar(content: Text("PLEASE SELECT A WEAPON SYSTEM", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, fontSize: 10)))
       );
       return;
     }
@@ -1698,11 +2780,10 @@ Future<void> _saveSettings() async {
     List<Map<String, dynamic>> tempResults = [];
     final int timestamp = DateTime.now().millisecondsSinceEpoch;
 
-    // --- STEP 1: APPLY MODE FILTER + EXCLUSION ZONE ---
     List<dynamic> allowedPool = _allWeaponData.where((w) {
       String url = (w['game_image'] ?? "").toString().toUpperCase();
       
-      // EXCLUSION ZONE LOGIC
+
       if (_isExclusionZoneActive && _excludedGames.isNotEmpty) {
         bool isExcluded = _excludedGames.any((game) => url.contains(game.toUpperCase()));
         if (isExcluded) return false;
@@ -1718,7 +2799,7 @@ Future<void> _saveSettings() async {
 
     if (allowedPool.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("CRITICAL ERROR: EXCLUSION ZONE EMPTY", style: TextStyle(fontFamily: 'Bungee', fontSize: 10, color: Colors.redAccent)))
+      SnackBar(content: Text("CRITICAL ERROR: EXCLUSION ZONE EMPTY", style: TextStyle(fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, fontSize: 10, color: Colors.redAccent)))
       );
       return;
     }
@@ -1776,135 +2857,201 @@ Future<void> _saveSettings() async {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0D0D0D),
-      appBar: AppBar(
+Widget build(BuildContext context) {
+  return ListenableBuilder(
+    listenable: widget.themeController,
+    builder: (context, _) {
+      final theme = Theme.of(context);
+      final activeTheme = widget.themeController.activeTheme;
+
+      return Scaffold(
+        backgroundColor: theme.colorScheme.surface, 
+        appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text("MODULE: RANDOMIZER", style: TextStyle(fontFamily: 'Bungee', fontSize: 14, color: Colors.cyanAccent)),
-        leading: IconButton(icon: const Icon(Icons.arrow_back_ios, color: Colors.cyanAccent, size: 16), onPressed: () => Navigator.pop(context)),
+        centerTitle: true,
+        title: Stack(
+          children: [
+            Text(
+              "MODULE: RANDOMIZER", 
+              style: TextStyle(
+                fontFamily: 'Days One', 
+                fontSize: 14, 
+                letterSpacing: 1.5,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2.0
+                  ..color = Colors.black,
+              )
+            ),
+            Text(
+              "MODULE: RANDOMIZER", 
+              style: TextStyle(
+                fontFamily: 'Days One', 
+                fontSize: 14, 
+                color: theme.colorScheme.primary,
+                letterSpacing: 1.5,
+              )
+            ),
+          ],
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: theme.colorScheme.primary, size: 16), 
+          onPressed: () => Navigator.pop(context)
+        ),
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              _buildStatusHeader(),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  children: [
-                    _buildControlTile(
-                      "EXCLUSION ZONE", 
-                      Switch(
-                        value: _isExclusionZoneActive, 
-                        activeColor: Colors.amberAccent, 
-                        onChanged: (v) {
-                          setState(() => _isExclusionZoneActive = v);
-                          _saveSettings();
-                        }
-                      )
-                    ),
 
-                    if (_isExclusionZoneActive) _buildExclusionDropdown(),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                _buildStatusHeader(theme),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    children: [
+                      _buildControlTile(
+                        "EXCLUSION ZONE", 
+                        Switch(
+                          value: _isExclusionZoneActive, 
+                          activeColor: Colors.amberAccent, 
+                          onChanged: (v) {
+                            setState(() => _isExclusionZoneActive = v);
+                            _saveSettings();
+                          }
+                        ),
+                        theme
+                      ),
 
-                    const SizedBox(height: 10),
-                    _buildControlTile("RANDOM WEAPON", Switch(value: _isRandomWeapon, activeColor: Colors.cyanAccent, onChanged: (v) => setState(() => _isRandomWeapon = v))),
-                    
-                    if (!_isRandomWeapon) ...[
+                      if (_isExclusionZoneActive) _buildExclusionDropdown(theme),
+
                       const SizedBox(height: 10),
-                      Autocomplete<String>(
-                        optionsBuilder: (val) {
-                          if (val.text.isEmpty) return const Iterable<String>.empty();
-                          return _weaponNames.where((s) => s.toLowerCase().contains(val.text.toLowerCase()));
-                        },
-                        onSelected: (s) => setState(() => _selectedWeapon = s),
-                        fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
-                          return TextField(
-                            controller: controller, focusNode: focusNode,
-                            style: const TextStyle(color: Colors.white, fontSize: 12),
-                            decoration: _inputDecoration("SEARCH ARMORY...").copyWith(
-                              suffixIcon: controller.text.isNotEmpty ? IconButton(icon: const Icon(Icons.close, size: 16), onPressed: () => controller.clear()) : const Icon(Icons.search, size: 16),
-                            ),
-                          );
-                        },
-                        optionsViewBuilder: (context, onSelected, options) {
-                          return Align(
-                            alignment: Alignment.topLeft,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width - 40,
-                                decoration: BoxDecoration(color: const Color(0xFF111111), borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.white10)),
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero, shrinkWrap: true, itemCount: options.length,
-                                  itemBuilder: (context, index) {
-                                    final option = options.elementAt(index);
-                                    final weaponData = _allWeaponData.firstWhere((w) => w['weapon_name'] == option);
-                                    String url = (weaponData['game_image'] ?? "").toString().toUpperCase();
-                                    
-                                    bool isBlocked = _isExclusionZoneActive && _excludedGames.any((game) => url.contains(game.toUpperCase()));
+                      _buildControlTile(
+                        "RANDOM WEAPON", 
+                        Switch(
+                          value: _isRandomWeapon, 
+                          activeColor: theme.colorScheme.primary, 
+                          onChanged: (v) => setState(() => _isRandomWeapon = v)
+                        ),
+                        theme
+                      ),
+                      
+                      if (!_isRandomWeapon) ...[
+                        const SizedBox(height: 10),
+                        Autocomplete<String>(
+                          optionsBuilder: (val) {
+                            if (val.text.isEmpty) return const Iterable<String>.empty();
+                            return _weaponNames.where((s) => s.toLowerCase().contains(val.text.toLowerCase()));
+                          },
+                          onSelected: (s) => setState(() => _selectedWeapon = s),
+                          fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                            return TextField(
+                              controller: controller, 
+                              focusNode: focusNode,
+                              style: const TextStyle(color: Colors.white, fontSize: 12),
+                              decoration: _inputDecoration("SEARCH ARMORY...", theme).copyWith(
+                                suffixIcon: controller.text.isNotEmpty 
+                                  ? IconButton(icon: const Icon(Icons.close, size: 16), onPressed: () => controller.clear()) 
+                                  : const Icon(Icons.search, size: 16),
+                              ),
+                            );
+                          },
+                          optionsViewBuilder: (context, onSelected, options) {
+                            return Align(
+                              alignment: Alignment.topLeft,
+                              child: Material(
+                                color: Colors.transparent,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width - 40,
+                                  decoration: BoxDecoration(
+                                    color: theme.colorScheme.surface.withOpacity(0.95), 
+                                    borderRadius: BorderRadius.circular(8), 
+                                    border: Border.all(color: Colors.white10)
+                                  ),
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.zero, 
+                                    shrinkWrap: true, 
+                                    itemCount: options.length,
+                                    itemBuilder: (context, index) {
+                                      final option = options.elementAt(index);
 
-                                    return ListTile(
-                                      title: Text(option, style: TextStyle(color: isBlocked ? Colors.white24 : Colors.white, fontSize: 12)),
-                                      subtitle: isBlocked ? const Text("LOCKED: EXCLUSION ZONE", style: TextStyle(color: Colors.amberAccent, fontSize: 8, fontFamily: 'Bungee')) : null,
-                                      trailing: isBlocked ? const Icon(Icons.lock_outline, color: Colors.amberAccent, size: 14) : null,
-                                      onTap: isBlocked ? null : () => onSelected(option),
-                                    );
-                                  },
+                                      return ListTile(
+                                        title: Text(option, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                                        onTap: () => onSelected(option),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ] else _buildLockedSearchTile(),
+                            );
+                          },
+                        ),
+                      ] else _buildLockedSearchTile(theme),
 
-                    const SizedBox(height: 10),
-                    _buildControlTile("GAME MODE", _buildModeDropdown()),
-                    const SizedBox(height: 10),
-                    _buildControlTile("QUANTITY", _buildQuantityDropdown()),
-                    const SizedBox(height: 30),
-                    _buildInitializeButton(),
-                    const SizedBox(height: 30),
-                    ..._generatedLoadouts.map((loadout) => GlitchedResultCard(key: ValueKey(loadout['id']), loadout: loadout)),
-                  ],
+                      const SizedBox(height: 10),
+                      _buildControlTile("GAME MODE", _buildModeDropdown(), theme),
+                      const SizedBox(height: 10),
+                      _buildControlTile("QUANTITY", _buildQuantityDropdown(), theme),
+                      const SizedBox(height: 30),
+                      
+                      _buildInitializeButton(activeTheme, theme), 
+                      
+                      const SizedBox(height: 30),
+                      ..._generatedLoadouts.map((loadout) => GlitchedResultCard(key: ValueKey(loadout['id']), loadout: loadout)),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          _buildScanlines(),
-        ],
-      ),
-    );
-  }
+              ],
+            ),
 
-  // --- UI COMPONENTS ---
+            _buildScanlines(),
+          ],
+        ),
+      );
+    }
+  );
+}
 
-  Widget _buildStatusHeader() {
+Widget _buildStatusHeader(ThemeData theme) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Column(
       children: [
-        // BOX 1: SYSTEM READY
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.cyanAccent.withOpacity(0.05),
-            border: Border.all(color: Colors.cyanAccent.withOpacity(0.2)),
+            color: theme.colorScheme.primary.withOpacity(0.05),
+            border: Border.all(color: theme.colorScheme.primary.withOpacity(0.2)),
             borderRadius: BorderRadius.circular(8)
           ),
           child: Row(
             children: [
-              FadeTransition(opacity: _pulseAnimation, child: const Icon(Icons.bolt, color: Colors.cyanAccent, size: 20)),
+              Icon(Icons.bolt, color: theme.colorScheme.primary, size: 20),
               const SizedBox(width: 12),
-              const Text("SYSTEM READY: SELECT PARAMETERS", style: TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 10)),
+              Stack(
+                children: [
+                  Text(
+                    "SYSTEM READY: SELECT PARAMETERS", 
+                    style: TextStyle(
+                      fontFamily: 'Days One', 
+                      fontSize: 10,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 1.5
+                        ..color = Colors.black,
+                    )
+                  ),
+                  Text(
+                    "SYSTEM READY: SELECT PARAMETERS", 
+                    style: TextStyle(fontFamily: 'Days One', color: theme.colorScheme.primary, fontSize: 10)
+                  ),
+                ],
+              ),
             ],
           ),
         ),
         
-        // BOX 2: EXCLUSION ZONE (With Allowed Games readout)
         if (_isExclusionZoneActive) ...[
           const SizedBox(height: 8),
           Container(
@@ -1923,12 +3070,16 @@ Future<void> _saveSettings() async {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        const Text("EXCLUSION ZONE: ACTIVE", style: TextStyle(fontFamily: 'Bungee', color: Colors.amberAccent, fontSize: 10)),
+                        Stack(
+                          children: [
+                            Text("EXCLUSION ZONE: ACTIVE", style: TextStyle(fontFamily: 'Days One', fontSize: 10, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 1.5..color = Colors.black)),
+                            const Text("EXCLUSION ZONE: ACTIVE", style: TextStyle(fontFamily: 'Days One', color: Colors.amberAccent, fontSize: 10)),
+                          ],
+                        ),
                         const Text("  |  ", style: TextStyle(color: Colors.white24, fontSize: 10)),
-                        const Text("ALLOWED: ", style: TextStyle(fontFamily: 'Bungee', color: Colors.white38, fontSize: 10)),
                         Text(
                           (_gameKeys.where((g) => !_excludedGames.contains(g)).toList()..sort()).join(" | "),
-                          style: const TextStyle(fontFamily: 'Bungee', color: Colors.cyanAccent, fontSize: 10),
+                          style: TextStyle(fontFamily: 'Days One', color: theme.colorScheme.primary, fontSize: 10),
                         ),
                       ],
                     ),
@@ -1943,83 +3094,87 @@ Future<void> _saveSettings() async {
   );
 }
 
-  Widget _buildExclusionDropdown() {
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.amberAccent.withOpacity(0.02),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
-        borderRadius: BorderRadius.circular(8)
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text("GAMES TO EXCLUDE", style: TextStyle(color: Colors.white38, fontFamily: 'Bungee', fontSize: 10)),
-          PopupMenuButton<String>(
-            onSelected: (String game) {
-              setState(() {
-                if (_excludedGames.contains(game)) {
-                  _excludedGames.remove(game);
-                } else {
-                  _excludedGames.add(game);
-                }
-                _excludedGames.sort();
-              });
-              _saveSettings();
-            },
-            itemBuilder: (context) {
-              List<String> alphabetizedKeys = List.from(_gameKeys)..sort();
-              return alphabetizedKeys.map((game) {
-                return CheckedPopupMenuItem(
-                  value: game,
-                  checked: _excludedGames.contains(game),
-                  child: Text(game, style: const TextStyle(color: Colors.white, fontSize: 12)),
-                );
-              }).toList();
-            },
-
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(border: Border.all(color: Colors.white10), borderRadius: BorderRadius.circular(4)),
-              child: Text(
-                _excludedGames.isEmpty ? "SELECT" : (_excludedGames..sort()).join(" | "),
-                style: const TextStyle(color: Colors.amberAccent, fontSize: 10, fontFamily: 'Bungee'),
-              ),
+  Widget _buildExclusionDropdown(ThemeData theme) {
+  return Container(
+    margin: const EdgeInsets.only(top: 5),
+    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    decoration: BoxDecoration(
+      color: Colors.amberAccent.withOpacity(0.02),
+      border: Border.all(color: Colors.white.withOpacity(0.05)),
+      borderRadius: BorderRadius.circular(8)
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text("GAMES TO EXCLUDE", style: TextStyle(color: Colors.white38, fontFamily: 'Days One', fontSize: 10)),
+        PopupMenuButton<String>(
+          color: theme.colorScheme.surface,
+          onSelected: (String game) {
+            setState(() {
+              if (_excludedGames.contains(game)) {
+                _excludedGames.remove(game);
+              } else {
+                _excludedGames.add(game);
+              }
+              _excludedGames.sort();
+            });
+            _saveSettings();
+          },
+          itemBuilder: (context) {
+            List<String> alphabetizedKeys = List.from(_gameKeys)..sort();
+            return alphabetizedKeys.map((game) {
+              return CheckedPopupMenuItem(
+                value: game,
+                checked: _excludedGames.contains(game),
+                child: Text(game, style: const TextStyle(color: Colors.white, fontSize: 12)),
+              );
+            }).toList();
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(border: Border.all(color: Colors.white10), borderRadius: BorderRadius.circular(4)),
+            child: Text(
+              _excludedGames.isEmpty ? "SELECT" : (_excludedGames..sort()).join(" | "),
+              style: TextStyle(color: Colors.amberAccent, fontSize: 10, fontFamily: 'Days One'),
             ),
-          )],
-      ),
-    );
-  }
+          ),
+        )
+      ],
+    ),
+  );
+}
 
-  Widget _buildControlTile(String label, Widget trailing) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.05)))),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(label, style: const TextStyle(color: Colors.white38, fontFamily: 'Bungee', fontSize: 10)),
+Widget _buildControlTile(String label, Widget trailing, ThemeData theme) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+    decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.05)))),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+      children: [
+        Stack(
+          children: [
+            Text(label, style: TextStyle(fontFamily: 'Days One', fontSize: 10, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 1.5..color = Colors.black)),
+            Text(label, style: const TextStyle(color: Colors.white38, fontFamily: 'Days One', fontSize: 10)),
+          ],
+        ),
         trailing,
-      ]),
-    );
-  }
+      ]
+    ),
+  );
+}
 
-  InputDecoration _inputDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white24, fontSize: 10),
-      filled: true,
-      fillColor: Colors.white.withOpacity(0.02),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.cyanAccent),
-        borderRadius: BorderRadius.circular(8),
-      ),
-    );
-  }
+  InputDecoration _inputDecoration(String hint, ThemeData theme) {
+  return InputDecoration(
+    hintText: hint,
+    hintStyle: const TextStyle(color: Colors.white24, fontSize: 10),
+    filled: true,
+    fillColor: theme.colorScheme.surface,
+    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.white10)),
+    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.white10)),
+    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: theme.colorScheme.primary.withOpacity(0.5))),
+  );
+}
 
   Widget _buildModeDropdown() {
     return DropdownButton<String>(
@@ -2027,7 +3182,7 @@ Future<void> _saveSettings() async {
       onChanged: (v) => setState(() => _selectedMode = v!),
       dropdownColor: const Color(0xFF0D0D0D),
       underline: const SizedBox(),
-      items: ['WARZONE', 'MULTIPLAYER'].map((mode) => DropdownMenuItem(value: mode, child: Text(mode, style: const TextStyle(color: Colors.cyanAccent, fontSize: 12, fontFamily: 'Bungee')))).toList(),
+      items: ['WARZONE', 'MULTIPLAYER'].map((mode) => DropdownMenuItem(value: mode, child: Text(mode, style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12, fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily)))).toList(),
     );
   }
 
@@ -2037,29 +3192,92 @@ Future<void> _saveSettings() async {
       onChanged: (v) => setState(() => _amount = v!),
       dropdownColor: const Color(0xFF0D0D0D),
       underline: const SizedBox(),
-      items: List.generate(10, (i) => i + 1).map((e) => DropdownMenuItem(value: e, child: Text("$e", style: const TextStyle(color: Colors.cyanAccent)))).toList(),
+      items: List.generate(10, (i) => i + 1).map((e) => DropdownMenuItem(value: e, child: Text("$e", style: TextStyle(color: Theme.of(context).colorScheme.primary)))).toList(),
     );
   }
 
-  Widget _buildInitializeButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: _generate,
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.cyanAccent, foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 15), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-        child: const Text("INITIALIZE", style: TextStyle(fontFamily: 'Bungee', letterSpacing: 2)),
+Widget _buildInitializeButton(ArmoryTheme activeTheme, ThemeData theme) {
+  Widget button = SizedBox(
+    width: double.infinity,
+    child: ElevatedButton(
+      onPressed: _generate,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
+      child: Stack(
+        children: [
+          Text(
+            "INITIALIZE",
+            style: TextStyle(
+              fontFamily: 'Days One', 
+              letterSpacing: 2,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 2.6
+                ..color = Colors.black,
+            ),
+          ),
+          const Text(
+            "INITIALIZE",
+            style: TextStyle(fontFamily: 'Days One', color: Colors.white, letterSpacing: 2),
+          ),
+        ],
+    ),
+  ),
+  );
+
+  if (activeTheme.isHolographic) {
+    return _InternalAnimatedBorder(
+      colors: activeTheme.refractionColors.isNotEmpty 
+          ? activeTheme.refractionColors 
+          : activeTheme.borderGradient,
+      child: button,
     );
   }
 
-  Widget _buildLockedSearchTile() {
-    return Container(
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.02), border: Border.all(color: Colors.white10), borderRadius: BorderRadius.circular(8)),
-      child: const Row(children: [Icon(Icons.lock_outline, color: Colors.white38, size: 14), SizedBox(width: 10), Text("SEARCH LOCKED: RANDOM MODE ACTIVE", style: TextStyle(color: Colors.white38, fontSize: 9, fontFamily: 'Bungee'))]),
-    );
-  }
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(
+        color: activeTheme.borderGradient.isNotEmpty 
+            ? activeTheme.borderGradient.first 
+            : theme.colorScheme.primary,
+        width: 2,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: (activeTheme.borderGradient.isNotEmpty 
+              ? activeTheme.borderGradient.first 
+              : theme.colorScheme.primary).withOpacity(0.2),
+          blurRadius: 8,
+        )
+      ],
+    ),
+    child: button,
+  );
+}
+
+  Widget _buildLockedSearchTile(ThemeData theme) {
+  return Container(
+    margin: const EdgeInsets.only(top: 10),
+    padding: const EdgeInsets.all(15),
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.02), 
+      border: Border.all(color: Colors.white10), 
+      borderRadius: BorderRadius.circular(8)
+    ),
+    child: Row(
+      children: [
+        Icon(Icons.lock_outline, color: theme.colorScheme.primary.withOpacity(0.5), size: 14), 
+        const SizedBox(width: 10), 
+        const Text("SEARCH LOCKED: RANDOM MODE ACTIVE", style: TextStyle(color: Colors.white38, fontSize: 9, fontFamily: 'Days One'))
+      ]
+    ),
+  );
+}
 
   Widget _buildScanlines() {
     return IgnorePointer(
@@ -2101,21 +3319,21 @@ class _AegisGlitchEffectState extends State<AegisGlitchEffect> {
     if (!_isGlitching) return widget.child;
 
     return StreamBuilder(
-      stream: Stream.periodic(const Duration(milliseconds: 40)), // Slightly faster jitter
+      stream: Stream.periodic(const Duration(milliseconds: 40)),
       builder: (context, snapshot) {
         return Stack(
           children: [
-            // Ghost Layer 1
+
             Transform.translate(
               offset: Offset(_random.nextDouble() * 6 - 3, _random.nextDouble() * 2 - 1),
               child: Opacity(opacity: 0.4, child: widget.child),
             ),
-            // Ghost Layer 2
+
             Transform.translate(
               offset: Offset(_random.nextDouble() * -6 + 3, _random.nextDouble() * -2 + 1),
               child: Opacity(opacity: 0.2, child: widget.child),
             ),
-            // The Stable Base (stays dark)
+
             widget.child,
           ],
         );
@@ -2138,81 +3356,123 @@ class _GlitchedResultCardState extends State<GlitchedResultCard> {
   @override
   void initState() {
     super.initState();
-    // Wait for the jitter to stabilize before showing text
+
     Future.delayed(const Duration(milliseconds: 400), () {
       if (mounted) setState(() => _showText = true);
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AegisGlitchEffect(
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.02),
-          border: Border.all(color: Colors.cyanAccent.withOpacity(0.3)),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // WEAPON NAME FADE
-            AnimatedOpacity(
-              opacity: _showText ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 300),
-              child: Text(
-                widget.loadout['name'].toString().toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.cyanAccent,
-                  fontFamily: 'Bungee',
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            
-            // STABLE DIVIDER (Does not fade, jitters with the box)
-            const Divider(color: Colors.white10), 
-            
-            const SizedBox(height: 10),
+Widget build(BuildContext context) {
+  final primaryColor = Theme.of(context).colorScheme.primary;
+  final bodyFont = Theme.of(context).textTheme.bodyLarge?.fontFamily;
 
-            // ATTACHMENTS FADE
-            AnimatedOpacity(
-              opacity: _showText ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 500), // Slightly slower for effect
-              child: Column(
-                children: widget.loadout['attachments'].entries.map<Widget>((e) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.chevron_right, color: Colors.cyanAccent, size: 14),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              "${e.key}:",
-                              style: const TextStyle(
-                                color: Colors.white38,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
+  return AegisGlitchEffect(
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.02),
+        border: Border.all(color: primaryColor.withOpacity(0.3)),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          AnimatedOpacity(
+            opacity: _showText ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 300),
+            child: Stack(
+              children: [
+                Text(
+                  widget.loadout['name'].toString().toUpperCase(),
+                  style: TextStyle(
+                    fontFamily: bodyFont,
+                    fontSize: 18,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 3.0
+                      ..color = Colors.black,
+                  ),
+                ),
+                Text(
+                  widget.loadout['name'].toString().toUpperCase(),
+                  style: TextStyle(
+                    color: primaryColor,
+                    fontFamily: bodyFont,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          const SizedBox(height: 10),
+          const Divider(color: Colors.white10), 
+          const SizedBox(height: 10),
+
+          AnimatedOpacity(
+            opacity: _showText ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 500),
+            child: Column(
+              children: widget.loadout['attachments'].entries.map<Widget>((e) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        Icon(Icons.chevron_right, color: primaryColor, size: 14),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              Text(
+                                "${e.key}:",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  foreground: Paint()
+                                    ..style = PaintingStyle.stroke
+                                    ..strokeWidth = 1.5
+                                    ..color = Colors.black,
+                                ),
+                              ),
+                              Text(
+                                "${e.key}:",
+                                style: const TextStyle(
+                                  color: Colors.white38,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Stack(
+                          children: [
+                            Text(
+                              e.value,
+                              style: TextStyle(
+                                fontSize: 11,
+                                foreground: Paint()
+                                  ..style = PaintingStyle.stroke
+                                  ..strokeWidth = 1.5
+                                  ..color = Colors.black,
                               ),
                             ),
-                          ),
-                          Text(
-                            e.value,
-                            style: const TextStyle(color: Colors.white, fontSize: 11),
-                          ),
-                        ],
-                      ),
-                    )).toList(),
-              ),
+                            Text(
+                              e.value,
+                              style: const TextStyle(color: Colors.white, fontSize: 11),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )).toList(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _CombatRatingDisplay extends StatelessWidget {
@@ -2221,7 +3481,6 @@ class _CombatRatingDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If no stats or no rating, render nothing
     if (stats == null || stats!.combatRating == null) return const SizedBox.shrink();
 
     return Column(
@@ -2249,38 +3508,35 @@ class _CombatRatingBox extends StatelessWidget {
     }
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
     final color = _getRatingColor(rating.label);
     return Container(
-      // 1. Remove horizontal margin to match the edge-to-edge look of other boxes
       margin: const EdgeInsets.symmetric(vertical: 8), 
-      // 2. Consistent padding
       padding: const EdgeInsets.all(16), 
       decoration: BoxDecoration(
         color: color.withOpacity(0.05),
-        // 3. Match your standard border radius (usually 4 or 6 in your file)
         borderRadius: BorderRadius.circular(6), 
         border: Border.all(color: color.withOpacity(0.2), width: 1),
       ),
       child: Row(
         children: [
           Container(
-            // 4. Fixed width/height container for the letter ensures alignment
             width: 45,
             height: 45,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(4),
+              boxShadow: [
+                BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 4, spreadRadius: 1)
+              ]
             ),
             child: Text(
               rating.label,
               style: const TextStyle(
                 color: Colors.black, 
-                fontWeight: FontWeight.bold, 
-                fontSize: 24, // Slightly larger to fill the 45x45 box
-                fontFamily: 'Bungee'
+                fontSize: 24, 
               ),
             ),
           ),
@@ -2290,24 +3546,52 @@ class _CombatRatingBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "COMBAT RATING", 
-                  style: TextStyle(
-                    color: color.withOpacity(0.8), 
-                    fontSize: 9, 
-                    fontWeight: FontWeight.w900, // Matching the 'heavy' look of your app
-                    letterSpacing: 1.2
-                  )
+                Stack(
+                  children: [
+                    Text(
+                      "COMBAT RATING",
+                      style: TextStyle(
+                        fontSize: 9,
+                        letterSpacing: 1.2,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 3
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      "COMBAT RATING",
+                      style: TextStyle(
+                        color: color.withOpacity(0.8),
+                        fontSize: 9,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  rating.description,
-                  style: const TextStyle(
-                    color: Colors.white, // White text is easier to read than colored opacities
-                    fontSize: 11, 
-                    fontWeight: FontWeight.w500,
-                    height: 1.3 // Adds a bit of breathing room to the text
-                  ),
+                Stack(
+                  children: [
+                    Text(
+                      rating.description,
+                      style: TextStyle(
+                        fontSize: 11,
+                        height: 1.3,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 3
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      rating.description,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        height: 1.3,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -2326,7 +3610,6 @@ class AugmentItem {
 
   AugmentItem({required this.name, required this.image, required this.minor, required this.major});
 
-  // Factory to handle the different JSON keys
   factory AugmentItem.fromJson(Map<String, dynamic> json) {
     return AugmentItem(
       name: (json['perk'] ?? json['upgrade'] ?? json['augment']).toString().toUpperCase(),
@@ -2409,81 +3692,109 @@ class _AugmentTreeScreenState extends State<AugmentTreeScreen> {
   }
 }
 
-  Widget _buildCategorySelector() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      child: Row(
-        children: ["PERKS", "AMMO MODS", "FIELD UPGRADES"].map((cat) {
-          bool isActive = activeCategory == cat;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                HapticFeedback.mediumImpact();
-                setState(() => activeCategory = cat);
-                _loadData();
-                // Reset carousel to first item when switching categories
-                _pageController.jumpToPage(0);
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 4),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.05),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: isActive ? Colors.cyanAccent : Colors.white10, 
-                    width: isActive ? 2 : 1
-                  ),
-                  boxShadow: isActive ? [
-                    BoxShadow(
-                      color: Colors.cyanAccent.withOpacity(0.2), 
-                      blurRadius: 8
-                    )
-                  ] : [],
+Widget _buildCategorySelector() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+    child: Row(
+      children: ["PERKS", "AMMO MODS", "FIELD UPGRADES"].map((cat) {
+        bool isActive = activeCategory == cat;
+        return Expanded(
+          child: GestureDetector(
+            onTap: () {
+              HapticFeedback.mediumImpact();
+              setState(() => activeCategory = cat);
+              _loadData();
+              _pageController.jumpToPage(0);
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: isActive ? Theme.of(context).colorScheme.primary : Colors.white10, 
+                  width: isActive ? 2 : 1
                 ),
-                child: Center(
-                  child: Text(
-                    cat, 
-                    style: TextStyle(
-                      color: isActive ? Colors.cyanAccent : Colors.white38, 
-                      fontSize: 10, 
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1
-                    )
-                  ),
+              ),
+              child: Center(
+                child: Stack(
+                  children: [
+                    Text(
+                      cat, 
+                      style: TextStyle(
+                        fontSize: 10, 
+                        letterSpacing: 1,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 3
+                          ..color = Colors.black,
+                      )
+                    ),
+                    Text(
+                      cat, 
+                      style: TextStyle(
+                        color: isActive ? Theme.of(context).colorScheme.primary : Colors.white38, 
+                        fontSize: 10, 
+                        letterSpacing: 1
+                      )
+                    ),
+                  ],
                 ),
               ),
             ),
-          );
-        }).toList(),
-      ),
-    );
-  }
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("AUGMENT TREE", style: TextStyle(fontFamily: 'Bungee', fontSize: 18)),
-        backgroundColor: Colors.black,
-        elevation: 0,
+      centerTitle: true,
+      title: Stack(
+        children: [
+          Text(
+            "AUGMENT TREE", 
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+              fontSize: 18,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3
+                ..color = Colors.black,
+            )
+          ),
+          Text(
+            "AUGMENT TREE", 
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+              fontSize: 18, 
+              color: Colors.white
+            )
+          ),
+        ],
       ),
+      backgroundColor: Colors.black,
+      elevation: 0,
+    ),
       body: Column(
         children: [
-          // The Row Selector remains the same as before...
+
           _buildCategorySelector(),
 
           Expanded(
             child: isLoading 
-              ? const Center(child: CircularProgressIndicator(color: Colors.cyanAccent))
+              ? Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary))
               : PageView.builder(
                   controller: _pageController,
                   physics: const BouncingScrollPhysics(),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
-                    // CALCULATE SCALE
-                    // 1.0 is full size, 0.85 is the "shrunk" side size
                     double scale = 0.85;
                     if (index == _currPageValue.floor()) {
                       scale = 1.0 - (_currPageValue - index) * (1 - 0.85);
@@ -2540,15 +3851,35 @@ class _AugmentCard extends StatelessWidget {
     };
   }
 
-  Widget _renderAugmentText(String text, TextStyle baseStyle) {
-    if (!text.contains("[OR]")) return Text(text, style: baseStyle);
+Widget _renderAugmentText(String text, TextStyle baseStyle) {
+    Widget buildStrokedText(String content) {
+      return Stack(
+        children: [
+          Text(
+            content.trim(),
+            style: baseStyle.copyWith(
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 3
+                ..color = Colors.black,
+            ),
+          ),
+          Text(
+            content.trim(),
+            style: baseStyle,
+          ),
+        ],
+      );
+    }
+
+    if (!text.contains("[OR]")) return buildStrokedText(text);
 
     List<String> segments = text.split("[OR]");
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         for (int i = 0; i < segments.length; i++) ...[
-          Text(segments[i].trim(), style: baseStyle),
+          buildStrokedText(segments[i]),
           if (i < segments.length - 1)
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -2558,7 +3889,10 @@ class _AugmentCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: Colors.white24, width: 0.5),
               ),
-              child: const Text("OR", style: TextStyle(color: Colors.white38, fontSize: 8, fontWeight: FontWeight.bold)),
+              child: const Text(
+                "OR", 
+                style: TextStyle(color: Colors.white38, fontSize: 8)
+              ),
             ),
         ]
       ],
@@ -2566,79 +3900,108 @@ class _AugmentCard extends StatelessWidget {
   }
 
   Widget _buildStandardBox(String title, String content, Color color) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: color.withOpacity(0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 9, letterSpacing: 1.5)),
-          const SizedBox(height: 8),
-          _renderAugmentText(content, const TextStyle(color: Colors.white, fontSize: 12, height: 1.4, fontWeight: FontWeight.w500)),
-        ],
-      ),
+  return Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(bottom: 12),
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: color.withOpacity(0.05),
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: color.withOpacity(0.2)),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            Text(title, style: TextStyle(fontSize: 9, letterSpacing: 1.5, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 2..color = Colors.black)),
+            Text(title, style: TextStyle(color: color, fontSize: 9, letterSpacing: 1.5)),
+          ],
+        ),
+        const SizedBox(height: 8),
+        _renderAugmentText(content, const TextStyle(color: Colors.white, fontSize: 12, height: 1.4)),
+      ],
+    ),
+  );
+}
+
+Widget _buildBO7Box(Map<String, dynamic> minor, Map<String, dynamic> major) {
+  bool hasMinorBO7 = minor['bo7'] != null;
+  bool hasMajorBO7 = major['bo7'] != null;
+  if (!hasMinorBO7 && !hasMajorBO7) return const SizedBox.shrink();
+
+  Widget buildSubLabel(String label) {
+    return Stack(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 8,
+            letterSpacing: 0.5,
+            foreground: Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 1.6
+              ..color = Colors.black,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.amberAccent.withOpacity(0.5), 
+            fontSize: 8,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildBO7Box(Map<String, dynamic> minor, Map<String, dynamic> major) {
-    bool hasMinorBO7 = minor['bo7'] != null;
-    bool hasMajorBO7 = major['bo7'] != null;
-
-    if (!hasMinorBO7 && !hasMajorBO7) return const SizedBox.shrink();
-
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 10),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.amberAccent.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.amberAccent.withOpacity(0.3), width: 1),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Row(
-            children: [
-              Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 14),
-              SizedBox(width: 8),
-              Text("BO7 ONLY", style: TextStyle(color: Colors.amberAccent, fontWeight: FontWeight.bold, fontSize: 10, letterSpacing: 1.2)),
-            ],
-          ),
-          const SizedBox(height: 15),
-          
-          if (hasMinorBO7) ...[
-            Text(
-              minor['isReplacement'] ? "REPLACED IN BO7 BY:" : "ADDITIONAL MINOR SLOT:",
-              style: TextStyle(color: Colors.amberAccent.withOpacity(0.5), fontSize: 8, fontWeight: FontWeight.bold)
+  return Container(
+    width: double.infinity,
+    margin: const EdgeInsets.only(top: 10),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.amberAccent.withOpacity(0.04),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(color: Colors.amberAccent.withOpacity(0.3), width: 1),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 14),
+            const SizedBox(width: 8),
+            Stack(
+              children: [
+                Text("BO7 ONLY", style: TextStyle(fontSize: 10, letterSpacing: 1.2, foreground: Paint()..style = PaintingStyle.stroke..strokeWidth = 2..color = Colors.black)),
+                const Text("BO7 ONLY", style: TextStyle(color: Colors.amberAccent, fontSize: 10, letterSpacing: 1.2)),
+              ],
             ),
-            const SizedBox(height: 4),
-            _renderAugmentText(minor['bo7'], const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
           ],
-
-          if (hasMinorBO7 && hasMajorBO7) const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Divider(color: Colors.amberAccent, thickness: 0.1),
-          ),
-
-          if (hasMajorBO7) ...[
-            Text(
-              major['isReplacement'] ? "REPLACED IN BO7 BY:" : "MAJOR AUGMENT EVOLUTION:",
-              style: TextStyle(color: Colors.amberAccent.withOpacity(0.5), fontSize: 8, fontWeight: FontWeight.bold)
-            ),
-            const SizedBox(height: 4),
-            _renderAugmentText(major['bo7'], const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-          ],
+        ),
+        const SizedBox(height: 15),
+        
+        if (hasMinorBO7) ...[
+          buildSubLabel(minor['isReplacement'] ? "REPLACED IN BO7 BY:" : "ADDITIONAL MINOR AUGMENT SLOT:"),
+          const SizedBox(height: 4),
+          _renderAugmentText(minor['bo7'], const TextStyle(color: Colors.white, fontSize: 12)),
         ],
-      ),
-    );
-  }
+
+        if (hasMinorBO7 && hasMajorBO7) const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Divider(color: Colors.amberAccent, thickness: 0.1),
+        ),
+
+        if (hasMajorBO7) ...[
+          buildSubLabel(major['isReplacement'] ? "REPLACED IN BO7 BY:" : "MAJOR AUGMENT EVOLUTION:"),
+          const SizedBox(height: 4),
+          _renderAugmentText(major['bo7'], const TextStyle(color: Colors.white, fontSize: 12)),
+        ],
+      ],
+    ),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -2660,11 +4023,39 @@ class _AugmentCard extends StatelessWidget {
           children: [
             Center(child: Image.network(item.image, height: 130, fit: BoxFit.contain)),
             const SizedBox(height: 20),
-            Center(child: Text(item.name, textAlign: TextAlign.center, style: const TextStyle(fontFamily: 'Bungee', fontSize: 22, color: Colors.white))),
+            
+            Center(
+              child: Stack(
+                children: [
+                  Text(
+                    item.name.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                      fontSize: 22,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 4
+                        ..color = Colors.black,
+                    ),
+                  ),
+                  Text(
+                    item.name.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                      fontSize: 22, 
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
             const SizedBox(height: 8),
-            Center(child: Container(width: 30, height: 2, color: Colors.cyanAccent)),
+            Center(child: Container(width: 30, height: 2, color: Theme.of(context).colorScheme.primary)),
             const SizedBox(height: 25),
-            _buildStandardBox("MINOR AUGMENT", minorData['base']!, Colors.cyanAccent),
+            _buildStandardBox("MINOR AUGMENT", minorData['base']!, Theme.of(context).colorScheme.primary),
             _buildStandardBox("MAJOR AUGMENT", majorData['base']!, Colors.purpleAccent),
             _buildBO7Box(minorData, majorData),
           ],
@@ -2683,7 +4074,7 @@ class MetaDashboardScreen extends StatefulWidget {
 
 class _MetaDashboardScreenState extends State<MetaDashboardScreen> {
   String activeGame = "BO6";
-  String? activeClass; // Null initially to auto-select first available
+  String? activeClass;
   List<MetaWeapon> allWeapons = [];
   bool isLoading = true;
   final List<String> _preferredClassOrder = [
@@ -2707,44 +4098,37 @@ Future<void> _loadMetaData() async {
   setState(() => isLoading = true);
 
   try {
-    // 1. Load the Weapon Database
+
     final String weaponResponse = await loadHotfixedJson('assets/Weapon_Names_202602160630.json');
     final Map<String, dynamic> weaponData = json.decode(weaponResponse);
     final List<dynamic> weaponList = weaponData['Weapon_Names'] ?? [];
 
-    // 2. Extract Game Logos for fallbacks (SAI/RGL-80)
     String? cwLogo = weaponList.firstWhere((w) => w['weapon_name'].toString().contains('(CW)'), orElse: () => null)?['game_image'];
     String? mw3Logo = weaponList.firstWhere((w) => w['weapon_name'].toString().contains('MW3'), orElse: () => null)?['game_image'];
 
-    // 3. Load the Meta Rankings
     final String metaResponse = await loadHotfixedJson('assets/META_202602160120.json');
     final metaData = json.decode(metaResponse);
 
     setState(() {
       allWeapons = (metaData['META'] as List).map((metaEntry) {
         String rawName = metaEntry['weapon'] ?? "";
-        
-        // --- STEP A: NORMALIZE PREFIXES ---
         String searchName = rawName.replaceFirst('•', '').trim();
+
         searchName = searchName.replaceFirst(RegExp(r'^\d+\.\s*'), '').trim();
 
-        // --- STEP B: HANDLE OUTLIERS & REDIRECTS ---
         if (searchName.toUpperCase() == "MAGNUM") searchName = "MAGNUM (CW)";
         if (searchName.toUpperCase() == "AKIMBO P890") searchName = "P890";
 
-        // --- STEP C: STRIP PRESTIGE & WZ IDENTITY ---
         searchName = searchName.replaceAll('(PRESTIGE)', '').trim();
         if (searchName.contains('SNIPER SUPPORT')) {
           searchName = searchName.split('SNIPER SUPPORT')[0].trim();
         }
 
-        // --- STEP D: PERFORM LOOKUP ---
         dynamic imageEntry = weaponList.firstWhere(
           (w) => w['weapon_name'].toString().trim().toUpperCase() == searchName.toUpperCase(),
           orElse: () => null,
         );
 
-        // --- STEP E: HARDCODED INJECTION (SAI / RGL-80) ---
         if (searchName.toUpperCase() == "SAI") {
           imageEntry = {
             "weapon_image": "https://res.cloudinary.com/dctlpj7fg/image/upload/v1759470886/Sai_HUD_Icon_BOCW_btzutq.png",
@@ -2764,7 +4148,6 @@ Future<void> _loadMetaData() async {
         return MetaWeapon.fromJson(metaEntry, imageEntry);
       }).toList();
 
-      // --- FINAL POLISH: INTELLIGENT CLASS SELECTION ---
       if (allWeapons.any((w) => w.game == activeGame)) {
         final List<String> currentClasses = allWeapons
             .where((w) => w.game == activeGame)
@@ -2772,7 +4155,6 @@ Future<void> _loadMetaData() async {
             .toSet()
             .toList();
 
-        // Check priorities: Warzone Close Range ALWAYS takes the crown
         if (currentClasses.contains("CLOSE RANGE (WZ)")) {
           activeClass = "CLOSE RANGE (WZ)";
         } else if (currentClasses.contains("MULTIPLAYER")) {
@@ -2816,16 +4198,40 @@ Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: Colors.black,
     appBar: AppBar(
-      title: const Text("GLOBAL META", style: TextStyle(fontFamily: 'Bungee', fontSize: 16, color: Colors.cyanAccent)),
+      title: Stack(
+        children: [
+          Text(
+            "META PICKS", 
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+              fontSize: 16, 
+              letterSpacing: 1.5,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = 2.5
+                ..color = Colors.black,
+            )
+          ),
+          Text(
+            "META PICKS", 
+            style: TextStyle(
+              fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+              fontSize: 16, 
+              color: Theme.of(context).colorScheme.primary,
+              letterSpacing: 1.5,
+            )
+          ),
+        ],
+      ),
+
       backgroundColor: Colors.black,
       centerTitle: true,
     ),
+
     body: Column(
       children: [
-        // Automatically fetch games from JSON to avoid "MWIII" vs "MW3" naming errors
         _buildGameSelector(allWeapons.map((w) => w.game).toSet().toList()..sort()),
 
-        // Dynamic, Sorted Class Selector
         Container(
           height: 50,
           margin: const EdgeInsets.symmetric(vertical: 10),
@@ -2838,12 +4244,11 @@ Widget build(BuildContext context) {
 
         Expanded(
           child: isLoading 
-            ? const Center(child: CircularProgressIndicator(color: Colors.cyanAccent))
+            ? Center(child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary))
             : PageView.builder(
                 controller: _pageController,
                 itemCount: filteredItems.length,
                 itemBuilder: (context, index) {
-                  // ... Keep existing scale logic for 120Hz smoothness
                   double scale = 0.85;
                   if (index == _currPageValue.floor()) {
                     scale = 1.0 - (_currPageValue - index) * (1 - 0.85);
@@ -2876,60 +4281,93 @@ Widget build(BuildContext context) {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: isActive ? Colors.cyanAccent.withOpacity(0.1) : Colors.white.withOpacity(0.05),
-          border: Border.all(color: isActive ? Colors.cyanAccent : Colors.white10),
+          color: isActive ? Theme.of(context).colorScheme.primary.withOpacity(0.1) : Colors.white.withOpacity(0.05),
+          border: Border.all(color: isActive ? Theme.of(context).colorScheme.primary : Colors.white10),
         ),
         child: Center(
-          child: Text(label, style: TextStyle(color: isActive ? Colors.cyanAccent : Colors.white38, fontSize: 9, fontFamily: 'Bungee')),
+          child: Text(label, style: TextStyle(color: isActive ? Colors.white : Colors.white38, fontSize: 9, fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily)),
         ),
       ),
     );
   }
 
-  Widget _buildGameSelector(List<String> options) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: Row(
-        children: options.map((opt) => Expanded(
-          child: GestureDetector(
-            onTap: () {
-              HapticFeedback.mediumImpact();
-              setState(() {
-                activeGame = opt;
-                
-                // Get all available classes for the NEWLY selected game
-                final List<String> newGameClasses = allWeapons
-                    .where((w) => w.game == opt)
-                    .map((w) => w.classType)
-                    .toSet()
-                    .toList();
+Widget _buildGameSelector(List<String> options) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+    child: Row(
+      children: options.map((opt) => Expanded(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque, 
+          onTap: () {
+            HapticFeedback.mediumImpact();
+            setState(() {
+              activeGame = opt;
+              
+              final List<String> newGameClasses = allWeapons
+                  .where((w) => w.game == opt)
+                  .map((w) => w.classType)
+                  .toSet()
+                  .toList();
 
-                // Re-apply the same priority logic here
-                if (newGameClasses.contains("CLOSE RANGE (WZ)")) {
-                  activeClass = "CLOSE RANGE (WZ)";
-                } else if (newGameClasses.contains("MULTIPLAYER")) {
-                  activeClass = "MULTIPLAYER";
-                } else {
-                  activeClass = newGameClasses.isNotEmpty ? newGameClasses.first : null;
-                }
-              });
-              if (_pageController.hasClients) _pageController.jumpToPage(0);
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              decoration: BoxDecoration(
-                color: activeGame == opt ? Colors.cyanAccent.withOpacity(0.1) : Colors.white.withOpacity(0.05),
-                border: Border.all(color: activeGame == opt ? Colors.cyanAccent : Colors.white10),
-                borderRadius: BorderRadius.circular(8),
+              if (newGameClasses.contains("CLOSE RANGE (WZ)")) {
+                activeClass = "CLOSE RANGE (WZ)";
+              } else if (newGameClasses.contains("MULTIPLAYER")) {
+                activeClass = "MULTIPLAYER";
+              } else {
+                activeClass = newGameClasses.isNotEmpty ? newGameClasses.first : null;
+              }
+            });
+            if (_pageController.hasClients) {
+              _pageController.animateToPage(
+                0, 
+                duration: const Duration(milliseconds: 300), 
+                curve: Curves.easeOut
+              );
+            }
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            decoration: BoxDecoration(
+              color: activeGame == opt 
+                  ? Theme.of(context).colorScheme.primary.withOpacity(0.1) 
+                  : Colors.white.withOpacity(0.05),
+              border: Border.all(
+                color: activeGame == opt 
+                    ? Theme.of(context).colorScheme.primary 
+                    : Colors.white10
               ),
-              child: Center(child: Text(opt, style: TextStyle(color: activeGame == opt ? Colors.cyanAccent : Colors.white38, fontSize: 10, fontWeight: FontWeight.bold))),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Stack(
+                children: [
+                  Text(
+                    opt, 
+                    style: TextStyle(
+                      fontSize: 10, 
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 1.8
+                        ..color = Colors.black
+                    )
+                  ),
+                  Text(
+                    opt, 
+                    style: TextStyle(
+                      color: activeGame == opt ? Colors.white : Colors.white38, 
+                      fontSize: 10
+                    )
+                  ),
+                ],
+              ),
             ),
           ),
-        )).toList(),
-      ),
-    );
-  }
+        ),
+      )).toList(),
+    ),
+  );
+}
 }
 
 class _MetaCard extends StatelessWidget {
@@ -2939,7 +4377,8 @@ class _MetaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isRanked = weapon.rank != null;
-    String cleanName = weapon.name.replaceAll('•', '').replaceAll(RegExp(r'^\d+\.\s?'), '').trim();
+    String cleanName = weapon.name.replaceAll('•', '').replaceAll(RegExp(r'^\d+\.\s?'), '').trim().toUpperCase();
+    final primary = Theme.of(context).colorScheme.primary;
 
     return Stack(
       children: [
@@ -2950,10 +4389,11 @@ class _MetaCard extends StatelessWidget {
             color: const Color(0xFF0D0D0D),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
-              color: isRanked ? Colors.amberAccent.withOpacity(0.3) : Colors.cyanAccent.withOpacity(0.1),
+              color: isRanked ? Colors.amberAccent.withOpacity(0.3) : primary.withOpacity(0.3),
               width: 1.5
             ),
           ),
+
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -2984,41 +4424,98 @@ class _MetaCard extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // RANK BADGE
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isRanked ? Colors.amberAccent : Colors.cyanAccent.withOpacity(0.1),
+                  color: isRanked ? Colors.amberAccent : primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Text(
-                  isRanked ? "RANKED #${weapon.rank}" : "POWER PICK",
-                  style: TextStyle(
-                    color: isRanked ? Colors.black : Colors.cyanAccent,
-                    fontSize: 9,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Bungee'
-                  ),
-                ),
+                child: isRanked 
+                  ? Text(
+                      "RANKED #${weapon.rank}",
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 11,
+                        letterSpacing: 0.5,
+                      ),
+                    )
+                  : Stack(
+                      children: [
+                        Text(
+                          "POWER PICK",
+                          style: TextStyle(
+                            fontSize: 11,
+                            letterSpacing: 0.5,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 2.5
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "POWER PICK",
+                          style: TextStyle(
+                            color: primary,
+                            fontSize: 11,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
               ),
               
               const SizedBox(height: 15),
               
-              Text(
-                cleanName,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontFamily: 'Bungee', fontSize: 22, color: Colors.white, letterSpacing: 1.2),
+              Stack(
+                children: [
+                  Text(
+                    cleanName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: Theme.of(context).textTheme.bodyLarge?.fontFamily, 
+                      fontSize: 22, 
+                      letterSpacing: 1.2,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 4
+                        ..color = Colors.black,
+                    ),
+                  ),
+                  Text(
+                    cleanName,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 22, 
+                      color: Colors.white, 
+                      letterSpacing: 1.2
+                    ),
+                  ),
+                ],
               ),
               
-              Text(
-                weapon.classType, 
-                style: const TextStyle(color: Colors.white24, fontSize: 9, letterSpacing: 2)
+              Stack(
+                children: [
+                  Text(
+                    weapon.classType.toUpperCase(), 
+                    style: TextStyle(
+                      fontSize: 9, 
+                      letterSpacing: 2,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 1.8
+                        ..color = Colors.black,
+                    )
+                  ),
+                  Text(
+                    weapon.classType.toUpperCase(), 
+                    style: const TextStyle(color: Colors.white24, fontSize: 9, letterSpacing: 2)
+                  ),
+                ],
               ),
             ],
           ),
         ),
 
-        // GAME LOGO
         if (weapon.gameImage != null)
           Positioned(
             top: 45,
@@ -3046,7 +4543,6 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
   Map<String, WeaponStats> statsLookup = {};
   Map<String, Weapon> grouped = {};
 
-  // 1. Process Image Names
   final Map<String, dynamic> imageJson = json.decode(namesRaw);
   for (var w in imageJson['Weapon_Names']) {
     if (w['weapon_name'] != null) {
@@ -3062,7 +4558,6 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
   }
 }
 
-  // 2. Process Stats
   final Map<String, dynamic> statsJson = json.decode(statsRaw);
   for (var s in statsJson['Premium_Stats']) {
     String key = s['weapon_name']?.toString().toUpperCase() ?? "";
@@ -3088,24 +4583,20 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
 
   for (var item in itemsToProcess) {
   String rawName = item['weapon_name'] ?? item['name'] ?? 'Unknown';
-  
-  // 1. CLEAN THE NAME (Keep spaces for the lookup)
+
   String baseName = rawName
       .replaceAll(_prestigeRegex, '')
       .replaceAll(_akimboRegex, '')
       .trim(); 
 
-  // 2. FETCH THE URL FROM JSON
   var imgData = imageLookup[baseName] ?? {'weapon_image': "", 'game_image': ""};
   String weaponImageUrl = imgData['weapon_image'] ?? "";
 
-  // 3. THE HEALER: Extract extension and force .png
   if (weaponImageUrl.isNotEmpty) {
     weaponImageUrl = weaponImageUrl.replaceAll(RegExp(r'\.[a-zA-Z0-9]+(?=\?|$)'), '.png');
     weaponImageUrl = Uri.encodeFull(weaponImageUrl);
   }
-      
-      // Categorization Logic 
+
       String modeKey = "Multiplayer";
       if (filePath.contains("special")) modeKey = "Special";
       else if (filePath.contains("zombies")) modeKey = "Zombies";
@@ -3116,7 +4607,6 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
       else if (filePath.contains("single")) modeKey = "Single";
       if (rawName.toUpperCase().contains("PRESTIGE")) modeKey = "Warzone Prestige";
 
-      // Attachment & Optic Logic 
       List<String> cleanAttachments = [];
       List<String> starredAttachments = [];
       Set<String> detectedCodes = {};
@@ -3141,7 +4631,7 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
       processAttachment(item['recommended_sight_shooting_style']);
 
       WeaponStats? buildStats;
-      WeaponStats? alternativeStats; // NEW: Holder for the Fast mode stats
+      WeaponStats? alternativeStats;
 
       bool isWarzoneType = (modeKey == "Warzone" || 
                             modeKey == "Rebirth" || 
@@ -3153,12 +4643,11 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
         String searchMod = modName?.toUpperCase() ?? "";
         String combinedSearch = "$searchName $searchMod".trim();
         
-        // 1. HARDCODED SOKOL EXCEPTION
         if (searchName.contains("SOKOL 545")) {
           buildStats = statsLookup["SOKOL 545 (SLOW)"];
           alternativeStats = statsLookup["SOKOL 545 (FAST)"];
         } else {
-          // 2. STANDARD LOOKUP
+
           buildStats = statsLookup[combinedSearch];
           if (buildStats == null && isWarzoneType) {
             buildStats = statsLookup[searchName];
@@ -3176,7 +4665,6 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
             if (archetype != null) {
               buildStats.combatRating = calculateCombatRatingStatic(buildStats, archetype, isAkimboBuild);
               
-              // Also calculate rating for the Fast mode if it exists so the Tier badge updates too
               if (alternativeStats != null) {
                 alternativeStats.combatRating = calculateCombatRatingStatic(alternativeStats, archetype, isAkimboBuild);
               }
@@ -3205,7 +4693,7 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
         buildCodes: detectedCodes.isNotEmpty ? detectedCodes.toList() : [item['build_code']?.toString() ?? ""].where((c) => c.isNotEmpty).toList(),
         modName: modName,
         stats: buildStats,
-        alternativeStats: alternativeStats, // NEW: Pass the Fast stats into the build
+        alternativeStats: alternativeStats,
       ));
   }
   }
@@ -3260,5 +4748,67 @@ CombatRating? calculateCombatRatingStatic(WeaponStats stats, String? archetype, 
     return CombatRating("C", "Vastly out-classed. Use with caution.");
   } catch (e) {
     return null;
+  }
+}
+
+class SweepBorderPainter extends CustomPainter {
+  final List<Color> colors;
+  final double animationValue;
+  final double strokeWidth;
+  final double borderRadius;
+
+  SweepBorderPainter({
+    required this.colors,
+    required this.animationValue,
+    this.strokeWidth = 2.0,
+    this.borderRadius = 12.0,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    final RRect rrect = RRect.fromRectAndRadius(rect, Radius.circular(borderRadius));
+
+    final Paint paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment(-1.0 + (animationValue * 2.0), 0),
+        end: Alignment(1.0 + (animationValue * 2.0), 0),
+        colors: colors,
+        tileMode: TileMode.repeated,
+      ).createShader(rect)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    canvas.drawRRect(rrect, paint);
+  }
+
+  @override
+  bool shouldRepaint(SweepBorderPainter oldDelegate) => 
+      oldDelegate.animationValue != animationValue;
+}
+
+class _InternalAnimatedBorder extends StatelessWidget {
+  final List<Color> colors;
+  final Widget child;
+
+  const _InternalAnimatedBorder({super.key, required this.colors, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<double>(
+      valueListenable: masterBorderNotifier,
+      builder: (context, animValue, _) {
+        return RepaintBoundary(
+          child: CustomPaint(
+            painter: SweepBorderPainter(
+              colors: colors,
+              animationValue: animValue, 
+              strokeWidth: 2.5,
+            ),
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }
