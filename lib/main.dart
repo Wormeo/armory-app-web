@@ -3603,7 +3603,7 @@ class _PremiumStatCard extends StatelessWidget {
                     _buildExpandedStat("HITSCAN", stats.hitscanRange, statTextColor),
 
                     if (stats.shotRange != null && _hasData(stats.shotRange))
-                      _buildExpandedStat("SNIPER", stats.shotRange!, statTextColor),
+                      _buildExpandedStat("ONE SHOT", stats.shotRange!, statTextColor),
                   ],
                 ),
               ),
