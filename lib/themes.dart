@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum ThemeCategory { simple, anemone, premium }
+enum ThemeCategory { simple, anemone, premium, neon}
 
 class ArmoryTheme {
   final String id;
@@ -12,6 +12,8 @@ class ArmoryTheme {
   final bool hasAnimatedBorder;
   final bool useWhiteSearch;
   final bool isHolographic;
+  final bool isReactive;
+  final bool isCustom;
   final List<Color> refractionColors;
   final List<Color> borderGradient;
   final Color pickerBoxColor;
@@ -33,21 +35,204 @@ class ArmoryTheme {
     this.hasAnimatedBorder = false,
     this.borderGradient = const [],
     this.isHolographic = false, 
+    this.isReactive = false,
+    this.isCustom = false,
     this.refractionColors = const [],
+  });
+}
+
+class ArmoryText extends StatelessWidget {
+  final String text;
+  final double baseFontSize;
+  final double baseStrokeWidth;
+  final ThemeController themeController;
+  final Color color;
+  final Color overrideStrokeColor;
+  final TextAlign textAlign;
+  final bool allowWrap;
+
+  final double? overrideFontSize;
+  final double? overrideStrokeWidth;
+  final double? letterSpacing;
+  final String? overrideFontFamily;
+  final double? lineHeight;
+
+  const ArmoryText(this.text, {
+    super.key,
+    required this.themeController,
+    this.baseFontSize = 18.0,
+    this.baseStrokeWidth = 2.5,
+    this.color = Colors.white,
+    this.textAlign = TextAlign.start,
+    this.allowWrap = false,
+    this.overrideFontSize,
+    this.overrideStrokeWidth,
+    this.overrideFontFamily,
+    this.letterSpacing,
+    this.lineHeight,
+    this.overrideStrokeColor = Colors.black
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final fontName = overrideFontFamily ?? themeController.activeFont;
+    final specs = ThemeController.fontConfigs[fontName] ?? const FontSpecs();
+
+    final double finalSize = overrideFontSize ?? (baseFontSize * specs.sizeScale);
+    final double finalStroke = overrideStrokeWidth ?? (baseStrokeWidth * specs.strokeScale);
+    
+    final double baseSpacing = letterSpacing ?? specs.spacingAdd;
+    final double finalSpacing = baseSpacing * specs.sizeScale;
+
+    final sharedStrut = StrutStyle(
+      fontFamily: fontName,
+      fontSize: finalSize,
+      height: lineHeight,
+      forceStrutHeight: true,
+    );
+
+    Widget textStack = Stack(
+      children: [
+        if (finalStroke > 0)
+          Text(
+            text,
+            textAlign: textAlign,
+            softWrap: allowWrap,
+            strutStyle: sharedStrut,
+            style: TextStyle(
+              fontFamily: fontName,
+              fontSize: finalSize,
+              height: lineHeight,
+              letterSpacing: finalSpacing,
+              foreground: Paint()
+                ..style = PaintingStyle.stroke
+                ..strokeWidth = finalStroke
+                ..strokeCap = StrokeCap.round
+                ..strokeJoin = StrokeJoin.round
+                ..color = overrideStrokeColor,
+            ),
+          ),
+        Text(
+          text,
+          textAlign: textAlign,
+          softWrap: allowWrap,
+          strutStyle: sharedStrut,
+          style: TextStyle(
+            fontFamily: fontName,
+            fontSize: finalSize,
+            height: lineHeight,
+            letterSpacing: finalSpacing,
+            color: color,
+          ),
+        ),
+      ],
+    );
+
+    if (allowWrap) {
+      return Container(
+        width: double.infinity,
+        alignment: textAlign == TextAlign.center 
+            ? Alignment.center 
+            : (textAlign == TextAlign.end ? Alignment.centerRight : Alignment.centerLeft),
+        child: textStack,
+      );
+    }
+
+    return FittedBox(
+      fit: BoxFit.scaleDown, 
+      alignment: textAlign == TextAlign.center 
+          ? Alignment.center 
+          : (textAlign == TextAlign.end ? Alignment.centerRight : Alignment.centerLeft),
+      child: textStack,
+    );
+  }
+}
+
+class FontSpecs {
+  final double sizeScale;
+  final double strokeScale;
+  final double spacingAdd;
+  
+  const FontSpecs({
+    this.sizeScale = 1.0, 
+    this.strokeScale = 1.0, 
+    this.spacingAdd = 0.0,
   });
 }
 
 class ThemeController extends ChangeNotifier {
   static const String _storageKey = 'selected_armory_theme_id';
+  static const String _fontKey = 'selected_armory_font';
+  static const String _colorKey = 'custom_neon_color';
 
   ArmoryTheme _activeTheme = allThemes.first; 
   ArmoryTheme get activeTheme => _activeTheme;
+
+  Color _customColor = const Color(0xFF00FFCC); 
+  Color get customColor => _customColor;
+
+  String _activeFont = 'Stock';
+  String get activeFont => _activeFont;
+
+  Color get activeAccentColor {
+    if (_activeTheme.isCustom) {
+      return _customColor;
+    }
+    return _activeTheme.themeData.colorScheme.primary;
+  }
+
+  Future<void> updateCustomColor(Color newColor) async {
+    _customColor = newColor;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_colorKey, newColor.toARGB32());
+  }
+
+static const Map<String, FontSpecs> fontConfigs = {
+  'Black Ops One': FontSpecs(sizeScale: 1.05, strokeScale: 0.8, spacingAdd: 0.5),
+  'Braah One': FontSpecs(sizeScale: 1.2, strokeScale: 0.9, spacingAdd: 0.0),
+  'Bungee': FontSpecs(sizeScale: 1.0, strokeScale: 0.7, spacingAdd: 0.2),
+  'Stock': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+  'Fugaz One': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+  'Germania One': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+  'Kaushan Script': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+  'Orbitron': FontSpecs(sizeScale: 0.9, strokeScale: 1.0, spacingAdd: 1.2),
+  'Permanent Marker': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+  'Quantico': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.8),
+  'Racing Sans': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+  'Silkscreen': FontSpecs(sizeScale: 1, strokeScale: 0.5, spacingAdd: 0.0),
+  'Vast Shadow': FontSpecs(sizeScale: 0.85, strokeScale: 0.6, spacingAdd: 0.1),
+};
+
+  static const List<String> availableFonts = [
+    'Stock',
+    'Black Ops One',
+    'Braah One',
+    'Bungee',
+    'Fugaz One',
+    'Germania One',
+    'Kaushan Script',
+    'Orbitron',
+    'Permanent Marker',
+    'Quantico',
+    'Racing Sans',
+    'Silkscreen',
+    'Vast Shadow',
+  ];
+
+  Future<void> setFont(String fontFamily) async {
+    if (_activeFont != fontFamily) {
+      _activeFont = fontFamily;
+      notifyListeners();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_fontKey, fontFamily);
+    }
+  }
 
   Future<void> setTheme(ArmoryTheme theme) async {
     if (_activeTheme.id != theme.id) {
       _activeTheme = theme;
       notifyListeners();
-
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(_storageKey, theme.id);
     }
@@ -55,17 +240,22 @@ class ThemeController extends ChangeNotifier {
 
   Future<void> loadSavedTheme() async {
     final prefs = await SharedPreferences.getInstance();
-    final String? savedId = prefs.getString(_storageKey);
+    _activeFont = prefs.getString(_fontKey) ?? 'Stock';
 
+    final int? savedColor = prefs.getInt(_colorKey);
+    if (savedColor != null) {
+      _customColor = Color(savedColor);
+    }
+
+    final String? savedId = prefs.getString(_storageKey);
     if (savedId != null) {
       try {
-        final savedTheme = allThemes.firstWhere((t) => t.id == savedId);
-        _activeTheme = savedTheme;
-        notifyListeners();
+        _activeTheme = allThemes.firstWhere((t) => t.id == savedId);
       } catch (e) {
         debugPrint("Theme persistence error: $e");
       }
     }
+    notifyListeners(); 
   }
 
   static final List<ArmoryTheme> allThemes = [
@@ -87,7 +277,7 @@ class ThemeController extends ChangeNotifier {
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(55, 87, 193, 1),
-          surface: Color.fromARGB(255, 10, 14, 17)
+          surface: Color.fromARGB(255, 6, 8, 10)
         ),
         useMaterial3: true,
         fontFamily: 'Days One'
@@ -204,7 +394,11 @@ class ThemeController extends ChangeNotifier {
       ),
     ),
 
+
+
     // ANEMONE
+
+
 
     ArmoryTheme(
       id: 'anemone_pink',
@@ -341,10 +535,10 @@ class ThemeController extends ChangeNotifier {
 
       themeData: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromRGBO(168, 192, 177, 1),
+        primaryColor: const Color.fromRGBO(131, 247, 250, 1),
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         colorScheme: const ColorScheme.dark(
-          primary: Color.fromRGBO(168, 182, 192, 1),
+          primary: Color.fromRGBO(131, 247, 250, 1),
           surface: Color.fromRGBO(30, 34, 47, 1)
         ),
         useMaterial3: true,
@@ -375,7 +569,7 @@ class ThemeController extends ChangeNotifier {
 
       themeData: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromRGBO(168, 192, 177, 1),
+        primaryColor: const Color.fromRGBO(191, 170, 229, 1),
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(191, 170, 229, 1),
@@ -405,10 +599,10 @@ class ThemeController extends ChangeNotifier {
 
       themeData: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromRGBO(168, 192, 177, 1),
+        primaryColor: const Color.fromRGBO(100, 225, 242, 1),
         scaffoldBackgroundColor: const Color(0xFF0D0D0D),
         colorScheme: const ColorScheme.dark(
-          primary: Color.fromRGBO(43, 100, 115, 1),
+          primary: Color.fromRGBO(100, 225, 242, 1),
           surface: Color.fromRGBO(30, 34, 47, 1)
         ),
         useMaterial3: true,
@@ -416,16 +610,53 @@ class ThemeController extends ChangeNotifier {
       ),
     ),
 
+    ArmoryTheme(
+      id: 'anemone_magma',
+      name: 'MAGMA',
+      pickerGradient: [
+        const Color.fromRGBO(249, 129, 46, 1),
+        const Color.fromRGBO(239, 117, 42, 1),
+        const Color.fromRGBO(59, 54, 50, 1),
+        const Color.fromARGB(255, 12, 13, 18),
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.anemone,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1771474845/6ddf9604cce49a7365fb18ba38049c9b_va0juo.jpg',
+      borderGradient: [
+        const Color.fromRGBO(249, 129, 46, 1),
+        const Color.fromRGBO(239, 117, 42, 1),
+        const Color.fromRGBO(59, 54, 50, 1),
+        const Color.fromARGB(255, 12, 14, 19),
+      ],
+
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(249, 129, 46, 1),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(249, 129, 46, 1),
+          surface: Color.fromRGBO(22, 17, 13, 1)
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+
+
     // HOLOGRAPHIC
+
+
 
     ArmoryTheme(
       id: 'holographic_gold',
       name: 'MOLTEN GOLD',
       pickerGradient: [
-      Color.fromRGBO(50, 49, 47, 1),
-      Color.fromRGBO(236, 185, 43, 1),
+      Color.fromRGBO(255, 249, 237, 1),
       Color.fromRGBO(234, 223, 66, 1),
-      Color.fromRGBO(50, 49, 47, 1),
+      Color.fromRGBO(236, 185, 43, 1),
+      Color.fromRGBO(225, 132, 26, 1),
+      Color.fromRGBO(255, 249, 237, 1),
       ],
       pickerTextColor: Colors.white,
       category: ThemeCategory.premium,
@@ -437,16 +668,17 @@ class ThemeController extends ChangeNotifier {
         const Color.fromRGBO(236, 185, 43, 1),
         ],
       refractionColors: [
-      Color.fromRGBO(50, 49, 47, 1),
-      Color.fromRGBO(236, 185, 43, 1),
+      Color.fromRGBO(255, 249, 237, 1),
       Color.fromRGBO(234, 223, 66, 1),
-      Color.fromRGBO(50, 49, 47, 1),
+      Color.fromRGBO(236, 185, 43, 1),
+      Color.fromRGBO(238, 143, 34, 1),
+      Color.fromRGBO(255, 249, 237, 1),
       ],
       themeData: ThemeData(
         fontFamily: 'Days One',
         colorScheme: ColorScheme.dark(
           primary: Color.fromRGBO(236, 185, 43, 1),
-          surface: const Color(0xFF1A1608),
+          surface: const Color.fromARGB(255, 34, 29, 11),
         ),
       ),
     ),
@@ -481,7 +713,7 @@ class ThemeController extends ChangeNotifier {
         brightness: Brightness.dark,
         primaryColor: const Color.fromARGB(255, 255, 255, 255),
         colorScheme: const ColorScheme.dark(
-          surface: Color(0xFF0A050A),
+          surface: Color.fromARGB(255, 34, 19, 36),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
@@ -513,14 +745,14 @@ class ThemeController extends ChangeNotifier {
         Colors.redAccent,
         Colors.deepPurpleAccent
       ],
-      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1771371000/76e42e833496c016282c91ac2ca87c53_cfon1b.jpg',
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1771474845/57bac4a8159b240cff6ae3f9b941d682_tmm2aj.jpg',
       borderGradient: [const Color.fromARGB(255, 255, 255, 255), Colors.black],
       themeData: ThemeData(
         brightness: Brightness.dark,
         primaryColor: const Color.fromARGB(255, 255, 255, 255),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromARGB(255, 255, 255, 255),
-          surface: Color.fromARGB(255, 15, 15, 15),
+          surface: Color.fromARGB(255, 18, 18, 18),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
@@ -548,10 +780,10 @@ class ThemeController extends ChangeNotifier {
       borderGradient: [Colors.purple, Colors.black],
       themeData: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromARGB(255, 67, 29, 174),
+        primaryColor: const Color.fromRGBO(85, 44, 162, 1),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(85, 44, 162, 1),
-          surface: Color(0xFF0A050A),
+          surface: Color.fromARGB(255, 17, 13, 26),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
@@ -587,7 +819,7 @@ class ThemeController extends ChangeNotifier {
         primaryColor: const Color.fromARGB(255, 35, 243, 222),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(61, 236, 221, 1),
-          surface: Color.fromARGB(255, 12, 12, 12),
+          surface: Color.fromARGB(255, 6, 32, 27),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
@@ -618,15 +850,33 @@ class ThemeController extends ChangeNotifier {
       borderGradient: [Colors.purple, Colors.black],
       themeData: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: const Color.fromARGB(255, 67, 29, 174),
+        primaryColor: const Color.fromRGBO(168, 76, 98, 1),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(168, 76, 98, 1),
-          surface: Color.fromRGBO(52, 31, 47, 1),
+          surface: Color.fromRGBO(72, 29, 44, 1),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
       ),
     ),
+
+    // NEON
+
+    ArmoryTheme(
+  id: 'neon_custom',
+  name: 'NEON',
+  category: ThemeCategory.neon,
+  isCustom: true,
+  backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1772174945/a8fb4ca06a6bc64c917a045cab6d091c_xotol4.jpg', 
+  themeData: ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: const Color.fromARGB(255, 0, 0, 0), 
+    colorScheme: const ColorScheme.dark(
+      primary: Color.fromARGB(255, 0, 0, 0),
+      surface: Color.fromARGB(0, 0, 0, 0),
+    ),
+  ),
+),
 
 
   ];

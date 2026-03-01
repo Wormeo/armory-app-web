@@ -1,8 +1,6 @@
 name: armory_app
 description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
@@ -19,12 +17,15 @@ dependencies:
   firebase_crashlytics: ^5.0.7
   firebase_analytics: ^12.1.2
   firebase_core: ^4.4.0
+  cached_network_image: ^3.3.1
+  flutter_colorpicker: ^1.1.0
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^2.4.3
-  flutter_launcher_icons: "^0.13.1"
+  flutter_launcher_icons: ^0.14.4
 
   flutter_lints: ^6.0.0
 
@@ -42,21 +43,59 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: Saira Stencil One
-      fonts:
-        - asset: assets/fonts/SairaStencilOne-Regular.ttf
-
+  
     - family: Bungee
       fonts:
         - asset: assets/fonts/Bungee-Regular.ttf
 
-    - family: Days One
+    - family: Stock
       fonts:
         - asset: assets/fonts/DaysOne-Regular.ttf
 
     - family: Silkscreen
       fonts:
         - asset: assets/fonts/Silkscreen-Regular.ttf
+
+    - family: Black Ops One
+      fonts:
+        - asset: assets/fonts/BlackOpsOne-Regular.ttf
+        
+    - family: Braah One
+      fonts:
+        - asset: assets/fonts/BraahOne-Regular.ttf
+
+    - family: Fugaz One
+      fonts:
+        - asset: assets/fonts/FugazOne-Regular.ttf
+    
+    - family: Germania One
+      fonts:
+        - asset: assets/fonts/GermaniaOne-Regular.ttf
+
+    - family: Kaushan Script
+      fonts:
+        - asset: assets/fonts/KaushanScript-Regular.ttf
+
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron-VariableFont_wght.ttf
+
+    - family: Permanent Marker
+      fonts:
+        - asset: assets/fonts/PermanentMarker-Regular.ttf
+
+    - family: Quantico
+      fonts:
+        - asset: assets/fonts/Quantico-Regular.ttf
+
+    - family: Racing Sans
+      fonts:
+        - asset: assets/fonts/RacingSansOne-Regular.ttf
+
+
+    - family: Vast Shadow
+      fonts:
+        - asset: assets/fonts/VastShadow-Regular.ttf
 
   assets:
     - assets/icon/
@@ -72,6 +111,7 @@ flutter:
     - assets/Multiplayer_Cold_War_202602130020.json
     - assets/Multiplayer_MW19_202602130020.json
     - assets/Multiplayer_MW3_BO6_202602130020.json
+    - assets/Ranked_202602202346.json
     - assets/REBIRTH_202602130024.json
     - assets/Single_202602130024.json
     - assets/Special_202602130024.json

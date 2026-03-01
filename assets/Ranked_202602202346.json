@@ -1,0 +1,47 @@
+{
+"Ranked": [
+	{
+		"id" : 19,
+		"weapon_name" : "M15 MOD 0",
+		"attach_1" : "RL-5.56 BRAKE MUZZLE",
+		"attach_2" : "16.5\" FUSION BARREL",
+		"attach_3" : "PEREGRINE REAR GRIP",
+		"attach_4" : "BACKLINE FLIP MAG",
+		"attach_5" : "LETHAL TOOLS ELO OPTIC",
+		"build_code" : "A01-AUYBU-FAWI1-1",
+		"availability" : "YES"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "DRAVEC 45",
+		"attach_1" : "HAWKER STABILIZER MK.II MUZZLE",
+		"attach_2" : "19\" EAM HORIZON BARREL",
+		"attach_3" : "HERALD-Z1 REAR GRIP \/ LETHAL TOOLS ELO OPTIC",
+		"attach_4" : "SERVAL Q-STEP STOCK",
+		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
+		"build_code" : "S04-2JD6P-5UB67-6W11",
+		"availability" : "YES"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "VS RECON",
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"build_code" : null,
+		"availability" : "YES"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "JAGER 45",
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"build_code" : null,
+		"availability" : "YES"
+	}
+]}

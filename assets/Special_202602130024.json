@@ -404,7 +404,7 @@
 		"attach_2" : "SLATE REFLECTOR SIGHT",
 		"attach_3" : "9MM LOW GRAIN ROUNDS",
 		"attach_4" : "50 ROUND DRUM",
-		"attach_5" : "JAK FEROCITY COVNERSION KIT",
+		"attach_5" : "JAK FEROCITY CONVERSION KIT",
 		"recommended_sight_shooting_style" : ""
 	},
 	{
@@ -911,6 +911,17 @@
 		"attach_3" : "VIPER WIRE STOCK",
 		"attach_4" : "SUSTAIN-25 EXTENDED MAG",
 		"attach_5" : "MPC-25 CONTRABLOOM LASER",
+		"recommended_sight_shooting_style" : "HIPFIRE"
+	},
+    {
+		"id" : 92,
+		"weapon_name" : "XM325",
+		"mod" : "AKIMBO",
+		"attach_1" : "TITAN-R 7.62 COMPENSATOR MUZZLE",
+		"attach_2" : "CAUSEWAY REAR GRIP",
+		"attach_3" : "CONVERGENCE BOX / MFS MOTION STRIKE LASER",
+		"attach_4" : "XM325 TITAN WIELD STOCK",
+		"attach_5" : "ACCELERATED RECOIL SYSTEM MOD",
 		"recommended_sight_shooting_style" : "HIPFIRE"
 	}
 ]}

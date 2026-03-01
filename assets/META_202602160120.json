@@ -490,7 +490,7 @@
 		"id" : 83,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "2. RAZOR 9MM (PRESTIGE)"
+		"weapon" : "2. REV-46"
 	},
 	{
 		"id" : 84,
@@ -502,37 +502,37 @@
 		"id" : 85,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "4. REV-46"
+		"weapon" : "4. RAZOR 9MM (PRESTIGE)"
 	},
 	{
 		"id" : 86,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "5. STURMWOLF 45"
+		"weapon" : "5. RYDEN 45K"
 	},
 	{
 		"id" : 87,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "1. MADDOX RFB"
+		"weapon" : "1. M8A1 SNIPER SUPPORT (WZ)"
 	},
 	{
 		"id" : 88,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "2. EGRT-17"
+		"weapon" : "2. M15 MOD 0"
 	},
 	{
 		"id" : 89,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "3. M15 MOD 0"
+		"weapon" : "3. MADDOX RFB"
 	},
 	{
 		"id" : 90,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "4. M8A1 SNIPER SUPPORT (WZ)"
+		"weapon" : "4. EGRT-17"
 	},
 	{
 		"id" : 91,
