@@ -108,7 +108,7 @@
 		"attach_3" : "STIP-40 REAR GRIP",
 		"attach_4" : "SIGHT",
 		"attach_5" : "JAK SHADOW TITAN CONVERSION KIT",
-		"recommended_sight_shooting_style" : "ADS"
+		"recommended_sight_shooting_style" : "NYDAR MODEL 2023"
 	},
 	{
 		"id" : 11,
@@ -273,6 +273,17 @@
 		"attach_3" : "SCHLAGER PEQ BOX IV LASER",
 		"attach_4" : "SL SKELETAL REAR GRIP",
 		"attach_5" : "CORIO EAGLESEYE 2.5X SCOPE \/ SP-X 80 6.6X SCOPE",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "LACMANN SHROUD",
+		"mod" : "FULL AUTO (MW3 MP)",
+		"attach_1" : "XTEN PHANTOM-5 UNDERBARREL",
+		"attach_2" : "1MW QUICKFIRE LASER",
+		"attach_3" : "9MM SUB OP AMMO",
+		"attach_4" : "40 ROUND MAG",
+		"attach_5" : "JAK DECIMATOR CONVERSION KIT",
 		"recommended_sight_shooting_style" : ""
 	},
 	{
@@ -913,15 +924,26 @@
 		"attach_5" : "MPC-25 CONTRABLOOM LASER",
 		"recommended_sight_shooting_style" : "HIPFIRE"
 	},
-    {
+	{
 		"id" : 92,
 		"weapon_name" : "XM325",
 		"mod" : "AKIMBO",
 		"attach_1" : "TITAN-R 7.62 COMPENSATOR MUZZLE",
 		"attach_2" : "CAUSEWAY REAR GRIP",
-		"attach_3" : "CONVERGENCE BOX / MFS MOTION STRIKE LASER",
+		"attach_3" : "CONVERGENCE BOX \/ MFS MOTION STRIKE LASER",
 		"attach_4" : "XM325 TITAN WIELD STOCK",
 		"attach_5" : "ACCELERATED RECOIL SYSTEM MOD",
 		"recommended_sight_shooting_style" : "HIPFIRE"
+	},
+	{
+		"id" : 93,
+		"weapon_name" : "RAZOR 9MM",
+		"mod" : "RAPID FIRE",
+		"attach_1" : "H-9MM PRECISION MUZZLE",
+		"attach_2" : "LATERAL PRECISION UNDERBARREL",
+		"attach_3" : "RWL STABILITY STOCK",
+		"attach_4" : "RAZOR 9MM WILDFIRE CONVERSION KIT",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "FANG HOVERPOINT ELO"
 	}
 ]}

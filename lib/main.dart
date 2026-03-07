@@ -20,6 +20,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'dart:math' as math;
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 
 const String globalNgrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
@@ -33,6 +34,40 @@ Future<String> loadHotfixedJson(String assetPath) async {
     return await localFile.readAsString();
   } else {
     return await rootBundle.loadString(assetPath);
+  }
+}
+
+Map<String, Map<String, double>>? minMaxAnchors;
+
+Future<void> loadMinMaxData() async {
+  try {
+    final String response = await loadHotfixedJson('assets/json/MinMax_202603052106.json');
+    
+    final Map<String, dynamic> data = json.decode(response);
+    final List<dynamic> rows = data['MinMax'];
+
+    final minRow = rows.firstWhere((r) => r['id'] == 1);
+    final maxRow = rows.firstWhere((r) => r['id'] == 2);
+    
+    minMaxAnchors = {};
+    const categories = ['ar', 'smg', 'lmg', 'marksman', 'battle'];
+    
+    for (var cat in categories) {
+      minMaxAnchors![cat] = {
+        'min': double.tryParse(minRow[cat].toString()) ?? 500.0,
+        'max': double.tryParse(maxRow[cat].toString()) ?? 1000.0,
+      };
+    }
+    debugPrint("✅ MinMax Synced: SMG is ${minMaxAnchors!['smg']!['min']} - ${minMaxAnchors!['smg']!['max']}");
+  } catch (e) {
+    debugPrint("❌ Sync Error: $e");
+    minMaxAnchors = {
+      "ar": {"min": 588.0, "max": 816.0},
+      "smg": {"min": 520.0, "max": 680.0},
+      "lmg": {"min": 511.0, "max": 804.0},
+      "marksman": {"min": 671.0, "max": 1353.0},
+      "battle": {"min": 480.0, "max": 800.0},
+    };
   }
 }
 
@@ -73,7 +108,7 @@ final Set<String> _opticDictionary = {"REMUDA MINI REFLEX", "OTERO MICRO DOT", "
 "SOLOZERO NVG ENHANCED", "MERC THERMAL OPTIC", "SNIPER SCOPE", "VARIABLE ZOOM SCOPE", "SP-X 80 6.6X",
 "DS FARSIGHT 11 SCOPE", "MCPR-300 9.5X SCOPE", "CORIO 13X VRS", "MILLSTOP REFLEX", "VISIONTECH 2X",
 "KOBRA RED DOT", "QUICKDOT LED", "AXIAL ARMS 3X", "SILLIX HOLOSCOUT", "MICROFLEX LED", "HAWKSMOOR",
-"LETHAL TOOLS ELO OPTIC"};
+"LETHAL TOOLS ELO OPTIC", "FANG HOVERPOINT ELO"};
 
 final RegExp _prestigeRegex = RegExp(r'\s*\(PRESTIGE\)', caseSensitive: false);
 final RegExp _akimboRegex = RegExp(r'\s*AKIMBO', caseSensitive: false);
@@ -149,6 +184,7 @@ void main() async {
 
   final themeController = ThemeController();
   await themeController.loadSavedTheme();
+  await loadMinMaxData();
   
   runApp(
     SyncProvider(
@@ -234,24 +270,31 @@ class Weapon {
 
 class MetaWeapon {
   final String name;
-  final int? rank; 
+  final String searchKey;
+  final int? rank;
   final String game;
   final String classType;
   final String? weaponImage;
   final String? gameImage;
 
   MetaWeapon({
-    required this.name, 
-    this.rank, 
-    required this.game, 
+    required this.name,
+    required this.searchKey,
+    this.rank,
+    required this.game,
     required this.classType,
     this.weaponImage,
     this.gameImage,
   });
 
-  factory MetaWeapon.fromJson(Map<String, dynamic> json, Map<String, dynamic>? imageEntry) {
+  factory MetaWeapon.fromJson(
+    Map<String, dynamic> json, 
+    Map<String, dynamic>? imageEntry, 
+    {String? searchName}
+  ) {
     return MetaWeapon(
       name: json['weapon'] ?? "UNKNOWN",
+      searchKey: searchName ?? json['weapon']?.toString().replaceFirst('•', '').trim() ?? "",
       rank: !json['weapon'].toString().startsWith('•') 
           ? int.tryParse(json['weapon'].toString().split('.')[0]) 
           : null,
@@ -372,9 +415,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   try {
     final premiumTask = _verifyPremiumStatus();
     final List<String> buildFiles = [
-      'assets/Akimbo_202602130023.json', 'assets/Cold_War_Akimbo_202602130024.json',
+      'assets/Akimbo_202603022137.json', 'assets/Cold_War_Akimbo_202602130024.json',
       'assets/Cold_War_Single_202602130024.json', 'assets/Endgame_BO7_202602130023.json',
-      'assets/Multiplayer_BO7_202602130017.json', 'assets/Multiplayer_Cold_War_202602130020.json',
+      'assets/Multiplayer_BO7_202603041754.json', 'assets/Multiplayer_Cold_War_202603041703.json',
       'assets/Multiplayer_MW19_202602130020.json', 'assets/Multiplayer_MW3_BO6_202602130020.json',
       'assets/REBIRTH_202602130024.json', 'assets/Single_202602130024.json',
       'assets/Special_202602130024.json', 'assets/Warzone_BO6_202602130021.json',
@@ -491,6 +534,7 @@ class MyHomePage extends StatefulWidget {
 enum ConnectionStatus { connected, tunnelIssue, offline }
 enum AppState { initializing, onboarding, booting, ready }
 bool _hasRunBootSequence = false;
+StreamSubscription<List<PurchaseDetails>>? _subscription;
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final FocusNode _searchFocusNode = FocusNode();
@@ -682,6 +726,9 @@ Widget _buildFirstTimeLoadingVisual() {
 @override
 void initState() {
   super.initState();
+
+  _initializeIAP();
+
   _checkOnboardingStatus();
   WidgetsBinding.instance.addObserver(this);
   
@@ -694,12 +741,42 @@ void initState() {
   _runBootSequence();
 }
 
+Future<void> _initializeIAP() async {
+  debugPrint("🛠️ IAP: Starting Initialization...");
+  try {
+    final InAppPurchase iap = InAppPurchase.instance;
+    debugPrint("🛠️ IAP: Checking availability...");
+    bool available = await iap.isAvailable().timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        debugPrint("⚠️ IAP: Availability check timed out.");
+        return false;
+      },
+    );
+
+    debugPrint("🛠️ IAP: Availability is $available");
+    if (!available) return;
+
+    _subscription = iap.purchaseStream.listen(
+      (purchaseDetailsList) {
+        debugPrint("🛠️ IAP: New purchase event received!");
+        _listenToPurchaseUpdated(purchaseDetailsList);
+      },
+      onDone: () => _subscription?.cancel(),
+      onError: (error) => debugPrint("❌ IAP Stream Error: $error"),
+    );
+    debugPrint("✅ IAP: Subscription active.");
+  } catch (e) {
+    debugPrint("❌ IAP: Critical Initialization Error: $e");
+  }
+}
+
   Future<void> _performPreload() async {
   try {
     final List<String> buildFiles = [
-      'assets/Akimbo_202602130023.json', 'assets/Cold_War_Akimbo_202602130024.json',
+      'assets/Akimbo_202603022137.json', 'assets/Cold_War_Akimbo_202602130024.json',
       'assets/Cold_War_Single_202602130024.json', 'assets/Endgame_BO7_202602130023.json',
-      'assets/Multiplayer_BO7_202602130017.json', 'assets/Multiplayer_Cold_War_202602130020.json',
+      'assets/Multiplayer_BO7_202602130017.json', 'assets/Multiplayer_Cold_War_202603041703.json',
       'assets/Multiplayer_MW19_202602130020.json', 'assets/Multiplayer_MW3_BO6_202602130020.json',
       'assets/REBIRTH_202602130024.json', 'assets/Single_202602130024.json',
       'assets/Special_202602130024.json', 'assets/Warzone_BO6_202602130021.json',
@@ -779,6 +856,7 @@ Widget _buildStatusIndicator() {
 
 @override
 void dispose() {
+  _subscription?.cancel();
   WidgetsBinding.instance.removeObserver(this);
   _statusTimer?.cancel();
   _idController.dispose();
@@ -1747,6 +1825,179 @@ Future<void> _verifyPremium() async {
   }
 }
 
+Future<void> _purchasePremiumGoogle() async {
+  final themeController = widget.themeController;
+  final Color coreColor = Color.lerp(themeController.activeAccentColor, Colors.white, 0.35)!;
+
+  try {
+    final InAppPurchase iap = InAppPurchase.instance;
+    final bool available = await iap.isAvailable().timeout(const Duration(seconds: 5));
+    if (!available) {
+      _showErrorSnackBar("GOOGLE PLAY STORE UNAVAILABLE");
+      return;
+    }
+
+    String? enteredId = await _showIdPopup(coreColor);
+    if (enteredId == null || enteredId.isEmpty) return;
+
+    const Set<String> kIds = <String>{'premium_lifetime'};
+    final ProductDetailsResponse response = await iap.queryProductDetails(kIds);
+
+    if (response.productDetails.isEmpty) {
+      _showErrorSnackBar("PRODUCT NOT FOUND IN STORE");
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('pending_discord_id', enteredId);
+
+    await iap.buyNonConsumable(purchaseParam: PurchaseParam(productDetails: response.productDetails.first));
+  } catch (e) {
+    print("IAP Error: $e");
+    _showErrorSnackBar("FAILED TO CONNECT TO STORE");
+  }
+}
+
+Future<void> _verifyWithServer(String token, String discordId) async {
+  try {
+    final response = await http.post(
+      Uri.parse('$globalNgrokUrl/google_verify'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode({
+        "purchaseToken": token,
+        "discordId": discordId,
+      }),
+    ).timeout(const Duration(seconds: 15));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      String autoPin = data['pin'].toString();
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('saved_discord_id', discordId);
+      await prefs.setString('saved_pin', autoPin);
+      await prefs.setBool('is_premium_user', true);
+
+      setState(() {
+        _isPremiumUser = true;
+        _idController.text = discordId;
+        _pinController.text = autoPin;
+      });
+
+      HapticFeedback.heavyImpact();
+      _showSuccessSnackBar("PREMIUM ACTIVATED: WELCOME $discordId");
+    } else {
+      _showErrorSnackBar("SERVER REJECTED VERIFICATION");
+    }
+  } catch (e) {
+    _showErrorSnackBar("VERIFICATION ERROR: $e");
+  }
+}
+
+Future<String?> _showIdPopup(Color coreColor) async {
+  final themeController = widget.themeController;
+  return await showDialog<String>(
+    context: context,
+    builder: (context) {
+      TextEditingController popupController = TextEditingController();
+      return AlertDialog(
+        backgroundColor: Colors.black,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: coreColor, width: 2),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: ArmoryText("ENTER DISCORD ID", 
+            themeController: themeController, 
+            baseFontSize: 14, 
+            color: coreColor),
+        content: TextField(
+          controller: popupController,
+          autofocus: true,
+          style: TextStyle(color: Colors.white, fontFamily: themeController.activeFont),
+          decoration: InputDecoration(
+            hintText: "e.g. 1234567890",
+            hintStyle: TextStyle(color: Colors.white24, fontSize: 12),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: coreColor.withOpacity(0.5))),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: coreColor)),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("CANCEL", style: TextStyle(color: Colors.white38)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, popupController.text.trim()),
+            child: Text("PROCEED", style: TextStyle(color: coreColor)),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _showSuccessSnackBar(String message) {
+  final themeController = widget.themeController;
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Colors.black,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.greenAccent, width: 2),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      content: ArmoryText(
+        message.toUpperCase(),
+        themeController: themeController,
+        baseFontSize: 11,
+        color: Colors.greenAccent,
+      ),
+    ),
+  );
+}
+
+void _showErrorSnackBar(String message) {
+  final themeController = widget.themeController;
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: Colors.black,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: Colors.redAccent, width: 2),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      content: ArmoryText(
+        message.toUpperCase(),
+        themeController: themeController,
+        baseFontSize: 11,
+        color: Colors.redAccent,
+      ),
+    ),
+  );
+}
+
+void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
+  for (var purchase in purchaseDetailsList) {
+    if (purchase.status == PurchaseStatus.purchased || purchase.status == PurchaseStatus.restored) {
+      final prefs = await SharedPreferences.getInstance();
+      String? discordId = prefs.getString('pending_discord_id') ?? _idController.text;
+      
+      await _verifyWithServer(purchase.verificationData.serverVerificationData, discordId);
+
+      if (purchase.pendingCompletePurchase) {
+        await InAppPurchase.instance.completePurchase(purchase);
+      }
+    } else if (purchase.status == PurchaseStatus.error) {
+      _showErrorSnackBar("GOOGLE PLAY ERROR: ${purchase.error?.message}");
+    } else if (purchase.status == PurchaseStatus.pending) {
+
+    }
+  }
+}
+
+
   void search(String query) {
     setState(() { displayList = widget.preloadedData.where((w) => w.name.toLowerCase().contains(query.toLowerCase())).toList(); });
   }
@@ -1844,20 +2095,45 @@ void _showBugReportDialog() {
 
               if (mounted) {
                 Navigator.pop(context);
+
+                final themeController = widget.themeController;
+                final activeTheme = themeController.activeTheme;
+                final bool isCustom = activeTheme.id == 'neon_custom';
+
+                final Color neonBorderColor = Color.lerp(themeController.activeAccentColor, Colors.white, 0.35)!;
+                
+                final Color displayColor = isCustom ? neonBorderColor : armoryBlue;
+
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    backgroundColor: Colors.black,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(color: armoryBlue, width: 1),
+                    backgroundColor: isCustom ? Colors.black : const Color.fromARGB(255, 10, 14, 17),
+                    behavior: SnackBarBehavior.fixed,
+                    elevation: 0,
+                    duration: const Duration(seconds: 3),
+                    padding: EdgeInsets.zero, 
+                    shape: Border(
+                      top: BorderSide(
+                        color: displayColor, 
+                        width: isCustom ? 2.5 : 1.5,
+                      ),
                     ),
-                    content: ArmoryText(
-                      "REPORT TRANSMITTED. THANK YOU.",
-                      themeController: widget.themeController,
-                      baseFontSize: 12,
-                      baseStrokeWidth: 1.0,
-                      color: armoryBlue,
+                    content: Container(
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 2.0,
+                        left: 15,
+                        right: 15,
+                      ),
+                      child: ArmoryText(
+                        "REPORT TRANSMITTED. THANK YOU.",
+                        themeController: themeController,
+                        baseFontSize: 12,
+                        baseStrokeWidth: isCustom ? 2.5 : 1.5,
+                        color: displayColor,
+                        overrideStrokeColor: Colors.black,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 );
@@ -2124,7 +2400,7 @@ Widget _buildSettingsDrawer() {
         
         border: Border(
           right: BorderSide(
-            color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.5), 
+            color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.8), 
             width: isCustom ? 2.5 : 2.5,
           ),
         ),
@@ -2163,7 +2439,7 @@ Widget _buildSettingsDrawer() {
             ),
           ),
         
-        Divider(color: isCustom ? accentColor : Theme.of(context).colorScheme.primary, height: 3),
+        Divider(color: isCustom ? accentColor : Theme.of(context).colorScheme.primary, height: 3, thickness: 1.5,),
 
         Expanded(
           child: ListView(
@@ -2301,7 +2577,7 @@ Widget _buildSettingsDrawer() {
           ),
         ),
 
-        const Divider(color: Colors.white10, height: 1),
+        Divider(color: isCustom ? accentColor : Theme.of(context).colorScheme.primary, height: 1, thickness: 1.5),
         _buildMinorDrawerTile(
           label: "REPORT A BUG",
           icon: Icons.bug_report_outlined,
@@ -2351,7 +2627,7 @@ Widget _buildSettingsDrawer() {
           },
         ),
         
-        const SizedBox(height: 20), 
+        const SizedBox(height: 5), 
       ],
     ),
   ),
@@ -2779,15 +3055,28 @@ Widget _buildAuthSection() {
         decoration: isCustom ? BoxDecoration(
           borderRadius: BorderRadius.circular(24), 
           boxShadow: [
-            BoxShadow(color: Colors.amberAccent.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
-            BoxShadow(color: Colors.amberAccent.withOpacity(0.3), blurRadius: 10, spreadRadius: 1),
+            BoxShadow(
+              color: Colors.amberAccent.withOpacity(0.8), 
+              blurRadius: 1, 
+              spreadRadius: 0.5
+            ),
+            BoxShadow(
+              color: Colors.amberAccent.withOpacity(0.3), 
+              blurRadius: 10, 
+              spreadRadius: 1
+            ),
           ],
         ) : null,
         child: OutlinedButton.icon(
-          onPressed: () => launchUrl(Uri.parse('https://...')), 
-          icon: Icon(Icons.shopping_cart_outlined, size: 16, color: isCustom ? Colors.white : Colors.amberAccent),
+          // TRIGGER: Now calls the Google Play logic instead of just launching a URL
+          onPressed: _purchasePremiumGoogle, 
+          icon: Icon(
+            Icons.shop_two_outlined, // Changed to a more "Store" focused icon
+            size: 16, 
+            color: isCustom ? Colors.white : Colors.amberAccent
+          ),
           label: ArmoryText(
-            "BUY PREMIUM",
+            "PURCHASE PREMIUM",
             themeController: themeController,
             baseFontSize: 12,
             baseStrokeWidth: 1.5,
@@ -2795,13 +3084,22 @@ Widget _buildAuthSection() {
             overrideStrokeColor: isCustom ? Colors.amberAccent : Colors.black,
           ),
           style: OutlinedButton.styleFrom(
+            // Rule: If neon (isCustom), container is black. If not, use regular surface color.
             backgroundColor: isCustom ? Colors.black : Theme.of(context).colorScheme.surface.withOpacity(0.9),
-            side: BorderSide(color: isCustom ? Color.lerp(Colors.amberAccent, Colors.white, 0.35)! : Colors.amberAccent, width: 1.5), 
-            minimumSize: const Size(double.infinity, 45)
+            // Rule: Neon border uses lerp(accent, white, 0.35)
+            side: BorderSide(
+              color: isCustom 
+                ? Color.lerp(Colors.amberAccent, Colors.white, 0.35)! 
+                : Colors.amberAccent, 
+              width: 1.5
+            ), 
+            minimumSize: const Size(double.infinity, 45),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           ),
         ),
       ),
-      const SizedBox(height: 15)
+      
+      const SizedBox(height: 15),
     ],
   );
 }
@@ -2891,27 +3189,32 @@ Widget build(BuildContext context) {
             color: Colors.white,
           ),
           subtitle: Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: mainListChips.map((m) {
-                  bool isLit = weapon.builds.containsKey(m);
-                  if (m == "Multiplayer") {
-                    isLit = weapon.builds.containsKey("Multiplayer") || 
-                            weapon.builds.containsKey("MULTIPLAYER FULL AUTO") || 
-                            weapon.builds.containsKey("MULTIPLAYER SEMI AUTO");
-                  }
+          padding: const EdgeInsets.only(top: 8),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: mainListChips.where((m) {
+                if (weapon.name == "MAGNUM (CW)" && m == "Multiplayer") {
+                  return false;
+                }
+                return true;
+              }).map((m) {
+                bool isLit = weapon.builds.containsKey(m);
+                if (m == "Multiplayer") {
+                  isLit = weapon.builds.containsKey("Multiplayer") || 
+                          weapon.builds.containsKey("MULTIPLAYER FULL AUTO") || 
+                          weapon.builds.containsKey("MULTIPLAYER SEMI AUTO");
+                }
 
-                  return _StatusChip(
-                    label: m,
-                    isActive: isLit,
-                    themeController: themeController,
-                  );
-                }).toList(),
-              ),
+                return _StatusChip(
+                  label: m,
+                  isActive: isLit,
+                  themeController: themeController,
+                );
+              }).toList(),
             ),
           ),
+        ),
           trailing: IconButton(
             icon: Icon(
               isFavorite ? Icons.star : Icons.star_border,
@@ -3012,9 +3315,16 @@ class _DetailScreenState extends State<DetailScreen> {
   bool isFastMode = false;
 
   @override
-void initState() {
-  super.initState();
-  final keys = widget.weapon.builds.keys.toList();
+  void initState() {
+    super.initState();
+
+  final keys = widget.weapon.builds.keys.where((k) {
+    if (widget.weapon.name == "MAGNUM (CW)" && k == "Multiplayer") {
+      return false;
+    }
+    return true;
+  }).toList();
+
   const order = {
     "MULTIPLAYER FULL AUTO": 0,
     "MULTIPLAYER SEMI AUTO": 1,
@@ -3058,7 +3368,7 @@ Widget build(BuildContext context) {
       ? currentBuild.alternativeStats
       : currentBuild.stats;
 
-  final hasStats = displayStats != null && !isRebirth;
+  final hasStats = displayStats != null && currentBuild.category != "Rebirth";
 
   return Scaffold(
     backgroundColor: theme.colorScheme.surface,
@@ -4018,6 +4328,7 @@ class _RandomLoadoutScreenState extends State<RandomLoadoutScreen> with SingleTi
   List<Map<String, dynamic>> _generatedLoadouts = [];
   String _selectedMode = 'WARZONE';
   bool _isExclusionZoneActive = false;
+  bool _lockWeapon = false;
   List<String> _excludedGames = [];
   final List<String> _gameKeys = ["MW2", "MW3", "BO6", "BO7", "CW", "MW19"];
 
@@ -4090,33 +4401,32 @@ Future<void> _saveSettings() async {
     });
   }
 
-  void _generate() {
-  if (!_isRandomWeapon && _selectedWeapon == null) {
-    HapticFeedback.heavyImpact();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.redAccent.withOpacity(0.9),
-        behavior: SnackBarBehavior.floating,
-        content: Row(
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: Colors.black, size: 18),
-            const SizedBox(width: 10),
-
-            Expanded(
-              child: ArmoryText(
-                "PLEASE SELECT A WEAPON SYSTEM",
-                themeController: widget.themeController,
-                baseFontSize: 11.5,
-                baseStrokeWidth: 0,
-                color: Colors.black,
+void _generate() {
+    if (!_isRandomWeapon && _selectedWeapon == null) {
+      HapticFeedback.heavyImpact();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.redAccent.withOpacity(0.9),
+          behavior: SnackBarBehavior.floating,
+          content: Row(
+            children: [
+              const Icon(Icons.warning_amber_rounded, color: Colors.black, size: 18),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ArmoryText(
+                  "PLEASE SELECT A WEAPON SYSTEM",
+                  themeController: widget.themeController,
+                  baseFontSize: 11.5,
+                  baseStrokeWidth: 0,
+                  color: Colors.black,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-    return;
-  }
+      );
+      return;
+    }
 
     if (_allWeaponData.isEmpty) return;
 
@@ -4126,7 +4436,6 @@ Future<void> _saveSettings() async {
 
     List<dynamic> allowedPool = _allWeaponData.where((w) {
       String url = (w['game_image'] ?? "").toString().toUpperCase();
-      
 
       if (_isExclusionZoneActive && _excludedGames.isNotEmpty) {
         bool isExcluded = _excludedGames.any((game) => url.contains(game.toUpperCase()));
@@ -4142,47 +4451,48 @@ Future<void> _saveSettings() async {
     }).toList();
 
     if (allowedPool.isEmpty) {
-  HapticFeedback.heavyImpact(); 
-
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: Colors.black,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(4),
-        side: const BorderSide(color: Colors.redAccent, width: 1),
-      ),
-      content: Row(
-        children: [
-          const Icon(Icons.gpp_maybe_outlined, color: Colors.redAccent, size: 20),
-          const SizedBox(width: 12),
-          Expanded(
-            child: ArmoryText(
-              "CRITICAL ERROR: EXCLUSION ZONE EMPTY",
-              themeController: widget.themeController,
-              baseFontSize: 10,
-              baseStrokeWidth: 1.2,
-              color: Colors.redAccent,
-            ),
+      HapticFeedback.heavyImpact();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.black,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
+            side: const BorderSide(color: Colors.redAccent, width: 1),
           ),
-        ],
-      ),
-    ),
-  );
-  return;
-}
+          content: Row(
+            children: [
+              const Icon(Icons.gpp_maybe_outlined, color: Colors.redAccent, size: 20),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ArmoryText(
+                  "CRITICAL ERROR: EXCLUSION ZONE EMPTY",
+                  themeController: widget.themeController,
+                  baseFontSize: 10,
+                  baseStrokeWidth: 1.2,
+                  color: Colors.redAccent,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      return;
+    }
 
     var anchorWeapon = _isRandomWeapon 
         ? allowedPool[_rng.nextInt(allowedPool.length)]
         : allowedPool.firstWhere(
             (w) => w['weapon_name'] == _selectedWeapon,
-            orElse: () => allowedPool[_rng.nextInt(allowedPool.length)],
+            orElse: () => allowedPool[_rng.nextInt(allowedPool.length)] as Map<String, dynamic>,
           );
     
     String anchorGame = _getGameFromUrl(anchorWeapon['game_image']);
 
     for (int i = 0; i < _amount; i++) {
-      var weapon = (i == 0) ? anchorWeapon : null;
+      var weapon = (_lockWeapon && !_isRandomWeapon) 
+          ? anchorWeapon 
+          : (i == 0 ? anchorWeapon : null);
 
       if (weapon == null) {
         List<dynamic> constraintPool = [];
@@ -4324,10 +4634,23 @@ Widget build(BuildContext context) {
                     theme,
                   ),
                   if (!_isRandomWeapon) ...[
-                    const SizedBox(height: 10),
-                    _buildOptimizedSearch(theme),
-                  ] else
-                    _buildLockedSearchTile(theme),
+                  const SizedBox(height: 10),
+                  _buildOptimizedSearch(theme),
+                  const SizedBox(height: 10),
+                  _buildControlTile(
+                    "LOCK WEAPON CHOICE",
+                    Switch(
+                      value: _lockWeapon,
+                      activeColor: isNeon ? coreColor : theme.colorScheme.primary,
+                      onChanged: (v) {
+                        HapticFeedback.selectionClick();
+                        setState(() => _lockWeapon = v);
+                      },
+                    ),
+                    theme,
+                  ),
+                ] else
+                  _buildLockedSearchTile(theme),
                   const SizedBox(height: 10),
                   _buildControlTile("GAME MODE", _buildModeDropdown(), theme),
                   const SizedBox(height: 10),
@@ -4996,7 +5319,6 @@ class _GlitchedResultCardState extends State<GlitchedResultCard> {
         decoration: BoxDecoration(
           color: isCustom ? const Color.fromARGB(255, 0, 0, 0) : Colors.white.withOpacity(0.02),
           borderRadius: BorderRadius.circular(12),
-        
           border: Border.all(
             color: isCustom ? coreColor : primaryColor.withOpacity(0.3),
             width: isCustom ? 2.0 : 1.0,
@@ -5041,38 +5363,52 @@ class _GlitchedResultCardState extends State<GlitchedResultCard> {
               opacity: _showText ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: Column(
-                children: widget.loadout['attachments'].entries.map<Widget>((e) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Row(
-                    children: [
-
-                      Icon(
-                        Icons.chevron_right, 
-                        color: isCustom ? coreColor.withOpacity(0.7) : primaryColor, 
-                        size: 14
-                      ),
-                      const SizedBox(width: 8),
-
-                      Expanded(
-                        child: ArmoryText(
-                          "${e.key.toString().toUpperCase()}:",
-                          themeController: themeController,
-                          baseFontSize: 10,
-                          baseStrokeWidth: 1.5,
-                          color: Colors.white38,
+                children: (widget.loadout['attachments'] as Map<String, dynamic>).entries.map<Widget>((e) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.chevron_right, 
+                          color: isCustom ? coreColor.withOpacity(0.7) : primaryColor, 
+                          size: 14
                         ),
-                      ),
+                        const SizedBox(width: 8),
 
-                      ArmoryText(
-                        e.value.toString().toUpperCase(),
-                        themeController: themeController,
-                        baseFontSize: 11,
-                        baseStrokeWidth: 1.5,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                )).toList(),
+                        Expanded(
+                          flex: 2,
+                          child: FittedBox(
+                            alignment: Alignment.centerLeft,
+                            fit: BoxFit.scaleDown,
+                            child: ArmoryText(
+                              "${e.key.toString().toUpperCase()}:",
+                              themeController: themeController,
+                              baseFontSize: 10,
+                              baseStrokeWidth: 1.5,
+                              color: Colors.white38,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 8),
+                        Expanded(
+                          flex: 3,
+                          child: FittedBox(
+                            alignment: Alignment.centerRight,
+                            fit: BoxFit.scaleDown,
+                            child: ArmoryText(
+                              e.value.toString().toUpperCase(),
+                              themeController: themeController,
+                              baseFontSize: 11,
+                              baseStrokeWidth: 1.5,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ],
@@ -5575,12 +5911,12 @@ class _AugmentCard extends StatelessWidget {
           ]),
           const SizedBox(height: 15),
           if (minor['bo7'] != null) ...[
-            buildSubLabel(minor['isReplacement'] ? "REPLACED IN BO7 BY:" : "ADDITIONAL MINOR SLOT:"),
+            buildSubLabel(minor['isReplacement'] ? "MINOR AUGMENT REPLACEMENT" : "ADDITIONAL MINOR SLOT:"),
             _renderAugmentText(minor['bo7'], isBO7: true),
             const SizedBox(height: 10),
           ],
           if (major['bo7'] != null) ...[
-            buildSubLabel(major['isReplacement'] ? "REPLACED IN BO7 BY:" : "MAJOR EVOLUTION:"),
+            buildSubLabel(major['isReplacement'] ? "MAJOR AUGMENT REPLACEMENT" : "MAJOR EVOLUTION:"),
             _renderAugmentText(major['bo7'], isBO7: true),
           ],
         ],
@@ -5793,7 +6129,7 @@ Future<void> _loadMetaData() async {
           debugPrint("⚠️ NO IMAGE MATCH: Searched for '$searchName'");
         }
 
-        return MetaWeapon.fromJson(metaEntry, imageEntry);
+        return MetaWeapon.fromJson(metaEntry, imageEntry, searchName: searchName);
       }).toList();
 
       if (allWeapons.any((w) => w.game == activeGame)) {
@@ -6115,9 +6451,9 @@ class _MetaCardState extends State<_MetaCard> {
     } 
     
     if (type == "MULTIPLAYER") {
-      if (game == "BO7") return 'assets/Multiplayer_BO7_202602130017.json';
+      if (game == "BO7") return 'assets/Multiplayer_BO7_202603041754.json';
       if (game == "BO6") return 'assets/Multiplayer_MW3_BO6_202602130020.json';
-      if (game == "CW") return 'assets/Multiplayer_Cold_War_202602130020.json';
+      if (game == "CW") return 'assets/Multiplayer_Cold_War_202603041703.json';
       if (game == "MW2") return 'assets/Multiplayer_MW3_BO6_202602130020.json';
       if (game == "MW3") return 'assets/Multiplayer_MW3_BO6_202602130020.json';
       if (game == "MW19") return 'assets/Multiplayer_MW19_202602130020.json';
@@ -6126,24 +6462,19 @@ class _MetaCardState extends State<_MetaCard> {
     if (type == "ZOMBIES") {
       if (game == "BO7") return 'assets/Zombies_BO7_202602130022.json';
       if (game == "BO6") return 'assets/Zombies_MW3_BO6_202602130022.json';
-      if (game == "BOCW") return 'assets/Zombies_Cold_War_202602130022.json';
+      if (game == "CW") return 'assets/Zombies_Cold_War_202602130022.json';
       if (game == "MW2") return 'assets/Zombies_MW3_BO6_202602130022.json';
       if (game == "MW3") return 'assets/Zombies_MW3_BO6_202602130022.json';
     }
     throw UnimplementedError("No absolute path defined for Game: $game, Type: $type");
   }
 
-  Future<void> _fetchLoadout() async {
+Future<void> _fetchLoadout() async {
   if (_foundLoadout != null) return;
   setState(() => _isSearching = true);
 
   try {
-
-    final String cardName = widget.weapon.name
-        .replaceAll('•', '')
-        .replaceAll(RegExp(r'^\d+\.\s?'), '')
-        .trim()
-        .toUpperCase();
+    final String cardName = widget.weapon.searchKey.toUpperCase();
 
     final bool isSpecialWarzone = cardName.contains('(WZ)') && 
                                  (cardName.contains('SNIPER SUPPORT') || cardName.contains('MOD'));
@@ -6171,13 +6502,18 @@ class _MetaCardState extends State<_MetaCard> {
       try {
         final response = await loadHotfixedJson(primaryPath);
         final List<dynamic> data = _parseJsonList(json.decode(response));
-        final String baseName = cardName.split('(')[0].trim();
-
+        
         match = data.firstWhere((item) {
-          String itemName = (item['weapon_name'] ?? item['name'] ?? "").toString().toUpperCase().trim();
+        String itemName = (item['weapon_name'] ?? item['name'] ?? "").toString().toUpperCase().trim();
+        
+        String target = cardName.toUpperCase().trim();
 
-          return itemName == cardName || itemName == baseName;
-        }, orElse: () => null);
+        if (itemName == target) return true;
+
+        if (itemName.contains(target) || target.contains(itemName)) return true;
+
+        return false;
+      }, orElse: () => null);
       } catch (e) {
         debugPrint("Primary JSON lookup failed: $e");
       }
@@ -6727,8 +7063,8 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
       if (baseName.toUpperCase() == "KASTOV LSW" && modeKey == "Multiplayer") {
         specialtyBoxValue = "SHOOTING STYLE - ADS";
         if (!cleanAttachments.contains("NYDAR MODEL 2023")) {
-          cleanAttachments.add("NYDAR MODEL 2023");
-          starredAttachments.add("NYDAR MODEL 2023");
+          cleanAttachments.add("NYDAR MODEL 2023 SIGHT");
+          starredAttachments.add("NYDAR MODEL 2023 SIGHT");
         }
       }
 
@@ -6754,11 +7090,15 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
         if (searchName.contains("SOKOL 545")) {
           buildStats = statsLookup["SOKOL 545 (SLOW)"];
           alternativeStats = statsLookup["SOKOL 545 (FAST)"];
-        } else {
-          buildStats = statsLookup[combinedSearch] ?? (isWarzoneType ? statsLookup[searchName] : null);
-        }
+      } else {
+          buildStats = statsLookup[combinedSearch];
 
-        if (buildStats != null && isWarzoneType) {
+          if (buildStats == null && isWarzoneType) {
+              buildStats = statsLookup[searchName];
+          }
+      }
+
+        if (buildStats != null && (isWarzoneType || isSpecialType)) {
           bool isAkimboBuild = rawName.toUpperCase().contains("AKIMBO") || searchMod.contains("AKIMBO");
           String? archetype = _archetypeLookup[combinedSearch] ?? _archetypeLookup[searchName] ?? _archetypeLookup[baseName.toUpperCase()];
           if (archetype != null) {
@@ -6803,50 +7143,70 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
 
 CombatRating? calculateCombatRatingStatic(WeaponStats stats, String? archetype, bool isAkimbo) {
   try {
-    double clean(String? val) {
-      if (val == null || val == "-" || val.toLowerCase() == "null") return 0;
-      return double.tryParse(val.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0;
+    double cleanStat(String? value) {
+      if (value == null || value.isEmpty || value.toLowerCase() == "null" || value == "-") return 0.0;
+      String cleaned = value.replaceAll(RegExp(r'[^0-9.]'), '');
+      return double.tryParse(cleaned) ?? 0.0;
     }
 
-    double t1 = clean(stats.ttk1);
-    double t2 = clean(stats.ttk2);
-    double ads = clean(stats.adsSpeed);
-    double vel = clean(stats.bulletVelocity);
+    double cleanStk(String? value) {
+      if (value == null || value.isEmpty || value.toLowerCase() == "null" || value == "-") return 8.0;
+      String firstPart = value.split('-')[0].split(' ')[0].trim();
+      String cleaned = firstPart.replaceAll(RegExp(r'[^0-9.]'), '');
+      double parsed = double.tryParse(cleaned) ?? 8.0;
+      
+      return parsed == 0 ? 8.0 : parsed;
+    }
 
-    double rawScore = 0;
-    double deduction = 0;
-    String arch = archetype?.toUpperCase().trim() ?? "";
+    double t1 = cleanStat(stats.ttk1);
+    double ads = cleanStat(stats.adsSpeed);
+    double vel = cleanStat(stats.bulletVelocity);
+    double stkVal = cleanStk(stats.shotsToKill);
+    if (stkVal == 0) stkVal = 8.0;
+
+    String arch = (archetype ?? "AR").toUpperCase().trim();
+    String dbCol = arch.toLowerCase().replaceAll(" ", "");
+    if (dbCol.contains("battle")) dbCol = "battle";
+    if (dbCol.contains("marksman")) dbCol = "marksman";
+
+    double combatScore = 0;
 
     if (arch == "SNIPER") {
-      double baseAnchor;
-      if (vel >= 1350) baseAnchor = 450;
-      else if (vel >= 1300) baseAnchor = 560;
-      else if (vel >= 1200) baseAnchor = 650;
-      else baseAnchor = 750;
-      rawScore = baseAnchor + (ads * 0.1);
+      double baseAnchor = (vel >= 1350) ? 420 : (vel >= 1200 ? 520 : 620);
+      combatScore = baseAnchor + (ads * 0.1);
     } else {
-      if (isAkimbo) {
-        rawScore = (t1 * 0.7) + (t2 * 0.3);
-      } else {
-        rawScore = (t1 * 0.5) + (ads * 0.3) + (t2 * 0.2);
-      }
-
-      Map<String, double> deductions = {
-        "AR": 45, "LMG": 85, "SMG": 30, "MARKSMAN RIFLE": 30,
-        "BATTLE RIFLE": 40, "PISTOL": 120, "SHOTGUN": 160, "AKIMBO": 60
+      final Map<String, Map<String, double>> hardcodedFallbacks = {
+        "ar": {"min": 588.0, "max": 816.0},
+        "smg": {"min": 520.0, "max": 680.0},
+        "lmg": {"min": 511.0, "max": 804.0},
+        "marksman": {"min": 671.0, "max": 1353.0},
+        "battle": {"min": 480.0, "max": 800.0},
       };
 
-      String key = (arch == "PISTOL" && isAkimbo) ? "AKIMBO" : arch;
-      deduction = deductions[key] ?? 0;
+      var limits = minMaxAnchors?[dbCol] ?? hardcodedFallbacks[dbCol] ?? {"min": 500.0, "max": 1000.0};
+      
+      double minLim = double.tryParse(limits['min'].toString()) ?? 500.0;
+      double maxLim = double.tryParse(limits['max'].toString()) ?? 1000.0;
+
+      if (maxLim <= minLim) maxLim = minLim + 1.0;
+
+      double relTtk = ((t1 - minLim) / (maxLim - minLim)) * 100;
+      double forgiveness = (t1 / stkVal) / 5;
+      double weightCalc = (relTtk * 0.7) + (forgiveness * 0.3);
+      combatScore = (weightCalc * 4) + 300;
     }
 
-    double combatScore = rawScore - deduction;
-
-    if (combatScore < 540) return CombatRating("S", "Top tier pick for its class. Reliable and hard hitting.");
-    if (combatScore < 610) return CombatRating("A", "Competitive choice, but not strong enough for S tier.");
-    if (combatScore < 710) return CombatRating("B", "Usable, but will feel noticeably weaker than meta picks.");
-    return CombatRating("C", "Vastly out-classed. Use with caution.");
+    if (combatScore < 450) {
+      return CombatRating("S", "Top tier pick for its class. Reliable and hard hitting.");
+    } else if (combatScore < 580) {
+      return CombatRating("A", "Competitive choice, but not strong enough for S tier.");
+    } else if (combatScore < 700) {
+      return CombatRating("B", "Usable, but will feel noticeably weaker than other picks.");
+    } else {
+      return CombatRating("C", "Vastly outclassed. Have steady aim if you dare try.");
+    }
   } catch (e) {
+    debugPrint("Combat Rating Calculation Error: $e");
     return null;
   }
 }
@@ -6962,25 +7322,32 @@ void didChangeDependencies() {
     },
     {
       "title": "HOME SCREEN",
-      "desc": "SCROLL, OR SEARCH FOR YOUR DESIRED WEAPONS TO FIND WHAT YOU NEED. TAKE IT A STEP FURTHER AND ADD THEM TO YOUR FAVOURITES SO THEY APPEAR FIRST IN THE LIST!",
+      "desc": "SCROLL, OR SEARCH FOR YOUR DESIRED WEAPONS TO FIND WHAT YOU NEED. TAKE IT A STEP FURTHER AND ADD THEM TO YOUR FAVOURITES SO THEY APPEAR FIRST IN THE LIST FOR EASY ACCESS!",
       "images": ["https://res.cloudinary.com/dctlpj7fg/image/upload/v1771713738/Screenshot_20260221_165020_md1gmz.jpg"]
     },
     {
       "title": "SETTINGS DRAWER",
-      "desc": "HERE IS WHERE YOU WILL ACCESS THE MODULES, LOG IN TO ACCESS PREMIUM BENEFITS, READ PATCH NOTES, AND MORE. NEED A REFRESHER? COME BACK TO THIS SCREEN WITH THE INTRO SCREEN BUTTON.",
+      "desc": "ACCESS MODULES, LOG IN TO ACCESS PREMIUM BENEFITS, READ PATCH NOTES, AND MORE. NEED A REFRESHER? COME BACK HERE WITH THE INTRO SCREEN BUTTON IN CASE YOU EVER GET LOST.",
       "images": ["https://res.cloudinary.com/dctlpj7fg/image/upload/v1771713738/Screenshot_20260221_173651_eb78fl.jpg"]
     },
     {
       "title": "MODULE - META PICKS",
-      "desc": "STAY ON TOP OF YOUR GAME. WITH CARD STYLE DISPLAYS (THAT FLIP!) AND VARIOUS SELECTORS, YOU'LL NEVER BE OUT OF THE LOOP AGAIN.",
+      "desc": "STAY ON TOP OF YOUR GAME AT ALL TIMES. NEVER AGAIN WILL YOU WONDER WHAT THE BEST PICKS ARE, OR BE CONFUSED WHAT'S WORTH USING ANYMORE FROM OLDER TITLES. ONLY THE BEST MAKE IT ON THIS LIST, AND IT'S ALWAYS UP TO DATE.",
       "images": [
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772230207/Screenshot_20260227_163221_qxaqvu.jpg",
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772230207/Screenshot_20260227_163223_miuhrd.jpg" 
       ]
     },
     {
+      "title": "MODULE - RANDOMIZER",
+      "desc": "ADD SOME CHAOS TO GAME NIGHT. GENERATE UP TO 10 WEAPONS AT A TIME, UTILIZE THE EXCLUSION ZONE TO BLOCK ENTIRE GAMES WHEN PICKING WEAPONS, LOCK YOUR CHOICE IN SO YOU ONLY GET RESULTS FOR THE WEAPON YOU WANT, AND MORE.",
+      "images": [
+        "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772398546/Screenshot_20260301_154943_xws36e.jpg", 
+      ]
+    },
+    {
       "title": "THEMES",
-      "desc": "WITH TONS OF THEMES AND FONT COMBOS AVAILABLE, YOU CAN MAKE ARMORY APP YOURS. PREMIUM MEMBERS WILL HAVE ACCESS TO EVEN MORE, DYNAMIC THEMES!",
+      "desc": "MAKE ARMORY APP YOURS. WITH TONS OF THEMES AND EVEN MORE FONT CHOICES, WE TAKE CUSTOMIZATION VERY SERIOUSLY AROUND HERE. PREMIUM MEMBERS WILL HAVE ACCESS TO EXCLUSIVE THEMES THAT TAKE IT A STEP FURTHER.",
       "images": [
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772230207/Screenshot_20260227_162907_gdvq97.jpg",
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772230207/Screenshot_20260227_162925_z3epnj.jpg",
@@ -6988,7 +7355,7 @@ void didChangeDependencies() {
     },
     {
       "title": "PREMIUM BENEFITS",
-      "desc": "ON TOP OF ACCESS TO MORE THEMES, YOU GET ACCESS TO THE ARMORYS ADVANCED WEAPON STATS, AND ALL OF ARMORY BOTS BENEFITS. YOUR STATUS IS SYNCED, SO NO MATTER WHAT PART OF THE ARMORY YOU'RE IN, YOU'RE ON THE VIP LIST.",
+      "desc": "ON TOP OF EXCLUSIVE THEMES, YOU ALSO GET ACCESS TO THE ARMORY'S ADVANCED WEAPON STATS, A SYSTEM BUILT FOR THOSE THAT REQUIRE ABSOLUTE PRECISION WHEN IT COMES TO MAKING EVERY MILLISECOND IN AN ENGAGEMENT MATTER. HOW FAST WILL THIS GUN DOWN AT 27 METERS? CAN THIS SNIPER ONE SHOT? NOW YOU KNOW.",
       "images": [
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1771713470/Screenshot_20260221_171720_qymkjm.jpg",
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772230992/Screenshot_20260227_172240_pmyd1v.jpg"
@@ -6996,7 +7363,7 @@ void didChangeDependencies() {
     },
     {
       "title": "LOGGING IN",
-      "desc": "IN ORDER TO SYNC YOUR STATUS, YOU MUST LOG IN WITH YOUR DISCORD ID, AND ACQUIRE YOUR PIN. HOW TO GET YOUR PIN? HEAD ON OVER TO ARMORY BOT AND USE THE /armorypin COMMAND. ONCE YOU'RE LOGGED IN, YOU'RE GOOD TO GO UNTIL YOU LOG OUT! (FOR WHATEVER REASON YOU WOULD).",
+      "desc": "IF YOU'RE A PREMIUM MEMBER WITH ARMORY BOT, YOU'RE IN LUCK BECAUSE ARMORY APP IS MOVING IN NEXT DOOR AND IS VERY EXCITED TO MINGLE. LOG IN WITH YOUR DISCORD ID AND SECRET PIN TO GET ALL YOUR BENEFITS SYNCED UP ACROSS BOTH SERVICES. HOW DO YOU GET YOUR PIN? HEAD ON OVER TO ARMORY BOT AND USE THE /armorypin COMMAND AND IT WILL GET YOU SORTED.",
       "images": [
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772235502/Screenshot_20260227_183803_wshl0m.jpg",
         "https://res.cloudinary.com/dctlpj7fg/image/upload/v1772235424/Screenshot_20260227_182644_Discord_ks4aea.jpg"
@@ -7004,7 +7371,7 @@ void didChangeDependencies() {
     },
     {
       "title": "TIME TO DEPLOY",
-      "desc": "YOU'VE GOT YOUR BRIEFING, IT'S TIME TO LOCK AND LOAD. UPDATE YOUR LOADOUTS, GET YOUR SQUAD AND LETS GET TO WORK.",
+      "desc": "WELL DONE, YOU'VE PASSED INSPECTION. LET'S GET YOU KITTED UP AND READY TO HIT THE FIELD SPRINTING. STAY FROSTY, YOUR SQUAD DEPENDS ON IT.",
       "images": ["https://res.cloudinary.com/dctlpj7fg/image/upload/v1771647135/ios_htmmoe.png"]
     },
   ];

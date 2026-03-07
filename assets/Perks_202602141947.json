@@ -76,5 +76,12 @@
 		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763424577\/WispTea_HUD_Icon_BO7_muooyk.webp",
 		"minor_augment" : "ANY | + ANY > BO7",
 		"major_augment" : "ANY"
+	},
+	{
+		"id" : 12,
+		"perk" : "MULE KICK",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772423345\/MuleKick_HUD_Icon_BOCW_rs1vtx.webp",
+		"minor_augment" : "BOGO | + ANY > BO7",
+		"major_augment" : "MULTI PACK \/ PACK MULE"
 	}
 ]}

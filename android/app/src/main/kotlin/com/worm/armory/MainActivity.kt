@@ -1,4 +1,4 @@
-package com.example.armory_app
+package com.worm.armory
 
 import io.flutter.embedding.android.FlutterActivity
 

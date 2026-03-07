@@ -7,7 +7,7 @@
 		"attach_1" : "EXF FIFTY GS SUPPRESSOR",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "SA HARE TRIGGER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "10 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -18,7 +18,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "RAPID 30 TRIGGER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "20 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -29,7 +29,7 @@
 		"attach_1" : " SUPPRESSOR \/ RAPID FIRE MOD",
 		"attach_2" : "STEADY AIM LASER",
 		"attach_3" : "CQB REAR GRIP",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "EXTENDED MAG I",
 		"attach_5" : "AKIMBO STOCK",
 		"build_code" : null
 	},
@@ -40,7 +40,7 @@
 		"attach_1" : "10.5\" FTAC ARROW BARREL",
 		"attach_2" : "BASILISK GRIP LASER",
 		"attach_3" : "S40 RAPID LOADER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "BRYSON HTA TRIGGER",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -51,7 +51,7 @@
 		"attach_1" : "FT STEEL FIRE SUPPRESSOR",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "XRK LIGHTNING FIRE TRIGGER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "18 \/ 30 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -62,7 +62,7 @@
 		"attach_1" : "XRK SANDSTORM MUZZLE",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "RN5-XV 9MM BARREL",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "50 ROUND DRUM",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -73,7 +73,7 @@
 		"attach_1" : "SUPPRESSOR",
 		"attach_2" : "STEADY AIM LASER",
 		"attach_3" : "EXTENDED MAG II",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "RECOIL SPRINGS \/ RAPID FIRE",
 		"attach_5" : "AKIMBO STOCK",
 		"build_code" : null
 	},
@@ -84,8 +84,8 @@
 		"attach_1" : "EXF FIFTY GS SUPPRESSOR",
 		"attach_2" : ".50 PISTOL OVERPRESSURED +P ROUNDS",
 		"attach_3" : "13 ROUND MAG",
-		"attach_4" : "ULLR'S FURY TRIGGER",
-		"attach_5" : "AKIMBO REAR GRIP",
+		"attach_4" : "AKIMBO REAR GRIP",
+		"attach_5" : "",
 		"build_code" : null
 	},
 	{
@@ -95,7 +95,7 @@
 		"attach_1" : "SUPPRESSOR",
 		"attach_2" : "STEADY AIM LASER",
 		"attach_3" : "LONG BARREL",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "EXTENDED MAG I",
 		"attach_5" : "AKIMBO STOCK",
 		"build_code" : null
 	},
@@ -106,7 +106,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "BRUEN EXPRESS TRIGGER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "10 \/ 12 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -117,7 +117,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "MLX SHORT COMPETITION BARREL",
 		"attach_3" : "XTEN SIDEARM-L400 LASER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "30 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -128,7 +128,7 @@
 		"attach_1" : "SUPPRESSOR",
 		"attach_2" : "STEADY AIM LASER",
 		"attach_3" : "LONG BARREL",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "RAPID FIRE \/ RECOIL SPRINGS",
 		"attach_5" : "AKIMBO STOCK",
 		"build_code" : null
 	},
@@ -150,7 +150,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "HISS SHORT LIGHT BARREL",
 		"attach_3" : "XTEN SIDEARM-L400 LASER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "32 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -161,7 +161,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "XRK LIGHTNING FIRE TRIGGER",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "24 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -172,7 +172,7 @@
 		"attach_1" : "SONIC SUPPRESSOR XS",
 		"attach_2" : "XTEN SIDEARM-L400 LASER",
 		"attach_3" : "XRK LUC-9 BARREL",
-		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_4" : "33 \/ 50 ROUND MAG",
 		"attach_5" : "AKIMBO REAR GRIP",
 		"build_code" : null
 	},
@@ -208,5 +208,16 @@
 		"attach_4" : "ST3-GLORIA REAR GRIP",
 		"attach_5" : "AKIMBO CODA 9 STOCK",
 		"build_code" : "P03-AAEC9-2UCH5-11"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "GRAVEMARK .357",
+		"weapon_id" : 5,
+		"attach_1" : "PORTED COMPENSATOR MUZZLE",
+		"attach_2" : "LONG BARREL",
+		"attach_3" : "STEADY AIM LASER",
+		"attach_4" : "RAPID FIRE MOD",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
 	}
 ]}

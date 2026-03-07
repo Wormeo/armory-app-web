@@ -32,8 +32,8 @@
 		"id" : 5,
 		"augment" : "SHADOW RIFT",
 		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/ShadowRift_AmmoMod_Icon_BO6_yhaoc2.png",
-		"minor_augment" : "SUPERMASSIVE | + SUPERMASSIVE > BO7",
-		"major_augment" : "TOPPLE DANGER | BO7 > GRAVITY WELL"
+		"minor_augment" : "SUPERMASSIVE | + ANY > BO7",
+		"major_augment" : "EXPLOSIVE RAIN | BO7 > GRAVITY WELL"
 	},
 	{
 		"id" : 6,
@@ -46,7 +46,7 @@
 		"id" : 7,
 		"augment" : "SHATTER BLAST",
 		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959421\/ShatterBlast_AmmoMod_Icon_BO6_b5gxnr.png",
-		"minor_augment" : "BLAST WAVE \/ ZONE",
+		"minor_augment" : "BLAST WAVE \/ BLAST ZONE | + ANY > BO7",
 		"major_augment" : "BLAST CHAIN"
 	},
 	{

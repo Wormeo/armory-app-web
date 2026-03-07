@@ -484,25 +484,25 @@
 		"id" : 82,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "1. CARBON 57"
+		"weapon" : "1. REV-46"
 	},
 	{
 		"id" : 83,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "2. REV-46"
+		"weapon" : "2. CARBON 57"
 	},
 	{
 		"id" : 84,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "3. KOGOT-7"
+		"weapon" : "3. RAZOR 9MM (PRESTIGE)"
 	},
 	{
 		"id" : 85,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "4. RAZOR 9MM (PRESTIGE)"
+		"weapon" : "4. KOGOT-7"
 	},
 	{
 		"id" : 86,

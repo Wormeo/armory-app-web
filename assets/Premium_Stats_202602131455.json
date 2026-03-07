@@ -2527,7 +2527,7 @@
 		"ads_speed" : "550MS",
 		"bullet_velocity" : "1291.4",
 		"shots_to_kill" : "1 - 2",
-		"ttk2" : null,
+		"ttk2" : "",
 		"range2" : null,
 		"hitscan_range" : "65M",
 		"shot_range" : "INFINITE"

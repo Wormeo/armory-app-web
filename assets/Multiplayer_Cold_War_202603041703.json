@@ -152,7 +152,7 @@
 	},
 	{
 		"id" : 16,
-		"weapon_name" : "KRIG 6 (CW)",
+		"weapon_name" : "KRIG 6",
 		"weapon_id" : 9,
 		"attach_1" : "SUPPRESSOR",
 		"attach_2" : "SAS COMBAT STOCK",
@@ -409,5 +409,15 @@
 		"attach_3" : "PATROL GRIP UNDERBARREL",
 		"attach_4" : "SERPENT WRAP HANDLE",
 		"attach_5" : "4 ROUND SPEED MAG"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "MAGNUM (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "4.7\" TIGHT SNUB BARREL",
+		"attach_3" : "SWAT 5MW LASER BODY",
+		"attach_4" : "SALVO 12 ROUND FAST MAG",
+		"attach_5" : "DUAL WIELD STOCK"
 	}
 ]}
