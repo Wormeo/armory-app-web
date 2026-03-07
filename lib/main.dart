@@ -20,7 +20,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'dart:math' as math;
-import 'package:in_app_purchase/in_app_purchase.dart';
 
 
 const String globalNgrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
@@ -34,40 +33,6 @@ Future<String> loadHotfixedJson(String assetPath) async {
     return await localFile.readAsString();
   } else {
     return await rootBundle.loadString(assetPath);
-  }
-}
-
-Map<String, Map<String, double>>? minMaxAnchors;
-
-Future<void> loadMinMaxData() async {
-  try {
-    final String response = await loadHotfixedJson('assets/json/MinMax_202603052106.json');
-    
-    final Map<String, dynamic> data = json.decode(response);
-    final List<dynamic> rows = data['MinMax'];
-
-    final minRow = rows.firstWhere((r) => r['id'] == 1);
-    final maxRow = rows.firstWhere((r) => r['id'] == 2);
-    
-    minMaxAnchors = {};
-    const categories = ['ar', 'smg', 'lmg', 'marksman', 'battle'];
-    
-    for (var cat in categories) {
-      minMaxAnchors![cat] = {
-        'min': double.tryParse(minRow[cat].toString()) ?? 500.0,
-        'max': double.tryParse(maxRow[cat].toString()) ?? 1000.0,
-      };
-    }
-    debugPrint("✅ MinMax Synced: SMG is ${minMaxAnchors!['smg']!['min']} - ${minMaxAnchors!['smg']!['max']}");
-  } catch (e) {
-    debugPrint("❌ Sync Error: $e");
-    minMaxAnchors = {
-      "ar": {"min": 588.0, "max": 816.0},
-      "smg": {"min": 520.0, "max": 680.0},
-      "lmg": {"min": 511.0, "max": 804.0},
-      "marksman": {"min": 671.0, "max": 1353.0},
-      "battle": {"min": 480.0, "max": 800.0},
-    };
   }
 }
 
@@ -108,7 +73,7 @@ final Set<String> _opticDictionary = {"REMUDA MINI REFLEX", "OTERO MICRO DOT", "
 "SOLOZERO NVG ENHANCED", "MERC THERMAL OPTIC", "SNIPER SCOPE", "VARIABLE ZOOM SCOPE", "SP-X 80 6.6X",
 "DS FARSIGHT 11 SCOPE", "MCPR-300 9.5X SCOPE", "CORIO 13X VRS", "MILLSTOP REFLEX", "VISIONTECH 2X",
 "KOBRA RED DOT", "QUICKDOT LED", "AXIAL ARMS 3X", "SILLIX HOLOSCOUT", "MICROFLEX LED", "HAWKSMOOR",
-"LETHAL TOOLS ELO OPTIC", "FANG HOVERPOINT ELO"};
+"LETHAL TOOLS ELO OPTIC"};
 
 final RegExp _prestigeRegex = RegExp(r'\s*\(PRESTIGE\)', caseSensitive: false);
 final RegExp _akimboRegex = RegExp(r'\s*AKIMBO', caseSensitive: false);
@@ -184,7 +149,6 @@ void main() async {
 
   final themeController = ThemeController();
   await themeController.loadSavedTheme();
-  await loadMinMaxData();
   
   runApp(
     SyncProvider(
@@ -534,7 +498,6 @@ class MyHomePage extends StatefulWidget {
 enum ConnectionStatus { connected, tunnelIssue, offline }
 enum AppState { initializing, onboarding, booting, ready }
 bool _hasRunBootSequence = false;
-StreamSubscription<List<PurchaseDetails>>? _subscription;
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final FocusNode _searchFocusNode = FocusNode();
@@ -726,9 +689,6 @@ Widget _buildFirstTimeLoadingVisual() {
 @override
 void initState() {
   super.initState();
-
-  _initializeIAP();
-
   _checkOnboardingStatus();
   WidgetsBinding.instance.addObserver(this);
   
@@ -739,36 +699,6 @@ void initState() {
   _loadFavorites();
   _startConnectionHeartbeat();
   _runBootSequence();
-}
-
-Future<void> _initializeIAP() async {
-  debugPrint("🛠️ IAP: Starting Initialization...");
-  try {
-    final InAppPurchase iap = InAppPurchase.instance;
-    debugPrint("🛠️ IAP: Checking availability...");
-    bool available = await iap.isAvailable().timeout(
-      const Duration(seconds: 5),
-      onTimeout: () {
-        debugPrint("⚠️ IAP: Availability check timed out.");
-        return false;
-      },
-    );
-
-    debugPrint("🛠️ IAP: Availability is $available");
-    if (!available) return;
-
-    _subscription = iap.purchaseStream.listen(
-      (purchaseDetailsList) {
-        debugPrint("🛠️ IAP: New purchase event received!");
-        _listenToPurchaseUpdated(purchaseDetailsList);
-      },
-      onDone: () => _subscription?.cancel(),
-      onError: (error) => debugPrint("❌ IAP Stream Error: $error"),
-    );
-    debugPrint("✅ IAP: Subscription active.");
-  } catch (e) {
-    debugPrint("❌ IAP: Critical Initialization Error: $e");
-  }
 }
 
   Future<void> _performPreload() async {
@@ -856,7 +786,6 @@ Widget _buildStatusIndicator() {
 
 @override
 void dispose() {
-  _subscription?.cancel();
   WidgetsBinding.instance.removeObserver(this);
   _statusTimer?.cancel();
   _idController.dispose();
@@ -1824,179 +1753,6 @@ Future<void> _verifyPremium() async {
     );
   }
 }
-
-Future<void> _purchasePremiumGoogle() async {
-  final themeController = widget.themeController;
-  final Color coreColor = Color.lerp(themeController.activeAccentColor, Colors.white, 0.35)!;
-
-  try {
-    final InAppPurchase iap = InAppPurchase.instance;
-    final bool available = await iap.isAvailable().timeout(const Duration(seconds: 5));
-    if (!available) {
-      _showErrorSnackBar("GOOGLE PLAY STORE UNAVAILABLE");
-      return;
-    }
-
-    String? enteredId = await _showIdPopup(coreColor);
-    if (enteredId == null || enteredId.isEmpty) return;
-
-    const Set<String> kIds = <String>{'premium_lifetime'};
-    final ProductDetailsResponse response = await iap.queryProductDetails(kIds);
-
-    if (response.productDetails.isEmpty) {
-      _showErrorSnackBar("PRODUCT NOT FOUND IN STORE");
-      return;
-    }
-
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('pending_discord_id', enteredId);
-
-    await iap.buyNonConsumable(purchaseParam: PurchaseParam(productDetails: response.productDetails.first));
-  } catch (e) {
-    print("IAP Error: $e");
-    _showErrorSnackBar("FAILED TO CONNECT TO STORE");
-  }
-}
-
-Future<void> _verifyWithServer(String token, String discordId) async {
-  try {
-    final response = await http.post(
-      Uri.parse('$globalNgrokUrl/google_verify'),
-      headers: {"Content-Type": "application/json"},
-      body: json.encode({
-        "purchaseToken": token,
-        "discordId": discordId,
-      }),
-    ).timeout(const Duration(seconds: 15));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      String autoPin = data['pin'].toString();
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('saved_discord_id', discordId);
-      await prefs.setString('saved_pin', autoPin);
-      await prefs.setBool('is_premium_user', true);
-
-      setState(() {
-        _isPremiumUser = true;
-        _idController.text = discordId;
-        _pinController.text = autoPin;
-      });
-
-      HapticFeedback.heavyImpact();
-      _showSuccessSnackBar("PREMIUM ACTIVATED: WELCOME $discordId");
-    } else {
-      _showErrorSnackBar("SERVER REJECTED VERIFICATION");
-    }
-  } catch (e) {
-    _showErrorSnackBar("VERIFICATION ERROR: $e");
-  }
-}
-
-Future<String?> _showIdPopup(Color coreColor) async {
-  final themeController = widget.themeController;
-  return await showDialog<String>(
-    context: context,
-    builder: (context) {
-      TextEditingController popupController = TextEditingController();
-      return AlertDialog(
-        backgroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: coreColor, width: 2),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        title: ArmoryText("ENTER DISCORD ID", 
-            themeController: themeController, 
-            baseFontSize: 14, 
-            color: coreColor),
-        content: TextField(
-          controller: popupController,
-          autofocus: true,
-          style: TextStyle(color: Colors.white, fontFamily: themeController.activeFont),
-          decoration: InputDecoration(
-            hintText: "e.g. 1234567890",
-            hintStyle: TextStyle(color: Colors.white24, fontSize: 12),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: coreColor.withOpacity(0.5))),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: coreColor)),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("CANCEL", style: TextStyle(color: Colors.white38)),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, popupController.text.trim()),
-            child: Text("PROCEED", style: TextStyle(color: coreColor)),
-          ),
-        ],
-      );
-    },
-  );
-}
-
-void _showSuccessSnackBar(String message) {
-  final themeController = widget.themeController;
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: Colors.black,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.greenAccent, width: 2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      content: ArmoryText(
-        message.toUpperCase(),
-        themeController: themeController,
-        baseFontSize: 11,
-        color: Colors.greenAccent,
-      ),
-    ),
-  );
-}
-
-void _showErrorSnackBar(String message) {
-  final themeController = widget.themeController;
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: Colors.black,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.redAccent, width: 2),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      content: ArmoryText(
-        message.toUpperCase(),
-        themeController: themeController,
-        baseFontSize: 11,
-        color: Colors.redAccent,
-      ),
-    ),
-  );
-}
-
-void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) async {
-  for (var purchase in purchaseDetailsList) {
-    if (purchase.status == PurchaseStatus.purchased || purchase.status == PurchaseStatus.restored) {
-      final prefs = await SharedPreferences.getInstance();
-      String? discordId = prefs.getString('pending_discord_id') ?? _idController.text;
-      
-      await _verifyWithServer(purchase.verificationData.serverVerificationData, discordId);
-
-      if (purchase.pendingCompletePurchase) {
-        await InAppPurchase.instance.completePurchase(purchase);
-      }
-    } else if (purchase.status == PurchaseStatus.error) {
-      _showErrorSnackBar("GOOGLE PLAY ERROR: ${purchase.error?.message}");
-    } else if (purchase.status == PurchaseStatus.pending) {
-
-    }
-  }
-}
-
 
   void search(String query) {
     setState(() { displayList = widget.preloadedData.where((w) => w.name.toLowerCase().contains(query.toLowerCase())).toList(); });
@@ -3055,28 +2811,15 @@ Widget _buildAuthSection() {
         decoration: isCustom ? BoxDecoration(
           borderRadius: BorderRadius.circular(24), 
           boxShadow: [
-            BoxShadow(
-              color: Colors.amberAccent.withOpacity(0.8), 
-              blurRadius: 1, 
-              spreadRadius: 0.5
-            ),
-            BoxShadow(
-              color: Colors.amberAccent.withOpacity(0.3), 
-              blurRadius: 10, 
-              spreadRadius: 1
-            ),
+            BoxShadow(color: Colors.amberAccent.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
+            BoxShadow(color: Colors.amberAccent.withOpacity(0.3), blurRadius: 10, spreadRadius: 1),
           ],
         ) : null,
         child: OutlinedButton.icon(
-          // TRIGGER: Now calls the Google Play logic instead of just launching a URL
-          onPressed: _purchasePremiumGoogle, 
-          icon: Icon(
-            Icons.shop_two_outlined, // Changed to a more "Store" focused icon
-            size: 16, 
-            color: isCustom ? Colors.white : Colors.amberAccent
-          ),
+          onPressed: () => launchUrl(Uri.parse('https://buy.stripe.com/dRm6oH6BFamr8Xe2CddUY00')), 
+          icon: Icon(Icons.shopping_cart_outlined, size: 16, color: isCustom ? Colors.white : Colors.amberAccent),
           label: ArmoryText(
-            "PURCHASE PREMIUM",
+            "BUY PREMIUM",
             themeController: themeController,
             baseFontSize: 12,
             baseStrokeWidth: 1.5,
@@ -3084,22 +2827,13 @@ Widget _buildAuthSection() {
             overrideStrokeColor: isCustom ? Colors.amberAccent : Colors.black,
           ),
           style: OutlinedButton.styleFrom(
-            // Rule: If neon (isCustom), container is black. If not, use regular surface color.
             backgroundColor: isCustom ? Colors.black : Theme.of(context).colorScheme.surface.withOpacity(0.9),
-            // Rule: Neon border uses lerp(accent, white, 0.35)
-            side: BorderSide(
-              color: isCustom 
-                ? Color.lerp(Colors.amberAccent, Colors.white, 0.35)! 
-                : Colors.amberAccent, 
-              width: 1.5
-            ), 
-            minimumSize: const Size(double.infinity, 45),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            side: BorderSide(color: isCustom ? Color.lerp(Colors.amberAccent, Colors.white, 0.35)! : Colors.amberAccent, width: 1.5), 
+            minimumSize: const Size(double.infinity, 45)
           ),
         ),
       ),
-      
-      const SizedBox(height: 15),
+      const SizedBox(height: 15)
     ],
   );
 }
@@ -3368,7 +3102,7 @@ Widget build(BuildContext context) {
       ? currentBuild.alternativeStats
       : currentBuild.stats;
 
-  final hasStats = displayStats != null && currentBuild.category != "Rebirth";
+  final hasStats = displayStats != null && !isRebirth;
 
   return Scaffold(
     backgroundColor: theme.colorScheme.surface,
@@ -6504,12 +6238,16 @@ Future<void> _fetchLoadout() async {
         final List<dynamic> data = _parseJsonList(json.decode(response));
         
         match = data.firstWhere((item) {
+        // Normalize the name from the JSON
         String itemName = (item['weapon_name'] ?? item['name'] ?? "").toString().toUpperCase().trim();
         
+        // Normalize your target name
         String target = cardName.toUpperCase().trim();
 
+        // 1. Exact match (should hit "MAGNUM (CW)")
         if (itemName == target) return true;
 
+        // 2. Fuzzy match (handles hidden spaces in JSON)
         if (itemName.contains(target) || target.contains(itemName)) return true;
 
         return false;
@@ -7090,15 +6828,11 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
         if (searchName.contains("SOKOL 545")) {
           buildStats = statsLookup["SOKOL 545 (SLOW)"];
           alternativeStats = statsLookup["SOKOL 545 (FAST)"];
-      } else {
-          buildStats = statsLookup[combinedSearch];
+        } else {
+          buildStats = statsLookup[combinedSearch] ?? (isWarzoneType ? statsLookup[searchName] : null);
+        }
 
-          if (buildStats == null && isWarzoneType) {
-              buildStats = statsLookup[searchName];
-          }
-      }
-
-        if (buildStats != null && (isWarzoneType || isSpecialType)) {
+        if (buildStats != null && isWarzoneType) {
           bool isAkimboBuild = rawName.toUpperCase().contains("AKIMBO") || searchMod.contains("AKIMBO");
           String? archetype = _archetypeLookup[combinedSearch] ?? _archetypeLookup[searchName] ?? _archetypeLookup[baseName.toUpperCase()];
           if (archetype != null) {
@@ -7143,70 +6877,50 @@ List<Weapon> _heavyDataProcessing(Map<String, dynamic> data) {
 
 CombatRating? calculateCombatRatingStatic(WeaponStats stats, String? archetype, bool isAkimbo) {
   try {
-    double cleanStat(String? value) {
-      if (value == null || value.isEmpty || value.toLowerCase() == "null" || value == "-") return 0.0;
-      String cleaned = value.replaceAll(RegExp(r'[^0-9.]'), '');
-      return double.tryParse(cleaned) ?? 0.0;
+    double clean(String? val) {
+      if (val == null || val == "-" || val.toLowerCase() == "null") return 0;
+      return double.tryParse(val.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0;
     }
 
-    double cleanStk(String? value) {
-      if (value == null || value.isEmpty || value.toLowerCase() == "null" || value == "-") return 8.0;
-      String firstPart = value.split('-')[0].split(' ')[0].trim();
-      String cleaned = firstPart.replaceAll(RegExp(r'[^0-9.]'), '');
-      double parsed = double.tryParse(cleaned) ?? 8.0;
-      
-      return parsed == 0 ? 8.0 : parsed;
-    }
+    double t1 = clean(stats.ttk1);
+    double t2 = clean(stats.ttk2);
+    double ads = clean(stats.adsSpeed);
+    double vel = clean(stats.bulletVelocity);
 
-    double t1 = cleanStat(stats.ttk1);
-    double ads = cleanStat(stats.adsSpeed);
-    double vel = cleanStat(stats.bulletVelocity);
-    double stkVal = cleanStk(stats.shotsToKill);
-    if (stkVal == 0) stkVal = 8.0;
-
-    String arch = (archetype ?? "AR").toUpperCase().trim();
-    String dbCol = arch.toLowerCase().replaceAll(" ", "");
-    if (dbCol.contains("battle")) dbCol = "battle";
-    if (dbCol.contains("marksman")) dbCol = "marksman";
-
-    double combatScore = 0;
+    double rawScore = 0;
+    double deduction = 0;
+    String arch = archetype?.toUpperCase().trim() ?? "";
 
     if (arch == "SNIPER") {
-      double baseAnchor = (vel >= 1350) ? 420 : (vel >= 1200 ? 520 : 620);
-      combatScore = baseAnchor + (ads * 0.1);
+      double baseAnchor;
+      if (vel >= 1350) baseAnchor = 450;
+      else if (vel >= 1300) baseAnchor = 560;
+      else if (vel >= 1200) baseAnchor = 650;
+      else baseAnchor = 750;
+      rawScore = baseAnchor + (ads * 0.1);
     } else {
-      final Map<String, Map<String, double>> hardcodedFallbacks = {
-        "ar": {"min": 588.0, "max": 816.0},
-        "smg": {"min": 520.0, "max": 680.0},
-        "lmg": {"min": 511.0, "max": 804.0},
-        "marksman": {"min": 671.0, "max": 1353.0},
-        "battle": {"min": 480.0, "max": 800.0},
+      if (isAkimbo) {
+        rawScore = (t1 * 0.7) + (t2 * 0.3);
+      } else {
+        rawScore = (t1 * 0.5) + (ads * 0.3) + (t2 * 0.2);
+      }
+
+      Map<String, double> deductions = {
+        "AR": 45, "LMG": 85, "SMG": 30, "MARKSMAN RIFLE": 30,
+        "BATTLE RIFLE": 40, "PISTOL": 120, "SHOTGUN": 160, "AKIMBO": 60
       };
 
-      var limits = minMaxAnchors?[dbCol] ?? hardcodedFallbacks[dbCol] ?? {"min": 500.0, "max": 1000.0};
-      
-      double minLim = double.tryParse(limits['min'].toString()) ?? 500.0;
-      double maxLim = double.tryParse(limits['max'].toString()) ?? 1000.0;
-
-      if (maxLim <= minLim) maxLim = minLim + 1.0;
-
-      double relTtk = ((t1 - minLim) / (maxLim - minLim)) * 100;
-      double forgiveness = (t1 / stkVal) / 5;
-      double weightCalc = (relTtk * 0.7) + (forgiveness * 0.3);
-      combatScore = (weightCalc * 4) + 300;
+      String key = (arch == "PISTOL" && isAkimbo) ? "AKIMBO" : arch;
+      deduction = deductions[key] ?? 0;
     }
 
-    if (combatScore < 450) {
-      return CombatRating("S", "Top tier pick for its class. Reliable and hard hitting.");
-    } else if (combatScore < 580) {
-      return CombatRating("A", "Competitive choice, but not strong enough for S tier.");
-    } else if (combatScore < 700) {
-      return CombatRating("B", "Usable, but will feel noticeably weaker than other picks.");
-    } else {
-      return CombatRating("C", "Vastly outclassed. Have steady aim if you dare try.");
-    }
+    double combatScore = rawScore - deduction;
+
+    if (combatScore < 540) return CombatRating("S", "Top tier pick for its class. Reliable and hard hitting.");
+    if (combatScore < 610) return CombatRating("A", "Competitive choice, but not strong enough for S tier.");
+    if (combatScore < 710) return CombatRating("B", "Usable, but will feel noticeably weaker than meta picks.");
+    return CombatRating("C", "Vastly out-classed. Use with caution.");
   } catch (e) {
-    debugPrint("Combat Rating Calculation Error: $e");
     return null;
   }
 }
