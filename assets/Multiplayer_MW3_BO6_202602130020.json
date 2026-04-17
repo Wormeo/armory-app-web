@@ -226,7 +226,7 @@
 		"weapon_id" : 1,
 		"attach_1" : "L4R FLASH HIDER MUZZLE",
 		"attach_2" : "DR-6 HANDSTOP UNDERBARREL",
-		"attach_3" : "SAKIN ZX REAR GRRIP",
+		"attach_3" : "SAKIN ZX REAR GRIP",
 		"attach_4" : "30 ROUND MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "SLATE REFLECTOR \/ MK. 3 REFLECTOR"
@@ -526,7 +526,7 @@
 		"attach_3" : "MORN-20 REAR GRIP",
 		"attach_4" : "SIGHT",
 		"attach_5" : "40 ROUND MAG",
-		"recommended_sight_shooting_style" : "NYDAR MODEL 2023 SIGHT"
+		"recommended_sight_shooting_style" : "NYDAR  MODEL 2023"
 	},
 	{
 		"id" : 49,
@@ -604,6 +604,17 @@
 		"attach_4" : "SCHLAGER PEQ BOX IV LASER",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "SP-X 80 6.6X SCOPE"
+	},
+	{
+		"id" : 56,
+		"weapon_name" : "KAR98K IRON SIGHTS",
+		"weapon_id" : 1,
+		"attach_1" : "BRYSON CARBINE-S BARREL",
+		"attach_2" : "DR-6 HANDSTOP",
+		"attach_3" : "NO STOCK",
+		"attach_4" : "SCHLAGER PEQ BOX IV LASER",
+		"attach_5" : "7.92X57MM HIGH GRAIN ROUNDS \/ BAYONET",
+		"recommended_sight_shooting_style" : ""
 	},
 	{
 		"id" : 57,
@@ -931,7 +942,7 @@
 		"attach_1" : "XTEN PORTED 290 MUZZLE",
 		"attach_2" : "BRUEN BASTION UNDERBARREL",
 		"attach_3" : "TORRENT SPAN-9 STOCK",
-		"attach_4" : "SAKIN ZK REAR GRIP",
+		"attach_4" : "SAKIN ZX REAR GRIP",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "MK. 3 REFLECTOR"
 	},

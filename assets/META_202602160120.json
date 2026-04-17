@@ -424,13 +424,13 @@
 		"id" : 72,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• M15 MOD 0"
+		"weapon" : "• AK-27"
 	},
 	{
 		"id" : 73,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• DRAVEC 45"
+		"weapon" : "• VOYAK KT-3"
 	},
 	{
 		"id" : 74,
@@ -442,97 +442,97 @@
 		"id" : 75,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• RYDEN 45K"
+		"weapon" : "• STURMWOLF 45"
 	},
 	{
 		"id" : 76,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• SHADOW SK"
+		"weapon" : "• DRAVEC 45"
 	},
 	{
 		"id" : 77,
 		"game" : "BO7",
 		"class_type" : "ZOMBIES",
-		"weapon" : "• MXR-17"
+		"weapon" : "• AK-27"
 	},
 	{
 		"id" : 78,
 		"game" : "BO7",
 		"class_type" : "ZOMBIES",
-		"weapon" : "• DRAVEC 45"
+		"weapon" : "• SG-12"
 	},
 	{
 		"id" : 79,
 		"game" : "BO7",
 		"class_type" : "ZOMBIES",
-		"weapon" : "• M10 BREACHER"
+		"weapon" : "• KOGOT-7"
 	},
 	{
 		"id" : 80,
 		"game" : "BO7",
 		"class_type" : "ZOMBIES",
-		"weapon" : "• MK.78"
+		"weapon" : "• XM325"
 	},
 	{
 		"id" : 81,
 		"game" : "BO7",
 		"class_type" : "ZOMBIES",
-		"weapon" : "• AK-27"
+		"weapon" : "• M34 NOVALINE"
 	},
 	{
 		"id" : 82,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "1. REV-46"
+		"weapon" : "1. RAZOR 9MM (PRESTIGE)"
 	},
 	{
 		"id" : 83,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "2. CARBON 57"
+		"weapon" : "2. DRAVEC 45"
 	},
 	{
 		"id" : 84,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "3. RAZOR 9MM (PRESTIGE)"
+		"weapon" : "3. KOGOT-7"
 	},
 	{
 		"id" : 85,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "4. KOGOT-7"
+		"weapon" : "4. RYDEN 45K"
 	},
 	{
 		"id" : 86,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "5. RYDEN 45K"
+		"weapon" : "5. REV-46"
 	},
 	{
 		"id" : 87,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "1. M8A1 SNIPER SUPPORT (WZ)"
+		"weapon" : "1. VOYAK KT-3"
 	},
 	{
 		"id" : 88,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "2. M15 MOD 0"
+		"weapon" : "2. EGRT-17"
 	},
 	{
 		"id" : 89,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "3. MADDOX RFB"
+		"weapon" : "3. PEACEKEEPER MK1"
 	},
 	{
 		"id" : 90,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "4. EGRT-17"
+		"weapon" : "4. MK.78"
 	},
 	{
 		"id" : 91,

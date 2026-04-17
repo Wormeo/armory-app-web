@@ -277,7 +277,7 @@
 	},
 	{
 		"id" : 28,
-		"weapon_name" : "LACMANN SHROUD",
+		"weapon_name" : "LACHMANN SHROUD",
 		"mod" : "FULL AUTO (MW3 MP)",
 		"attach_1" : "XTEN PHANTOM-5 UNDERBARREL",
 		"attach_2" : "1MW QUICKFIRE LASER",
@@ -862,7 +862,7 @@
 		"id" : 84,
 		"weapon_name" : "AKITA",
 		"mod" : "AKIMBO",
-		"attach_1" : "FANG MODIFED CHOKE MUZZLE",
+		"attach_1" : "FANG MODIFIED CHOKE MUZZLE",
 		"attach_2" : "14\" RETRIEVER BARREL",
 		"attach_3" : "S-47 RESPONSE REAR GRIP",
 		"attach_4" : "EAM SCATTERLINE LASER",
@@ -906,9 +906,9 @@
 		"id" : 90,
 		"weapon_name" : "M8A1",
 		"mod" : "SNIPER SUPPORT (WZ)",
-		"attach_1" : "VAS 5.56 SUPPRESSOR",
-		"attach_2" : "M8A1 AUTOSTRIKE BARREL",
-		"attach_3" : "SWIFTLINE STOCK",
+		"attach_1" : "M8A1 AUTOSTRIKE BARREL",
+		"attach_2" : "FORCE STABILIZER UNDERBARREL",
+		"attach_3" : "SCHMIDT TRAPPER REAR GRIP",
 		"attach_4" : "SENTINEL EXTENDED MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO"
@@ -940,10 +940,21 @@
 		"weapon_name" : "RAZOR 9MM",
 		"mod" : "RAPID FIRE",
 		"attach_1" : "H-9MM PRECISION MUZZLE",
-		"attach_2" : "LATERAL PRECISION UNDERBARREL",
+		"attach_2" : "EAM PUSHBACK REAR GRIP",
 		"attach_3" : "RWL STABILITY STOCK",
 		"attach_4" : "RAZOR 9MM WILDFIRE CONVERSION KIT",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "FANG HOVERPOINT ELO"
+	},
+	{
+		"id" : 94,
+		"weapon_name" : "MXR-17",
+		"mod" : "HAMR CONVERSION KIT",
+		"attach_1" : "REDWELL-90 COMPENSATOR",
+		"attach_2" : "MXR-17 ANVL CONVERSION BARREL",
+		"attach_3" : "CELERITY REAR GRIP",
+		"attach_4" : "3MW MOTION STRIKE LASER",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO"
 	}
 ]}

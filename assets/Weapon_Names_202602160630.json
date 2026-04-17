@@ -130,7 +130,7 @@
 		"id" : 22,
 		"weapon_name" : "CROSSBOW (MW2)",
 		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188647\/CROSSBOW_klvwu8.webp",
-		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
 		"id" : 23,
@@ -525,7 +525,7 @@
 	{
 		"id" : 88,
 		"weapon_name" : "KRIG C (BO6)",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177901\/KOMAPKT_v5uqwh.png",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177901\/KRIGC_hpxyu8.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
 	},
 	{
@@ -1036,7 +1036,7 @@
 		"id" : 173,
 		"weapon_name" : "MINIBAK",
 		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188785\/MINIBAK_t6ymrp.png",
-		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
 		"id" : 174,
@@ -1840,6 +1840,30 @@
 		"id" : 307,
 		"weapon_name" : "SG-12",
 		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229710\/SG12_gc662u.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 308,
+		"weapon_name" : "VOYAK KT-3",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1773635427\/VOYAK_g8pp6v.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 309,
+		"weapon_name" : "SWORDFISH A1",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1773971920\/SWORDFISH_pi00pp.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 310,
+		"weapon_name" : "MK35 ISR",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1775189329\/MK35_ui4jom.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 311,
+		"weapon_name" : "VST",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1775189329\/VST_co6weu.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
 	}
 ]}

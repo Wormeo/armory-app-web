@@ -11,9 +11,9 @@
 		"attach_5" : "LITHE THIN REAR GRIP",
 		"attach_6" : "CALIBAN LIGHT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "ENHANCED CYCLE SYSTEM MOD",
+		"attach_8" : "7.62 SOVIET FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A02-2DDCP-GLF12-W31"
+		"build_code" : "A02-S3A5T-4SJYY-VP11"
 	},
 	{
 		"id" : 2,
@@ -37,13 +37,13 @@
 		"attach_1" : "K&S STALKER SUPPRESSOR",
 		"attach_2" : "10.2\" EX-3 HEAVY BARREL",
 		"attach_3" : "SAPPER UNDERBARREL",
-		"attach_4" : "MFS RENOWN PLUS MAG",
+		"attach_4" : "SIGHT \/ NOTHING",
 		"attach_5" : "PUCK-57 REAR GRIP",
 		"attach_6" : "GRAPH-AERO STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "ENHANCED CYCLE SYSTEM MOD",
-		"recommended_sight_shooting_style" : null,
-		"build_code" : "S05-6EUX8-6CW31"
+		"attach_8" : "5.7X28 FMJ",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "S05-21WSL-SSLS5-9Z11"
 	},
 	{
 		"id" : 5,
@@ -55,10 +55,10 @@
 		"attach_4" : "QUIKARM REAR GRIP",
 		"attach_5" : "EAM HERITAGE STOCK",
 		"attach_6" : "EAM SCATTERLINE LASER",
-		"attach_7" : "BOLT CARRIER MOD",
+		"attach_7" : ".45 CAL FMJ",
 		"attach_8" : "SIGHT \/ NOTHING",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S04-3M8XM-B9Y31"
+		"build_code" : "S04-21X3D-ZIVAF-YZ11"
 	},
 	{
 		"id" : 6,
@@ -71,9 +71,9 @@
 		"attach_5" : "NEEDLETAIL REAR GRIP",
 		"attach_6" : "ASSAULT DIVISION STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.56 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A05-6C3E8-IY531"
+		"build_code" : "A05-21WSL-RECSF-ZP11"
 	},
 	{
 		"id" : 7,
@@ -116,7 +116,7 @@
 		"attach_5" : "PEREGRINE REAR GRIP",
 		"attach_6" : "TELESCOPIC STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "BOLT CARRIER MOD \/ MFS 5.56 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "A01-2DDCP-GLF2U-531"
 	},
@@ -127,28 +127,28 @@
 		"attach_1" : "GREAVES A-763 SUPPRESSOR",
 		"attach_2" : "15\" CYCLOPS-03 BARREL",
 		"attach_3" : "EAM STEADY-90 UNDERBARREL",
-		"attach_4" : "BOWEN 763 EXTENDED MAG",
+		"attach_4" : "BOWEN 762 EXTENDED MAG",
 		"attach_5" : "COUGAR DRAW REAR GRIP",
 		"attach_6" : "MIL-SPEC LIGHT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "7.62 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "M03-6C3E8-IY531"
+		"build_code" : "M03-21WSL-RECSF-ZP11"
 	},
 	{
 		"id" : 12,
 		"weapon_name" : "M8A1",
 		"weapon_id" : 3,
 		"attach_1" : "VAS 5.56 SUPPRESSOR",
-		"attach_2" : "16.5\" DEADEYE BARREL",
-		"attach_3" : "M335-X FRAG \/ EAM STEADY-90 UNDERBARREL",
+		"attach_2" : "M8A1 AUTOSTRIKE BARREL",
+		"attach_3" : "M335-X FRAG \/ ENVOY UNDERBARREL",
 		"attach_4" : "REDLINE CAPACITY DRUM MAG",
 		"attach_5" : "INSTINCT REAR GRIP",
 		"attach_6" : "VAS BARRAGE-01 STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.56 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "M01-2DDCP-GLF12-W31"
+		"build_code" : "M01-2KQJ1-TY29D-NE11"
 	},
 	{
 		"id" : 13,
@@ -161,9 +161,9 @@
 		"attach_5" : "TRAILBLAZE REAR GRIP",
 		"attach_6" : "CHARON LIGHT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "7.62 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "L01-6C3E8-KQD31"
+		"build_code" : "L01-2JD6U-HY42R-4G11"
 	},
 	{
 		"id" : 14,
@@ -172,13 +172,13 @@
 		"attach_1" : "K&S STALKER SUPPRESSOR",
 		"attach_2" : "12\" TOXIN BARREL",
 		"attach_3" : "FLOWGUARD UNDERBARREL",
-		"attach_4" : "COACHWHIP FAST MAG",
-		"attach_5" : "QUICKDRAW REAR GRIP",
+		"attach_4" : "SUSTAIN-25 EXTENDED MAG",
+		"attach_5" : "MAGNATE REAR GRIP",
 		"attach_6" : "VIPER WIRE STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.56X30MM FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "SO6-6C3E8-IY531"
+		"build_code" : "S06-2JD6U-GMSHT-KX11"
 	},
 	{
 		"id" : 15,
@@ -191,9 +191,9 @@
 		"attach_5" : "CELERITY REAR GRIP",
 		"attach_6" : "GREAVES COVENANT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "7.62 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A03-2DDCP-GLF12-W31"
+		"build_code" : "A03-2KQJ1-TY29F-EG11"
 	},
 	{
 		"id" : 16,
@@ -203,12 +203,12 @@
 		"attach_2" : "25\" EAM HEAVY BARREL",
 		"attach_3" : "M335-X FRAG \/ EAM STEADY-90 UNDERBARREL",
 		"attach_4" : "VULCAN REACH EXTENSION MAG",
-		"attach_5" : "RAPID-LOCK REAR GRIP",
+		"attach_5" : "KINETIX-MK 1 REAR GRIP",
 		"attach_6" : "SWIFT-8 GUARD STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.7X28MM FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A06-2DDCP-GLF2U-531"
+		"build_code" : "A06-23A5T-4VIEU-6X11"
 	},
 	{
 		"id" : 17,
@@ -221,9 +221,9 @@
 		"attach_5" : "HASTE RIBBED REAR GRIP",
 		"attach_6" : "SERPENT PAD STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "9MM PARABELLUM FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S03-6C3E8-IY531"
+		"build_code" : "S03-21WSL-RBECM-GP11"
 	},
 	{
 		"id" : 18,
@@ -236,9 +236,9 @@
 		"attach_5" : "LOTUS DRAW REAR GRIP",
 		"attach_6" : "NIGHTFALL RAPID STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "ENHANCED CYCLE SYSTEM MOD",
+		"attach_8" : "9MM PARABELLUM FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S02-6C3E8-IY531"
+		"build_code" : "S02-2JD6U-GJU2Y-AN11"
 	},
 	{
 		"id" : 19,
@@ -251,9 +251,9 @@
 		"attach_5" : "EXCESS REAR GRIP",
 		"attach_6" : "COLLAPSIBLE STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : ".45 CAL FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S01-6C3E8-IY531"
+		"build_code" : "S01-21WSL-RBECK-PG11"
 	},
 	{
 		"id" : 20,
@@ -295,10 +295,10 @@
 		"attach_4" : "LTI TYRANNIS REAR GRIP",
 		"attach_5" : "WARDEN FOLDING STOCK",
 		"attach_6" : "CONVERGENCE BOX LASER",
-		"attach_7" : "MFS SNAP TRIGGER MOD",
+		"attach_7" : "MFS SNAP TRIGGER MOD \/ .308 NATO FMJ",
 		"attach_8" : "NOTHING \/ SIGHT",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "M02-6C3E9-9RF11"
+		"build_code" : "M02-2JDBR-XJBLE-T811"
 	},
 	{
 		"id" : 24,
@@ -310,10 +310,10 @@
 		"attach_4" : "PILLORY REAR GRIP",
 		"attach_5" : "ETHEREAL WAVE STOCK",
 		"attach_6" : "CONVERGENCE BOX LASER",
-		"attach_7" : "BOLT CARRIER MOD",
+		"attach_7" : "4.73 CASELESS FMJ",
 		"attach_8" : "LTI MINI OPTIC",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A04-63SYS-M4IJ3-1"
+		"build_code" : "A04-21WXJ-8AR71-K411"
 	},
 	{
 		"id" : 25,
@@ -326,9 +326,9 @@
 		"attach_5" : "ELYSIAN QUICK REAR GRIP",
 		"attach_6" : "VG-0 LIGHT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.56 CASELESS FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "L02-6C3E8-IY531"
+		"build_code" : "L02-21WSL-SSLSA-KP11"
 	},
 	{
 		"id" : 26,
@@ -356,39 +356,39 @@
 		"attach_5" : "SPOTTED AGILE REAR GRIP",
 		"attach_6" : "F7-HOWL STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "9X21MM FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S10-91MXX-X5D51"
+		"build_code" : "S10-21WSP-GBQ98-LM11"
 	},
 	{
 		"id" : 29,
 		"weapon_name" : "MADDOX RFB",
 		"weapon_id" : 3,
 		"attach_1" : "VAS 5.56 SUPPRESSOR",
-		"attach_2" : "21\" TURBINE BOOSTER BARREL",
+		"attach_2" : "19\" VIRTUOUS-OP BARREL",
 		"attach_3" : "M335-X FRAG \/ EAM STEADY-90 UNDERBARREL ",
 		"attach_4" : "BILLING EXTENDED MAG",
 		"attach_5" : "FARADAY QUICK REAR GRIP",
 		"attach_6" : "VOLTAIC LIGHT STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : "5.56 NATO FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "A11-JJQ26-2C33U-51"
+		"build_code" : "A11-22GC6-GGZVZ-4P11"
 	},
 	{
 		"id" : 30,
 		"weapon_name" : "SOKOL 545",
 		"weapon_id" : 3,
 		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
-		"attach_2" : "18.2\" PRIMER BARREL",
+		"attach_2" : "18.2\" PARLOUS HEAVY BARREL",
 		"attach_3" : "ENVOY UNDERBARREL",
 		"attach_4" : "CLEPEN FAST MAG",
 		"attach_5" : "PYTHIAN-VI REAR GRIP",
 		"attach_6" : "VODA FLOUNCE STOCK",
 		"attach_7" : "CONVERGENCE BOX LASER",
-		"attach_8" : "BUFFER SPRING MOD \/ SIGHT",
+		"attach_8" : "5.45 FMJ \/ SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "L04-EB8XG-D2751"
+		"build_code" : "L04-2JD73-FQDAQ-LZ11"
 	},
 	{
 		"id" : 31,
@@ -401,9 +401,9 @@
 		"attach_5" : "SELENE ROVER REAR GRIP",
 		"attach_6" : "ITINERANT STOCK",
 		"attach_7" : "EAM SCATTERLINE LASER",
-		"attach_8" : "BOLT CARRIER MOD",
+		"attach_8" : ".45 CAL FMJ",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S07-6EUYS-GQL31"
+		"build_code" : "S07-21WSL-U6SCD-S511"
 	},
 	{
 		"id" : 32,
@@ -460,9 +460,114 @@
 		"attach_4" : "CAWDOR EXTENDED MAG",
 		"attach_5" : "TRAVERSAL REAR GRIP",
 		"attach_6" : "EAM SCATTERLINE LASER",
-		"attach_7" : "BOLT CARRIER MOD",
+		"attach_7" : "4.6X30MM FMJ",
 		"attach_8" : "LETHAL TOOLS ELO OPTIC",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S09-AXR1V-KNQ15-1"
+		"build_code" : "S09-21X3E-6CU5K-RK11"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "VOYAK KT-3",
+		"weapon_id" : 3,
+		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
+		"attach_2" : "17.6\" LTI GRAV-4 BARREL",
+		"attach_3" : "SAPPER GUARD UNDERBARREL",
+		"attach_4" : "LINEGUARD CASKET MAG",
+		"attach_5" : "PLEATED REAR GRIP",
+		"attach_6" : "RIDGEWAY PAD STOCK",
+		"attach_7" : "CONVERGENCE BOX \/ MFS ANTI-DISPERSION LASER",
+		"attach_8" : "7.62 SOVIET FMJ",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "A09-2KG9S-QTT38-R311"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "SWORDFISH A1",
+		"weapon_id" : 3,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "15.9\" BOWEN MELVILLE BARREL",
+		"attach_3" : "MODUS-R UNDERBARREL",
+		"attach_4" : "DORADO EXTENDED MAG",
+		"attach_5" : "R1-SPLENDOR REAR GRIP",
+		"attach_6" : "ADEPT SKIFF STOCK",
+		"attach_7" : "BOLT CARRIER GROUP MOD",
+		"attach_8" : "LETHAL TOOLS ELO OPTIC",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "M05-5XMQL-4P2J3-1"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 3,
+		"attach_1" : "JAGER ROAR SUPPRESSOR",
+		"attach_2" : "VECTOR SYNC LASER",
+		"attach_3" : "AKIMBO JAGER 45 STOCK",
+		"attach_4" : "WARPATH CAPACITY MAG",
+		"attach_5" : ".45 CAL FMJ",
+		"attach_6" : null,
+		"attach_7" : null,
+		"attach_8" : null,
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P01-2JMG3-GGMD5-5R11"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_id" : 3,
+		"attach_1" : "GREAVES COVERT SUPPRESSOR",
+		"attach_2" : "5.2\" ANVIL BARREL",
+		"attach_3" : "VECTOR SYNC LASER",
+		"attach_4" : "DRACO RESERVE EXTENDED MAG",
+		"attach_5" : "5.7X28MM FMJ",
+		"attach_6" : null,
+		"attach_7" : null,
+		"attach_8" : null,
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P02-2JD6R-RGJQD-YZ11"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "CODA 9",
+		"weapon_id" : 3,
+		"attach_1" : "BOWEN 9MM SUPPRESSOR",
+		"attach_2" : "4.9\" OMEN BARREL",
+		"attach_3" : "2MW PINPOINT LASER",
+		"attach_4" : "HELLGATE STICK MAG",
+		"attach_5" : "9MM PARABELLUM FMJ",
+		"attach_6" : null,
+		"attach_7" : null,
+		"attach_8" : null,
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P03-2JD6U-DFHBX-1511"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "MK35 ISR",
+		"weapon_id" : 3,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "16.5\" GREAVES BELLUM BARREL",
+		"attach_3" : "M335-X FRAG \/ ENVOY UNDERBARREL",
+		"attach_4" : "GEN-X04 EXTENDED MAG",
+		"attach_5" : "R-V2 QUICK REAR GRIP",
+		"attach_6" : "COURSER LIGHT STOCK",
+		"attach_7" : "CONVERGENCE BOX LASER",
+		"attach_8" : "5.56 NATO FMJ",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "A12-2KG9Q-4RYLC-S111"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "VST",
+		"weapon_id" : 4,
+		"attach_1" : "BOWEN .45 SUPPRESSOR",
+		"attach_2" : "11\" URSINE BARREL",
+		"attach_3" : "EAM STEADY-90 UNDERBARREL",
+		"attach_4" : "AMPLIFY EXTENDED MAG",
+		"attach_5" : "LTI COALESCE REAR GRIP",
+		"attach_6" : "HAWKER CUB-55 STOCK",
+		"attach_7" : "EAM SCATTERLINE LASER",
+		"attach_8" : "9MM PARABELLUM FMJ",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S12-2JD73-E67F7-UQ11"
 	}
 ]}

@@ -167,5 +167,13 @@
 		"embed_colour" : null,
 		"excluded_games" : "[]",
 		"is_premium" : "NO"
+	},
+    {
+		"id" : 24,
+		"user_id" : 123456789,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "YES"
 	}
 ]}

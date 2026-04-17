@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 enum ThemeCategory { simple, anemone, premium, neon}
 
@@ -148,6 +150,36 @@ class ArmoryText extends StatelessWidget {
   }
 }
 
+class ArmorySelectableText extends StatelessWidget {
+  final String text;
+  final double baseFontSize;
+  final ThemeController themeController;
+  final Color color;
+  final double? letterSpacing;
+
+  const ArmorySelectableText(this.text, {
+    super.key,
+    required this.themeController,
+    this.baseFontSize = 12.0,
+    this.color = Colors.white,
+    this.letterSpacing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SelectionArea(
+      child: ArmoryText(
+        text,
+        themeController: themeController,
+        baseFontSize: baseFontSize,
+        color: color,
+        letterSpacing: letterSpacing,
+        baseStrokeWidth: 0,
+      ),
+    );
+  }
+}
+
 class FontSpecs {
   final double sizeScale;
   final double strokeScale;
@@ -173,6 +205,60 @@ class ThemeController extends ChangeNotifier {
 
   String _activeFont = 'Stock';
   String get activeFont => _activeFont;
+
+  String _lastViewedPatchDate = "";
+  bool _hasNewPatch = false;
+  Map<String, dynamic>? _currentPatchData;
+
+  bool get hasNewPatch => _hasNewPatch;
+  Map<String, dynamic>? get currentPatchData => _currentPatchData;
+
+Future<void> syncPatchNotes(String serverUrl) async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    _lastViewedPatchDate = prefs.getString('last_viewed_patch_date') ?? "";
+
+    final response = await http.get(Uri.parse("$serverUrl/cdn/hotfixes.json")); 
+    
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      _currentPatchData = data;
+      
+      String serverDate = data['patch_date'] ?? "";
+
+      if (serverDate != _lastViewedPatchDate) {
+        _hasNewPatch = true;
+      }
+      notifyListeners();
+    }
+  } catch (e) {
+    debugPrint("Patch Sync Error: $e");
+  }
+}
+
+Future<void> markPatchRead() async {
+  if (_currentPatchData == null) return;
+  
+  final prefs = await SharedPreferences.getInstance();
+  String serverDate = _currentPatchData!['patch_date'];
+  
+  await prefs.setString('last_viewed_patch_date', serverDate);
+  _hasNewPatch = false;
+  notifyListeners();
+}
+
+  Future<void> resetToDefault() async {
+    _activeTheme = allThemes.first; 
+    _activeFont = 'Stock';
+    _customColor = const Color(0xFF00FFCC);
+
+    notifyListeners();
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_storageKey, 'stock');
+    await prefs.setString(_fontKey, 'Stock');
+    await prefs.remove(_colorKey);
+  }
 
   Color get activeAccentColor {
     if (_activeTheme.isCustom) {
@@ -388,6 +474,50 @@ static const Map<String, FontSpecs> fontConfigs = {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(220, 208, 202, 1),
           surface: Color.fromRGBO(18, 3, 2,1),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'lavender',
+      name: 'LAVENDER',
+      pickerBoxColor: Color.fromRGBO(62, 67, 142, 1),
+      pickerBorderColor: Color.fromRGBO(169, 166, 240, 1),
+      pickerTextColor: Colors.white,
+      useWhiteSearch: true,
+      category: ThemeCategory.simple,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1775037164/0e6fade917607899390658ea1dd92ff7_nsgwnr.jpg',
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromARGB(255, 209, 216, 242),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(169, 166, 240, 1),
+          surface: Color.fromRGBO(46, 53, 93, 1),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'pastel',
+      name: 'PASTEL',
+      pickerBoxColor: Color.fromRGBO(248, 199, 233, 1),
+      pickerBorderColor: Color.fromRGBO(199, 146, 198, 1),
+      pickerTextColor: Colors.white,
+      useWhiteSearch: true,
+      category: ThemeCategory.simple,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1775037164/10b73edae925923deb995ac672377b07_ubtq9e.jpg',
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromARGB(255, 242, 209, 237),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(255, 198, 238, 1),
+          surface: Color.fromRGBO(89, 65, 85, 1)
         ),
         useMaterial3: true,
         fontFamily: 'Days One'
@@ -853,14 +983,98 @@ static const Map<String, FontSpecs> fontConfigs = {
         primaryColor: const Color.fromRGBO(168, 76, 98, 1),
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(168, 76, 98, 1),
-          surface: Color.fromRGBO(72, 29, 44, 1),
+          surface: Color.fromRGBO(90, 35, 55, 1),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
       ),
     ),
 
+    ArmoryTheme(
+      id: 'holographic_aether',
+      name: 'DARK AETHER',
+      pickerGradient: [
+        Color.fromRGBO(218, 213, 255, 1),
+        Color.fromRGBO(105, 100, 139, 1),
+        Color.fromRGBO(138, 129, 207, 1),
+        Color.fromRGBO(210, 209, 255, 1),
+        Color.fromRGBO(126, 117, 195, 1),
+        Color.fromRGBO(113, 107, 152, 1),
+        Color.fromRGBO(218, 213, 255, 1),
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.premium,
+      isHolographic: true,
+      refractionColors: [
+        Color.fromRGBO(218, 213, 255, 1),
+        Color.fromRGBO(105, 100, 139, 1),
+        Color.fromRGBO(138, 129, 207, 1),
+        Color.fromRGBO(210, 209, 255, 1),
+        Color.fromRGBO(126, 117, 195, 1),
+        Color.fromRGBO(113, 107, 152, 1),
+        Color.fromRGBO(218, 213, 255, 1),
+      ],
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1775037164/95a8ed4b259d0812400456449b1c39da_bzbslk.jpg',
+      borderGradient: [Colors.purple, Colors.black],
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(138, 129, 207, 1),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(141, 101, 193, 1),
+          surface: Color.fromRGBO(38, 28, 55, 1),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One',
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'holographic_opal',
+      name: 'OPAL',
+      pickerGradient: [
+        Color.fromRGBO(195, 195, 196, 1),
+        Color.fromRGBO(247, 225, 144, 1),
+        Color.fromRGBO(243, 166, 142, 1),
+        Color.fromRGBO(239, 150, 187, 1),
+        Color.fromRGBO(167, 152, 247, 1),
+        Color.fromRGBO(142, 184, 245, 1),
+        Color.fromRGBO(104, 237, 242, 1),
+        Color.fromRGBO(168, 253, 179, 1),
+        Color.fromRGBO(195, 195, 196, 1),
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.premium,
+      isHolographic: true,
+      refractionColors: [
+        Color.fromRGBO(195, 195, 196, 1),
+        Color.fromRGBO(247, 225, 144, 1),
+        Color.fromRGBO(243, 166, 142, 1),
+        Color.fromRGBO(239, 150, 187, 1),
+        Color.fromRGBO(167, 152, 247, 1),
+        Color.fromRGBO(142, 184, 245, 1),
+        Color.fromRGBO(104, 237, 242, 1),
+        Color.fromRGBO(168, 253, 179, 1),
+        Color.fromRGBO(195, 195, 196, 1),
+      ],
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1775037164/bc5bba399ba21918cdaf1c51e8bdf59b_gihjwe.jpg',
+      borderGradient: [Colors.purple, Colors.black],
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(142, 184, 245, 1),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(142, 184, 245, 1),
+          surface: Color.fromRGBO(44, 44, 44, 1),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One',
+      ),
+    ),
+
+
+
     // NEON
+
+
 
     ArmoryTheme(
   id: 'neon_custom',

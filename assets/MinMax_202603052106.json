@@ -6,7 +6,8 @@
       "smg": "520",
       "lmg": "511",
       "marksman": "671",
-      "battle": "480"
+      "battle": "480",
+      "pistol": "460"
     },
     {
       "id": 2,
@@ -14,7 +15,8 @@
       "smg": "680",
       "lmg": "804",
       "marksman": "1353",
-      "battle": "800"
+      "battle": "800",
+      "pistol": "1049"
     }
   ]
 }

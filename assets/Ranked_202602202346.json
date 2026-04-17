@@ -3,12 +3,12 @@
 	{
 		"id" : 19,
 		"weapon_name" : "M15 MOD 0",
-		"attach_1" : "RL-5.56 BRAKE MUZZLE",
-		"attach_2" : "16.5\" FUSION BARREL",
-		"attach_3" : "PEREGRINE REAR GRIP",
+		"attach_1" : "18\" BOWEN WATCHTOWER BARREL",
+		"attach_2" : "AXIS SHIFT VERTICAL UNDERBARREL",
+		"attach_3" : "5.56 NATO OVERPRESSURED ROUNDS",
 		"attach_4" : "BACKLINE FLIP MAG",
 		"attach_5" : "LETHAL TOOLS ELO OPTIC",
-		"build_code" : "A01-AUYBU-FAWI1-1",
+		"build_code" : "A01-2JDGJ-91GX1-E711",
 		"availability" : "YES"
 	},
 	{
@@ -16,10 +16,10 @@
 		"weapon_name" : "DRAVEC 45",
 		"attach_1" : "HAWKER STABILIZER MK.II MUZZLE",
 		"attach_2" : "19\" EAM HORIZON BARREL",
-		"attach_3" : "HERALD-Z1 REAR GRIP \/ LETHAL TOOLS ELO OPTIC",
-		"attach_4" : "SERVAL Q-STEP STOCK",
+		"attach_3" : "QUIKARM REAR GRIP",
+		"attach_4" : "SERVAL Q-STEP STOCK \/ GATOR EXTENDED MAG",
 		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
-		"build_code" : "S04-2JD6P-5UB67-6W11",
+		"build_code" : "S04-2JD6P-5RCQB-VN11",
 		"availability" : "YES"
 	},
 	{

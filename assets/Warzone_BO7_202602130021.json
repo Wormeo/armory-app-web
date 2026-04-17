@@ -164,7 +164,7 @@
 		"attach_2" : "25\" EAM HEAVY BARREL",
 		"attach_3" : "RAPID-LOCK REAR GRIP",
 		"attach_4" : "VULCAN REACH EXTENDED MAG",
-		"attach_5" : "MFS COUNTERFORCE-C1 STOCK",
+		"attach_5" : "MFS COUNTERFORCE-C1 STOCK \/ RECOIL SPRINGS",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "A06-D122G-811"
 	},
@@ -173,12 +173,12 @@
 		"weapon_name" : "RAZOR 9MM (PRESTIGE)",
 		"weapon_id" : 2,
 		"attach_1" : "12\" MFS SIDEWINDER BARREL",
-		"attach_2" : "LATERAL PRECISION UNDEBARREL",
-		"attach_3" : "ACCELERATED RECOIL SYSTEM MOD",
+		"attach_2" : "EAM STEADY-90 UNDERBARREL",
+		"attach_3" : "BOWEN 9MM SUPPRESSOR",
 		"attach_4" : "STRIKEFACE EXTENDED MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "EAM XL REFLEX",
-		"build_code" : "S03-T49H8-ZP7I5-1"
+		"build_code" : "S03-T46PW-AJ5R1-1"
 	},
 	{
 		"id" : 16,
@@ -196,9 +196,9 @@
 		"id" : 17,
 		"weapon_name" : "RYDEN 45K",
 		"weapon_id" : 2,
-		"attach_1" : "11\" RAUCH 6L-R BARREL",
-		"attach_2" : "LATERAL PRECISION UNDERBARREL",
-		"attach_3" : "SKELTONIZED REAR GRIP",
+		"attach_1" : "BOWEN .45 SUPPRESSOR \/ BOUNTY REAR GRIP",
+		"attach_2" : "10.5\" SLIM-MOD BARREL",
+		"attach_3" : "LATERAL PRECISON UNDERBARREL",
 		"attach_4" : "TORCH EXTENDED MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
@@ -281,12 +281,12 @@
 		"weapon_name" : "KOGOT-7",
 		"weapon_id" : 2,
 		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
-		"attach_2" : "11.7\" CINEROUS BARREL",
-		"attach_3" : "VAS DRIFT LOCK UNDERBARREL",
+		"attach_2" : "10.2\" TZ-INCISOR BARREL",
+		"attach_3" : "EAM STEADY-90 UNDERBARREL",
 		"attach_4" : "FORTUNE EXTENDED MAG",
-		"attach_5" : "BUFFER SPRING MOD",
+		"attach_5" : "F7-HOWL STOCK",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S10-56Z9W-LZ31"
+		"build_code" : "S10-6K99P-MK11"
 	},
 	{
 		"id" : 25,
@@ -316,7 +316,7 @@
 		"id" : 27,
 		"weapon_name" : "STURMWOLF 45",
 		"weapon_id" : 2,
-		"attach_1" : "BOWEN 45. SUPPRESSOR",
+		"attach_1" : "BOWEN .45 SUPPRESSOR",
 		"attach_2" : "15\" REGNANT BARREL",
 		"attach_3" : "ENVOY UNDERBARREL",
 		"attach_4" : "LOCUS EXTENDED MAG",
@@ -340,13 +340,13 @@
 		"id" : 29,
 		"weapon_name" : "RAZOR 9MM",
 		"weapon_id" : 2,
-		"attach_1" : "H-9MM PRECISION COMP MUZZLE",
-		"attach_2" : "LATERAL PRECISION UNDERBARREL",
+		"attach_1" : "10\" RAZOR IMPACT BARREL",
+		"attach_2" : "EAM STEADY-90 UNDERBARREL",
 		"attach_3" : "EAM PUSHBACK REAR GRIP",
 		"attach_4" : "STRIKEFACE EXTENDED MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "EAM XL REFLEX",
-		"build_code" : "S03-T49N9-152G1-1"
+		"build_code" : "S03-T46VL-VU5I1-1"
 	},
 	{
 		"id" : 30,
@@ -395,5 +395,101 @@
 		"attach_5" : "CONVERGENCE BOX LASER",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "C05-BL2R9-C4F11"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "VOYAK KT-3",
+		"weapon_id" : 2,
+		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
+		"attach_2" : "17.6\" LTI GRAV-4 BARREL",
+		"attach_3" : "SAPPER GUARD UNDERBARREL",
+		"attach_4" : "LINEGUARD CASKET MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "A09-AV1RJ-N9ZW1-1"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 2,
+		"attach_1" : "JAGER ROAR SUPPRESSOR",
+		"attach_2" : "8.7\" EAM VOYAGER BARREL",
+		"attach_3" : "RANGER LITE REAR GRIP",
+		"attach_4" : "WARPATH CAPACITY MAG",
+		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P01-5XH6K-PXDM1-1"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_id" : 2,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "4\" MFS CELESTE BARREL",
+		"attach_3" : "PERENNIAL REAR GRIP",
+		"attach_4" : "CORVUS EXTENDED MAG",
+		"attach_5" : "LTI MINI SIGHT",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P02-5XH9K-Q5T41-1"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "CODA 9",
+		"weapon_id" : 2,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "5\" LTI EPSILON-1 BARREL",
+		"attach_3" : "ST3-GLORIA REAR GRIP",
+		"attach_4" : "1MW PULSE LASER",
+		"attach_5" : "9MM PARABELLUM OVERPRESSURED ROUNDS",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P03-21WSR-WGS57-RP11"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "SWORDFISH A1",
+		"weapon_id" : 2,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "16.5\" GAR-XL BARREL",
+		"attach_3" : "R1-SPLENDOR REAR GRIP",
+		"attach_4" : "DORADO EXTENDED MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "M05-5XH6J-5IFY1-1"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "VST",
+		"weapon_id" : 2,
+		"attach_1" : "HAWKER SERIES 45 MUZZLE",
+		"attach_2" : "11\" URSINE BARREL",
+		"attach_3" : "EAM STEADY-90 UNDERBARREL",
+		"attach_4" : "AMPLIFY EXTENDED MAG",
+		"attach_5" : "VAS BLENCH STOCK",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S12-6K99V-6S11"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "MK35 ISR",
+		"weapon_id" : 2,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "ENVOY UNDERBARREL",
+		"attach_3" : "5.56 NATO OVERPRESSURED",
+		"attach_4" : "GEN-X04 EXTENDED MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "A12-21X3B-HGTSF-J511"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "MK35 ISR (PRESTIGE)",
+		"weapon_id" : 2,
+		"attach_1" : "19\" MFS NIGHTFALL SUPPRESSED BARREL",
+		"attach_2" : "ENVOY UNDERBARREL",
+		"attach_3" : "5.56 NATO OVERPRESSURED",
+		"attach_4" : "GEN-X04 EXTENDED MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "A12-21X3B-HGQMQ-AW11"
 	}
 ]}

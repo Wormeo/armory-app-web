@@ -64,13 +64,13 @@
 		"id" : 6,
 		"weapon_name" : "PEACEKEEPER MK1",
 		"weapon_id" : 1,
-		"attach_1" : "21\" DF-3 MERGE BARREL",
+		"attach_1" : "K&S COMPENSATOR MUZZLE",
 		"attach_2" : "LATERAL PRECISION UNDERBARREL \/ SIGHT",
 		"attach_3" : "RAPID-LOCK REAR GRIP",
 		"attach_4" : "PATHFINDER-SKEL STOCK",
 		"attach_5" : "BUFFER SPRING MOD",
 		"recommended_sight_shooting_style" : "NULL",
-		"build_code" : "A02-6WVQM-7251"
+		"build_code" : "A02-6WYVC-FI51"
 	},
 	{
 		"id" : 7,
@@ -148,7 +148,7 @@
 		"id" : 13,
 		"weapon_name" : "M10 BREACHER",
 		"weapon_id" : 1,
-		"attach_1" : "M10 CQB CHOKE",
+		"attach_1" : "M10 CQB CHOKE MUZZLE",
 		"attach_2" : "17.4\" REDWELL-5K BARREL",
 		"attach_3" : "EAM STEADY-90 UNDERBARREL",
 		"attach_4" : "LW SKELETON STOCK",
@@ -296,9 +296,9 @@
 		"attach_2" : "13.5\" CANIS-05 BARREL",
 		"attach_3" : "VAS DRIFT LOCK UNDERBARREL",
 		"attach_4" : "FORTUNE EXTENDED MAG",
-		"attach_5" : "BUFFER SPRING MOD",
+		"attach_5" : "3MW MOTION STRIKE LASER",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "S10-56Z9W-L131"
+		"build_code" : "S10-3R5WV-DUZ11"
 	},
 	{
 		"id" : 29,
@@ -353,7 +353,7 @@
 		"weapon_name" : "REV-46",
 		"weapon_id" : 1,
 		"attach_1" : "HAWKER SERIES 45 MUZZLE",
-		"attach_2" : "CAUDAL TARGET BARREL",
+		"attach_2" : "14.9\" CAUDAL TARGET BARREL",
 		"attach_3" : "SAPPER GUARD UNDERBARREL",
 		"attach_4" : "JANUS FLIP MAG",
 		"attach_5" : "LETHAL TOOLS ELO OPTIC",
@@ -383,5 +383,53 @@
 		"attach_5" : "CONVERGENCE BOX LASER",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "C05-BGVY9-U1Y11"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "VOYAK KT-3",
+		"weapon_id" : 1,
+		"attach_1" : "15\" BOWEN DUALIST BARREL",
+		"attach_2" : "FORCE STABILIZER UNDERBARREL",
+		"attach_3" : "PATH NET REAR GRIP",
+		"attach_4" : "3MW MOTION STRIKE LASER",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "A09-B6J7E-D8SY1-1"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "SWORDFISH A1",
+		"weapon_id" : 1,
+		"attach_1" : "RL-5.56 BRAKE MUZZLE",
+		"attach_2" : "15.1\" SPATHA BARREL",
+		"attach_3" : "R1-SPLENDOR REAR GRIP",
+		"attach_4" : "RO-G SPEED MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "M05-5XH6F-ZUXS1-1"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "MK35 ISR",
+		"weapon_id" : 1,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "17\" LTI FIRETAIL BARREL",
+		"attach_3" : "LTI MISSIVE UNDERBARREL",
+		"attach_4" : "R-V2 QUICK REAR GRIP",
+		"attach_5" : "COURSER LIGHT STOCK",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "A12-5CSZT-QD11"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "VST",
+		"weapon_id" : 1,
+		"attach_1" : "HAWKER SERIES 45 COMPENSATOR MUZZLE",
+		"attach_2" : "14\" LTI EXPEDITION BARREL",
+		"attach_3" : "LATERAL PRECISION UNDERBARREL",
+		"attach_4" : "AMPLIFY EXTENDED MAG",
+		"attach_5" : "VAS BLENCH STOCK",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S12-2ED5S-FU11"
 	}
 ]}

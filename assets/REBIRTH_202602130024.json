@@ -34,7 +34,7 @@
 		"id" : 4,
 		"weapon_name" : "CARRACK .300",
 		"weapon_id" : 14,
-		"attach_1" : " 300 SUBSOUND BARREL",
+		"attach_1" : "300 SUBSOUND BARREL",
 		"attach_2" : "LEX V14 STOCK",
 		"attach_3" : ".300 HIGH VELOCITY ROUNDS",
 		"attach_4" : "10 ROUND MAG",
@@ -116,7 +116,7 @@
 		"weapon_id" : 14,
 		"attach_1" : "XRK EDGE BW-4 HANDSTOP UNDERBARREL",
 		"attach_2" : "SO INLINE STOCK",
-		"attach_3" : ".50 CAL HIHGH VELOCITY ROUNDS",
+		"attach_3" : ".50 CAL HIGH VELOCITY ROUNDS",
 		"attach_4" : "SL RAZORHAWK LASER",
 		"attach_5" : "SP-X 80 6.6X SCOPE"
 	},

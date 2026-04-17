@@ -1,7 +1,7 @@
 name: armory_app
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0+1
+version: 2.2.0+17
 
 environment:
   sdk: ^3.11.0
@@ -14,14 +14,20 @@ dependencies:
   http: ^1.1.0
   cupertino_icons: ^1.0.8
   url_launcher: ^6.3.2
-  firebase_crashlytics: ^5.0.7
-  firebase_analytics: ^12.1.2
-  firebase_core: ^4.4.0
+  firebase_crashlytics: ^4.0.2
+  firebase_analytics: ^11.0.2
+  firebase_core: ^3.1.1
   cached_network_image: ^3.3.1
   flutter_colorpicker: ^1.1.0
   animations: ^2.0.11
   in_app_purchase: ^3.2.0
   change_app_package_name: ^1.5.0
+  connectivity_plus: ^7.0.0
+  firebase_database: ^11.0.2
+  app_links: ^6.3.2
+  webview_flutter: ^4.13.1
+  cloud_firestore: ^5.0.2
+  device_preview: ^1.2.0
 
 dev_dependencies:
   flutter_test:
@@ -30,15 +36,28 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
   flutter_lints: ^6.0.0
+  firebase_core_platform_interface: ^6.0.2
+
 
 flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icon/ios.png"
+  adaptive_icon_background: "assets/icon/ios.png"
+  adaptive_icon_foreground: "assets/icon/ios.png"
   remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/icon/back.png
   
-  adaptive_icon_background: "assets/icon/ic_launcher_adaptive_back.png"
-  adaptive_icon_foreground: "assets/icon/ic_launcher_adaptive_fore.png"
+  android_12:
+    image: assets/icon/back.png
+    color: "#000000"
+
+  android: true
+  ios: true
+  fullscreen: true
 
 
 flutter:
@@ -129,10 +148,21 @@ flutter:
     - assets/Premium_Stats_202602131455.json
     - assets/images/arm (1).jpg
     - assets/MinMax_202603052106.json
-
-flutter_native_splash:
-  color: "#000000"
-  image: assets/icon/ios.png
-  android_12:
-    image: assets/icon/ios.png
-    color: "#000000"
+    - assets/images/pin.jpg
+    - assets/hotfixes.json
+    - assets/archetypes.json
+    - assets/icon/bitmap.png
+    - assets/images/1.jpg
+    - assets/images/2.jpg
+    - assets/images/3.jpg
+    - assets/images/4.jpg
+    - assets/images/5.jpg
+    - assets/images/6.jpg
+    - assets/images/7.jpg
+    - assets/images/8.jpg
+    - assets/images/9.jpg
+    - assets/images/10.jpg
+    - assets/images/11.jpg
+    - assets/images/12.jpg
+    - assets/images/13.jpg
+    - assets/images/ios.png
