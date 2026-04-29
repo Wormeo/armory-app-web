@@ -424,13 +424,13 @@
 		"id" : 72,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• AK-27"
+		"weapon" : "• VOYAK KT-3"
 	},
 	{
 		"id" : 73,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• VOYAK KT-3"
+		"weapon" : "• STURMWOLF 45"
 	},
 	{
 		"id" : 74,
@@ -442,13 +442,13 @@
 		"id" : 75,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• STURMWOLF 45"
+		"weapon" : "• SWORDFISH A1"
 	},
 	{
 		"id" : 76,
 		"game" : "BO7",
 		"class_type" : "MULTIPLAYER",
-		"weapon" : "• DRAVEC 45"
+		"weapon" : "• KOGOT-7"
 	},
 	{
 		"id" : 77,
@@ -484,60 +484,60 @@
 		"id" : 82,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "1. RAZOR 9MM (PRESTIGE)"
+		"weapon" : "1. VST"
 	},
 	{
 		"id" : 83,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "2. DRAVEC 45"
+		"weapon" : "2. KOGOT-7"
 	},
 	{
 		"id" : 84,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "3. KOGOT-7"
+		"weapon" : "3. CARBON 57"
 	},
 	{
 		"id" : 85,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "4. RYDEN 45K"
+		"weapon" : "4. RAZOR 9MM (PRESTIGE)"
 	},
 	{
 		"id" : 86,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "5. REV-46"
+		"weapon" : "5. DRAVEC 45"
 	},
 	{
 		"id" : 87,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "1. VOYAK KT-3"
+		"weapon" : "1. MK35 ISR"
 	},
 	{
 		"id" : 88,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "2. EGRT-17"
+		"weapon" : "2. PEACEKEEPER MK1"
 	},
 	{
 		"id" : 89,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "3. PEACEKEEPER MK1"
+		"weapon" : "3. VOYAK KT-3"
 	},
 	{
 		"id" : 90,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "4. MK.78"
+		"weapon" : "4. AK-27"
 	},
 	{
 		"id" : 91,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "5. AK-27"
+		"weapon" : "5. EGRT-17"
 	}
 ]}

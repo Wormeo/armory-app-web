@@ -219,5 +219,16 @@
 		"attach_4" : "RAPID FIRE MOD",
 		"attach_5" : "AKIMBO STOCK",
 		"build_code" : null
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 5,
+		"attach_1" : "P-45 STRIKE COMP SUPPRESSOR",
+		"attach_2" : "VECTOR SYNC LASER",
+		"attach_3" : "SEAR FAST TRIGGER",
+		"attach_4" : "SIRIUS EXTENDED MAG",
+		"attach_5" : "AKIMBO 1911 STOCK",
+		"build_code" : "P07-AABSS-SWT6S-11"
 	}
 ]}

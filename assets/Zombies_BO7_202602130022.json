@@ -569,5 +569,20 @@
 		"attach_8" : "9MM PARABELLUM FMJ",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "S12-2JD73-E67F7-UQ11"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 3,
+		"attach_1" : "P-45 STRIKE COMP SUPPRESSOR",
+		"attach_2" : "4.5 LIT LOUT BARREL",
+		"attach_3" : "VECTOR SYNC LASER",
+		"attach_4" : "SIRUS EXTENDED MAG",
+		"attach_5" : "AKIMBO 1911 STOCK",
+		"attach_6" : null,
+		"attach_7" : null,
+		"attach_8" : null,
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P07-AABQ1-9X8KF-11"
 	}
 ]}

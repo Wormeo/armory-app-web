@@ -325,18 +325,6 @@
 		"build_code" : "S07-6X4KE-NQ11"
 	},
 	{
-		"id" : 31,
-		"weapon_name" : "STURMWOLF 45 (PRESTIGE)",
-		"weapon_id" : 1,
-		"attach_1" : "HAWKER STABILIZER MK.II MUZZLE",
-		"attach_2" : "ENVOY UNDERBARREL",
-		"attach_3" : "SELENE ROVER REAR GRIP",
-		"attach_4" : "MFS TIGRIS .40 CAL MAG",
-		"attach_5" : ".40 CAL OVERPRESSURED ROUNDS",
-		"recommended_sight_shooting_style" : null,
-		"build_code" : "S07-43QCD-FVSYW-UH11"
-	},
-	{
 		"id" : 32,
 		"weapon_name" : "HAWKER HX",
 		"weapon_id" : 1,
@@ -431,5 +419,17 @@
 		"attach_5" : "VAS BLENCH STOCK",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "S12-2ED5S-FU11"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 1,
+		"attach_1" : "P-45 STRIKE COMP SUPPRESSOR",
+		"attach_2" : "6.4\" LONG SLIDE BARREL",
+		"attach_3" : "F4-ABLE REAR GRIP",
+		"attach_4" : "SIRIUS EXTENDED MAG",
+		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P07-2JD6P-5XEB8-8711"
 	}
 ]}

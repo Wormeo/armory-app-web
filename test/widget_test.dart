@@ -8,7 +8,7 @@ void main() {
     final themeController = ThemeController(); 
 
     // Pass it to MyApp
-    await tester.pumpWidget(MyApp(themeController: themeController));
+    await tester.pumpWidget(MyApp(themeController: themeController, allPremiumStats: [],));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

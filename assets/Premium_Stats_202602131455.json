@@ -2761,7 +2761,7 @@
 		"weapon_name" : "EGRT-17",
 		"ttk1" : "592MS",
 		"range1" : "38M",
-		"ads_speed" : "240MS",
+		"ads_speed" : "280MS",
 		"bullet_velocity" : "1052.3",
 		"shots_to_kill" : "9 - 10",
 		"ttk2" : "666MS",
@@ -2840,7 +2840,7 @@
 		"ttk1" : "644MS",
 		"range1" : "52M",
 		"ads_speed" : "255MS",
-		"bullet_velocity" : "1069.5",
+		"bullet_velocity" : "1092",
 		"shots_to_kill" : "8 - 9",
 		"ttk2" : "736MS",
 		"range2" : "75M",
@@ -2856,8 +2856,34 @@
 		"bullet_velocity" : "320",
 		"shots_to_kill" : "3 - 4",
 		"ttk2" : "849MS",
-		"range2" : "5M",
+		"range2" : "5",
 		"hitscan_range" : "16M",
+		"shot_range" : null
+	},
+	{
+		"id" : 225,
+		"weapon_name" : "1911 (BO7)",
+		"ttk1" : "600",
+		"range1" : "30M",
+		"ads_speed" : "150MS",
+		"bullet_velocity" : "517.5",
+		"shots_to_kill" : "5 - 7",
+		"ttk2" : "900",
+		"range2" : "30M",
+		"hitscan_range" : "26M",
+		"shot_range" : null
+	},
+	{
+		"id" : 226,
+		"weapon_name" : "STURMWOLF 45 (PRESTIGE)",
+		"ttk1" : "535MS",
+		"range1" : "14M",
+		"ads_speed" : "195MS",
+		"bullet_velocity" : "496.8",
+		"shots_to_kill" : "6 - 7",
+		"ttk2" : "642MS",
+		"range2" : "22",
+		"hitscan_range" : "25M",
 		"shot_range" : null
 	}
 ]}

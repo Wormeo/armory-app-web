@@ -569,5 +569,20 @@
 		"attach_8" : "BOLT CARRIER MOD",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "S12-E9NQ1-H5Q31"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 4,
+		"attach_1" : "CASTLE COMPENSATOR MUZZLE",
+		"attach_2" : "6.4\" LONG SLIDE BARREL",
+		"attach_3" : "F4-ABLE REAR GRIP",
+		"attach_4" : "SIRIUS EXTENDED MAG",
+		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
+		"attach_6" : null,
+		"attach_7" : null,
+		"attach_8" : null,
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P07-2JD6P-5XB6H-XB11"
 	}
 ]}

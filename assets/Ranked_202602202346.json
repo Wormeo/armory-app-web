@@ -43,5 +43,16 @@
 		"attach_5" : null,
 		"build_code" : null,
 		"availability" : "YES"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "MPC-25",
+		"attach_1" : "K&S COMPENSATOR MUZZLE",
+		"attach_2" : "14.5\" VAS ASHE BARREL",
+		"attach_3" : "ZERO SHIFT HANDSTOP UNDERBARREL",
+		"attach_4" : "COACHWHIP FAST \/ SUSTAIN-25 EXTENDED MAG",
+		"attach_5" : "VASSAL STABILITY REAR GRIP",
+		"build_code" : "S06-85BZL-4C11",
+		"availability" : "YES"
 	}
 ]}

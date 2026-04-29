@@ -8343,5 +8343,33 @@
 		"perk" : null,
 		"pumps" : null,
 		"pump grip" : null
+	},
+	{
+		"id" : 299,
+		"weapon_name" : "1911 (BO7)",
+		"barrel" : "6.4\" LONG SLIDE BARREL, 5.1\" TESSELLATE BARREL, 4.5\" TORX REINFORCED BARREL, 3.7\" VELA SHORT BARREL, 4.5\" LTI LOUT BARREL",
+		"stock" : "AKIMBO 1911",
+		"ammunition" : null,
+		"muzzle" : "MFS OVERDRIVE AUTO-BRAKE, REDWELL SHADE-X SUPPRESSOR, P-45 STRIKE COMP, CASTLE COMPENSATOR, MONOLITHIC SUPPRESSOR",
+		"rear grip" : "MOLT REGEN GRIP, EAVES QUICK GRIP, STENCIL CONTROL GRIP, F4-ABLE GRIP, INTERLOCK ADVANCED GRIP",
+		"optic" : "FANG HOVERPOINT ELO, LTI MINI, VAS MICROFLEX, EAM MICRO DOT,  BOWEN PIXEL REFLEX, KEPLER PRISM-IX MINI, VAS LED, BOWEN PISTOL SCOUT SCOPE",
+		"underbarrel" : null,
+		"magazine" : "LUCIEN FAST MAG, SIRIUS EXTENDED MAG, RIGEL EXTENDED II",
+		"laser" : "XS-1 TACTICAL LASER, RAPID SIGHT MOTION LASER, VECTOR SYNC LASER, JAGER RAPID ZERO-X LASER, AIRGLIDE TARGET LASER",
+		"comb" : null,
+		"trigger action" : null,
+		"guard" : null,
+		"bolt" : null,
+		"arm" : null,
+		"rail" : null,
+		"carry handle" : null,
+		"lever" : null,
+		"loader" : null,
+		"wire" : null,
+		"slings" : null,
+		"fire mods" : ".45 CAL OVERPRESSURED, RECOIL SYNC UNIT, .45 CAL FMJ, SEAR FAST TRIGGER",
+		"perk" : null,
+		"pumps" : null,
+		"pump grip" : null
 	}
 ]}

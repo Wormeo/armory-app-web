@@ -297,7 +297,7 @@ void main() async {
   runApp(
     AppRestartWrapper(
       child: SyncProvider(
-        child: MyApp(themeController: themeController),
+        child: MyApp(themeController: themeController, allPremiumStats: [],),
       ),
     ),
   );
@@ -422,7 +422,7 @@ class MetaWeapon {
 
 class MyApp extends StatelessWidget {
   final ThemeController themeController;
-  const MyApp({super.key, required this.themeController});
+  const MyApp({super.key, required this.themeController, required List<dynamic> allPremiumStats});
 
   @override
   Widget build(BuildContext context) {
@@ -744,7 +744,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           : activeTheme.themeData.colorScheme.surface.withOpacity(0.9),
       
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         borderSide: hasSpecialWrapper 
             ? BorderSide.none 
             : BorderSide(
@@ -753,7 +753,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         borderSide: hasSpecialWrapper 
             ? BorderSide.none 
             : BorderSide(
@@ -767,13 +767,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   Widget finalSearch;
   if (isHolographic && _isPremiumUser) {
-    finalSearch = _InternalAnimatedBorder(colors: activeTheme.refractionColors, child: textField);
+    finalSearch = _InternalAnimatedBorder(colors: activeTheme.refractionColors, borderRadius: 18, child: textField);
   } else if (isAnemone && _isPremiumUser) {
-    finalSearch = ArmoryGradientBorder(gradientColors: activeTheme.borderGradient, borderRadius: 12, child: textField);
+    finalSearch = ArmoryGradientBorder(gradientColors: activeTheme.borderGradient, borderRadius: 18, child: textField);
   } else if (isCustom && _isPremiumUser) {
     finalSearch = Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(color: coreColor, width: 2.0),
           boxShadow: [
             BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
@@ -886,7 +886,7 @@ void _showFilterSheet(ThemeController themeController) {
                                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                                   decoration: BoxDecoration(
                                     color: isSelected ? accentColor : Colors.white.withOpacity(0.05),
-                                    borderRadius: BorderRadius.circular(4),
+                                    borderRadius: BorderRadius.circular(24),
                                     border: Border.all(
                                       color: isSelected ? Colors.white : Colors.white10,
                                       width: 1.5,
@@ -947,7 +947,7 @@ void _showFilterSheet(ThemeController themeController) {
                                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                                 decoration: BoxDecoration(
                                   color: isSelected ? accentColor : Colors.white.withOpacity(0.05),
-                                  borderRadius: BorderRadius.circular(4), 
+                                  borderRadius: BorderRadius.circular(20), 
                                   border: Border.all(
                                     color: isSelected ? Colors.white : Colors.white10,
                                     width: 1.2,
@@ -957,7 +957,6 @@ void _showFilterSheet(ThemeController themeController) {
                                   arch,
                                   style: TextStyle(
                                     color: isSelected ? Colors.black : Colors.white70,
-                                    fontWeight: FontWeight.bold,
                                     fontSize: 11,
                                     fontFamily: activeFont,
                                   ),
@@ -1154,7 +1153,7 @@ void initState() {
   _startConnectionHeartbeat();
 }
 
-  Future<void> _performPreload() async {
+Future<void> _performPreload() async {
   try {
     final List<String> buildFiles = [
       'assets/Akimbo_202603022137.json', 'assets/Cold_War_Akimbo_202602130024.json',
@@ -1339,7 +1338,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
   }
 }
 
-  void _startConnectionHeartbeat() {
+void _startConnectionHeartbeat() {
   _checkConnection();
   _statusTimer = Timer.periodic(const Duration(seconds: 30), (timer) {
     _checkConnection();
@@ -1544,6 +1543,7 @@ void _showThemePickerDialog() {
           final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
           final bool isHolo = activeTheme.isHolographic;
           final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+          final Color accentColor = widget.themeController.activeAccentColor;
 
           final Color accent = widget.themeController.activeAccentColor;
           final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
@@ -1561,7 +1561,7 @@ void _showThemePickerDialog() {
               color: containerBg,
               borderRadius: BorderRadius.circular(innerRadius),
               border: (!isHolo && !isAnemone) 
-                  ? Border.all(color: isNeon ? coreColor : simpleBorderColor, width: borderWidth)
+                  ? Border.all(color: isNeon ? coreColor : accentColor, width: borderWidth)
                   : null,
               boxShadow: [
                 if (isNeon) BoxShadow(
@@ -1598,7 +1598,7 @@ void _showThemePickerDialog() {
                           color: isNeon ? coreColor : simpleBorderColor.withOpacity(0.5),
                           width: isNeon ? 1.5 : 1.0,
                         )),
-                        shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                        shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
@@ -1693,7 +1693,7 @@ Widget _buildFontRow() {
             margin: const EdgeInsets.only(right: 12),
             decoration: BoxDecoration(
               color: isActive ? Colors.white.withOpacity(0.1) : Colors.white10,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(18),
               border: Border.all(
                 color: isActive ? Colors.white : Colors.white12,
                 width: isActive ? 2 : 1,
@@ -1803,7 +1803,7 @@ Widget _buildThemeRow(ThemeCategory category) {
 
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                duration: const Duration(milliseconds: 1500), 
+                duration: const Duration(milliseconds: 2500), 
                 behavior: SnackBarBehavior.fixed,
                 padding: EdgeInsets.zero,
                 backgroundColor: Theme.of(context).colorScheme.surface,
@@ -1864,7 +1864,7 @@ Widget _buildThemeRow(ThemeCategory category) {
                     ) 
                   : null,
               
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(24),
               border: Border.all(
                 color: isCustomNeon
                     ? (isActive ? neonCore : neonColor.withOpacity(0.3))
@@ -2108,24 +2108,25 @@ Future<void> _checkConnection() async {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
 
- Set<String> _favorites = {};
+  Set<String> _favorites = {};
 
 void _showPatchNotes(BuildContext context) {
   final primary = Theme.of(context).colorScheme.primary;
 
   final List<String> notes = [
-    "!WHAT'S NEW IN VERSION 2.2",
-    "!NEW FEATURE: ARMORY DELTA | AEGIS EYE",
-    "DIRECTLY COMPARE WEAPONS STAT WISE TO EACHOTHER TO FIND STANDOUTS, COMPLETE WITH A COMBAT RATING.",
-    "!SISTER FEATURE: AEGIS EYE",
-    "VIEW A LIST OF WEAPONS SORTED BY THE STAT YOU WANT, ASCENDING OR DESCENDING.",
-    "!LOGIC",
-    "IMPROVED COMBAT RATING CALCULATION LOGIC FOR SNIPER RIFLES",
+    "!WHAT'S NEW IN VERSION 2.4",
+    "!FUNCTION",
+    "MASSIVELY IMPROVED AEGIS EYE RANKING SYSTEM LOGIC",
+    "IMRPOVED SORTING LOGIC WITHIN AEGIS EYE",
+    "UPGRADED THE BUG REPORT SYSTEM",
+    "!NEW FEATURE: AEGIS LOADOUT RANKING",
+    "VIEW HOW YOUR CHOSEN LOADOUT STACKS UP AT A GLANCE, WITH A BRAND NEW FIELD ADDED TO THE ADVANCED WEAPON STATS WINDOW.",
     "!VISUAL",
-    "ADJUSTED OUTLINE OF COMBAT RATING LETTERS WITH NEON THEME APPLIED",
-    "IMPROVED ANIMATION OF HOLOGRAPHIC THEMES WHEN DRAWING LARGE CONTAINERS",
-    "RESTRUCTURED RANDOMIZER SCREEN",
-    "UPDATED APP-WIDE TEXT COLOURS FOR READABILITY WITH ALL THEMES"
+    "CUSTOM SCALED MW2, MW3, COLD WAR AND MW19 WEAPON IMAGES FOR CONSISTENCY",
+    "ROUNDED APP-WIDE CONTAINER BORDERS",
+    "IMPROVED THEME DRAWING WITHIN AEGIS EYE",
+    "IMPROVED SPACING OF CONTAINERS WITHIN WEAPON LIST, AND LOADOUT SCREEN",
+    "SHRUNK STAT TEXT WITHIN ADVANCED STATS WINDOW"
   ];
 
   showDialog(
@@ -2136,22 +2137,26 @@ void _showPatchNotes(BuildContext context) {
     final Color accent = widget.themeController.activeAccentColor;
     final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
     final Color effectivePrimary = isNeon ? coreColor : primary;
+    final Color primaryFaded = Color.alphaBlend(
+    Theme.of(context).colorScheme.surface.withOpacity(0.8), 
+    Colors.black
+  );
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: AlertDialog(
-        backgroundColor: isNeon ? Colors.black : const Color(0xFF0D0D0D),
+        backgroundColor: isNeon ? Colors.black : primaryFaded,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(26),
           side: BorderSide(
-            color: isNeon ? coreColor : primary.withOpacity(0.5),
-            width: isNeon ? 2.0 : 1.5,
+            color: isNeon ? coreColor : primary.withOpacity(0.8),
+            width: isNeon ? 2.0 : 2.0,
           ),
         ),
         title: Column(
           children: [
             ArmoryText(
-              "SYSTEM UPDATES | PRE-RELEASE 2.2 BOREALIS",
+              "SYSTEM UPDATES | PRE-RELEASE 2.4 ECLIPSE",
               themeController: widget.themeController,
               baseFontSize: 14,
               baseStrokeWidth: isNeon ? 3.0 : 2.5,
@@ -2210,7 +2215,7 @@ void _showPatchNotes(BuildContext context) {
                   )
                 ),
                 shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))
                 ),
                 overlayColor: WidgetStateProperty.resolveWith<Color?>(
                   (Set<WidgetState> states) {
@@ -2274,7 +2279,7 @@ void _sortDisplayList() {
   });
 }
 
-  Future<void> _loadStoredCredentials() async {
+Future<void> _loadStoredCredentials() async {
   final prefs = await SharedPreferences.getInstance();
   setState(() {
     _idController.text = prefs.getString('saved_discord_id') ?? "";
@@ -2718,7 +2723,6 @@ Future<void> _savePremiumStatus(bool status) async {
   await prefs.setBool('is_premium', status);
 }
 
-
 void search(String query) {
   final queryUpper = query.toUpperCase().trim();
   
@@ -2807,7 +2811,7 @@ void _showBugReportDialog() {
     builder: (context) => AlertDialog(
       backgroundColor: armorySurface,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         side: const BorderSide(color: armoryBlue, width: 1.0),
       ),
       title: Column(
@@ -2835,13 +2839,14 @@ void _showBugReportDialog() {
         child: TextField(
           controller: bugController,
           maxLines: 3,
+          textCapitalization: TextCapitalization.sentences,
           style: TextStyle(
             fontFamily: widget.themeController.activeFont,
             color: Colors.white, 
             fontSize: 13
           ),
           decoration: InputDecoration(
-            hintText: "Describe the issue and how it occurred if applicable.",
+            hintText: "Describe the issue and how it occurred.",
             hintStyle: TextStyle(
               fontFamily: widget.themeController.activeFont, 
               color: Colors.white38,
@@ -2849,11 +2854,11 @@ void _showBugReportDialog() {
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: armoryBlue.withOpacity(0.5)),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: armoryBlue),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(24),
             ),
             filled: true,
             fillColor: Colors.black.withOpacity(0.3),
@@ -2864,11 +2869,14 @@ void _showBugReportDialog() {
         TextButton(
           onPressed: () => Navigator.pop(context),
           style: ButtonStyle(
-            side: WidgetStateProperty.all(BorderSide(color: Colors.white.withOpacity(0.1))),
-            overlayColor: WidgetStateProperty.all(Colors.white.withOpacity(0.05)),
-            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+            backgroundColor: WidgetStateProperty.all(const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1)),
+            side: WidgetStateProperty.all(BorderSide(color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.05), width: 1.0)),
+            overlayColor: WidgetStateProperty.all(armoryBlue.withOpacity(0.2)),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
           ),
-          child: ArmoryText(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: ArmoryText(
             "CANCEL",
             themeController: widget.themeController,
             baseFontSize: 10,
@@ -2876,16 +2884,46 @@ void _showBugReportDialog() {
             color: Colors.grey,
           ),
         ),
+        ),
         
         TextButton(
           onPressed: () async {
             if (bugController.text.isNotEmpty) {
-              final note = bugController.text;
-              await FirebaseAnalytics.instance.logEvent(
-                name: 'dev_symptom_report',
-                parameters: {'note': note},
-              );
-              FirebaseCrashlytics.instance.log("MANUAL_REPORT: $note");
+              final prefs = await SharedPreferences.getInstance();
+              final String? savedId = prefs.getString('saved_discord_id');
+
+              final String rawNote = bugController.text.trim();
+              final String note = rawNote[0].toUpperCase() + rawNote.substring(1);
+
+              try {
+                final String webhookUrl = 'https://discord.com/api/webhooks/1497705180471496744/htB2HC48RrtAJ1ZGVOw3INWj80IJV8pFfEK1ao49_lhlCDV6b80fZnOz573JUGKxjIsy';
+                
+                List<Map<String, dynamic>> embedFields = [];
+
+                if (savedId != null && savedId.isNotEmpty) {
+                  embedFields.insert(0, {
+                    "name": "User ID",
+                    "value": "`$savedId`",
+                    "inline": false
+                  });
+                }
+
+                await http.post(
+                  Uri.parse(webhookUrl),
+                  headers: {'Content-Type': 'application/json'},
+                  body: jsonEncode({
+                    "embeds": [{
+                      "title": "User Report Submitted",
+                      "description": "**Report Content:**\n>>> $note",
+                      "color": 15158332,
+                      "fields": embedFields,
+                      "timestamp": DateTime.now().toIso8601String(),
+                    }],
+                  }),
+                );
+              } catch (e) {
+                debugPrint("Webhook Error: $e");
+              }
 
               if (mounted) {
                 Navigator.pop(context);
@@ -2913,12 +2951,7 @@ void _showBugReportDialog() {
                       ),
                     ),
                     content: Container(
-                      padding: const EdgeInsets.only(
-                        top: 10.0,
-                        bottom: 2.0,
-                        left: 15,
-                        right: 15,
-                      ),
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 2.0, left: 15, right: 15),
                       child: ArmoryText(
                         "REPORT TRANSMITTED. THANK YOU.",
                         themeController: themeController,
@@ -2938,7 +2971,7 @@ void _showBugReportDialog() {
             backgroundColor: WidgetStateProperty.all(armoryBlue.withOpacity(0.1)),
             side: WidgetStateProperty.all(const BorderSide(color: armoryBlue, width: 1.0)),
             overlayColor: WidgetStateProperty.all(armoryBlue.withOpacity(0.2)),
-            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+            shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -3434,15 +3467,6 @@ Widget _buildSettingsDrawer() {
         Divider(color: isCustom ? coreColor : Theme.of(context).colorScheme.primary, height: 1, thickness: 1.5),
 
         _buildMinorDrawerTile(
-          label: "PATCH NOTES",
-          icon: Icons.terminal_outlined,
-          onTap: () {
-            HapticFeedback.mediumImpact(); 
-            _showPatchNotes(context);
-          }
-        ),
-        
-        _buildMinorDrawerTile(
           label: "HOTFIXES",
           icon: Icons.terminal_outlined,
           onTap: () {
@@ -3461,6 +3485,14 @@ Widget _buildSettingsDrawer() {
                 ),
               )
             : null,
+        ),
+        _buildMinorDrawerTile(
+          label: "PATCH NOTES",
+          icon: Icons.terminal_outlined,
+          onTap: () {
+            HapticFeedback.mediumImpact(); 
+            _showPatchNotes(context);
+          }
         ),
         _buildMinorDrawerTile(
           label: "REPORT A BUG",
@@ -3523,7 +3555,7 @@ void _showPremiumLockDialog(BuildContext context) {
           color: isCustom ? coreColor : accentColor, 
           width: 2
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
       ),
       title: ArmoryText(
         "ACCESS RESTRICTED", 
@@ -3628,10 +3660,10 @@ Widget _buildAegisBox(ArmoryTheme activeTheme, ThemeData theme) {
     padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
     decoration: BoxDecoration(
       color: theme.colorScheme.surface.withOpacity(0.92),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(24),
       border: !isCustom ? Border.all(
         color: aegisColor,
-        width: 1.5,
+        width: 2,
       ) : null,
     ),
     child: Row(
@@ -3640,7 +3672,7 @@ Widget _buildAegisBox(ArmoryTheme activeTheme, ThemeData theme) {
         _buildTacticalIcon(
           aegisIcon, 
           isCustom ? coreColor : aegisColor, 
-          strokeSize: 1.0
+          strokeSize: 0.8
         ),
         const SizedBox(width: 15),
 
@@ -3662,7 +3694,7 @@ Widget _buildAegisBox(ArmoryTheme activeTheme, ThemeData theme) {
     if (isCustom) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: coreColor,
           width: 2.0,
@@ -3719,7 +3751,7 @@ Widget _buildMinorDrawerTile({
           alignment: Alignment.center,
           children: [
             Transform.scale(
-              scale: 1.10,
+              scale: 1.17,
               child: Icon(
                 icon,
                 size: 16, 
@@ -3728,7 +3760,7 @@ Widget _buildMinorDrawerTile({
             ),
             Icon(
               icon,
-              size: 16, 
+              size: 17, 
               color: isCustom ? coreColor : Colors.white54,
             ),
           ],
@@ -3777,7 +3809,7 @@ Widget _buildDrawerButton({
       color: (isCustom && canShowEffects)
           ? theme.colorScheme.surface.withOpacity(0.92)
           : theme.colorScheme.surface.withOpacity(0.92), 
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(24),
       border: (canShowEffects && (isHolographic || isAnemone || isCustom)) 
           ? null 
           : Border.all(color: baseColor.withOpacity(0.5), width: 1),
@@ -3857,7 +3889,7 @@ Widget _buildPremiumSection() {
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(26),
           border: Border.all(
             color: isCustom ? coreColor : premiumGold.withOpacity(0.3), 
             width: 2.0,
@@ -3880,7 +3912,7 @@ Widget _buildPremiumSection() {
             _buildTacticalIcon(
               Icons.stars_rounded, 
               isCustom ? coreColor : premiumGold, 
-              strokeSize: 1.0
+              strokeSize: 0.8
             ),
             const SizedBox(width: 15),
             Flexible(
@@ -3924,6 +3956,7 @@ Widget _buildPremiumSection() {
           letterSpacing: 1.1,
         ),
       ),
+      const SizedBox(height: 12),
     ],
   );
 }
@@ -3961,7 +3994,7 @@ Widget _buildAuthSection() {
             child: _buildTacticalIcon(
               Icons.person_search, 
               isCustom ? coreColor : primaryColor,
-              strokeSize: 1.0
+              strokeSize: 0.8
             ),
           ),
           enabledBorder: UnderlineInputBorder(
@@ -3999,7 +4032,7 @@ Widget _buildAuthSection() {
             child: _buildTacticalIcon(
               Icons.lock_outline, 
               isCustom ? coreColor : primaryColor,
-              strokeSize: 1.0
+              strokeSize: 0.8
             ),
           ),
           counterStyle: const TextStyle(color: Colors.white38), 
@@ -4025,26 +4058,41 @@ Widget _buildAuthSection() {
         child: ElevatedButton(
           onPressed: _verifyPremium,
           style: ElevatedButton.styleFrom(
-            minimumSize: const Size(double.infinity, 45),
-            side: BorderSide(color: isCustom ? coreColor : primaryColor, width: 2.0),
+            minimumSize: const Size(double.infinity, 50),
+            side: BorderSide(color: isCustom ? _ArmoryOnboardingState.armoryBlue : _ArmoryOnboardingState.armoryBlue, width: 2.0),
             shape: const StadiumBorder(),
             backgroundColor: isCustom ? const Color.fromARGB(255, 0, 0, 0) : Theme.of(context).colorScheme.surface.withOpacity(0.9), 
             elevation: 0,
           ),
-          child: ArmoryText(
-            "AUTHENTICATE",
-            themeController: themeController,
-            baseFontSize: 13,
-            baseStrokeWidth: 2.5,
-            color: Colors.white,
-            overrideStrokeColor: isCustom ? accentColor : Colors.black,
-            textAlign: TextAlign.center,
-          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildTacticalIcon(
+                Icons.login_outlined, 
+                isCustom ? _ArmoryOnboardingState.armoryBlue : _ArmoryOnboardingState.armoryBlue,
+                strokeSize: 0.8,
+              ),
+
+              const SizedBox(width: 12),
+
+            ArmoryText(
+              "AUTHENTICATE",
+              themeController: themeController,
+              baseFontSize: 13,
+              baseStrokeWidth: 2.5,
+              color: Colors.white,
+              overrideStrokeColor: isCustom ? accentColor : Colors.black,
+              textAlign: TextAlign.center,
+            ),
+         ],
         ),
       ),
-      
+     ),
+
       const SizedBox(height: 15),
 
+
+      
       Container(
         decoration: isCustom ? BoxDecoration(
           borderRadius: BorderRadius.circular(24), 
@@ -4054,7 +4102,7 @@ Widget _buildAuthSection() {
           ],
         ) : null,
         child: OutlinedButton(
-          onPressed: _openCommunityLink, // Points directly to the website
+          onPressed: _openCommunityLink, 
           style: OutlinedButton.styleFrom(
             backgroundColor: isCustom ? Colors.black : Theme.of(context).colorScheme.surface.withOpacity(0.9),
             side: BorderSide(
@@ -4063,7 +4111,7 @@ Widget _buildAuthSection() {
                 : Colors.amberAccent, 
               width: 1.5
             ), 
-            minimumSize: const Size(double.infinity, 45),
+            minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
           ),
           child: Row(
@@ -4072,9 +4120,11 @@ Widget _buildAuthSection() {
               _buildTacticalIcon(
                 Icons.shop_two_outlined, 
                 isCustom ? Colors.white : Colors.amberAccent,
-                strokeSize: 1.0
+                strokeSize: 0.8
               ),
-              const SizedBox(width: 8),
+
+              const SizedBox(width: 12),
+
               ArmoryText(
                 "PURCHASE PREMIUM",
                 themeController: themeController,
@@ -4087,6 +4137,7 @@ Widget _buildAuthSection() {
           ),
         ),
       ),
+      const SizedBox(height: 6),
       
       TextButton(
         onPressed: () => _showForgotPinDialog(),
@@ -4098,6 +4149,7 @@ Widget _buildAuthSection() {
           baseStrokeWidth: 1.8,
         ),
       ),
+      const SizedBox(height: 10),
     ],
   );
 }
@@ -4119,7 +4171,7 @@ void _showForgotPinDialog() {
       child: AlertDialog(
         backgroundColor: const Color.fromARGB(255, 10, 14, 17),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(18),
           side: const BorderSide(color: Color.fromRGBO(55, 87, 193, 1), width: 1.5),
         ),
         title: ArmoryText(
@@ -4134,7 +4186,7 @@ void _showForgotPinDialog() {
           children: [
 
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(18),
               child: Image.asset(
                 'assets/images/pin.jpg',
                 fit: BoxFit.contain,
@@ -4185,6 +4237,10 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
   final bool isCustom = activeTheme.id == 'neon_custom';
   final Color accentColor = themeController.activeAccentColor;
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
+  final Color primaryFaded = Color.alphaBlend(
+    Theme.of(context).colorScheme.surface.withOpacity(0.8), 
+    Colors.black
+  );
 
   HapticFeedback.lightImpact();
 
@@ -4196,9 +4252,9 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
     child: BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
       child: AlertDialog(
-        backgroundColor: isCustom ? const Color(0xFF000000) : Theme.of(context).colorScheme.surface,
+        backgroundColor: isCustom ? const Color(0xFF000000) : primaryFaded,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(24),
           side: BorderSide(
             color: isCustom ? coreColor : Theme.of(context).colorScheme.primary, 
             width: 1.5
@@ -4235,9 +4291,9 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
                   child: ArmoryText(
                     "• ${note.toString()}",
                     themeController: themeController,
-                    baseFontSize: 12,
+                    baseFontSize: 11,
                     color: Colors.white.withOpacity(0.9),
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.center,
                     allowWrap: true,
                   ),
                 );
@@ -4320,7 +4376,7 @@ Widget build(BuildContext context) {
       margin: EdgeInsets.zero,
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         side: BorderSide.none,
       ),
       child: ListTile(
@@ -4443,21 +4499,23 @@ Widget build(BuildContext context) {
   if (activeTheme.isHolographic) {
     finalWidget = _InternalAnimatedBorder(
       colors: activeTheme.refractionColors,
+      borderRadius: 18,
+      strokeWidth: 3.0,
       child: cardContent,
     );
   } else if (activeTheme.category == ThemeCategory.anemone) {
     finalWidget = RepaintBoundary(
       child: ArmoryGradientBorder(
         gradientColors: activeTheme.borderGradient,
-        strokeWidth: 2,
-        borderRadius: 12,
+        strokeWidth: 2.5,
+        borderRadius: 18,
         child: cardContent,
       ),
     );
   } else if (isCustom) {
     finalWidget = Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(color: coreColor, width: 2.0),
         boxShadow: [
           BoxShadow(
@@ -4473,7 +4531,7 @@ Widget build(BuildContext context) {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(18),
         child: cardContent,
       ),
     );
@@ -4481,21 +4539,21 @@ Widget build(BuildContext context) {
   else {
     finalWidget = Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: theme.colorScheme.primary.withOpacity(0.5), 
-          width: 1.5,
+          color: theme.colorScheme.primary.withOpacity(0.7), 
+          width: 2.0,
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(18),
         child: cardContent,
       ),
     );
   }
 
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
     child: finalWidget,
   );
 }
@@ -4504,11 +4562,11 @@ Widget build(BuildContext context) {
 class DetailScreen extends StatefulWidget {
   final Weapon weapon;
   final bool isPremiumUser;
-  final ThemeController themeController; 
+  final ThemeController themeController;
 
   const DetailScreen({
-    super.key, 
-    required this.weapon, 
+    super.key,
+    required this.weapon,
     required this.isPremiumUser,
     required this.themeController,
   });
@@ -4522,37 +4580,158 @@ class _DetailScreenState extends State<DetailScreen> {
   late int selectedIndex;
   bool showStats = false;
   bool isFastMode = false;
+  Map<String, ArchetypeRank>? archetypeRankings = {};
+  bool isRankingLoading = true;
+  bool showSpecialCode = false;
 
   @override
   void initState() {
     super.initState();
+    _calculateRankings(widget.weapon.name.toUpperCase().trim());
 
-  final keys = widget.weapon.builds.keys.where((k) {
-    if (widget.weapon.name == "MAGNUM (CW)" && k == "Multiplayer") {
-      return false;
+    final keys = widget.weapon.builds.keys.where((k) {
+      if (widget.weapon.name == "MAGNUM (CW)" && k == "Multiplayer") return false;
+      return true;
+    }).toList();
+
+    const order = {
+      "MULTIPLAYER FULL AUTO": 0, "MULTIPLAYER SEMI AUTO": 1, "Multiplayer": 2, 
+      "Warzone": 3, "Rebirth": 4, "Warzone Prestige": 5, "Endgame": 6, 
+      "Zombies": 7, "Special": 8
+    };
+    
+    keys.sort((a, b) => (order[a] ?? 99).compareTo(order[b] ?? 99));
+    
+    flatBuilds = [];
+    for (var k in keys) { 
+      flatBuilds.addAll(widget.weapon.builds[k]!); 
     }
-    return true;
-  }).toList();
-
-  const order = {
-    "MULTIPLAYER FULL AUTO": 0,
-    "MULTIPLAYER SEMI AUTO": 1,
-    "Multiplayer": 2, 
-    "Warzone": 3, 
-    "Rebirth": 4, 
-    "Warzone Prestige": 5, 
-    "Endgame": 6, 
-    "Zombies": 7, 
-    "Special": 8
-  };
-  
-  keys.sort((a, b) => (order[a] ?? 99).compareTo(order[b] ?? 99));
-  
-  flatBuilds = [];
-  for (var k in keys) { 
-    flatBuilds.addAll(widget.weapon.builds[k]!); 
+    selectedIndex = 0;
   }
-  selectedIndex = 0;
+
+Future<void> _calculateRankings(String targetSearchName) async {
+  if (!mounted) return;
+  setState(() => isRankingLoading = true);
+
+  try {
+    final String statsRaw = await rootBundle.loadString('assets/Premium_Stats_202602131455.json');
+    final String archetypesRaw = await rootBundle.loadString('assets/archetypes.json');
+    
+    final Map<String, dynamic> statsJson = json.decode(statsRaw);
+    final Map<String, dynamic> archetypesJson = json.decode(archetypesRaw);
+
+    final List<dynamic> allStats = statsJson['Premium_Stats'] ?? [];
+    final Map<String, dynamic> archetypeMap = archetypesJson['archetypes'] ?? {};
+
+    String searchName = targetSearchName.toUpperCase().trim();
+
+    final currentStatsEntry = allStats.firstWhere(
+      (s) => s['weapon_name']?.toString().toUpperCase().trim() == searchName,
+      orElse: () => null
+    );
+
+    if (currentStatsEntry == null ||
+        currentStatsEntry['bullet_velocity'] == "-") {
+      if (mounted) {
+        setState(() {
+          archetypeRankings = null;
+          isRankingLoading = false;
+        });
+      }
+      return;
+    }
+
+    String? currentArchetype;
+    final String baseLookupName = widget.weapon.name.split(" (")[0].toUpperCase().trim();
+
+    archetypeMap.forEach((type, weapons) {
+      if ((weapons as List).any((w) => w.toString().toUpperCase().trim().contains(baseLookupName))) {
+        currentArchetype = type;
+      }
+    });
+
+    if (currentArchetype == null) {
+      if (mounted) setState(() => isRankingLoading = false);
+      return;
+    }
+
+    List<Map<String, dynamic>> peerStatsPool = [];
+    List<String> namesInArch = List<String>.from(archetypeMap[currentArchetype]);
+
+    for (var name in namesInArch) {
+      final entry = allStats.firstWhere(
+        (s) => s['weapon_name']?.toString().toUpperCase().trim() == name.toUpperCase().trim(),
+        orElse: () => null
+      );
+      if (entry != null) {
+        peerStatsPool.add(Map<String, dynamic>.from(entry));
+      }
+    }
+
+    int realTotal = peerStatsPool.length;
+    Map<String, ArchetypeRank> results = {};
+    Map<String, String> keyMap = {
+      'ttkClose': 'ttk1', 
+      'ttkFar': 'ttk2', 
+      'adsSpeed': 'ads_speed',
+      'velocity': 'bullet_velocity', 
+      'stk': 'shots_to_kill'
+    };
+
+    double clean(dynamic val, String key) {
+      if (val == null || val == "-") return (key == 'bullet_velocity') ? 0.0 : 9999.0;
+      String s = val.toString().trim();
+
+      if (key == 'shots_to_kill') {
+        if (s.contains('-')) {
+          List<String> parts = s.split('-');
+          double close = double.tryParse(parts[0].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
+          double far = double.tryParse(parts[1].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
+          return (close * 100) + far;
+        }
+        double single = double.tryParse(s.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
+        return (single * 100) + single;
+      }
+
+      String cleaned = s.split('-')[0].replaceAll(RegExp(r'[^0-9.]'), '');
+      return double.tryParse(cleaned) ?? 0.0;
+    }
+
+    for (var entry in keyMap.entries) {
+      List<Map<String, dynamic>> sortedPool = List.from(peerStatsPool);
+
+      sortedPool.sort((a, b) {
+        double vA = clean(a[entry.value], entry.value);
+        double vB = clean(b[entry.value], entry.value);
+        
+        if (entry.value == 'bullet_velocity') {
+          if (vA == 0) return 1;
+          if (vB == 0) return -1;
+          return vB.compareTo(vA);
+        } 
+
+        if (vA >= 9999) return 1;
+        if (vB >= 9999) return -1;
+        
+        return vA.compareTo(vB);
+      });
+
+      int rankIndex = sortedPool.indexWhere(
+        (s) => s['weapon_name']?.toString().toUpperCase().trim() == searchName
+      );
+
+      results[entry.key] = ArchetypeRank(rankIndex == -1 ? realTotal : rankIndex + 1, realTotal);
+    }
+
+    if (mounted) {
+      setState(() {
+        archetypeRankings = results;
+        isRankingLoading = false;
+      });
+    }
+  } catch (e) {
+    if (mounted) setState(() => isRankingLoading = false);
+  }
 }
 
 @override
@@ -4566,42 +4745,25 @@ Widget build(BuildContext context) {
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
 
   final currentBuild = flatBuilds[selectedIndex];
+  final bool canShowStats = (currentBuild.category.toLowerCase().contains('warzone') || 
+                              currentBuild.category.toLowerCase() == 'special') && 
+                            currentBuild.stats != null;
 
   String baseWeaponName = widget.weapon.name.split(" - ")[0].toUpperCase();
   String effectiveImageUrl = widget.weapon.imageUrl;
   
   final bool isSokol = baseWeaponName.contains("SOKOL 545");
+  final bool isRebirth = currentBuild.category == "Rebirth";
 
-  WeaponStats? displayStats = (isSokol && isFastMode && currentBuild.alternativeStats != null) 
-    ? currentBuild.alternativeStats 
-    : currentBuild.stats;
+  WeaponStats? displayStats = (isSokol && isFastMode && currentBuild.alternativeStats != null)
+      ? currentBuild.alternativeStats
+      : currentBuild.stats;
 
-  String? archetype = displayStats?.archetype;
-
-  if (archetype == null || archetype.isEmpty) {
-    for (var category in widget.weapon.builds.values) {
-      for (var build in category) {
-        if (build.stats?.archetype != null) {
-          archetype = build.stats!.archetype;
-          break;
-        }
-      }
-      if (archetype != null) break;
-    }
-  }
-
-  final String cat = currentBuild.category;
-  final bool isStatMode = cat == "Warzone" || 
-                          cat == "Warzone Prestige" || 
-                          cat == "Special";
-
-  final bool hasStats = currentBuild.stats != null && (
-      (currentBuild.stats!.adsSpeed != "-" && currentBuild.stats!.adsSpeed.isNotEmpty) ||
-      (currentBuild.stats!.bulletVelocity != "-" && currentBuild.stats!.bulletVelocity.isNotEmpty) ||
-      (currentBuild.stats!.ttk1 != "-" && currentBuild.stats!.ttk1.isNotEmpty)
-  );
-
-  final bool showStatUI = isStatMode && hasStats;
+  final bool shouldShowToggle = (currentBuild.category.toLowerCase().contains('warzone') || 
+                               currentBuild.category.toLowerCase() == 'special') && 
+                               currentBuild.stats != null && 
+                               currentBuild.stats!.ttk1 != "-" &&
+                               currentBuild.category != "Rebirth";
 
   return Scaffold(
     backgroundColor: theme.colorScheme.surface,
@@ -4614,33 +4776,21 @@ Widget build(BuildContext context) {
             child: ArmoryText(
               widget.weapon.name.toUpperCase(),
               themeController: widget.themeController,
-              baseFontSize: 16, 
+              baseFontSize: 18,
               baseStrokeWidth: 2.5,
               overrideStrokeColor: Colors.black,
             ),
           ),
-          if (archetype != null && archetype.isNotEmpty) ...[
-            const SizedBox(width: 8),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: isCustom ? Colors.black : theme.colorScheme.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(
-                  color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.5),
-                  width: 1.5,
-                ),
-              ),
-              child: ArmoryText(
-                archetype.toUpperCase(),
-                themeController: widget.themeController,
-                baseFontSize: 9,
-                baseStrokeWidth: 1.2,
-                color: Colors.white,
-                letterSpacing: 1.0,
-              ),
+          
+          const SizedBox(width: 10),
+
+          if ((displayStats?.archetype ?? widget.weapon.classType ?? "").isNotEmpty)
+            _buildArchetypeBadge(
+              displayStats?.archetype ?? widget.weapon.classType ?? "WEAPON", 
+              isCustom, 
+              coreColor, 
+              theme
             ),
-          ],
         ],
       ),
       backgroundColor: isCustom 
@@ -4649,21 +4799,24 @@ Widget build(BuildContext context) {
       elevation: 0,
       shape: isCustom ? Border(
         bottom: BorderSide(
-          color: coreColor, 
+          color: Color.lerp(accentColor, Colors.white, 0.35)!, 
           width: 2
         ),
       ) : null,
       actions: [
-        if (showStatUI && showStats && isSokol) _buildFireModeToggle(),
-        if (showStatUI) ...[
+        if (shouldShowToggle && showStats && isSokol) _buildFireModeToggle(),
+        if (shouldShowToggle) ...[
           if (widget.isPremiumUser) ...[
+            const SizedBox(width: 2),
             Center(
               child: ArmoryText(
                 "STATS",
                 themeController: widget.themeController,
                 baseFontSize: 10,
                 baseStrokeWidth: 1.5,
-                color: isCustom ? coreColor : coreColor,
+                color: isCustom 
+                    ? Color.lerp(accentColor, Colors.white, 0.35)! 
+                    : theme.colorScheme.primary,
                 letterSpacing: 1.0,
               ),
             ),
@@ -4686,6 +4839,8 @@ Widget build(BuildContext context) {
                   HapticFeedback.mediumImpact(); 
                   setState(() => showStats = v);
                 },
+                activeColor: isCustom ? Color.lerp(accentColor, Colors.white, 0.35)! : theme.colorScheme.primary,
+                activeTrackColor: isCustom ? accentColor.withOpacity(0.3) : null,
               ),
             ),
           ] else ...[
@@ -4693,12 +4848,8 @@ Widget build(BuildContext context) {
                 icon: const Icon(Icons.analytics_outlined, color: Colors.white24, size: 18),
                 onPressed: () {
                   HapticFeedback.heavyImpact();
-                  
-                  ScaffoldMessenger.of(context).clearSnackBars(); 
-
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      duration: const Duration(seconds: 2),
                       backgroundColor: const Color(0xFF0D0D0D),
                       behavior: SnackBarBehavior.fixed,
                       elevation: 0,
@@ -4754,39 +4905,64 @@ Widget build(BuildContext context) {
                     bool sel = selectedIndex == index;
 
                     Color buildAccent = b.category == "Special" 
-                        ? Colors.purpleAccent 
-                        : (b.category == "Rebirth" 
-                            ? Colors.orangeAccent
-                            : (b.category.contains("Prestige") ? const Color(0xFFFFD700) : accentColor));
-                            
-                    Color dynamicCore = Color.lerp(buildAccent, Colors.white, 0.35)!;
+                    ? Colors.purpleAccent 
+                    : (b.category == "Rebirth" 
+                        ? Colors.orangeAccent
+                        : (b.category.contains("Prestige") ? const Color(0xFFFFD700) : accentColor));
+                        
+
+                    final Color coreColor = Color.lerp(buildAccent, Colors.white, 0.35)!;
 
                     return GestureDetector(
                       onTap: () {
                         HapticFeedback.mediumImpact(); 
+                        final newBuild = flatBuilds[index];
+                        
+                        final bool isWarzone = newBuild.category.toLowerCase().contains('warzone');
+                        final bool isPrestige = newBuild.category.toLowerCase().contains('prestige');
+                        final bool isSpecial = newBuild.category.toLowerCase() == 'special';
+                        
+                        final bool hasValidStats = (isWarzone || isPrestige || isSpecial) && 
+                                                    newBuild.stats != null && 
+                                                    newBuild.stats!.ttk1 != "-";
+
                         setState(() {
                           selectedIndex = index;
-                          final newBuild = flatBuilds[index];
-                          
-                          final bool newHasStats = newBuild.stats != null && 
-                                                  newBuild.stats!.adsSpeed != "-" &&
-                                                  newBuild.stats!.adsSpeed.isNotEmpty;
-                          final bool newIsStatMode = ["Warzone", "Warzone Prestige", "Special"].contains(newBuild.category);
-                          
-                          if (!newHasStats || !newIsStatMode) {
+
+                          if (!hasValidStats) {
                             showStats = false; 
+                            archetypeRankings = null; 
+                            isRankingLoading = false;
+                          } else {
+                            isRankingLoading = true;
                           }
                         });
+
+                        if (hasValidStats) {
+                          String targetSearchName = widget.weapon.name.toUpperCase().trim();
+                          if (targetSearchName.contains("SOKOL 545")) {
+                            targetSearchName = isFastMode ? "SOKOL 545 (FAST)" : "SOKOL 545 (SLOW)";
+                          } else if (isSpecial && newBuild.modName != null) {
+                            targetSearchName = "${widget.weapon.name.toUpperCase()} ${newBuild.modName!.toUpperCase()}";
+                          } else if (isPrestige) {
+                            targetSearchName = "$targetSearchName (PRESTIGE)";
+                          }
+
+                          _calculateRankings(targetSearchName);
+                        }
                       },
+
+                      // GAME MODE SELECTORS
+
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         decoration: BoxDecoration(
                           color: (isCustom && sel) 
                               ? const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9)
                               : (sel ? buildAccent : theme.colorScheme.surface.withOpacity(0.9)),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: (isCustom && sel) ? dynamicCore : (sel ? Colors.white : buildAccent.withOpacity(0.3)),
+                            color: (isCustom && sel) ? coreColor : (sel ? Colors.white : buildAccent.withOpacity(0.3)),
                             width: sel ? 2 : 1,
                           ),
                           boxShadow: (isCustom && sel) ? [
@@ -4807,68 +4983,70 @@ Widget build(BuildContext context) {
                   }),
                 ),
               ),
+                
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
-                    if (showStatUI) 
-                      _CombatRatingDisplay(
-                        stats: displayStats!, 
-                        themeController: widget.themeController
-                      ),
-                    
-                    if (showStats && showStatUI && widget.isPremiumUser) 
-                      _PremiumStatCard(
-                        stats: displayStats!, 
-                        themeController: widget.themeController
-                      ),
+                    if (shouldShowToggle) _CombatRatingDisplay(stats: displayStats, themeController: widget.themeController),
+                    if (showStats && widget.isPremiumUser)
+                        _PremiumStatCard(
+                          stats: displayStats!,
+                          themeController: widget.themeController,
+                          rankings: archetypeRankings,
+                          isLoading: isRankingLoading,
+                        ),
+                    if (currentBuild.modName != null) 
 
-                     if (currentBuild.modName != null || currentBuild.category == "Special")
-                      () {
-                        final Color buildAccent = currentBuild.category == "Special" 
-                            ? Colors.purpleAccent 
-                            : (currentBuild.category == "Rebirth" 
-                                ? Colors.orangeAccent
-                                : (currentBuild.category.contains("Prestige") ? const Color(0xFFFFD700) : accentColor));
+                      // Special Box
 
-                        final Color dynamicCore = Color.lerp(buildAccent, Colors.white, 0.35)!;
-
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: isCustom ? Colors.black : theme.colorScheme.surface.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: isCustom ? dynamicCore : theme.colorScheme.primary.withOpacity(0.6),
-                                width: isCustom ? 2.5 : 1.5,
-                              ),
-                              boxShadow: isCustom ? [
-                                BoxShadow(color: buildAccent.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
-                                BoxShadow(color: buildAccent.withOpacity(0.3), blurRadius: 15, spreadRadius: 2),
-                              ] : [],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4, bottom: 4), 
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: isCustom 
+                                ? const Color(0xFF000000) 
+                                : theme.colorScheme.surface.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(
+                              color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.8), 
+                              width: isCustom ? 2.5 : 1.5,
                             ),
-                            child: Center(
-                              child: ArmoryText(
-                                (currentBuild.category == "Special" 
-                                    ? "SPECIAL BUILD" 
-                                    : (currentBuild.modName ?? currentBuild.category)).toUpperCase(),
-                                themeController: widget.themeController,
-                                baseFontSize: 14,
-                                baseStrokeWidth: isCustom ? 2.5 : 2.0,
-                                color: Colors.white,
-                                overrideStrokeColor: isCustom ? buildAccent.withOpacity(0.6) : Colors.black,
-                                letterSpacing: 3.0,
+                            boxShadow: isCustom ? [
+
+                              BoxShadow(
+                                color: accentColor.withOpacity(0.8), 
+                                blurRadius: 1, 
+                                spreadRadius: 0.5
                               ),
+
+                              BoxShadow(
+                                color: accentColor.withOpacity(0.3), 
+                                blurRadius: 15, 
+                                spreadRadius: 2
+                              ),
+                            ] : [],
+                          ),
+                          child: Center(
+                            child: ArmoryText(
+                              (currentBuild.category == "Special" ? "SPECIAL BUILD" : 
+                              currentBuild.category == "Rebirth" ? "REBIRTH BUILD" : 
+                              currentBuild.category).toUpperCase(),
+                              themeController: widget.themeController,
+                              baseFontSize: 14,
+                              baseStrokeWidth: isCustom ? 2.5 : 2.0,
+                              color: Colors.white,
+                              overrideStrokeColor: isCustom ? accentColor.withOpacity(0.6) : Colors.black,
+                              letterSpacing: 3.0,
                             ),
                           ),
-                        );
-                      }(),
+                        ),
+                      ),
                         
-                    ...currentBuild.buildCodes.map((c) => _BuildCodeBox(
+                        ...currentBuild.buildCodes.map((c) => _BuildCodeBox(
                       code: c, 
                       weaponName: widget.weapon.name, 
                       mode: currentBuild.category, 
@@ -4888,30 +5066,38 @@ Widget build(BuildContext context) {
                         value: currentBuild.specialtyValue!, 
                         themeController: widget.themeController, 
                       ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
 }
 
 Widget _ImageHeader({required String url}) {
-    return Container(
-      height: 160,
-      width: double.infinity,
-      color: Colors.transparent,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(26.0), 
+  final String weaponName = widget.weapon.name;
+  
+  final ScaleProfile profile = weaponScaleOverrides[weaponName] ?? 
+                               const ScaleProfile(scale: 1.0, padding: 26.0);
+
+  return Container(
+    height: 160,
+    width: double.infinity,
+    color: Colors.transparent,
+    child: Center(
+      child: Padding(
+        padding: EdgeInsets.all(profile.padding), 
+        child: Transform.scale(
+          scale: profile.scale, 
           child: _SmartImage(url: url), 
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
 Widget _buildFireModeToggle() {
   final activeTheme = widget.themeController.activeTheme;
@@ -4923,7 +5109,21 @@ Widget _buildFireModeToggle() {
     child: GestureDetector(
       onTap: () {
         HapticFeedback.mediumImpact();
-        setState(() => isFastMode = !isFastMode);
+        
+        final bool nextMode = !isFastMode;
+
+        setState(() {
+          isFastMode = nextMode;
+          isRankingLoading = true;
+        });
+
+        String targetSearchName = widget.weapon.name.toUpperCase().trim();
+        
+        if (targetSearchName.contains("SOKOL 545")) {
+          targetSearchName = nextMode ? "SOKOL 545 (FAST)" : "SOKOL 545 (SLOW)";
+        }
+
+        _calculateRankings(targetSearchName);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -4965,11 +5165,25 @@ Widget _buildFireModeToggle() {
   );
 }
 
- Widget _AttachmentTile({
-    required String text, 
-    required bool isStarred, 
-    required ThemeController themeController
-  }) {
+bool _hasActualData(String? val) => val != null && val != "-" && val.isNotEmpty;
+
+Widget _buildArchetypeBadge(String label, bool isCustom, Color coreColor, ThemeData theme) {
+  return Container(
+    padding: EdgeInsets.only(top: 2, bottom: 3, left: 6, right: 6),
+    decoration: BoxDecoration(
+      color: isCustom ? Colors.black : theme.colorScheme.primary.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(4),
+      border: Border.all(color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.5), width: 1.5),
+    ),
+    child: ArmoryText(label.toUpperCase(), themeController: widget.themeController, baseFontSize: 9),
+  );
+}
+
+Widget _AttachmentTile({
+  required String text, 
+  required bool isStarred, 
+  required ThemeController themeController
+}) {
   final activeTheme = themeController.activeTheme;
   final theme = activeTheme.themeData;
   final bool isHolographic = activeTheme.isHolographic;
@@ -4978,20 +5192,21 @@ Widget _buildFireModeToggle() {
   final Color accentColor = themeController.activeAccentColor;
 
   Widget tileContent = Container(
-    margin: (isAnemone || isHolographic || isCustom) ? EdgeInsets.zero : const EdgeInsets.only(bottom: 8),
+    margin: EdgeInsets.zero, 
     decoration: BoxDecoration(
       color: theme.colorScheme.surface.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(18),
       border: (isAnemone || isHolographic || isCustom) ? null : Border.all(
-        color: theme.colorScheme.primary.withOpacity(0.15),
+        color: theme.colorScheme.primary.withOpacity(0.8),
+        width: 2.0,
       ),
     ),
     child: ListTile(
       dense: true,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+      contentPadding: const EdgeInsets.only(right: 12, left: 12, bottom: 0.5),
       visualDensity: const VisualDensity(horizontal: 0, vertical: -2), 
       leading: Icon(
-        isStarred ? Icons.star : Icons.gps_fixed,
+        isStarred ? Icons.star : Icons.api_sharp,
         color: isStarred ? Colors.amber : (isCustom ? accentColor : theme.colorScheme.primary),
         size: 16,
       ),
@@ -5007,94 +5222,294 @@ Widget _buildFireModeToggle() {
     ),
   );
 
+  Widget finalWidget;
+
   if (isHolographic) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: _InternalAnimatedBorder(
-        colors: activeTheme.refractionColors,
-        child: tileContent,
-      ),
+    finalWidget = _InternalAnimatedBorder(
+      colors: activeTheme.refractionColors,
+      borderRadius: 18,
+      strokeWidth: 3.5,
+      child: tileContent,
     );
-  } 
-  
-  else if (isAnemone) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: ArmoryGradientBorder(
-        gradientColors: activeTheme.borderGradient,
-        borderRadius: 12,
-        child: tileContent,
-      ),
+  } else if (isAnemone) {
+    finalWidget = ArmoryGradientBorder(
+      gradientColors: activeTheme.borderGradient,
+      borderRadius: 18,
+      strokeWidth: 3.0,
+      child: tileContent,
     );
-  } 
-
-  else if (isCustom) {
+  } else if (isCustom) {
     final Color coreColor = Color.lerp(accentColor, Colors.white, 0.45)!;
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0), 
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: coreColor, 
-            width: 1.5,
-          ),
-          boxShadow: [
-
-            BoxShadow(
-              color: accentColor.withOpacity(0.8),
-              blurRadius: 1,
-              spreadRadius: 0.5,
+    finalWidget = Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: coreColor, width: 2.0),
+        boxShadow: [
+          BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
+          BoxShadow(color: accentColor.withOpacity(0.3), blurRadius: 15, spreadRadius: 2),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+          color: Colors.black.withOpacity(0.92),
+          child: ListTile(
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+            visualDensity: const VisualDensity(horizontal: 0, vertical: -2), 
+            leading: Icon(
+              isStarred ? Icons.star : Icons.api_sharp,
+              color: isStarred ? Colors.amber : coreColor, 
+              size: 16,
             ),
-
-            BoxShadow(
-              color: accentColor.withOpacity(0.3),
-              blurRadius: 15,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(9),
-          child: Container(
-            color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.92),
-            child: ListTile(
-              dense: true,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-              visualDensity: const VisualDensity(horizontal: 0, vertical: -2), 
-              leading: Icon(
-                isStarred ? Icons.star : Icons.check_circle,
-                color: isStarred ? Colors.amber : coreColor, 
-                size: 16,
-              ),
-              title: ArmoryText(
-                text.toUpperCase(),
-                themeController: themeController,
-                baseFontSize: 13,
-                baseStrokeWidth: 2.5,
-                color: Colors.white, 
-                overrideStrokeColor: Colors.black, 
-                letterSpacing: 0.5,
-              ),
+            title: ArmoryText(
+              text.toUpperCase(),
+              themeController: themeController,
+              baseFontSize: 13,
+              baseStrokeWidth: 2.5,
+              color: Colors.white, 
+              overrideStrokeColor: Colors.black, 
+              letterSpacing: 0.5,
             ),
           ),
         ),
       ),
     );
+  } else {
+    finalWidget = tileContent;
   }
 
-  return tileContent;
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10.0), 
+    child: finalWidget,
+  );
 }
 }
+
+class ScaleProfile {
+  final double scale;
+  final double padding;
+  const ScaleProfile({this.scale = 1.0, this.padding = 15.0});
+}
+
+const Map<String, ScaleProfile> weaponScaleOverrides = {
+  // --- MODERN WARFARE (2019) ---
+  "AK-47 (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "AN-94": ScaleProfile(scale: 1.5, padding: 10.0),
+  "AS VAL (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "AUG (MW19)": ScaleProfile(scale: 1.2, padding: 10.0),
+  "CR-56 AMAX (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FAL": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FN SCAR 17": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FR 5.56 (MW19)": ScaleProfile(scale: 1.3, padding: 10.0),
+  "GRAU 5.56": ScaleProfile(scale: 1.3, padding: 10.0),
+  "KILO 141 (MW19)": ScaleProfile(scale: 1.4, padding: 10.0),
+  "M13": ScaleProfile(scale: 1.4, padding: 10.0),
+  "M4A1 (MW19)": ScaleProfile(scale: 1.3, padding: 10.0),
+  "ODEN": ScaleProfile(scale: 1.3, padding: 10.0),
+  "RAM-7 (MW19)": ScaleProfile(scale: 1.3, padding: 10.0),
+  "SA87": ScaleProfile(scale: 1.4, padding: 10.0),
+  "CX-9": ScaleProfile(scale: 1.2, padding: 10.0),
+  "FENNEC (MW19)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "ISO (MW19)": ScaleProfile(scale: 1.1, padding: 10.0),
+  "MP5 (MW19)": ScaleProfile(scale: 1.15, padding: 10.0),
+  "MP7": ScaleProfile(scale: 1.1, padding: 10.0),
+  "P90": ScaleProfile(scale: 1.15, padding: 10.0),
+  "PP19 BIZON (MW19)": ScaleProfile(scale: 1.3, padding: 10.0),
+  "STRIKER 45 (MW19)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "UZI": ScaleProfile(scale: 1.4, padding: 10.0),
+  "BRUEN MK9 (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FiNN LMG": ScaleProfile(scale: 1.5, padding: 10.0),
+  "HOLGER-26 (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "M91": ScaleProfile(),
+  "MG34": ScaleProfile(scale: 1.5, padding: 10.0),
+  "PKM": ScaleProfile(scale: 1.5, padding: 10.0),
+  "RAAL MG (MW19)": ScaleProfile(scale: 1.1, padding: 10.0),
+  "725": ScaleProfile(scale: 1.5, padding: 10.0),
+  "JAK-12": ScaleProfile(scale: 1.25, padding: 10.0),
+  "MODEL 680 (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "ORIGIN 12": ScaleProfile(scale: 1.3, padding: 10.0),
+  "R9-0": ScaleProfile(scale: 1.3, padding: 10.0),
+  "VLK ROGUE": ScaleProfile(scale: 1.4, padding: 10.0),
+  "CROSSBOW (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "EBR-14 (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "KAR98K (MW19)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "MK2 CARBINE": ScaleProfile(scale: 1.5, padding: 10.0),
+  ".50 GS (MW19)": ScaleProfile(),
+  "1911 (MW19)": ScaleProfile(),
+  "M19": ScaleProfile(),
+  "RENETTI (MW19)": ScaleProfile(),
+  "SYKOV": ScaleProfile(),
+  "X16": ScaleProfile(),
+  "MAGNUM (MW19)": ScaleProfile(),
+
+  // --- COLD WAR ---
+  "AK-47 (CW)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "AK-74U": ScaleProfile(scale: 1.3, padding: 10.0),
+  "C58": ScaleProfile(scale: 1.5, padding: 10.0),
+  "EM2": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FARA 83": ScaleProfile(scale: 1.5, padding: 10.0),
+  "FFAR 1 (CW)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "GRAV": ScaleProfile(scale: 1.5, padding: 10.0),
+  "GROZA": ScaleProfile(scale: 1.2, padding: 10.0),
+  "KRIG 6 (CW)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "QBZ-83": ScaleProfile(scale: 1.3, padding: 10.0),
+  "UGR": ScaleProfile(scale: 1.4, padding: 10.0),
+  "VARGO 52": ScaleProfile(scale: 1.5, padding: 10.0),
+  "XM4 (CW)": ScaleProfile(scale: 1.4, padding: 10.0),
+  "BULLFROG": ScaleProfile(scale: 1.4, padding: 10.0),
+  "KSP 45": ScaleProfile(scale: 1.2, padding: 10.0),
+  "LAPA": ScaleProfile(scale: 1.1, padding: 10.0),
+  "LC10 (CW)": ScaleProfile(scale: 1.3, padding: 10.0),
+  "MAC-10": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MILANO 821": ScaleProfile(scale: 1.1, padding: 10.0),
+  "MP5 (CW)": ScaleProfile(scale: 1.15, padding: 10.0),
+  "OTS 9": ScaleProfile(scale: 1.4, padding: 10.0),
+  "PPSH-41 (CW)": ScaleProfile(scale: 1.35, padding: 10.0),
+  "TEC-9": ScaleProfile(scale: 1.1, padding: 10.0),
+  "M60": ScaleProfile(scale: 1.5, padding: 10.0),
+  "MG 82": ScaleProfile(scale: 1.5, padding: 10.0),
+  "RPD": ScaleProfile(scale: 1.5, padding: 10.0),
+  "STONER 63": ScaleProfile(scale: 1.5, padding: 10.0),
+  "AUG (CW)": ScaleProfile(scale: 1.4, padding: 10.0),
+  "CARV.2": ScaleProfile(scale: 1.2, padding: 10.0),
+  "DMR 14": ScaleProfile(scale: 1.5, padding: 10.0),
+  "M16 (CW)": ScaleProfile(scale: 1.5, padding: 10.0),
+  "TYPE 63": ScaleProfile(scale: 1.5, padding: 10.0),
+  ".410 IRONHIDE": ScaleProfile(scale: 1.5, padding: 10.0),
+  "GALLO SA12": ScaleProfile(scale: 1.4, padding: 10.0),
+  "HAUER 77": ScaleProfile(scale: 1.5, padding: 10.0),
+  "STREETSWEEPER": ScaleProfile(scale: 1.5, padding: 10.0),
+  "LW3 TUNDRA": ScaleProfile(scale: 1.5, padding: 10.0),
+  "M82": ScaleProfile(scale: 1.5, padding: 10.0),
+  "PELINGTON 703": ScaleProfile(scale: 1.5, padding: 10.0),
+  "SWISS K31": ScaleProfile(scale: 1.5, padding: 10.0),
+  "ZRG 20MM": ScaleProfile(scale: 1.5, padding: 10.0),
+  "1911 (CW)": ScaleProfile(scale: 1.1, padding: 10.0),
+  "AMP63": ScaleProfile(scale: 1.3, padding: 10.0),
+  "DIAMATTI": ScaleProfile(scale: 1.1, padding: 10.0),
+  "MAGNUM (CW)": ScaleProfile(),
+  "MARSHAL": ScaleProfile(),
+
+  // --- MW3/MW2 ---
+  "556 ICARUS": ScaleProfile(scale: 0.9, padding: 10.0),
+  "9MM DAEMON": ScaleProfile(scale: 1.0, padding: 10.0),
+  "AMR9": ScaleProfile(scale: 1.0, padding: 10.0),
+  "BAL-27": ScaleProfile(scale: 0.9, padding: 10.0),
+  "BAS-B": ScaleProfile(scale: 1.0, padding: 10.0),
+  "BAS-P": ScaleProfile(scale: 1.0, padding: 10.0),
+  "BASILISK": ScaleProfile(scale: 0.9, padding: 10.0),
+  "BP50": ScaleProfile(scale: 1.0, padding: 10.0),
+  "BRUEN MK9 (MW3)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "BRYSON 890": ScaleProfile(scale: 0.8, padding: 10.0),
+  "CARRACK .300": ScaleProfile(scale: 1.0, padding: 10.0),
+  "CHIMERA": ScaleProfile(scale: 1.0, padding: 10.0),
+  "CRONEN SQUALL": ScaleProfile(scale: 1.1, padding: 10.0),
+  "DG-56": ScaleProfile(scale: 1.0, padding: 10.0),
+  "DG-58 LSW": ScaleProfile(scale: 1.0, padding: 10.0),
+  "DM56": ScaleProfile(scale: 1.0, padding: 10.0),
+  "EBR-14 (MW2)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "EXPEDITE 12": ScaleProfile(scale: 0.8, padding: 10.0),
+  "FENNEC 45": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FJX HORUS": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FJX IMPERIUM": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FR 5.56 (MW3)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FR AVANCER": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FSS HURRICANE": ScaleProfile(scale: 1.0, padding: 10.0),
+  "FTAC RECON": ScaleProfile(scale: 0.9, padding: 10.0),
+  "FTAC SIEGE": ScaleProfile(scale: 1.0, padding: 10.0),
+  "GS MAGNA": ScaleProfile(scale: 0.9, padding: 10.0),
+  "HAYMAKER": ScaleProfile(scale: 0.9, padding: 10.0),
+  "HCR 56": ScaleProfile(scale: 0.9, padding: 10.0),
+  "HOLGER 26 (MW3)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "HOLGER 556": ScaleProfile(scale: 1.0, padding: 10.0),
+  "HRM-9": ScaleProfile(scale: 0.9, padding: 10.0),
+  "ISO 45": ScaleProfile(scale: 1.0, padding: 10.0),
+  "ISO 9MM": ScaleProfile(scale: 1.0, padding: 10.0),
+  "ISO HEMLOCK": ScaleProfile(scale: 1.0, padding: 10.0),
+  "KASTOV 545": ScaleProfile(scale: 0.9, padding: 10.0),
+  "KASTOV 762": ScaleProfile(scale: 0.9, padding: 10.0),
+  "KASTOV-74U": ScaleProfile(scale: 0.9, padding: 10.0),
+  "KATT-AMR": ScaleProfile(scale: 1.0, padding: 10.0),
+  "KV BROADSIDE": ScaleProfile(scale: 0.9, padding: 10.0),
+  "KV INHIBITOR": ScaleProfile(scale: 1.0, padding: 10.0),
+  "KVD ENFORCER": ScaleProfile(scale: 0.9, padding: 10.0),
+  "LA-B 330": ScaleProfile(scale: 1.0, padding: 10.0),
+  "LACHMANN SUB": ScaleProfile(scale: 0.9, padding: 10.0),
+  "LACHMANN-556": ScaleProfile(scale: 0.9, padding: 10.0),
+  "LACHMANN-762": ScaleProfile(scale: 1.0, padding: 10.0),
+  "LM-S": ScaleProfile(scale: 1.0, padding: 10.0),
+  "LOCKWOOD 300": ScaleProfile(scale: 0.9, padding: 10.0),
+  "LOCKWOOD 680 (MW3)": ScaleProfile(scale: 0.9, padding: 10.0),
+  "LONGBOW": ScaleProfile(scale: 1.0, padding: 10.0),
+  "M13B": ScaleProfile(scale: 1.1, padding: 10.0),
+  "M13C": ScaleProfile(scale: 1.0, padding: 10.0),
+  "M4": ScaleProfile(scale: 0.9, padding: 10.0),
+  "MCPR-300": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MCW": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MCW 6.8": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MINIBAK": ScaleProfile(scale: 0.9, padding: 10.0),
+  "MORS": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MTZ INTERCEPTOR": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MTZ-556": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MTZ-762": ScaleProfile(scale: 1.0, padding: 10.0),
+  "MX GUARDIAN": ScaleProfile(scale: 0.8, padding: 10.0),
+  "P890": ScaleProfile(scale: 0.9, padding: 10.0),
+  "PDSW 528": ScaleProfile(scale: 0.85, padding: 10.0),
+  "PULEMYOT 762": ScaleProfile(scale: 1.0, padding: 10.0),
+  "RAAL MG (MW2)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "RAM-7 (MW3)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "RAM-9": ScaleProfile(scale: 1.0, padding: 10.0),
+  "RAPP H": ScaleProfile(scale: 0.9, padding: 10.0),
+  "RECLAIMER 18": ScaleProfile(scale: 0.85, padding: 10.0),
+  "RENETTI (MW3)": ScaleProfile(scale: 0.9, padding: 10.0),
+  "RIVAL-9": ScaleProfile(scale: 0.9, padding: 10.0),
+  "RIVETER": ScaleProfile(scale: 1.0, padding: 10.0),
+  "RPK": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SAKIN MG38": ScaleProfile(scale: 0.9, padding: 10.0),
+  "SIDEWINDER": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SIGNAL 50": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SO-14": ScaleProfile(scale: 0.9, padding: 10.0),
+  "SO-14 MP - FULL-AUTO": ScaleProfile(scale: 0.9, padding: 10.0),
+  "SO-14 MP - SEMI-AUTO": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SOA SUBVERTER": ScaleProfile(scale: 0.9, padding: 10.0),
+  "SP-R 208 (MW2)": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SP-X 80": ScaleProfile(scale: 1.0, padding: 10.0),
+  "STATIC-HV": ScaleProfile(scale: 1.0, padding: 10.0),
+  "STB 556": ScaleProfile(scale: 0.9, padding: 10.0),
+  "STG44": ScaleProfile(scale: 1.2, padding: 10.0),
+  "STRIKER": ScaleProfile(scale: 0.9, padding: 10.0),
+  "STRIKER 9": ScaleProfile(scale: 1.0, padding: 10.0),
+  "SUPERI 46": ScaleProfile(scale: 0.9, padding: 10.0),
+  "SVA 545": ScaleProfile(scale: 1.0, padding: 10.0),
+  "TAQ ERADICATOR": ScaleProfile(scale: 1.0, padding: 10.0),
+  "TAQ-56": ScaleProfile(scale: 0.9, padding: 10.0),
+  "TAQ-M": ScaleProfile(scale: 0.9, padding: 10.0),
+  "TAQ-V": ScaleProfile(scale: 0.9, padding: 10.0),
+  "TEMPUS RAZORBACK": ScaleProfile(scale: 1.0, padding: 10.0),
+  "TEMPUS TORRENT": ScaleProfile(scale: 1.0, padding: 10.0),
+  "TR-76 GEIST": ScaleProfile(scale: 0.9, padding: 10.0),
+  "TYR": ScaleProfile(scale: 0.9, padding: 10.0),
+  "VAZNEV-9K": ScaleProfile(scale: 0.9, padding: 10.0),
+  "VEL 46": ScaleProfile(scale: 1.0, padding: 10.0),
+  "VICTUS XMR": ScaleProfile(scale: 1.0, padding: 10.0),
+  "WSP STINGER": ScaleProfile(scale: 1.0, padding: 10.0),
+  "WSP SWARM": ScaleProfile(scale: 0.9, padding: 10.0),
+  "WSP-9": ScaleProfile(scale: 0.9, padding: 10.0),
+  "XRK STALKER": ScaleProfile(scale: 1.0, padding: 10.0),
+};
 
 class _PremiumStatCard extends StatelessWidget {
   final WeaponStats stats;
   final ThemeController themeController;
+  final Map<String, ArchetypeRank>? rankings;
+  final bool isLoading;
 
   const _PremiumStatCard({
-    required this.stats, 
+    required this.stats,
     required this.themeController,
+    this.rankings,
+    required this.isLoading,
   });
 
   bool _hasData(String? val) {
@@ -5109,38 +5524,28 @@ class _PremiumStatCard extends StatelessWidget {
     final theme = Theme.of(context);
     final Color accentColor = themeController.activeAccentColor;
     final bool isCustom = activeTheme.id == 'neon_custom';
-
     final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
+    
+    final Color ratingColor = _getRatingColor(stats.combatRating?.label);
 
     return ListenableBuilder(
       listenable: themeController,
       builder: (context, _) {
-
-        final Color statTextColor = isCustom ? Colors.white : theme.colorScheme.primary;
-
         return Container(
-          margin: const EdgeInsets.only(top: 8, bottom: 12),
+          margin: const EdgeInsets.only(top: 6, bottom: 10),
           width: double.infinity,
           decoration: BoxDecoration(
             color: isCustom 
                 ? const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9) 
                 : theme.colorScheme.surface.withOpacity(0.9),
-            borderRadius: BorderRadius.circular(12), 
+            borderRadius: BorderRadius.circular(18), 
             border: Border.all(
-              color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.15),
-              width: 2.0,
+              color: isCustom ? coreColor : accentColor,
+              width: 1.5,
             ),
             boxShadow: isCustom ? [
-              BoxShadow(
-                color: accentColor.withOpacity(0.8),
-                blurRadius: 1,
-                spreadRadius: 0.5,
-              ),
-              BoxShadow(
-                color: accentColor.withOpacity(0.3),
-                blurRadius: 15,
-                spreadRadius: 2,
-              ),
+              BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
+              BoxShadow(color: accentColor.withOpacity(0.3), blurRadius: 15, spreadRadius: 2),
             ] : [],
           ),
           child: Column(
@@ -5159,44 +5564,60 @@ class _PremiumStatCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Divider(
-                  color: isCustom ? accentColor.withOpacity(0.3) : Colors.white10, 
-                  height: 1
-                ),
+                child: Divider(color: isCustom ? accentColor.withOpacity(0.3) : Colors.white10, height: 1),
               ),
+
               Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 12, left: 4, right: 4),
+                padding: const EdgeInsets.only(top: 8, bottom: 10, left: 6, right: 6),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (_hasData(stats.ttk1))
-                      _buildExpandedStat(
-                        "TTK 0-${stats.range1}", 
-                        stats.ttk1, 
-                      ),
-
-                    if (_hasData(stats.ttk2))
-                      _buildExpandedStat(
-                        (stats.range1 == stats.range2) 
-                            ? "TTK ${stats.range1}+" 
-                            : "TTK ${stats.range1}-${stats.range2}",
-                        stats.ttk2, 
-                      ),
-                    
+                    if (_hasData(stats.ttk1)) _buildExpandedStat("TTK 0-${stats.range1}", stats.ttk1),
+                    const SizedBox(width: 2),
+                    if (_hasData(stats.ttk2)) _buildExpandedStat((stats.range1 == stats.range2) ? "TTK ${stats.range1}+" : "TTK ${stats.range1}-${stats.range2}", stats.ttk2),
+                    const SizedBox(width: 2),
                     _buildExpandedStat("ADS SPEED", stats.adsSpeed),
-                    _buildExpandedStat("VELOCITY", stats.bulletVelocity,),
-                    _buildExpandedStat("HITS TO KILL", stats.shotsToKill,),
-                    
-                    if (!_hasData(stats.ttk2) && _hasData(stats.range2))
-                      _buildExpandedStat("DROP", stats.range2,),
-
-                    _buildExpandedStat("HITSCAN", stats.hitscanRange,),
-
-                    if (stats.shotRange != null && _hasData(stats.shotRange))
-                      _buildExpandedStat("ONE SHOT", stats.shotRange!,),
+                    _buildExpandedStat("VELOCITY", stats.bulletVelocity),
+                    _buildExpandedStat("HITS TO KILL", stats.shotsToKill),
+                    if (!_hasData(stats.ttk2) && _hasData(stats.range2)) _buildExpandedStat("DROP", stats.range2),
+                    _buildExpandedStat("HITSCAN", stats.hitscanRange),
+                    if (stats.shotRange != null && _hasData(stats.shotRange)) _buildExpandedStat("ONE SHOT", stats.shotRange!),
                   ],
                 ),
               ),
+              
+              if (stats.archetype != null && stats.archetype!.isNotEmpty) ...[
+                Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Divider(color: isCustom ? accentColor.withOpacity(0.3) : Colors.white10, height: 1),
+              ),
+                const SizedBox(height: 8),
+                
+                 ArmoryText(
+                  "${stats.archetype!.toUpperCase()} RANKING", 
+                  themeController: themeController,
+                  baseFontSize: 10,
+                  baseStrokeWidth: 2.0,
+                  color: isCustom ? Colors.black : coreColor,
+                  overrideStrokeColor: isCustom ? coreColor : Colors.black,
+                ),
+                
+                const SizedBox(height: 12),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16, right: 8, left: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildRankElement("TTK CLOSE", "ttkClose", ratingColor),
+                      _buildRankElement("TTK FAR", "ttkFar", ratingColor),
+                      _buildRankElement("ADS SPEED", "adsSpeed", ratingColor),
+                      _buildRankElement("VELOCITY", "velocity", ratingColor),
+                      _buildRankElement("SHOTS TO KILL", "stk", ratingColor),
+                    ],
+                  ),
+                ),
+              ]
             ],
           ),
         );
@@ -5204,11 +5625,56 @@ class _PremiumStatCard extends StatelessWidget {
     );
   }
 
-    Widget _buildExpandedStat(String label, String value, {Color? overrideColor}) {
+  Widget _buildRankElement(String label, String key, Color color) {
+    final Color accentColor = themeController.activeAccentColor;
+    final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
+    final data = rankings?[key];
+    final String rankText = isLoading ? "..." : (data != null ? "#${data.rank}" : "-");
+
+    return Column(
+      children: [
+        _buildRankCircle(rankText, color),
+        const SizedBox(height: 6),
+        ArmoryText(
+              label,
+              themeController: themeController,
+              baseFontSize: 8,
+              baseStrokeWidth: 2.5,
+              color: coreColor,
+              overrideStrokeColor: Colors.black,
+            ),
+      ],
+    );
+  }
+
+  Widget _buildRankCircle(String rankText, Color color) {
+    return Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: color, width: 1.5),
+        boxShadow: [
+          BoxShadow(color: color.withOpacity(0.2), blurRadius: 4, spreadRadius: 1),
+        ],
+      ),
+      child: Center(
+        child: ArmoryText(
+              rankText,
+              themeController: themeController,
+              baseFontSize: 9,
+              baseStrokeWidth: 2.0,
+              color: color,
+              overrideStrokeColor: Colors.black,
+            ),
+        ),
+    );
+  }
+
+  Widget _buildExpandedStat(String label, String value, {Color? overrideColor}) {
     final activeTheme = themeController.activeTheme;
     final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
     final Color accent = themeController.activeAccentColor;
-    
     final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
     final Color finalColor = overrideColor ?? (isNeon ? Colors.white : coreColor);
 
@@ -5222,6 +5688,15 @@ class _PremiumStatCard extends StatelessWidget {
         )
       )
     );
+  }
+
+  Color _getRatingColor(String? label) {
+    switch (label?.toUpperCase()) {
+      case "S": return Colors.amberAccent;
+      case "A": return Colors.greenAccent;
+      case "B": return Colors.orangeAccent;
+      default: return Colors.redAccent;
+    }
   }
 }
 
@@ -5266,10 +5741,10 @@ class _StatItem extends StatelessWidget {
             ArmoryText(
               label.toUpperCase(),
               themeController: themeController,
-              baseFontSize: 8,
+              baseFontSize: 7,
               baseStrokeWidth: isCustom ? 2.2 : 1.8,
               color: isCustom ? baseDisplayColor : baseDisplayColor,
-              overrideStrokeColor: isCustom ? accentColor.withOpacity(0.5) : Colors.black,
+              overrideStrokeColor: Colors.black,
               letterSpacing: 0.5,
             ),
           ],
@@ -5298,12 +5773,12 @@ class _AttachmentTile extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8), 
       decoration: BoxDecoration(
         color: const Color(0xFF1A1A1A), 
-        borderRadius: BorderRadius.circular(8)
+        borderRadius: BorderRadius.circular(18)
       ), 
       child: ListTile(
         dense: true, 
         leading: Icon(
-          isStarred ? Icons.star : Icons.check_circle_outline, 
+          isStarred ? Icons.star : Icons.api_sharp, 
           size: 18, 
           color: isStarred ? Colors.amber : primaryBlue,
         ), 
@@ -5348,9 +5823,9 @@ class _SpecialtyBox extends StatelessWidget {
           color: isCustom 
               ? const Color.fromARGB(255, 0, 0, 0) 
               : theme.colorScheme.surface.withOpacity(0.6),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.5), 
+            color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.8), 
             width: isCustom ? 2.5 : 1.5,
           ),
           boxShadow: isCustom ? [
@@ -5435,27 +5910,43 @@ class _StatusChip extends StatelessWidget {
 class _ImageHeader extends StatelessWidget {
   final String url;
   const _ImageHeader({required this.url});
+
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(height: 180,
-      width: double.infinity,
-      alignment: Alignment.center,
-        child: _SmartImage(
-          url: url,
-          width: 300
-          )),
+    final bool isColdWar = url.contains('COLD_WAR');
+
+    final double scaleFactor = isColdWar ? 1.25 : 1.0;
+
+    return Stack(
+      children: [
+        Container(
+          height: 180,
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Transform.scale(
+            scale: scaleFactor,
+            child: _SmartImage(
+              url: url,
+              width: 300,
+            ),
+          ),
+        ),
         Positioned.fill(
-          child:
-            Container(
-              decoration:
-                BoxDecoration(
-                  gradient:
-                    LinearGradient(
-                      begin:
-                        Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.transparent, Colors.black.withOpacity(0.9)]))))]);
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.transparent, 
+                  Colors.black.withOpacity(0.9)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -5484,7 +5975,7 @@ class _BuildCodeBox extends StatelessWidget {
     final Color activeContainerColor = isNeon ? Colors.black : surfaceBg;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.only(top: 8, bottom: 6),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
@@ -5508,7 +5999,7 @@ class _BuildCodeBox extends StatelessWidget {
                 themeController: themeController,
                 baseFontSize: 11,
                 baseStrokeWidth: 1.5,
-                color: isNeon ? coreColor : Colors.white,
+                color: isNeon ? coreColor : accentColor,
                 textAlign: TextAlign.center,
               ),
             ),
@@ -5519,7 +6010,7 @@ class _BuildCodeBox extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: activeContainerColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(
               color: activeBorderColor,
               width: isNeon ? 2.5 : 1.0,
@@ -6656,7 +7147,7 @@ final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
       border: Border.all(
         color: isCustom ? Colors.amberAccent.withOpacity(0.3) : Theme.of(context).colorScheme.primary.withOpacity(0.6)
       ),
-      borderRadius: BorderRadius.circular(12)
+      borderRadius: BorderRadius.circular(24)
     ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -6796,7 +7287,7 @@ Widget _buildControlTile(String label, Widget trailing, ThemeData theme) {
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
     decoration: BoxDecoration(
       color: isCustom ? const Color.fromARGB(255, 0, 0, 0) : primaryFaded,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(24),
       border: Border.all(
         color: isCustom ? coreColor.withOpacity(0.4) : theme.colorScheme.primary.withOpacity(0.6),
         width: 1,
@@ -7439,9 +7930,9 @@ class _CombatRatingBox extends StatelessWidget {
     final Color coreColor = Color.lerp(ratingColor, Colors.white, 0.35)!;
 
     return Container(
-      margin: const EdgeInsets.only(top: 2, bottom: 2), 
+      margin: const EdgeInsets.only(top: 10), 
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: isCustom ? coreColor : ratingColor.withOpacity(0.4), 
           width: 2.0,
@@ -7452,7 +7943,7 @@ class _CombatRatingBox extends StatelessWidget {
         ] : [],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
+        borderRadius: BorderRadius.circular(18),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), 
           color: isCustom 
@@ -7628,7 +8119,7 @@ class _AugmentTreeScreenState extends State<AugmentTreeScreen> {
               padding: const EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
                 color: boxFill,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(
                   color: borderColor, 
                   width: isActive ? 2 : 1
@@ -7805,7 +8296,7 @@ class _AugmentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(4), 
         border: Border.all(color: color.withOpacity(0.3), width: 0.5)
       ),
-      child: Text("OR", style: TextStyle(color: color.withOpacity(0.6), fontSize: 8, fontWeight: FontWeight.bold)),
+      child: Text("OR", style: TextStyle(color: color.withOpacity(0.6), fontSize: 8)),
     );
   }
 
@@ -7825,7 +8316,7 @@ class _AugmentCard extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: fill, 
-        borderRadius: BorderRadius.circular(12), 
+        borderRadius: BorderRadius.circular(24), 
         border: Border.all(
           color: activeColor.withOpacity(_useBlueprint ? 0.6 : 0.2), 
           width: _useBlueprint ? 1.5 : 1.0
@@ -7869,7 +8360,7 @@ class _AugmentCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: fill, 
-        borderRadius: BorderRadius.circular(12), 
+        borderRadius: BorderRadius.circular(24), 
         border: Border.all(color: borderColor, width: 1.0)
       ),
       child: Column(
@@ -7895,6 +8386,7 @@ class _AugmentCard extends StatelessWidget {
           ],
           if (major['bo7'] != null) ...[
             buildSubLabel(major['isReplacement'] ? "MAJOR AUGMENT REPLACEMENT" : "MAJOR EVOLUTION:"),
+            const SizedBox(height: 5),
             _renderAugmentText(major['bo7'], isBO7: true),
           ],
         ],
@@ -7918,7 +8410,7 @@ Widget build(BuildContext context) {
   Widget slotContent = Container(
     decoration: BoxDecoration(
       color: _isNeon ? Colors.black : Theme.of(context).colorScheme.surface,
-      borderRadius: BorderRadius.circular(innerRadius),
+      borderRadius: BorderRadius.circular(24),
       border: (!isHolo && !isAnemone) 
           ? Border.all(
               color: _isNeon ? coreColor : Theme.of(context).colorScheme.primary, 
@@ -7963,15 +8455,15 @@ Widget build(BuildContext context) {
     finalSlot = _InternalAnimatedBorder(
       colors: activeTheme.refractionColors,
       useRotation: true,
-      borderRadius: outerRadius,
-      strokeWidth: strokeWidth,
+      borderRadius: 24,
+      strokeWidth: 4.0,
       child: slotContent,
     );
   } else if (isAnemone) {
     finalSlot = ArmoryGradientBorder(
       gradientColors: activeTheme.borderGradient,
-      strokeWidth: strokeWidth,
-      borderRadius: outerRadius,
+      strokeWidth: 4.0,
+      borderRadius: 24,
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       child: slotContent,
@@ -8259,7 +8751,7 @@ Widget _buildClassChip(String label) {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(24),
         color: isActive 
             ? (isNeon ? Colors.black : primaryColor.withOpacity(0.1)) 
             : Colors.white.withOpacity(0.05),
@@ -8340,7 +8832,7 @@ Widget _buildGameSelector(List<String> options) {
                   color: isActive ? activeBorder : Colors.white10,
                   width: (isNeon && isActive) ? 2.0 : 1.0, 
                 ),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(18),
                 boxShadow: (isNeon && isActive) ? [
                   BoxShadow(color: accent.withOpacity(0.4), blurRadius: 8, spreadRadius: 0.5),
                 ] : null,
@@ -10301,17 +10793,17 @@ class _TacticalModuleButtonState extends State<TacticalModuleButton> {
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface.withOpacity(0.92),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         border: (canShowEffects && (isHolographic || isAnemone || isCustom))
             ? null
-            : Border.all(color: baseColor.withOpacity(_isPressed ? 0.8 : 0.5), width: 1),
+            : Border.all(color: baseColor, width: 2),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           _buildTacticalIcon(
             widget.icon, 
-            (isCustom && canShowEffects) ? coreColor : baseColor, strokeSize: 1
+            (isCustom && canShowEffects) ? coreColor : baseColor, strokeSize: 0.8
           ),
           const SizedBox(width: 15),
           Flexible(
@@ -10331,21 +10823,21 @@ class _TacticalModuleButtonState extends State<TacticalModuleButton> {
 
     Widget themedButton;
     if (isHolographic && canShowEffects) {
-      themedButton = _InternalAnimatedBorder(colors: activeTheme.refractionColors, child: boxContent);
+      themedButton = _InternalAnimatedBorder(colors: activeTheme.refractionColors, borderRadius: 24, strokeWidth: 3.5, child: boxContent);
     } else if (isAnemone && canShowEffects) {
-      themedButton = ArmoryGradientBorder(gradientColors: activeTheme.borderGradient, borderRadius: 12, strokeWidth: 2, child: boxContent);
+      themedButton = ArmoryGradientBorder(gradientColors: activeTheme.borderGradient, borderRadius: 24, strokeWidth: 3.5, child: boxContent);
     } else if (isCustom && canShowEffects) {
       themedButton = AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: coreColor, width: _isPressed ? 2.5 : 2.0),
           boxShadow: [
             BoxShadow(color: baseColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
             BoxShadow(color: baseColor.withOpacity(glowOpacity), blurRadius: blurRadius, spreadRadius: 2),
           ],
         ),
-        child: ClipRRect(borderRadius: BorderRadius.circular(10), child: boxContent),
+        child: ClipRRect(borderRadius: BorderRadius.circular(24), child: boxContent),
       );
     } else {
       themedButton = boxContent;
@@ -10544,7 +11036,7 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
     return aWins ? Colors.redAccent : Colors.greenAccent;
   }
 
-  void _openWeaponSelector(String slot) async {
+void _openWeaponSelector(String slot) async {
   _searchQuery = "";
   _searchController.clear();
 
@@ -10558,54 +11050,51 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
 
   if (!mounted) return;
 
-    showModalBottomSheet(
+  showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (context) => StatefulBuilder(
       builder: (context, setModalState) {
         final activeTheme = widget.themeController.activeTheme;
-        final isCustom = activeTheme.id == 'neon_custom';
+        final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
+        final bool isHolo = activeTheme.isHolographic;
+        final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
         final accentColor = widget.themeController.activeAccentColor;
         final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
+        final activeFont = widget.themeController.activeFont;
+        final Color primaryFaded = Color.alphaBlend(
+        Theme.of(context).colorScheme.surface.withOpacity(0.2), 
+        Colors.black
+      );
 
         final filtered = widget.allWeapons.where((w) {
-        final name = w.name.toLowerCase().trim();
-        
-        bool hasExactMatch = validNamesInJson.contains(name);
-        bool isPrefixMatch = validNamesInJson.any((n) => n.startsWith(name));
-
-        return hasExactMatch || isPrefixMatch;
-      }).where((w) {
-        final n = w.name.toUpperCase();
-        return n != "GRAV" && n != "M13"; 
-      }).where((w) => w.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+          final name = w.name.toLowerCase().trim();
+          bool hasExactMatch = validNamesInJson.contains(name);
+          bool isPrefixMatch = validNamesInJson.any((n) => n.startsWith(name));
+          return hasExactMatch || isPrefixMatch;
+        }).where((w) {
+          final n = w.name.toUpperCase();
+          return n != "GRAV" && n != "M13"; 
+        }).where((w) => w.name.toLowerCase().contains(_searchQuery.toLowerCase()))
         .toList()
         ..sort((a, b) => a.name.compareTo(b.name));
 
         Widget modalBody = Container(
           decoration: BoxDecoration(
-            color: isCustom ? Colors.black : const Color(0xFF0D0D0D),
+            color: isNeon ? Colors.black : Colors.black,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            border: (!activeTheme.isHolographic && activeTheme.category != ThemeCategory.anemone)
+            border: (!isHolo && !isAnemone)
                 ? Border(
                     top: BorderSide(
-                      color: isCustom ? coreColor : accentColor.withOpacity(0.8),
-                      width: 2.0,
+                      color: isNeon ? coreColor : accentColor.withOpacity(0.8),
+                      width: 2.5,
                     ),
                   )
                 : null,
-            boxShadow: isCustom ? [
-              BoxShadow(
-                color: accentColor.withOpacity(0.8), 
-                blurRadius: 4, 
-                spreadRadius: 1
-              ),
-              BoxShadow(
-                color: accentColor.withOpacity(0.3), 
-                blurRadius: 20, 
-                spreadRadius: 2
-              ),
+            boxShadow: isNeon ? [
+              BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 4, spreadRadius: 1),
+              BoxShadow(color: accentColor.withOpacity(0.3), blurRadius: 20, spreadRadius: 2),
             ] : [],
           ),
           child: Column(
@@ -10621,15 +11110,18 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
                   controller: _searchController,
                   textCapitalization: TextCapitalization.sentences,
                   onChanged: (val) => setModalState(() => _searchQuery = val),
-                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                  style: TextStyle(color: Colors.white, fontSize: 13, fontFamily: activeFont),
                   decoration: InputDecoration(
                     hintText: "SEARCH FOR WEAPON...",
                     hintStyle: const TextStyle(color: Colors.white30, fontSize: 11),
                     prefixIcon: Icon(Icons.search, color: accentColor, size: 18),
                     filled: true,
-                  
-                    fillColor: Colors.white10,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+                    // Themed search bar color
+                    fillColor: isNeon ? Colors.white.withOpacity(0.05) : Colors.white10,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8), 
+                      borderSide: isNeon ? BorderSide(color: coreColor.withOpacity(0.2)) : BorderSide.none
+                    ),
                   ),
                 ),
               ),
@@ -10637,7 +11129,7 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
               const SizedBox(height: 15),
 
               SizedBox(
-                height: 150,
+                height: 160,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -10647,36 +11139,20 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
                     return GestureDetector(
                       onTap: () async {
                         HapticFeedback.lightImpact();
+                        final String response = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
+                        final Map<String, dynamic> data = json.decode(response);
+                        final List<dynamic> premiumList = data['Premium_Stats'];
+                        final String weaponNameLower = w.name.toLowerCase().trim();
+                        final Set<String> validNamesInJson = premiumList.map((item) => item['weapon_name'].toString().toLowerCase().trim()).toSet();
+                        bool hasBaseInJson = validNamesInJson.contains(weaponNameLower);
+                        bool hasPrestigeInJson = validNamesInJson.any((n) => n.contains(weaponNameLower) && n.contains("prestige"));
+                        bool hasSpecialVariantInJson = validNamesInJson.any((n) => n.startsWith(weaponNameLower) && n != weaponNameLower && !n.contains("prestige"));
 
-                          final String response = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
-                          final Map<String, dynamic> data = json.decode(response);
-                          final List<dynamic> premiumList = data['Premium_Stats'];
-                          
-                          final String weaponNameLower = w.name.toLowerCase().trim();
-                          final Set<String> validNamesInJson = premiumList
-                              .map((item) => item['weapon_name'].toString().toLowerCase().trim())
-                              .toSet();
-
-                          bool hasBaseInJson = validNamesInJson.contains(weaponNameLower);
-                          bool hasPrestigeInJson = validNamesInJson.any((n) => n.contains(weaponNameLower) && n.contains("prestige"));
-                          bool hasSpecialVariantInJson = validNamesInJson.any((n) => 
-                            n.startsWith(weaponNameLower) && 
-                            n != weaponNameLower && 
-                            !n.contains("prestige")
-                          );
-
-                          final validBuilds = w.builds.keys.where((key) {
+                        final validBuilds = w.builds.keys.where((key) {
                           final k = key.toLowerCase();
-
-                          bool isWzVariantInJson = validNamesInJson.any((n) => 
-                              n.contains(weaponNameLower) && n.contains("(wz)"));
-                              
-                          if (k.contains("warzone") || k.contains("(wz)")) {
-                            return isWzVariantInJson || hasBaseInJson;
-                          }
-                          
+                          bool isWzVariantInJson = validNamesInJson.any((n) => n.contains(weaponNameLower) && n.contains("(wz)"));
+                          if (k.contains("warzone") || k.contains("(wz)")) return isWzVariantInJson || hasBaseInJson;
                           if (k.contains("prestige")) return hasPrestigeInJson;
-
                           if (k == "special" || k.contains("conversion") || k.contains(weaponNameLower)) {
                             if (hasSpecialVariantInJson) return true;
                             return !(hasBaseInJson || hasPrestigeInJson);
@@ -10684,54 +11160,40 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
                           return false;
                         }).toList();
 
-                          List<String> finalSelection = validBuilds;
-                          if (finalSelection.isEmpty && (hasBaseInJson || hasPrestigeInJson || hasSpecialVariantInJson)) {
-                            finalSelection = w.builds.entries
-                              .where((e) => e.value.any((b) => b.stats != null))
-                              .map((e) => e.key)
-                              .toList();
-                          }
+                        List<String> finalSelection = validBuilds;
+                        if (finalSelection.isEmpty && (hasBaseInJson || hasPrestigeInJson || hasSpecialVariantInJson)) {
+                          finalSelection = w.builds.entries.where((e) => e.value.any((b) => b.stats != null)).map((e) => e.key).toList();
+                        }
 
-                          if (finalSelection.length > 1) {
-                            _showVariantDialog(context, w, finalSelection, slot);
-                          } else if (finalSelection.isNotEmpty) {
-                            _selectWeapon(w, finalSelection.first, slot);
-                          } else {
-                            _selectWeapon(w, w.builds.keys.contains('Warzone') ? 'Warzone' : w.builds.keys.first, slot);
-                          }
-                        },
-                        child: Container(
+                        if (finalSelection.length > 1) {
+                          _showVariantDialog(context, w, finalSelection, slot);
+                        } else if (finalSelection.isNotEmpty) {
+                          _selectWeapon(w, finalSelection.first, slot);
+                        } else {
+                          _selectWeapon(w, w.builds.keys.contains('Warzone') ? 'Warzone' : w.builds.keys.first, slot);
+                        }
+                      },
+                      child: Container(
                         width: 130,
-                        margin: const EdgeInsets.only(right: 12, bottom: 8, top: 8),
+                        margin: const EdgeInsets.only(right: 12, bottom: 12, top: 4),
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.black, // Weapon card background
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: isCustom ? coreColor : Colors.white10,
-                            width: isCustom ? 1.5 : 1.0
+                            color: isNeon ? coreColor.withOpacity(0.6) : Colors.white10,
+                            width: isNeon ? 1.5 : 1.0
                           ),
-
-                          boxShadow: isCustom ? [
-                            BoxShadow(
-                              color: accentColor.withOpacity(0.5), 
-                              blurRadius: 2, 
-                              spreadRadius: 0.5
-                            ),
-                            BoxShadow(
-                              color: accentColor.withOpacity(0.2), 
-                              blurRadius: 8, 
-                              spreadRadius: 1
-                            ),
+                          boxShadow: isNeon ? [
+                            BoxShadow(color: accentColor.withOpacity(0.4), blurRadius: 4),
                           ] : [],
                         ),
-
                         child: Column(
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+                              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                color: isCustom ? coreColor.withOpacity(0.1) : Colors.white.withOpacity(0.05),
+                                color: isNeon ? coreColor.withOpacity(0.15) : Colors.white.withOpacity(0.05),
                                 borderRadius: const BorderRadius.vertical(top: Radius.circular(11))
                               ),
                               child: ArmoryText(
@@ -10755,22 +11217,25 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
                   },
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
             ],
           ),
         );
 
         Widget finalModal;
-        if (activeTheme.isHolographic) {
+        if (isHolo) {
           finalModal = _InternalAnimatedBorder(
             colors: activeTheme.refractionColors,
+            useRotation: true,
             child: modalBody,
           );
-        } else if (activeTheme.category == ThemeCategory.anemone) {
+        } else if (isAnemone) {
           finalModal = ArmoryGradientBorder(
             gradientColors: activeTheme.borderGradient,
-            strokeWidth: 2,
-            borderRadius: 20,
+            strokeWidth: 3,
+            borderRadius: 12,
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
             child: modalBody,
           );
         } else {
@@ -10784,7 +11249,7 @@ WeaponStats? _getWeaponStats(Weapon? weapon, String? selectedBuild) {
       }
     ),
   );
- }
+}
 
 void _selectWeapon(Weapon? w, String? buildName, String slot) {
   if (Navigator.canPop(context) && w != null) {
@@ -10828,77 +11293,125 @@ void _selectWeapon(Weapon? w, String? buildName, String slot) {
   _searchQuery = "";
 }
 
- void _showVariantDialog(BuildContext context, Weapon w, List<String> buildNames, String slot) {
-  showDialog(
-    context: context,
-    builder: (context) => Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: const Color(0xFF0D0D0D),
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: widget.themeController.activeAccentColor.withOpacity(0.5)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ArmoryText("SELECT CONFIGURATION", themeController: widget.themeController, baseFontSize: 12),
-            const SizedBox(height: 20),
-            ...buildNames.map((name) {
-              String displayLabel = name.toUpperCase();
-              String actualSelectionName = name;
+void _showVariantDialog(BuildContext context, Weapon w, List<String> buildNames, String slot) {
+  final activeTheme = widget.themeController.activeTheme;
+  final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
+  final bool isHolo = activeTheme.isHolographic;
+  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+  final accentColor = widget.themeController.activeAccentColor;
+  
+  final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
 
-              if (name.toLowerCase() == "special" || name.toLowerCase().contains("conversion")) {
-                final builds = w.builds[name];
-                if (builds != null && builds.isNotEmpty) {
-                  final specialBuild = builds.firstWhere(
-                    (b) => b.modName != null && b.modName!.toUpperCase().contains("(WZ)"),
-                    orElse: () => builds.firstWhere(
-                      (b) => b.modName != null && b.modName!.toLowerCase() != w.name.toLowerCase(),
-                      orElse: () => builds.first
-                    )
-                  );
-                  
-                  if (specialBuild.modName != null) {
-                    displayLabel = specialBuild.modName!.toUpperCase();
-                    actualSelectionName = specialBuild.modName!; 
-                  }
-                }
+  const double outerRadius = 28.0;
+  final double borderWidth = (isNeon || isHolo || isAnemone) ? 3.0 : 1.5;
+
+  Widget dialogContent = Container(
+    width: MediaQuery.of(context).size.width * 0.85,
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      color: isNeon ? Colors.black : Colors.black,
+      borderRadius: BorderRadius.circular(outerRadius),
+      border: (!isHolo && !isAnemone) 
+          ? Border.all(
+              color: isNeon ? coreColor : accentColor.withOpacity(0.5),
+              width: borderWidth,
+            )
+          : null,
+      boxShadow: isNeon ? [
+        BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 4, spreadRadius: 0.5),
+        BoxShadow(color: accentColor.withOpacity(0.2), blurRadius: 15, spreadRadius: 1),
+      ] : null,
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ArmoryText("SELECT CONFIGURATION", themeController: widget.themeController, baseFontSize: 12),
+        const SizedBox(height: 20),
+        ...buildNames.map((name) {
+          String displayLabel = name.toUpperCase();
+          String actualSelectionName = name;
+          if (name.toLowerCase() == "special" || name.toLowerCase().contains("conversion")) {
+            final builds = w.builds[name];
+            if (builds != null && builds.isNotEmpty) {
+              final specialBuild = builds.firstWhere(
+                (b) => b.modName != null && b.modName!.toUpperCase().contains("(WZ)"),
+                orElse: () => builds.firstWhere(
+                  (b) => b.modName != null && b.modName!.toLowerCase() != w.name.toLowerCase(),
+                  orElse: () => builds.first
+                )
+              );
+              if (specialBuild.modName != null) {
+                displayLabel = specialBuild.modName!.toUpperCase();
+                actualSelectionName = specialBuild.modName!; 
               }
+            }
+          }
+          String weaponNameUpper = w.name.toUpperCase();
+          if (displayLabel.contains(weaponNameUpper) && displayLabel != weaponNameUpper) {
+            displayLabel = displayLabel.replaceFirst(weaponNameUpper, "").trim();
+          }
 
-              String weaponNameUpper = w.name.toUpperCase();
-              if (displayLabel.contains(weaponNameUpper) && displayLabel != weaponNameUpper) {
-                displayLabel = displayLabel.replaceFirst(weaponNameUpper, "").trim();
-              }
-
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context); 
-                    _selectWeapon(w, actualSelectionName, slot);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.05),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: widget.themeController.activeAccentColor.withOpacity(0.3)),
-                    ),
-                    child: ArmoryText(
-                      displayLabel,
-                      themeController: widget.themeController, 
-                      baseFontSize: 9, 
-                      textAlign: TextAlign.center,
-                      allowWrap: true,
-                    ),
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context); 
+                _selectWeapon(w, actualSelectionName, slot);
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: isNeon ? Colors.black : Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: isNeon ? coreColor.withOpacity(0.5) : accentColor.withOpacity(0.3)
                   ),
                 ),
-              );
-            }),
-          ],
+                child: ArmoryText(
+                  displayLabel,
+                  themeController: widget.themeController, 
+                  baseFontSize: 9, 
+                  textAlign: TextAlign.center,
+                  allowWrap: true,
+                ),
+              ),
+            ),
+          );
+        }),
+      ],
+    ),
+  );
+
+  // Apply specialized border wrappers
+  Widget wrappedDialog;
+  if (isHolo) {
+    wrappedDialog = _InternalAnimatedBorder(
+      colors: activeTheme.refractionColors,
+      borderRadius: outerRadius,
+      useRotation: true, // Holographic requirement
+      child: dialogContent,
+    );
+  } else if (isAnemone) {
+    wrappedDialog = ArmoryGradientBorder(
+      gradientColors: activeTheme.borderGradient,
+      borderRadius: outerRadius,
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+      child: dialogContent,
+    );
+  } else {
+    wrappedDialog = dialogContent;
+  }
+
+  showDialog(
+    context: context,
+    builder: (context) => BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // Standard dialog blur
+      child: Center(
+        child: Material( // Ensures text styles and ink ripples work
+          color: Colors.transparent,
+          child: wrappedDialog,
         ),
       ),
     ),
@@ -11294,7 +11807,7 @@ Widget _buildSelectionSlot(String slot, Weapon? weapon, String? selectedBuild, b
     height: 140, 
     decoration: BoxDecoration(
       color: isCustom ? const Color(0xFF000000) : const Color(0xFF080808),
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(18),
       border: (!activeTheme.isHolographic && activeTheme.category != ThemeCategory.anemone)
           ? Border.all(
               color: isCustom ? coreColor : accentColor, 
@@ -11307,7 +11820,7 @@ Widget _buildSelectionSlot(String slot, Weapon? weapon, String? selectedBuild, b
       ] : (weapon != null ? [BoxShadow(color: accentColor.withOpacity(0.1), blurRadius: 4)] : []),
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(9),
+      borderRadius: BorderRadius.circular(18),
       child: Column(
         children: [
           Container(
@@ -11344,13 +11857,14 @@ Widget _buildSelectionSlot(String slot, Weapon? weapon, String? selectedBuild, b
     finalSlot = _InternalAnimatedBorder(
       colors: activeTheme.refractionColors,
       useRotation: true,
+      borderRadius: 18,
       child: slotContent,
     );
   } else if (activeTheme.category == ThemeCategory.anemone) {
     finalSlot = ArmoryGradientBorder(
       gradientColors: activeTheme.borderGradient,
       strokeWidth: 2,
-      borderRadius: 10,
+      borderRadius: 18,
       child: slotContent,
     );
   } else {
@@ -11610,6 +12124,7 @@ class _GlobalAnalysisScreenState extends State<GlobalAnalysisScreen> {
   String _currentFilter = "TTK CLOSE";
   SortMode _sortMode = SortMode.none;
   int? _flippedIndex;
+  Map<String, WeaponStats> statsLookup = {}; 
 
   final List<String> _filters = ["TTK CLOSE", "TTK FAR", "VELOCITY", "ADS SPEED", "STK"];
 
@@ -11623,17 +12138,29 @@ String selectedCategory = "ALL";
 void _handleFilterTap(String filter) {
   setState(() {
     _flippedIndex = null;
-    if (_currentFilter == filter) {
-      if (_sortMode == SortMode.none) {
-        _sortMode = _isHighBetter(filter) ? SortMode.highToLow : SortMode.lowToHigh;
-      } else if (_sortMode == (_isHighBetter(filter) ? SortMode.highToLow : SortMode.lowToHigh)) {
-        _sortMode = _isHighBetter(filter) ? SortMode.lowToHigh : SortMode.highToLow;
+
+    if (_currentFilter != filter) {
+      _currentFilter = filter;
+      _sortMode = (filter == "VELOCITY") ? SortMode.highToLow : SortMode.lowToHigh;
+      return;
+    }
+
+    if (filter == "VELOCITY") {
+      if (_sortMode == SortMode.highToLow) {
+        _sortMode = SortMode.lowToHigh;
+      } else if (_sortMode == SortMode.lowToHigh) {
+        _sortMode = SortMode.none; 
       } else {
-        _sortMode = SortMode.none;
+        _sortMode = SortMode.highToLow;
       }
     } else {
-      _currentFilter = filter;
-      _sortMode = _isHighBetter(filter) ? SortMode.highToLow : SortMode.lowToHigh;
+      if (_sortMode == SortMode.lowToHigh) {
+        _sortMode = SortMode.highToLow;
+      } else if (_sortMode == SortMode.highToLow) {
+        _sortMode = SortMode.none;
+      } else {
+        _sortMode = SortMode.lowToHigh;
+      }
     }
   });
 }
@@ -11648,18 +12175,38 @@ double _parse(dynamic val) {
   return double.tryParse(clean) ?? 0.0;
 }
 
-WeaponStats? _extractBaseStats(Weapon weapon, {String? targetSpecificName}) {
+WeaponStats? _extractBaseStats(
+  Weapon weapon, {
+  String? targetSpecificName, 
+  Map<String, WeaponStats>? statsLookup
+}) {
   if (targetSpecificName != null) {
     final String target = targetSpecificName.toUpperCase().trim();
-    final String baseWeaponName = weapon.name.toUpperCase().trim();
+
+    if (statsLookup != null && statsLookup.containsKey(target)) {
+      final exactStats = statsLookup[target];
+      if (exactStats != null) {
+        if (target.contains("SOKOL 545") && exactStats.combatRating == null) {
+          exactStats.archetype = "LMG";
+          exactStats.combatRating = calculateCombatRatingStatic(exactStats, "LMG", false);
+        }
+        return exactStats;
+      }
+    }
 
     for (var buildsList in weapon.builds.values) {
       for (var build in buildsList) {
         final String buildName = (build.modName ?? "").toUpperCase().trim();
-
         if (buildName == target) return build.stats;
+      }
+    }
 
-        if (buildName.isNotEmpty && target.contains(buildName)) {
+    for (var buildsList in weapon.builds.values) {
+      for (var build in buildsList) {
+        final String buildName = (build.modName ?? "").toUpperCase().trim();
+        if (buildName.isNotEmpty && 
+            !target.contains("SOKOL 545") && 
+            target.contains(buildName)) {
            return build.stats;
         }
       }
@@ -11679,16 +12226,44 @@ WeaponStats? _extractBaseStats(Weapon weapon, {String? targetSpecificName}) {
   }
 
   Future<void> _loadArchetypes() async {
-    try {
-      final String response = await rootBundle.loadString('assets/archetypes.json');
-      final data = await json.decode(response);
-      setState(() {
-        archetypesJson = data;
-      });
-    } catch (e) {
-      debugPrint("Error loading archetypes: $e");
+  try {
+    final String response = await rootBundle.loadString('assets/archetypes.json');
+    final data = json.decode(response);
+
+    final String statsResponse = await rootBundle.loadString('assets/Premium_Stats_202602131455.json');
+    final Map<String, dynamic> statsData = json.decode(statsResponse);
+    
+    final Map<String, WeaponStats> tempLookup = {};
+    
+    if (statsData['Premium_Stats'] != null) {
+      for (var s in statsData['Premium_Stats']) {
+        String key = s['weapon_name']?.toString().toUpperCase().trim() ?? "";
+        if (key.isNotEmpty) {
+          tempLookup[key] = WeaponStats(
+            ttk1: s['ttk1']?.toString() ?? "-",
+            ttk2: s['ttk2']?.toString() ?? "-",
+            adsSpeed: s['ads_speed']?.toString() ?? "-",
+            bulletVelocity: s['bullet_velocity']?.toString() ?? "-",
+            shotsToKill: s['shots_to_kill']?.toString() ?? "-",
+            range1: s['range1']?.toString() ?? "-",
+            range2: s['range2']?.toString() ?? "-",
+            hitscanRange: s['hitscan_range']?.toString() ?? "-",
+          );
+        }
+      }
     }
+
+    setState(() {
+      archetypesJson = data;
+      statsLookup = tempLookup;
+    });
+    
+    debugPrint("✅ Stats Lookup Initialized: ${statsLookup.length} entries.");
+    
+  } catch (e) {
+    debugPrint("Error loading JSON data: $e");
   }
+}
 
 @override
 Widget build(BuildContext context) {
@@ -12019,7 +12594,23 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
   final isCustom = activeTheme.id == 'neon_custom';
   final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
 
-  final int rank = index + 1;
+  final int totalCount = _getSortedWeapons().length; 
+  
+  int rank;
+  
+  if (_sortMode == SortMode.none) {
+    rank = index + 1;
+  } 
+  else if (_currentFilter == "VELOCITY") {
+    rank = (_sortMode == SortMode.highToLow) 
+        ? (index + 1) 
+        : (totalCount - index);
+  } 
+  else {
+    rank = (_sortMode == SortMode.lowToHigh) 
+        ? (index + 1) 
+        : (totalCount - index);
+  }
 
   String displayValue = _extractValue(stats);
 
@@ -12032,10 +12623,6 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
     } else {
       displayValue = "${stats.range1}+";
     }
-  } else {
-    if (isTTK || _currentFilter == "ADS SPEED") {
-      displayValue = displayValue;
-    }
   }
 
   Widget cardContent = Container(
@@ -12043,7 +12630,7 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
     padding: const EdgeInsets.symmetric(horizontal: 8),
     decoration: const BoxDecoration(
       color: Colors.black,
-      borderRadius: BorderRadius.all(Radius.circular(12)),
+      borderRadius: BorderRadius.all(Radius.circular(24)),
     ),
     child: Row(
       children: [
@@ -12099,21 +12686,22 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
   if (activeTheme.isHolographic) {
     finalWidget = _InternalAnimatedBorder(
       colors: activeTheme.refractionColors,
+      borderRadius: (24),
       child: cardContent, 
     );
   } else if (activeTheme.category == ThemeCategory.anemone) {
     finalWidget = RepaintBoundary(
       child: ArmoryGradientBorder(
         gradientColors: activeTheme.borderGradient,
-        strokeWidth: 2,
-        borderRadius: 12,
+        strokeWidth: 2.5,
+        borderRadius: 24,
         child: cardContent,
       ),
     );
   } else if (isCustom) {
     finalWidget = Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: coreColor, width: 1.5),
         boxShadow: [
           BoxShadow(
@@ -12136,10 +12724,10 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
   } else {
     finalWidget = Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: accentColor.withOpacity(0.5), 
-          width: 1.2,
+          color: accentColor.withOpacity(0.8), 
+          width: 1.5,
         ),
       ),
       child: ClipRRect(
@@ -12155,23 +12743,34 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
   );
 }
 
-  String _extractValue(WeaponStats stats) {
-    switch (_currentFilter) {
-      case "STK": return stats.shotsToKill;
-      case "VELOCITY": return stats.bulletVelocity;
-      case "ADS SPEED": return stats.adsSpeed;
-      case "TTK CLOSE": return stats.ttk1;
-      case "TTK FAR": return stats.ttk2;
-      default: return stats.combatRating?.label ?? "N/A";
-    }
+String _extractValue(WeaponStats stats) {
+  switch (_currentFilter) {
+    case "STK": return stats.shotsToKill;
+    case "VELOCITY": return stats.bulletVelocity;
+    case "ADS SPEED": return stats.adsSpeed;
+    case "TTK CLOSE": return stats.ttk1;
+    case "TTK FAR": return stats.ttk2;
+    default: return stats.combatRating?.label ?? "N/A";
   }
+}
 
 List<SortedItem> _getSortedWeapons() {
   List<SortedItem> items = [];
 
   List<String> allowedInSearch = [];
   final Map<String, dynamic> archetypes = archetypesJson['archetypes'] ?? {};
-  
+  final Map<String, String> nameToArchetypeMap = {};
+
+  if (selectedCategory == "ALL") {
+    archetypes.forEach((arch, list) {
+      if (list is List) {
+        for (var n in list) {
+          nameToArchetypeMap[n.toString().toUpperCase().trim()] = arch;
+        }
+      }
+    });
+  }
+
   if (selectedCategory != "ALL") {
     allowedInSearch = (archetypes[selectedCategory] as List<dynamic>?)
             ?.map((e) => e.toString().toUpperCase().trim())
@@ -12185,24 +12784,58 @@ List<SortedItem> _getSortedWeapons() {
   }
 
   for (var weapon in widget.allWeapons) {
-    final String baseName = weapon.name.toUpperCase().trim();
-    
-    List<String> variants = allowedInSearch
-        .where((name) => name.contains(baseName))
-        .toList();
+  final String baseName = weapon.name.toUpperCase().trim();
 
-    if (variants.isEmpty && selectedCategory == "ALL") {
-      variants.add(baseName);
+  List<String> variants = allowedInSearch.where((name) {
+    final String cleanName = name.toUpperCase().trim();
+
+    if (cleanName == baseName) return true;
+    if (cleanName.startsWith("$baseName (")) return true;
+    if (cleanName.startsWith("$baseName ")) {
+
+      String remaining = cleanName.substring(baseName.length + 1);
+      bool startsWithNumber = remaining.isNotEmpty && RegExp(r'^[0-9]').hasMatch(remaining);
+      return !startsWithNumber; 
+    }
+    return false;
+  }).toList();
+
+  if (variants.isNotEmpty) {
+  }
+
+  if (variants.isEmpty && selectedCategory == "ALL") {
+    variants.add(baseName);
+  }
+
+  final Set<String> processedNames = {};
+
+  for (var vName in variants) {
+    if (processedNames.contains(vName)) {
+      debugPrint("🚫 [AEGIS_EYE] Skipping duplicate variant: $vName for weapon $baseName");
+      continue;
     }
 
-    final Set<String> processedNames = {};
+    if (vName == "SOKOL 545") continue;
 
-    for (var vName in variants) {
-      if (processedNames.contains(vName)) continue;
+    final stats = _extractBaseStats(weapon, targetSpecificName: vName, statsLookup: statsLookup);
+    
+    if (stats != null) {
+        if (stats.combatRating == null) {
+          
+          String arch = nameToArchetypeMap[vName] ?? 
+                       (selectedCategory != "ALL" ? selectedCategory : "");
+          
+          stats.archetype = arch;
 
-      final stats = _extractBaseStats(weapon, targetSpecificName: vName);
-      
-      if (stats != null) {
+          if (arch.isNotEmpty) {
+            stats.combatRating = calculateCombatRatingStatic(
+              stats, 
+              arch, 
+              false
+            );
+          }
+        }
+
         String rawValue = "";
         switch (_currentFilter) {
           case "ADS SPEED": rawValue = stats.adsSpeed.toString().trim(); break;
@@ -12215,13 +12848,13 @@ List<SortedItem> _getSortedWeapons() {
         if (rawValue == "-") continue;
 
         String cleanedName = vName.replaceAll(" (WZ)", "");
-
         items.add(SortedItem(weapon, stats, displayName: cleanedName));
         processedNames.add(vName);
       }
     }
   }
 
+  // Sorting logic
   if (_sortMode == SortMode.none) {
     items.sort((a, b) => a.displayName.compareTo(b.displayName));
     return items;
@@ -12244,22 +12877,31 @@ List<SortedItem> _getSortedWeapons() {
           comparison = _parse(a.stats.ttk2).compareTo(_parse(b.stats.ttk2));
           break;
         case "STK":
-          int stkScore(WeaponStats s) {
-            final raw = s.shotsToKill.toString(); 
-            if (raw.isEmpty || !raw.contains("-")) return 999;
-            final parts = raw.split("-");
-            int close = int.tryParse(parts[0].trim()) ?? 99;
-            int far = int.tryParse(parts[1].trim()) ?? 99;
-            return (close * 100) + far;
+          int calculateWeightedStk(WeaponStats s) {
+            final raw = s.shotsToKill.toString().trim();
+            if (raw.isEmpty || raw == "-") return 9999;
+            
+            if (raw.contains("-")) {
+              final parts = raw.split("-");
+              final close = int.tryParse(parts[0].replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
+              final far = int.tryParse(parts[1].replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
+              return (close * 100) + far;
+            }
+            
+            final val = int.tryParse(raw.replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
+            return (val * 100) + val;
           }
-          comparison = stkScore(a.stats).compareTo(stkScore(b.stats));
+          comparison = calculateWeightedStk(a.stats).compareTo(calculateWeightedStk(b.stats));
           break;
       }
     } catch (e) {
       comparison = 0;
     }
 
-    return _sortMode == SortMode.highToLow ? (comparison * -1) : comparison;
+    if (_sortMode == SortMode.highToLow) {
+      return (comparison * -1);
+    }
+    return comparison;
   });
   
   return items;
@@ -12311,4 +12953,62 @@ class SortedItem {
   final String displayName;
 
   SortedItem(this.weapon, this.stats, {required this.displayName});
+}
+
+class ArchetypeRank {
+  final int rank;
+  final int total;
+  ArchetypeRank(this.rank, this.total);
+}
+
+Map<String, ArchetypeRank> calculateArchetypeRankings({
+  required Weapon currentWeapon,
+  required WeaponStats currentStats,
+  required List<WeaponStats> allPremiumStats,
+}) {
+  Map<String, ArchetypeRank> rankings = {};
+
+  final String targetArchetype = currentStats.archetype ?? "";
+  if (targetArchetype.isEmpty) return rankings;
+  
+  List<WeaponStats> peers = allPremiumStats.where((s) => s.archetype == targetArchetype).toList();
+
+  List<String> statKeys = ['ttkClose', 'ttkFar', 'adsSpeed', 'velocity', 'stk'];
+
+  for (var key in statKeys) {
+    List<double> values = peers.map((p) {
+      String? val;
+      if (key == 'ttkClose') val = p.ttk1;
+      if (key == 'ttkFar') val = p.ttk2;
+      if (key == 'adsSpeed') val = p.adsSpeed;
+      if (key == 'velocity') val = p.bulletVelocity;
+      if (key == 'stk') val = p.shotsToKill;
+      
+      return double.tryParse(val ?? '0') ?? 0.0;
+    }).where((v) => v > 0).toList();
+
+    if (values.isEmpty) continue;
+
+    values.sort();
+
+    bool lowerIsBetter = (key != 'velocity');
+    if (!lowerIsBetter) {
+      values = values.reversed.toList();
+    }
+
+    double currentVal = 0.0;
+    if (key == 'ttkClose') currentVal = double.tryParse(currentStats.ttk1) ?? 0.0;
+    if (key == 'ttkFar') currentVal = double.tryParse(currentStats.ttk2) ?? 0.0;
+    if (key == 'adsSpeed') currentVal = double.tryParse(currentStats.adsSpeed) ?? 0.0;
+    if (key == 'velocity') currentVal = double.tryParse(currentStats.bulletVelocity) ?? 0.0;
+    if (key == 'stk') currentVal = double.tryParse(currentStats.shotsToKill) ?? 0.0;
+
+    int rank = values.indexOf(currentVal) + 1;
+    // Fallback if the exact value isn't found
+    if (rank == 0) rank = values.length; 
+
+    rankings[key] = ArchetypeRank(rank, peers.length);
+  }
+
+  return rankings;
 }

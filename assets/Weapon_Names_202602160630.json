@@ -147,7 +147,7 @@
 	{
 		"id" : 25,
 		"weapon_name" : "CX-9",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194951\/CX-9_ki3iq9.webp",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777302475\/CX-9_siswjp.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198509\/MW19_LOGO_qh03z4.png"
 	},
 	{
@@ -345,7 +345,7 @@
 	{
 		"id" : 58,
 		"weapon_name" : "EXPEDITE 12",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194524\/EXPEDITE_12_jguq4h.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362010\/EXPEDITE_zl4sen.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
@@ -561,7 +561,7 @@
 	{
 		"id" : 94,
 		"weapon_name" : "KV BROADSIDE",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194964\/KV_BROADSIDE_e8a95l.webp",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362410\/KB_BROADSIDE_eadgnh.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
@@ -609,7 +609,7 @@
 	{
 		"id" : 102,
 		"weapon_name" : "HAYMAKER",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194525\/HAYMAKER_qidh8w.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362009\/HAYMAKER_r6rzhf.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
 	},
 	{
@@ -735,13 +735,13 @@
 	{
 		"id" : 123,
 		"weapon_name" : "LOCKWOOD 300",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194526\/LOCKWOOD_300_m89l7i.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362010\/LOCKWOOD_300_enewyh.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
 		"id" : 124,
 		"weapon_name" : "LOCKWOOD 680 (MW3)",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194527\/LOCKWOOD_680_ypr7xn.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362009\/LOCKWOOD_680_qv0h6l.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
@@ -957,7 +957,7 @@
 	{
 		"id" : 160,
 		"weapon_name" : "RAAL MG (MW19)",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194960\/RAAL_MG_lwankf.webp",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777303963\/RAALMGMW19_ynamdu.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198509\/MW19_LOGO_qh03z4.png"
 	},
 	{
@@ -1029,7 +1029,7 @@
 	{
 		"id" : 172,
 		"weapon_name" : "RECLAIMER 18",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194518\/RECLAIMER_18_feq5bc.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362010\/RECLAIMER_f8msaz.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
 	},
 	{
@@ -1077,7 +1077,7 @@
 	{
 		"id" : 180,
 		"weapon_name" : "RIVETER",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194518\/RIVETER_mvbna5.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362010\/RIVETER_l8k05a.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
 	},
 	{
@@ -1173,7 +1173,7 @@
 	{
 		"id" : 196,
 		"weapon_name" : "MX GUARDIAN",
-		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194516\/MX_GUARDIAN_xpdwqn.jpg",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1777362010\/MX_GUARDIAN_qclbfd.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
 	},
 	{
@@ -1864,6 +1864,12 @@
 		"id" : 311,
 		"weapon_name" : "VST",
 		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1775189329\/VST_co6weu.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 312,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1776913054\/1911_bfsruh.png",
 		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
 	}
 ]}

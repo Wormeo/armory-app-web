@@ -806,6 +806,7 @@ static const Map<String, FontSpecs> fontConfigs = {
       ],
       themeData: ThemeData(
         fontFamily: 'Days One',
+        primaryColor: Color.fromRGBO(236, 185, 43, 1),
         colorScheme: ColorScheme.dark(
           primary: Color.fromRGBO(236, 185, 43, 1),
           surface: const Color.fromARGB(255, 34, 29, 11),

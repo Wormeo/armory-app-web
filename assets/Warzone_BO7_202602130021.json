@@ -366,11 +366,11 @@
 		"weapon_id" : 2,
 		"attach_1" : "EAM IBIS SUPPRESSOR",
 		"attach_2" : "16.5\" BOWEN RESISTOR BARREL",
-		"attach_3" : "EAM STEADY-90 UNDERBARREL",
-		"attach_4" : "EAM ACUTE MAG",
+		"attach_3" : "BOWEN DAMPENER REAR GRIP",
+		"attach_4" : "VERTO FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A07-AV1RM-SZBQ1-1"
+		"build_code" : "A07-AUY61-P8U61-1"
 	},
 	{
 		"id" : 32,
@@ -491,5 +491,29 @@
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
 		"build_code" : "A12-21X3B-HGQMQ-AW11"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 2,
+		"attach_1" : "P-45 STRIKE COMP SUPPRESSOR",
+		"attach_2" : "6.4\" LONG SLIDE BARREL",
+		"attach_3" : "F4-ABLE REAR GRIP",
+		"attach_4" : "SIRIUS EXTENDED MAG",
+		"attach_5" : ".45 CAL OVERPRESSURED",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "P07-2JD6P-5XEB8-8711"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "STURMWOLF 45 (PRESTIGE)",
+		"weapon_id" : 2,
+		"attach_1" : "BOWEN .45 SUPPRESSOR",
+		"attach_2" : "ENVOY UNDERBARREL",
+		"attach_3" : "MOTLEY LIGHT REAR GRIP",
+		"attach_4" : "MFS TIGRIS .40 CAL MAG",
+		"attach_5" : ".40 CAL OVERPRESSURED ROUNDS",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S07-43QCD-FQ3DL-TS11"
 	}
 ]}
