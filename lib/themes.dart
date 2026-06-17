@@ -1209,8 +1209,6 @@ class ThemeController extends ChangeNotifier {
 
   Color _customColor = const Color(0xFF00FFCC); 
   Color get customColor => _customColor;
-
-  // Rule: Core neon border color helper if your UI components need to draw it
   Color get neonBorderCoreColor => Color.lerp(_customColor, Colors.white, 0.35)!;
 
   String _activeFont = 'Stock';
@@ -1232,11 +1230,9 @@ class ThemeController extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       _lastViewedPatchDate = prefs.getString('last_viewed_patch_date') ?? "";
 
-      // Match the exact naming schema used by the web-optimized Slipstream syncData script
       final String suffixPath = (langCode == 'en') ? 'hotfixes.json' : '$langCode/hotfixes_$langCode.json';
       final String cachePrefKey = 'cached_file_$suffixPath';
 
-      // 1. Strictly Web: Check SharedPreferences cache first instead of FileSystem
       if (prefs.containsKey(cachePrefKey)) {
         final String? localContent = prefs.getString(cachePrefKey);
         if (localContent != null && localContent.isNotEmpty) {
@@ -1256,7 +1252,6 @@ class ThemeController extends ChangeNotifier {
         }
       }
 
-      // 2. Fallback to a live network query if browser cache is clear
       final cleanBaseUrl = serverUrl.endsWith('/') 
           ? serverUrl.substring(0, serverUrl.length - 1) 
           : serverUrl;
@@ -1279,7 +1274,6 @@ class ThemeController extends ChangeNotifier {
           _hasNewPatch = true;
         }
 
-        // Strictly Web: Cache downloaded string to LocalStorage instead of writing a file
         await prefs.setString(cachePrefKey, response.body);
         notifyListeners();
 
@@ -1330,21 +1324,21 @@ class ThemeController extends ChangeNotifier {
     await prefs.setInt(_colorKey, newColor.toARGB32());
   }
 
-static const Map<String, FontSpecs> fontConfigs = {
-  'Black Ops One': FontSpecs(sizeScale: 1.05, strokeScale: 0.8, spacingAdd: 0.5),
-  'Braah One': FontSpecs(sizeScale: 1.2, strokeScale: 0.9, spacingAdd: 0.0),
-  'Bungee': FontSpecs(sizeScale: 1.0, strokeScale: 0.7, spacingAdd: 0.2),
-  'Stock': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
-  'Fugaz One': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
-  'Germania One': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
-  'Kaushan Script': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
-  'Orbitron': FontSpecs(sizeScale: 0.9, strokeScale: 1.0, spacingAdd: 1.2),
-  'Permanent Marker': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
-  'Quantico': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.8),
-  'Racing Sans': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
-  'Silkscreen': FontSpecs(sizeScale: 1, strokeScale: 0.5, spacingAdd: 0.0),
-  'Vast Shadow': FontSpecs(sizeScale: 0.85, strokeScale: 0.6, spacingAdd: 0.1),
-};
+  static const Map<String, FontSpecs> fontConfigs = {
+    'Black Ops One': FontSpecs(sizeScale: 1.05, strokeScale: 0.8, spacingAdd: 0.5),
+    'Braah One': FontSpecs(sizeScale: 1.2, strokeScale: 0.9, spacingAdd: 0.0),
+    'Bungee': FontSpecs(sizeScale: 1.0, strokeScale: 0.7, spacingAdd: 0.2),
+    'Stock': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+    'Fugaz One': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+    'Germania One': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+    'Kaushan Script': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+    'Orbitron': FontSpecs(sizeScale: 0.9, strokeScale: 1.0, spacingAdd: 1.2),
+    'Permanent Marker': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+    'Quantico': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.8),
+    'Racing Sans': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+    'Silkscreen': FontSpecs(sizeScale: 1, strokeScale: 0.5, spacingAdd: 0.0),
+    'Vast Shadow': FontSpecs(sizeScale: 0.85, strokeScale: 0.6, spacingAdd: 0.1),
+  };
 
   static const List<String> availableFonts = [
     'Stock',
@@ -1822,6 +1816,39 @@ static const Map<String, FontSpecs> fontConfigs = {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(249, 129, 46, 1),
           surface: Color.fromRGBO(22, 17, 13, 1)
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'anemone_tulip',
+      name: 'TULIP',
+      pickerGradient: [
+        const Color.fromRGBO(218, 70, 106, 1),
+        const Color.fromRGBO(254, 108, 144, 1),
+        const Color.fromRGBO(254, 183, 199, 1),
+        const Color.fromRGBO(253, 221, 226, 1),
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.anemone,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1781719639/255c01ce331f80c354bd828ff5fd8c4f_otbu1a.jpg',
+      borderGradient: [
+        const Color.fromRGBO(253, 221, 226, 1),
+        const Color.fromRGBO(254, 183, 199, 1),
+        const Color.fromRGBO(254, 108, 144, 1),
+        const Color.fromRGBO(218, 70, 106, 1),
+
+      ],
+
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(254, 108, 144, 1),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(254, 108, 144, 1),
+          surface: Color.fromRGBO(91, 57, 66, 1)
         ),
         useMaterial3: true,
         fontFamily: 'Days One'

@@ -1,6 +1,8 @@
 // ignore_for_file: unused_local_variable, unused_element_parameter, unused_element, non_constant_identifier_names, curly_braces_in_flow_control_structures, use_build_context_synchronously, deprecated_member_use
 
 import 'dart:convert';
+import 'package:web/web.dart' as web;
+import 'dart:js_interop';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -283,6 +285,17 @@ class _SyncProviderState extends State<SyncProvider>
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb) {
+    try {
+      final storage = web.window.navigator.storage;
+      final persisted = await storage.persist().toDart;
+      
+      debugPrint("Storage persistent: $persisted");
+    } catch (e) {
+      debugPrint("Could not request persistence: $e");
+    }
+  }
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
@@ -2398,7 +2411,7 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
           title: Column(
             children: [
               ArmoryText(
-                "${context.read<LocaleController>().translate("SYSTEM UPDATES")} | PRE-RELEASE 2.6 ECLIPSE",
+                "${context.read<LocaleController>().translate("SYSTEM UPDATES")} | PRE-RELEASE 2.8 ECLIPSE",
                 themeController: widget.themeController,
                 baseFontSize: 14,
                 baseStrokeWidth: isNeon ? 3.0 : 2.5,
