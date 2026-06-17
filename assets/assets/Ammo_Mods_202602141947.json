@@ -1,0 +1,59 @@
+{
+"Ammo_Mods": [
+	{
+		"id" : 1,
+		"augment" : "DEAD WIRE",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/DeadWire_AmmoMod_Icon_BO6_ln4gd7.png",
+		"minor_augment" : "HASTE | + AFTERSHOCK > BO7",
+		"major_augment" : "LIGHTNING STRIKE"
+	},
+	{
+		"id" : 2,
+		"augment" : "CRYO FREEZE",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/CryoFreeze_AmmoMod_Icon_BO6_gthzdv.png",
+		"minor_augment" : "LIQUID NITROGEN | + EXTENSION > BO7",
+		"major_augment" : "ICE CLOUD"
+	},
+	{
+		"id" : 3,
+		"augment" : "NAPALM BURST",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/NapalmBurst_AmmoMod_Icon_BO6_jqkzhu.png",
+		"minor_augment" : "INCENDIARY | + EXTENSION \/ BACKDRAFT > BO7",
+		"major_augment" : "FIRE BOMB"
+	},
+	{
+		"id" : 4,
+		"augment" : "BRAIN ROT",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/BrainRot_AmmoMod_Icon_BO6_cphnrn.png",
+		"minor_augment" : "EXPLOSIVE | + EXTENSION \/ HASTE > BO7",
+		"major_augment" : "PHEROMONE"
+	},
+	{
+		"id" : 5,
+		"augment" : "SHADOW RIFT",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/ShadowRift_AmmoMod_Icon_BO6_yhaoc2.png",
+		"minor_augment" : "SUPERMASSIVE | + ANY > BO7",
+		"major_augment" : "EXPLOSIVE RAIN | BO7 > GRAVITY WELL"
+	},
+	{
+		"id" : 6,
+		"augment" : "LIGHT MEND",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959420\/LightMend_AmmoMod_Icon_BO6_bg0ey7.png",
+		"minor_augment" : "EXTRA STRENGTH",
+		"major_augment" : "DUAL ACTION"
+	},
+	{
+		"id" : 7,
+		"augment" : "SHATTER BLAST",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959421\/ShatterBlast_AmmoMod_Icon_BO6_b5gxnr.png",
+		"minor_augment" : "BLAST WAVE \/ BLAST ZONE | + ANY > BO7",
+		"major_augment" : "BLAST CHAIN"
+	},
+	{
+		"id" : 8,
+		"augment" : "FIREWORKS",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763425061\/FireWorks_AmmoMod_Icon_BO7_c5bfsw.webp",
+		"minor_augment" : "SHORT FUSE | + STARLIGHT > BO7",
+		"major_augment" : "STARBURST"
+	}
+]}

@@ -1,0 +1,87 @@
+{
+"Perks": [
+	{
+		"id" : 1,
+		"perk" : "神射手",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/Juggernog_HUD_Icon_BOCW_frtgxh.png",
+		"minor_augment" : "强化护甲板 | + 耐用护甲板 > BO7",
+		"major_augment" : "反应装甲"
+	},
+	{
+		"id" : 2,
+		"perk" : "快手苏醒",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/QuickRevive_HUD_Icon_BOCW_z9qldu.png",
+		"minor_augment" : "迅速恢复 | + 因果报应 > BO7",
+		"major_augment" : "最后心愿"
+	},
+	{
+		"id" : 3,
+		"perk" : "大力汽水",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/StaminUp_HUD_Icon_BOCW_rcjoqz.png",
+		"minor_augment" : "疾步之足 | + 任意 > BO7",
+		"major_augment" : "冲锋者"
+	},
+	{
+		"id" : 4,
+		"perk" : "快速换弹",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/SpeedCola_HUD_Icon_BOCW_ylmu6w.png",
+		"minor_augment" : "极速轮盘 / 快速切枪 | + 快速换弹 > BO7",
+		"major_augment" : "经典配方"
+	},
+	{
+		"id" : 5,
+		"perk" : "近战玛奇朵",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/MeleeMacchiato_HUD_Icon_BO6_zw5v9l.png",
+		"minor_augment" : "力量训练 | + 咖啡师乱斗 > BO7",
+		"major_augment" : "浓缩咖啡"
+	},
+	{
+		"id" : 6,
+		"perk" : "博士滑行",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/PHDSlider_HUD_Icon_BOCW_yrbemo.png",
+		"minor_augment" : "摩擦力专家 | + 爆炸物处理技术员 > BO7",
+		"major_augment" : "PHD 滑行者"
+	},
+	{
+		"id" : 7,
+		"perk" : "双击",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/DoubleTapRootBeer_HUD_Icon_BO6_1_hafpzj.png",
+		"minor_augment" : "双倍速度 | + 双倍口径 > BO7",
+		"major_augment" : "双倍冲击"
+	},
+	{
+		"id" : 8,
+		"perk" : "秃鹫支援",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/VultureAid_HUD_Icon_BO6_vcgqz4.png",
+		"minor_augment" : "挑食者 | + 腐肉行李 > BO7",
+		"major_augment" : "死亡气味 | BO7 > 死亡气味 / 自动装甲"
+	},
+	{
+		"id" : 9,
+		"perk" : "元素汽水",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/ElementalPop_HUD_Icon_BOCW_fvgfi7.png",
+		"minor_augment" : "易伤豆 | + 冰凉果 > BO7",
+		"major_augment" : "电击樱桃"
+	},
+	{
+		"id" : 10,
+		"perk" : "死亡射手",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/which-deadshot-daiquiri-perk-icon-looks-better-iyo-v0-bnzfkdrv0kdd1_tuxvro.png",
+		"minor_augment" : "速瞄盲射 | + 死亡突破 > BO7",
+		"major_augment" : "死忠份子"
+	},
+	{
+		"id" : 11,
+		"perk" : "灵光茶",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763424577\/WispTea_HUD_Icon_BO7_muooyk.webp",
+		"minor_augment" : "任意 | + 任意 > BO7",
+		"major_augment" : "任意"
+	},
+	{
+		"id" : 12,
+		"perk" : "骡子踢击",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772423345\/MuleKick_HUD_Icon_BOCW_rs1vtx.webp",
+		"minor_augment" : "买一送一 | + 任意 > BO7",
+		"major_augment" : "多重背包 / 背包骡子"
+	}
+]}

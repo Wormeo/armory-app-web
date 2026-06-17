@@ -1,0 +1,73 @@
+{
+"Field_Upgrades": [
+	{
+		"id" : 1,
+		"upgrade" : "DESTELLO OSCURO",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/DarkFlare_FieldUpgrade_Icon_Zombies_BO6_dpi9v7.png",
+		"minor_augment" : "EXTENSIÓN | + PENUMBRA TOTAL \/ CARGA EXTRA > BO7",
+		"major_augment" : "SUPERNOVA \/ EXTENSIÓN"
+	},
+	{
+		"id" : 2,
+		"upgrade" : "MINA DE ENERGÍA",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/EnergyMine_FieldUpgrade_Icon_Zombies_BOCW_a5s156.png",
+		"minor_augment" : "SIRENA \/ CARGA EXTRA | + IMPULSO DE FRECUENCIA > BO7",
+		"major_augment" : "DISPERSIÓN \/ TORRETA"
+	},
+	{
+		"id" : 3,
+		"upgrade" : "GUARDIA FRENÉTICO",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/FrenziedGuard_FieldUpgrade_Icon_Zombies_BOCW_y3jkke.png",
+		"minor_augment" : "EXTENSIÓN | + CUALQUIERA > BO7",
+		"major_augment" : "FUEGO FRENÉTICO"
+	},
+	{
+		"id" : 4,
+		"upgrade" : "AURA DE CURACIÓN",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/HealingAura_FieldUpgrade_Icon_Zombies_BOCW_woejng.png",
+		"minor_augment" : "PRESENCIA ESTOICA | + CUALQUIERA > BO7",
+		"major_augment" : "RESILIENCIA \/ NIGROMANTE > BO7"
+	},
+	{
+		"id" : 5,
+		"upgrade" : "VELO DE ÉTER",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/AetherShroud_FieldUpgrade_Icon_Zombies_BOCW_n7aq7m.png",
+		"minor_augment" : "EXTENSIÓN | + CARGA EXTRA > BO7",
+		"major_augment" : "IMPULSO EXPLOSIVO"
+	},
+	{
+		"id" : 6,
+		"upgrade" : "RÁFAGA DE ESCARCHA",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/FrostBlast_FieldUpgrade_Icon_Zombies_BOCW_1_iphjid.png",
+		"minor_augment" : "EXTENSIÓN | + CARGA EXTRA > BO7",
+		"major_augment" : "CONGELACIÓN INSTANTÁNEA"
+	},
+	{
+		"id" : 7,
+		"upgrade" : "TORMENTA TESLA",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960286\/TeslaStorm_FieldUpgrade_Icon_Zombies_BOCW_weidlo.png",
+		"minor_augment" : "CARGA DE LITIO | + AMPLIFICADO \/ ACELERADO > BO7",
+		"major_augment" : "DESCARGA LETAL"
+	},
+	{
+		"id" : 8,
+		"upgrade" : "SR. PEEKS",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960221\/MisterPeeks_FieldUpgrade_Icon_Zombies_BO6_1_ibuys9.png",
+		"minor_augment" : "ALMA DE LA FIESTA | + MARIPOSA SOCIAL > BO7",
+		"major_augment" : "FIESTA DE BAILE \/ CAZADOR APEX"
+	},
+	{
+		"id" : 9,
+		"upgrade" : "CRECIMIENTO TÓXICO",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763425061\/ToxicGrowth_FieldUpgrade_Icon_Zombies_BOCW_sjz9j6.webp",
+		"minor_augment" : "MANO VERDE | + CARGA EXTRA \/ TRITURADOR DE TOBILLOS > BO7",
+		"major_augment" : "URTICANTE"
+	},
+	{
+		"id" : 10,
+		"upgrade" : "INCENDIO FORESTAL",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1778063983\/WildFire_FieldUpgrade_Icon_Zombies_BO7_wshoqy.webp",
+		"minor_augment" : "OXIDANTE | + NÚCLEO FUNDIDO \/ ONDA DE CALOR > BO7",
+		"major_augment" : "BOLA DE FUEGO \/ TORMENTA DE FUEGO"
+	}
+]}

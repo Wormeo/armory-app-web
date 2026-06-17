@@ -1,0 +1,179 @@
+{
+"Premium_Users": [
+	{
+		"id" : 1,
+		"user_id" : 537581744841424907,
+		"preference" : "YES",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW19\", \"BO Cold War\", \"MW2019\"]",
+		"is_premium" : "YES"
+	},
+	{
+		"id" : 3,
+		"user_id" : 1032182093565935748,
+		"preference" : "YES",
+		"embed_colour" : "FF0000",
+		"excluded_games" : null,
+		"is_premium" : "YES"
+	},
+	{
+		"id" : 5,
+		"user_id" : 999423767279321178,
+		"preference" : null,
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 6,
+		"user_id" : 780871889022353408,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW2019\", \"BO Cold War\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 7,
+		"user_id" : 469963213677789194,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW3\", \"MW2\", \"BO Cold War\", \"MW2019\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 8,
+		"user_id" : 795123744708362260,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 9,
+		"user_id" : 853039647445745684,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW2019\", \"BO Cold War\", \"MW2\", \"MW3\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 10,
+		"user_id" : 663202154340679691,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 11,
+		"user_id" : 1233123964386017331,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"BO6\", \"MW3\", \"MW2\", \"BO Cold War\", \"MW2019\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 12,
+		"user_id" : 1426526532364668948,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 13,
+		"user_id" : 1338583550039167016,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 14,
+		"user_id" : 1429802066557010003,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW3\", \"BO6\", \"MW2\", \"BO Cold War\", \"MW2019\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 15,
+		"user_id" : 781590397922312193,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 16,
+		"user_id" : 600850084028219392,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"MW3\", \"BO6\", \"MW2019\", \"BO Cold War\", \"MW2\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 17,
+		"user_id" : 547418850811969536,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"CW\", \"MW2019\", \"MW2\", \"MW3\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 18,
+		"user_id" : 1022244554218405899,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 19,
+		"user_id" : 835548293688721410,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 20,
+		"user_id" : 1415916485368610877,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"CW\", \"MW3\", \"MW2\", \"BO6\", \"MW2019\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 21,
+		"user_id" : 1223084082615816244,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[\"BO6\", \"MW3\", \"MW2019\", \"MW2\"]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 22,
+		"user_id" : 911272509612113940,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+	{
+		"id" : 23,
+		"user_id" : 391287551501271040,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "NO"
+	},
+    {
+		"id" : 24,
+		"user_id" : 123456789,
+		"preference" : "NO",
+		"embed_colour" : null,
+		"excluded_games" : "[]",
+		"is_premium" : "YES"
+	}
+]}

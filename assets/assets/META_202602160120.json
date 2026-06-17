@@ -1,0 +1,543 @@
+{
+"META": [
+	{
+		"id" : 1,
+		"game" : "BO6",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• KILO 141 (BO6)"
+	},
+	{
+		"id" : 2,
+		"game" : "BO6",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• MERRICK 556"
+	},
+	{
+		"id" : 3,
+		"game" : "BO6",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• GPR 91"
+	},
+	{
+		"id" : 4,
+		"game" : "BO6",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• SWAT 5.56"
+	},
+	{
+		"id" : 5,
+		"game" : "BO6",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• CR-56 AMAX (BO6)"
+	},
+	{
+		"id" : 6,
+		"game" : "BO6",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• DRESDEN 9MM"
+	},
+	{
+		"id" : 7,
+		"game" : "BO6",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• C9"
+	},
+	{
+		"id" : 8,
+		"game" : "BO6",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• JACKAL PDW"
+	},
+	{
+		"id" : 9,
+		"game" : "BO6",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• X52 RESONATOR"
+	},
+	{
+		"id" : 10,
+		"game" : "BO6",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• LADRA"
+	},
+	{
+		"id" : 11,
+		"game" : "BO6",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• KSV"
+	},
+	{
+		"id" : 12,
+		"game" : "BO6",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• CR-56 AMAX (BO6)"
+	},
+	{
+		"id" : 13,
+		"game" : "BO6",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• FFAR 1 (BO6)"
+	},
+	{
+		"id" : 14,
+		"game" : "BO6",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• LADRA"
+	},
+	{
+		"id" : 15,
+		"game" : "BO6",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• AS VAL (BO6)"
+	},
+	{
+		"id" : 16,
+		"game" : "BO6",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• AS VAL (BO6)"
+	},
+	{
+		"id" : 17,
+		"game" : "BO6",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• GPMG-7"
+	},
+	{
+		"id" : 18,
+		"game" : "BO6",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• ASG-89"
+	},
+	{
+		"id" : 19,
+		"game" : "BO6",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• GS45"
+	},
+	{
+		"id" : 21,
+		"game" : "BO6",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• SIRIN 9MM"
+	},
+	{
+		"id" : 22,
+		"game" : "CW",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• SWISS K31"
+	},
+	{
+		"id" : 23,
+		"game" : "CW",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• HAUER 77"
+	},
+	{
+		"id" : 24,
+		"game" : "CW",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• TEC-9"
+	},
+	{
+		"id" : 25,
+		"game" : "CW",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• M16 (CW)"
+	},
+	{
+		"id" : 26,
+		"game" : "CW",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• MAGNUM"
+	},
+	{
+		"id" : 27,
+		"game" : "CW",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• M16 (CW)"
+	},
+	{
+		"id" : 28,
+		"game" : "CW",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• FFAR 1 (CW)"
+	},
+	{
+		"id" : 29,
+		"game" : "CW",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• GALLO SA12"
+	},
+	{
+		"id" : 30,
+		"game" : "CW",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• HAUER 77"
+	},
+	{
+		"id" : 31,
+		"game" : "CW",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• SAI"
+	},
+	{
+		"id" : 32,
+		"game" : "MW3",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• SVA 545"
+	},
+	{
+		"id" : 33,
+		"game" : "MW3",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• DTIR 30-06"
+	},
+	{
+		"id" : 34,
+		"game" : "MW3",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• STATIC-HV"
+	},
+	{
+		"id" : 35,
+		"game" : "MW3",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• SUPERI 46"
+	},
+	{
+		"id" : 36,
+		"game" : "MW3",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• STRIKER"
+	},
+	{
+		"id" : 37,
+		"game" : "MW3",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• HAYMAKER"
+	},
+	{
+		"id" : 38,
+		"game" : "MW3",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• RGL-80"
+	},
+	{
+		"id" : 39,
+		"game" : "MW3",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• FJX HORUS"
+	},
+	{
+		"id" : 40,
+		"game" : "MW3",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• RECLAIMER 18"
+	},
+	{
+		"id" : 41,
+		"game" : "MW3",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• RAM-9"
+	},
+	{
+		"id" : 42,
+		"game" : "MW3",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• MCW"
+	},
+	{
+		"id" : 43,
+		"game" : "MW3",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• SOA SUBVERTER"
+	},
+	{
+		"id" : 44,
+		"game" : "MW3",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• MTZ-556"
+	},
+	{
+		"id" : 45,
+		"game" : "MW3",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• BAL-27"
+	},
+	{
+		"id" : 46,
+		"game" : "MW3",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• PULEMYOT 762"
+	},
+	{
+		"id" : 47,
+		"game" : "MW3",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• SUPERI 46"
+	},
+	{
+		"id" : 48,
+		"game" : "MW3",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• STATIC-HV"
+	},
+	{
+		"id" : 49,
+		"game" : "MW3",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• RIVETER"
+	},
+	{
+		"id" : 50,
+		"game" : "MW3",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• STRIKER"
+	},
+	{
+		"id" : 51,
+		"game" : "MW3",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• HRM-9"
+	},
+	{
+		"id" : 52,
+		"game" : "MW2",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• M13B"
+	},
+	{
+		"id" : 53,
+		"game" : "MW2",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• M4"
+	},
+	{
+		"id" : 54,
+		"game" : "MW2",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• KASTOV 762"
+	},
+	{
+		"id" : 55,
+		"game" : "MW2",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• SAKIN MG38"
+	},
+	{
+		"id" : 56,
+		"game" : "MW2",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "• TAQ-56"
+	},
+	{
+		"id" : 57,
+		"game" : "MW2",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• LACHMANN SHROUD"
+	},
+	{
+		"id" : 58,
+		"game" : "MW2",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• MX9"
+	},
+	{
+		"id" : 59,
+		"game" : "MW2",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• PDSW 528"
+	},
+	{
+		"id" : 60,
+		"game" : "MW2",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• VEL 46"
+	},
+	{
+		"id" : 61,
+		"game" : "MW2",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "• BAS-P"
+	},
+	{
+		"id" : 62,
+		"game" : "MW2",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• FTAC SIEGE"
+	},
+	{
+		"id" : 63,
+		"game" : "MW2",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• M13B"
+	},
+	{
+		"id" : 64,
+		"game" : "MW2",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• FR AVANCER"
+	},
+	{
+		"id" : 65,
+		"game" : "MW2",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• PDSW 528"
+	},
+	{
+		"id" : 66,
+		"game" : "MW2",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• LACHMANN SHROUD"
+	},
+	{
+		"id" : 67,
+		"game" : "MW2",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• LACHMANN SHROUD"
+	},
+	{
+		"id" : 68,
+		"game" : "MW2",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• VEL 46"
+	},
+	{
+		"id" : 69,
+		"game" : "MW2",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• CHIMERA"
+	},
+	{
+		"id" : 70,
+		"game" : "MW2",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• AKIMBO P890"
+	},
+	{
+		"id" : 71,
+		"game" : "MW2",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• M13B"
+	},
+	{
+		"id" : 72,
+		"game" : "BO7",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• VOYAK KT-3"
+	},
+	{
+		"id" : 73,
+		"game" : "BO7",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• STURMWOLF 45"
+	},
+	{
+		"id" : 74,
+		"game" : "BO7",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• AK-27"
+	},
+	{
+		"id" : 75,
+		"game" : "BO7",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• SWORDFISH A1"
+	},
+	{
+		"id" : 76,
+		"game" : "BO7",
+		"class_type" : "MULTIPLAYER",
+		"weapon" : "• KOGOT-7"
+	},
+	{
+		"id" : 77,
+		"game" : "BO7",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• AK-27"
+	},
+	{
+		"id" : 78,
+		"game" : "BO7",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• SG-12"
+	},
+	{
+		"id" : 79,
+		"game" : "BO7",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• KOGOT-7"
+	},
+	{
+		"id" : 80,
+		"game" : "BO7",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• XM325"
+	},
+	{
+		"id" : 81,
+		"game" : "BO7",
+		"class_type" : "ZOMBIES",
+		"weapon" : "• M34 NOVALINE"
+	},
+	{
+		"id" : 82,
+		"game" : "BO7",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "1. CARBON 57"
+	},
+	{
+		"id" : 83,
+		"game" : "BO7",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "2. DRAVEC 45"
+	},
+	{
+		"id" : 84,
+		"game" : "BO7",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "3. VST"
+	},
+	{
+		"id" : 85,
+		"game" : "BO7",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "4. KOGOT-7"
+	},
+	{
+		"id" : 86,
+		"game" : "BO7",
+		"class_type" : "CLOSE RANGE (WZ)",
+		"weapon" : "CBRS-3"
+	},
+	{
+		"id" : 87,
+		"game" : "BO7",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "1. AK-27"
+	},
+	{
+		"id" : 88,
+		"game" : "BO7",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "2. DS20 MIRAGE"
+	},
+	{
+		"id" : 89,
+		"game" : "BO7",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "3. MXR-17"
+	},
+	{
+		"id" : 90,
+		"game" : "BO7",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "4. VOYAK KT-3"
+	},
+	{
+		"id" : 91,
+		"game" : "BO7",
+		"class_type" : "LONG RANGE (WZ)",
+		"weapon" : "5. MK35 ISR"
+	}
+]}

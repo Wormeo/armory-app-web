@@ -1,0 +1,483 @@
+{
+"Multiplayer_MW19": [
+	{
+		"id" : 1,
+		"weapon_name" : "725",
+		"weapon_id" : 13,
+		"attach_1" : "收束器（枪口）",
+		"attach_2" : "锯短枪管 / 5毫瓦激光",
+		"attach_3" : "Tempus修身握把护手",
+		"attach_4" : "快手",
+		"attach_5" : "锯短枪托"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "1911 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "1911 Stalker枪管",
+		"attach_3" : "15发弹匣",
+		"attach_4" : "颗粒感后握把",
+		"attach_5" : "轻型扳机"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : ".50 GS (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Forge Tac执行者枪管",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "轻型扳机 / G.I.袖珍反射式瞄准镜"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "AK-47 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "镂空枪托",
+		"attach_4" : "快手",
+		"attach_5" : "5.45x39mm 30发弹匣"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "AN-94",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "AS VAL (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "突击队前握把（下挂）",
+		"attach_2" : "Stovl 6P30镂空枪托",
+		"attach_3" : "橡胶化后握把",
+		"attach_4" : "快手",
+		"attach_5" : "30发弹匣"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "AUG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Forge Tac近战梳型枪托",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "32发弹匣"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "BRUEN MK9 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "战术消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "60发弹匣",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "CR-56 AMAX (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "XRK Zodiac S440枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "CR-56 Exo枪托"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "CROSSBOW (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "FTAC速瞄握把（下挂）",
+		"attach_2" : "Forge Tac Speedtrak枪托 / 瞄准镜",
+		"attach_3" : "XRK Quill 100磅弓臂",
+		"attach_4" : "快手",
+		"attach_5" : "28股弓弦"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "CX-9",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "30发弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "CX-9战术后握把"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "EBR-14 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "FSS Raider精英底盘枪托",
+		"attach_3" : "20发弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "Viper反射式瞄准镜 / 可变焦距倍镜"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "FAL",
+		"weapon_id" : 13,
+		"attach_1" : "战术消音器",
+		"attach_2" : "XRK神枪手枪管",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "FENNEC (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "ZLR Sabre消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "40发弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "FiNN LMG",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "原厂机动枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "5.56 CT 100发弹链",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "FN SCAR 17",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "30发弹匣"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "FR 5.56 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "FSS Tac-Wrap枪托"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "GRAU 5.56",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Tempus 26.4英寸大天使枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "XRK Void II后握把"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "HOLGER-26 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "战术消音器",
+		"attach_2" : "XRK Akix枪托",
+		"attach_3" : "30发弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "ISO (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "50发鼓形弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "ISO折叠枪托"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "JAK-12",
+		"weapon_id" : 13,
+		"attach_1" : "收束器（枪口）",
+		"attach_2" : "ZLR J-2800 Influx枪管",
+		"attach_3" : "5毫瓦激光",
+		"attach_4" : "快手",
+		"attach_5" : "20发弹匣"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "KAR98K (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "颗粒感后握把",
+		"attach_2" : "FTAC运动梳型枪托",
+		"attach_3" : "战术激光",
+		"attach_4" : "快手",
+		"attach_5" : "狙击镜"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "KILO 141 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "M13",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "橡胶化后握把",
+		"attach_4" : "快手",
+		"attach_5" : "M13镂空枪托"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "M19",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "XRK L超级枪管",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "轻型扳机"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "M4A1 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "M91",
+		"weapon_id" : 13,
+		"attach_1" : "战术消音器",
+		"attach_2" : "M91步兵枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "MAGNUM (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "消焰器（枪口）",
+		"attach_2" : ".357长枪管",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "轻型扳机"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "MG34",
+		"weapon_id" : 13,
+		"attach_1" : "FSS短枪管",
+		"attach_2" : "特工前握把（下挂）/ G.I.袖珍反射式瞄准镜",
+		"attach_3" : "75发弹链",
+		"attach_4" : "快手",
+		"attach_5" : "颗粒感后握把"
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "MK2 CARBINE",
+		"weapon_id" : 13,
+		"attach_1" : "颗粒感后握把",
+		"attach_2" : "FSS MK2运动梳型枪托",
+		"attach_3" : "战术激光",
+		"attach_4" : "快手",
+		"attach_5" : "狙击镜 / G.I.袖珍反射式瞄准镜 / 无"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "MODEL 680 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "收束器（枪口）",
+		"attach_2" : "XRK 30.0英寸运动枪管",
+		"attach_3" : "5毫瓦激光",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "MP5 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "FTAC折叠枪托",
+		"attach_4" : "快手",
+		"attach_5" : "45发弹匣"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "MP7",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "FSS侦察枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "ODEN",
+		"weapon_id" : 13,
+		"attach_1" : "巨人消音器",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "橡胶化后握把",
+		"attach_4" : "快手",
+		"attach_5" : "FTAC XL精英梳型枪托"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "ORIGIN 12",
+		"weapon_id" : 13,
+		"attach_1" : "收束器（枪口）",
+		"attach_2" : "Forge Tac穿刺者枪管",
+		"attach_3" : "12发弹匣",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "P90",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "FSS 10.6英寸专业枪管",
+		"attach_3" : "橡胶化后握把",
+		"attach_4" : "快手",
+		"attach_5" : "飞带枪托"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "PKM",
+		"weapon_id" : 13,
+		"attach_1" : "战术消音器",
+		"attach_2" : "18.2英寸紧凑枪管",
+		"attach_3" : "掠夺握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "颗粒感后握把"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "PP19 BIZON (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "8.7英寸钢制枪管",
+		"attach_3" : "橡胶化后握把",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "R9-0",
+		"weapon_id" : 13,
+		"attach_1" : "收束器（枪口）",
+		"attach_2" : "Forge Tac哨兵枪管",
+		"attach_3" : "5毫瓦激光",
+		"attach_4" : "快手",
+		"attach_5" : "颗粒感后握把"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "RAAL MG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "PMC握把（下挂）",
+		"attach_2" : "颗粒感后握把",
+		"attach_3" : "50发弹链",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "RAM-7 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "FSS游骑兵枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "颗粒感后握把"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "RENETTI (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Mk3三连发改装枪管",
+		"attach_3" : "XRK机动后握把",
+		"attach_4" : "27发弹匣",
+		"attach_5" : "轻型扳机"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "SA87",
+		"weapon_id" : 13,
+		"attach_1" : "SA87 12.4英寸原厂枪管",
+		"attach_2" : "突击队前握把（下挂）",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "快手",
+		"attach_5" : "G.I.袖珍反射 / Viper反射式瞄准镜"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "STRIKER 45 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "300mm聚合物枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "FTAC G-5 Exo后握把"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "SYKOV",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Sorokin 140mm全自动枪管",
+		"attach_3" : "VLK Elita后握把",
+		"attach_4" : "快手",
+		"attach_5" : "80发鼓形弹匣"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "UZI",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "FSS专业卡宾枪管",
+		"attach_3" : "突击队前握把（下挂）",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "VLK ROGUE",
+		"weapon_id" : 13,
+		"attach_1" : "Forge Tac掠夺者（枪口）",
+		"attach_2" : "VLK Czar枪管",
+		"attach_3" : "5毫瓦激光",
+		"attach_4" : "快手",
+		"attach_5" : "无枪托"
+	},
+	{
+		"id" : 48,
+		"weapon_name" : "X16",
+		"weapon_id" : 13,
+		"attach_1" : "一体化消音器",
+		"attach_2" : "Singuard Arms优势枪管",
+		"attach_3" : "颗粒感后握把",
+		"attach_4" : "17发弹匣",
+		"attach_5" : "轻型扳机"
+	}
+]}

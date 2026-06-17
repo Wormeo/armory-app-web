@@ -1,0 +1,87 @@
+{
+"Perks": [
+	{
+		"id" : 1,
+		"perk" : "JUGGERNOG",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/Juggernog_HUD_Icon_BOCW_frtgxh.png",
+		"minor_augment" : "HARDENED PLATES  | + DURABLE PLATES > BO7",
+		"major_augment" : "REACTIVE ARMOR"
+	},
+	{
+		"id" : 2,
+		"perk" : "QUICK REVIVE",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/QuickRevive_HUD_Icon_BOCW_z9qldu.png",
+		"minor_augment" : "SWIFT RECOVERY | + KARMIC RETURN > BO7",
+		"major_augment" : "DYING WISH"
+	},
+	{
+		"id" : 3,
+		"perk" : "STAMINUP",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/StaminUp_HUD_Icon_BOCW_rcjoqz.png",
+		"minor_augment" : "HOT FOOT | + ANY > BO7",
+		"major_augment" : "DASHER"
+	},
+	{
+		"id" : 4,
+		"perk" : "SPEED COLA",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/SpeedCola_HUD_Icon_BOCW_ylmu6w.png",
+		"minor_augment" : "SPEEDY ROULETTE \/ QUICK SWAP | + PRESTIDIGITATION > BO7",
+		"major_augment" : "CLASSIC FORMULA"
+	},
+	{
+		"id" : 5,
+		"perk" : "MELEE MACCHIATO",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/MeleeMacchiato_HUD_Icon_BO6_zw5v9l.png",
+		"minor_augment" : "STRENGTH TRAINING | + BARISTA BRAWL > BO7",
+		"major_augment" : "EXPRESSO"
+	},
+	{
+		"id" : 6,
+		"perk" : "PHD FLOPPER",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/PHDSlider_HUD_Icon_BOCW_yrbemo.png",
+		"minor_augment" : "TRIBOLOGIST | + EOD TECHNICIAN > BO7",
+		"major_augment" : "PHD SLIDER"
+	},
+	{
+		"id" : 7,
+		"perk" : "DOUBLE TAP",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/DoubleTapRootBeer_HUD_Icon_BO6_1_hafpzj.png",
+		"minor_augment" : "DOUBLE TIME | + DOUBLE CALIBER > BO7",
+		"major_augment" : "DOUBLE IMPACT"
+	},
+	{
+		"id" : 8,
+		"perk" : "VULTURE AID",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/VultureAid_HUD_Icon_BO6_vcgqz4.png",
+		"minor_augment" : "PICKY EATER | + CARRION LUGGAGE > BO7",
+		"major_augment" : "SMELL OF DEATH | BO7 > SMELL OF DEATH \/ ARMOR-MATIC"
+	},
+	{
+		"id" : 9,
+		"perk" : "ELEMENTAL POP",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/ElementalPop_HUD_Icon_BOCW_fvgfi7.png",
+		"minor_augment" : "VULNERA BEAN | + CHILL BERRY > BO7",
+		"major_augment" : "ELECTRIC CHERRY"
+	},
+	{
+		"id" : 10,
+		"perk" : "DEADSHOT DAQUIRI",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/which-deadshot-daiquiri-perk-icon-looks-better-iyo-v0-bnzfkdrv0kdd1_tuxvro.png",
+		"minor_augment" : "DEAD DRAW | + DEAD BREAK > BO7",
+		"major_augment" : "DEADHEAD"
+	},
+	{
+		"id" : 11,
+		"perk" : "WISP TEA",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763424577\/WispTea_HUD_Icon_BO7_muooyk.webp",
+		"minor_augment" : "ANY | + ANY > BO7",
+		"major_augment" : "ANY"
+	},
+	{
+		"id" : 12,
+		"perk" : "MULE KICK",
+		"perk_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772423345\/MuleKick_HUD_Icon_BOCW_rs1vtx.webp",
+		"minor_augment" : "BOGO | + ANY > BO7",
+		"major_augment" : "MULTI PACK \/ PACK MULE"
+	}
+]}

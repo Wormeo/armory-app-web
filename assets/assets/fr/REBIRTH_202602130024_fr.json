@@ -1,0 +1,193 @@
+{
+"REBIRTH": [
+	{
+		"id" : 1,
+		"weapon_name" : "KAR98K (MW3)",
+		"weapon_id" : 14,
+		"attach_1" : "CANON LONG PRÄZISIONGEWEHR 762",
+		"attach_2" : "SANS CROSSE",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ 7.92X57MM",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE RANGE CALLER V3.4"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "SA-B 50",
+		"weapon_id" : 14,
+		"attach_1" : "VERROU FSS ST87",
+		"attach_2" : "CROSSE ASSAULT-60",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .308",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "SP-R 208 (MW2)",
+		"weapon_id" : 14,
+		"attach_1" : "VERROU FSS ST87",
+		"attach_2" : "CROSSE ZRL T70 PAD",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ 7.62X51MM",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "CARRACK .300",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 300 SUBSOUND",
+		"attach_2" : "CROSSE LEX V14",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .300",
+		"attach_4" : "CHARGEUR DE 10 CARTOUCHES",
+		"attach_5" : "VISEUR VLK 4.0"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "FJX IMPERIUM",
+		"weapon_id" : 14,
+		"attach_1" : "CANON TAC-COMMAND 19\"",
+		"attach_2" : "VERROU FJX BLAST",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .408",
+		"attach_4" : "CROSSE FJX KILO TAC",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "KATT-AMR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIEUX SONIQUE XL",
+		"attach_2" : "CROSSE TACTICAL PAD",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .50 CAL",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "KV INHIBITOR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIEUX SONIQUE L",
+		"attach_2" : "GARDE-MAIN XRK EDGE BW-4 (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE D'ASSAUT FSS STORMENDER",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "LA-B 330",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 16\" ZLR EXECUTOR 80",
+		"attach_2" : "CROSSE ZLR T70 PAD",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .300",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "VERROU FSS ST87"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "LONGBOW",
+		"weapon_id" : 14,
+		"attach_1" : "GARDE-MAIN XRK EDGE BW-4 (ACCESSOIRE CANON)",
+		"attach_2" : "VERROU RAPIDE SA-M",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ 7.62X39MM",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "POIGNÉE ARRIÈRE DEMO 650"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "MCPR-300",
+		"weapon_id" : 14,
+		"attach_1" : "VERROU FLUIDE CRONEN",
+		"attach_2" : "CROSSE FSS MERC",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .300 MAG",
+		"attach_4" : "CHARGEUR DE 5 CARTOUCHES",
+		"attach_5" : "SP-X 80 6.6X \/ LUNETTE AKILINA LR-STALK"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "MORS",
+		"weapon_id" : 14,
+		"attach_1" : "CANON LÉGER DOWNFALL",
+		"attach_2" : "CROSSE SUPERLITE-90",
+		"attach_3" : "POIGNÉE ARRIÈRE OP-980",
+		"attach_4" : "VERROU RAPIDE",
+		"attach_5" : "LUNETTE AKILINA LR-STALK"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "SIGNAL 50",
+		"weapon_id" : 14,
+		"attach_1" : "GARDE-MAIN XRK EDGE BW-4 (ACCESSOIRE CANON)",
+		"attach_2" : "CROSSE SO INLINE",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .50 CAL",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "SP-X 80",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 16\" ZLR EXECUTOR 80",
+		"attach_2" : "CROSSE TACTIQUE PVZ-890",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .300",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "VERROU FSS ST87"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "VICTUS XMR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIEUX SONIQUE XL",
+		"attach_2" : "CROSSE XRK RISE 50",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .50 CAL",
+		"attach_4" : "LASER KIMURA RYL33",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "XRK STALKER",
+		"weapon_id" : 14,
+		"attach_1" : "POIGNÉE ARRIÈRE D'USINE XRK STALKER",
+		"attach_2" : "CROSSE LÉGÈRE HELIX LV",
+		"attach_3" : "BALLES À HAUTE VÉLOCITÉ .50 CAL",
+		"attach_4" : "LASER SL RAZORHAWK",
+		"attach_5" : "LUNETTE SP-X 80 6.6X"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "HAWKER HX",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 20.5\" HAWKER SPRING",
+		"attach_2" : "UNDERPITCH (ACCESSOIRE CANON)",
+		"attach_3" : "BALLES SURPRESSURISÉES .338 LM",
+		"attach_4" : "CHARGEUR RAPIDE FLATLOAD",
+		"attach_5" : "POIGNÉE ARRIÈRE AURORAL LIGHT"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "VS RECON",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 24.9\" DOMAIN",
+		"attach_2" : "POIGNÉE ARRIÈRE R-1 SHELF",
+		"attach_3" : "BALLES SURPRESSURISÉES 7.62 OTAN",
+		"attach_4" : "CHARGEUR RAPIDE DASHLINE",
+		"attach_5" : "LASER 1MW INSTINCT"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "SHADOW SK",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIEUX SWF TISHINA",
+		"attach_2" : "CANON 17\" THUST",
+		"attach_3" : "BALLES SURPRESSURISÉES .300 WM",
+		"attach_4" : "POIGNÉE ARRIÈRE SQUELETTIQUE E-3 BILLET",
+		"attach_5" : "LUNETTE PRISMATECH TURBO 4X + RÉTICULE COVERT"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "XR-3 ION",
+		"weapon_id" : 14,
+		"attach_1" : "CANON 15\" FRINGE",
+		"attach_2" : "POIGNÉE ARRIÈRE L.T. SLING",
+		"attach_3" : "BALLES SURPRESSURISÉES 7.62 OTAN",
+		"attach_4" : "LASER 1MW INSTINCT",
+		"attach_5" : "LUNETTE PRISMATECH TURBO 4X + RÉTICULE COVER"
+	}
+]}

@@ -1,0 +1,58 @@
+{
+"Ranked": [
+	{
+		"id" : 19,
+		"weapon_name" : "M15 MOD 0",
+		"attach_1" : "18\" BOWEN WATCHTOWER BARREL",
+		"attach_2" : "AXIS SHIFT VERTICAL UNDERBARREL",
+		"attach_3" : "5.56 NATO OVERPRESSURED ROUNDS",
+		"attach_4" : "BACKLINE FLIP MAG",
+		"attach_5" : "LETHAL TOOLS ELO OPTIC",
+		"build_code" : "A01-2JDGJ-91GX1-E711",
+		"availability" : "YES"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "DRAVEC 45",
+		"attach_1" : "HAWKER STABILIZER MK.II MUZZLE",
+		"attach_2" : "19\" EAM HORIZON BARREL",
+		"attach_3" : "QUIKARM REAR GRIP",
+		"attach_4" : "SERVAL Q-STEP STOCK \/ GATOR EXTENDED MAG",
+		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
+		"build_code" : "S04-2JD6P-5RCQB-VN11",
+		"availability" : "YES"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "VS RECON",
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"build_code" : null,
+		"availability" : "YES"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "JAGER 45",
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"build_code" : null,
+		"availability" : "YES"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "MPC-25",
+		"attach_1" : "K&S COMPENSATOR MUZZLE",
+		"attach_2" : "14.5\" VAS ASHE BARREL",
+		"attach_3" : "ZERO SHIFT HANDSTOP UNDERBARREL",
+		"attach_4" : "COACHWHIP FAST \/ SUSTAIN-25 EXTENDED MAG",
+		"attach_5" : "VASSAL STABILITY REAR GRIP",
+		"build_code" : "S06-85BZL-4C11",
+		"availability" : "YES"
+	}
+]}

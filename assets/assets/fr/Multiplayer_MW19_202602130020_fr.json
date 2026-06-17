@@ -1,0 +1,483 @@
+{
+"Multiplayer_MW19": [
+	{
+		"id" : 1,
+		"weapon_name" : "725",
+		"weapon_id" : 13,
+		"attach_1" : "ÉTRANGLEMENT (BOUCHE)",
+		"attach_2" : "CANON SCIÉ \/ LASER 5MW",
+		"attach_3" : "GARDE-MAIN TEMPUS SLIM",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CROSSE SCIÉE"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "1911 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON 1911 STALKER",
+		"attach_3" : "CHARGEURS DE 15 CARTOUCHES",
+		"attach_4" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_5" : "DÉTENTE LÉGÈRE"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : ".50 GS (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON FORGE TAC ENFORCER",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "DÉTENTE LÉGÈRE \/ VISEUR MINI REFLEX G.I."
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "AK-47 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "CROSSE SQUELETTIQUE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 30 CARTOUCHES 5.45X39MM"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "AN-94",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "AS VAL (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_2" : "CROSSE SQUELETTIQUE STOVL 6P30",
+		"attach_3" : "POIGNÉE ARRIÈRE CAOUTCHOUTÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 30 CARTOUCHES"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "AUG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "APPUI-JOUE FORGE TAC CQB",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 32 CARTOUCHES"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "BRUEN MK9 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX TACTIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "CHARGEURS DE 60 CARTOUCHES",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "CR-56 AMAX (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON XRK ZODIAC S440",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CROSSE CR-56 EXO"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "CROSSBOW (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "POIGNÉE DE VITESSE FTAC (ACCESSOIRE CANON)",
+		"attach_2" : "CROSSE FORGE TAC SPEEDTRAK \/ VISEUR",
+		"attach_3" : "BRAS XRK QUILL 100 LB",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CÂBLE 28 BRINS"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "CX-9",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "CHARGEURS DE 30 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE TACTIQUE CX-9"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "EBR-14 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CROSSE CHÂSSIS FSS RAIDER ELITE",
+		"attach_3" : "CHARGEURS DE 20 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "VISEUR REFLEX VIPER \/ LUNETTE À ZOOM AJUSTABLE"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "FAL",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX TACTIQUE",
+		"attach_2" : "CANON XRK MARKSMAN",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "FENNEC (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX ZLR SABRE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "CHARGEURS DE 40 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "FiNN LMG",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON D'USINE ADVERSE",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "BANDES DE 100 CARTOUCHES 5.56 CT",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "FN SCAR 17",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 30 CARTOUCHES"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "FR 5.56 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "REVÊTEMENT DE CROSSE FSS TACTIQUE"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "GRAU 5.56",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON TEMPUS 26.4\" ARCHANGEL",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE XRK VOID II"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "HOLGER-26 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX TACTIQUE",
+		"attach_2" : "CROSSE XRK AKIX",
+		"attach_3" : "CHARGEURS DE 30 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "ISO (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "TAMBOURS DE 50 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CROSSE RÉTRACTABLE ISO"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "JAK-12",
+		"weapon_id" : 13,
+		"attach_1" : "ÉTRANGLEMENT (BOUCHE)",
+		"attach_2" : "CANON ZLR J-2800 INFLUX",
+		"attach_3" : "LASER 5MW",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 20 CARTOUCHES"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "KAR98K (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_2" : "APPUI-JOUE FTAC SPORT",
+		"attach_3" : "LASER TACTIQUE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "LUNETTE DE TIREUR D'ÉLITE"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "KILO 141 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "M13",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE CAOUTCHOUTÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CROSSE SQUELETTIQUE M13"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "M19",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON XRK L SUPER",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "DÉTENTE LÉGÈRE"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "M4A1 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "M91",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX TACTIQUE",
+		"attach_2" : "CANON M91 INFANTERIE",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "MAGNUM (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "PARE-FLAMME (BOUCHE)",
+		"attach_2" : "CANON LONG .357",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "DÉTENTE LÉGÈRE"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "MG34",
+		"weapon_id" : 13,
+		"attach_1" : "CANON FSS COURT",
+		"attach_2" : "POIGNÉE AVANT D'OPÉRATEUR (ACCESSOIRE CANON) \/ MINI REFLEX G.I.",
+		"attach_3" : "BANDE DE 75 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE POINTILLÉE"
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "MK2 CARBINE",
+		"weapon_id" : 13,
+		"attach_1" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_2" : "APPUI-JOUE FSS MK2 SPORT",
+		"attach_3" : "LASER TACTIQUE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "LUNETTE DE TIREUR D'ÉLITE \/ MINI REFLEX G.I. \/ RIEN"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "MODEL 680 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "ÉTRANGLEMENT (BOUCHE)",
+		"attach_2" : "CANON XRK 30.0\" SPORT",
+		"attach_3" : "LASER 5MW",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "MP5 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "CROSSE RÉTRACTABLE FTAC",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CHARGEURS DE 45 CARTOUCHES"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "MP7",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON FSS RECON",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "ODEN",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX COLOSSUS",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE CAOUTCHOUTÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "APPUI-JOUE FTAC XL ELITE"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "ORIGIN 12",
+		"weapon_id" : 13,
+		"attach_1" : "ÉTRANGLEMENT (BOUCHE)",
+		"attach_2" : "CANON FORGE TAC IMPALER",
+		"attach_3" : "CHARGEURS DE 12 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "P90",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON FSS 10.6\" PRO",
+		"attach_3" : "POIGNÉE ARRIÈRE CAOUTCHOUTÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "CROSSE FLY STRAP"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "PKM",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX TACTIQUE",
+		"attach_2" : "CANON COMPACT 18.2\"",
+		"attach_3" : "POIGNÉE SNATCH (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE POINTILLÉE"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "PP19 BIZON (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON EN ACIER 8.7\"",
+		"attach_3" : "POIGNÉE ARRIÈRE CAOUTCHOUTÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "R9-0",
+		"weapon_id" : 13,
+		"attach_1" : "ÉTRANGLEMENT (BOUCHE)",
+		"attach_2" : "CANON FORGE TAC SENTINELLE",
+		"attach_3" : "LASER 5MW",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE POINTILLÉE"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "RAAL MG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "POIGNÉE PMC (ACCESSOIRE CANON)",
+		"attach_2" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_3" : "BANDES DE 50 CARTOUCHES",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "RAM-7 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON FSS RANGER",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE POINTILLÉE"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "RENETTI (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON MODÈLE RAFALE MK3",
+		"attach_3" : "POIGNÉE ARRIÈRE XRK SPEED",
+		"attach_4" : "CHARGEURS DE 27 CARTOUCHES",
+		"attach_5" : "DÉTENTE LÉGÈRE"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "SA87",
+		"weapon_id" : 13,
+		"attach_1" : "CANON D'USINE SA87 12.4\"",
+		"attach_2" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "MINI REFLEX G.I. \/ VISEUR REFLEX VIPER"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "STRIKER 45 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON POLY 300MM",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "POIGNÉE ARRIÈRE FTAC G-5 EXO"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "SYKOV",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON AUTO SOROKIN 140MM",
+		"attach_3" : "POIGNÉE ARRIÈRE VLK ELITA",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "TAMBOURS DE 80 CARTOUCHES"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "UZI",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON FSS CARABINE PRO",
+		"attach_3" : "POIGNÉE AVANT DE COMMANDO (ACCESSOIRE CANON)",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "VLK ROGUE",
+		"weapon_id" : 13,
+		"attach_1" : "BOUCHE FORGE TAC MARAUDEUR",
+		"attach_2" : "CANON VLK CZAR",
+		"attach_3" : "LASER 5MW",
+		"attach_4" : "TOUR DE PASSE-PASSE",
+		"attach_5" : "SANS CROSSE"
+	},
+	{
+		"id" : 48,
+		"weapon_name" : "X16",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIEUX MONOLITHIQUE",
+		"attach_2" : "CANON SINGUARD ARMS ADVANTAGE",
+		"attach_3" : "POIGNÉE ARRIÈRE POINTILLÉE",
+		"attach_4" : "CHARGEURS DE 17 CARTOUCHES",
+		"attach_5" : "DÉTENTE LÉGÈRE"
+	}
+]}

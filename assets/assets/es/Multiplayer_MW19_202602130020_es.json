@@ -1,0 +1,483 @@
+{
+"Multiplayer_MW19": [
+	{
+		"id" : 1,
+		"weapon_name" : "725",
+		"weapon_id" : 13,
+		"attach_1" : "ESTRANGULADOR",
+		"attach_2" : "CAÑÓN RECORTADO \/ LÁSER DE 5mW",
+		"attach_3" : "PROTECTOR DE EMPUÑADURA TEMPUS SLIM",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA RECORTADA"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "1911 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN STALKER 1911",
+		"attach_3" : "CARGADORES DE 15 BALAS",
+		"attach_4" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_5" : "GATILLO LIGERO"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : ".50 GS (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN FORGE TAC ENFORCER",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "GATILLO LIGERO \/ MIRA RÉFLEX MINI G.I."
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "AK-47 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "CULATA ESQUELÉTICA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 30 BALAS DE 5.45x39mm"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "AN-94",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "AS VAL (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_2" : "CULATA ESQUELÉTICA STOVL 6P30",
+		"attach_3" : "EMPUÑADURA DE GOMA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 30 BALAS"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "AUG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CULATA FORGE TAC CQB COMB",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 32 BALAS"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "BRUEN MK9 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR TÁCTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "CARGADORES DE 60 BALAS",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "CR-56 AMAX (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN XRK ZODIAC S440",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA EXO CR-56"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "CROSSBOW (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "EMPUÑADURA FTAC SPEEDGRIP",
+		"attach_2" : "CULATA FORGE TAC SPEEDTRAK \/ MIRA",
+		"attach_3" : "BRAZOS XRK QUILL 100 LB",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CABLE DE 28 HEBRAS"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "CX-9",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "CARGADORES DE 30 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "EMPUÑADURA TÁCTICA CX-9"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "EBR-14 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CHASIS DE ÉLITE FSS RAIDER",
+		"attach_3" : "CARGADORES DE 20 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX VIPER \/ MIRA DE ZOOM VARIABLE"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "FAL",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR TÁCTICO",
+		"attach_2" : "CAÑÓN DE TIRADOR XRK",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "FENNEC (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR ZLR SABRE",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "CARGADORES DE 40 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "FiNN LMG",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN ADVERSO DE FÁBRICA",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "CINTAS DE 100 BALAS 5.56 CT",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "FN SCAR 17",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 30 BALAS"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "FR 5.56 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA FSS TAC-WRAP"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "GRAU 5.56",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN TEMPUS DE 67.1 CM ARCHANGEL",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "EMPUÑADURA XRK VOID II"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "HOLGER-26 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR TÁCTICO",
+		"attach_2" : "CULATA XRK AKIX",
+		"attach_3" : "CARGADORES DE 30 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "ISO (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "TAMBORES DE 50 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA PLEGABLE ISO"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "JAK-12",
+		"weapon_id" : 13,
+		"attach_1" : "ESTRANGULADOR",
+		"attach_2" : "CAÑÓN ZLR J-2800 INFLUX",
+		"attach_3" : "LÁSER DE 5mW",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 20 BALAS"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "KAR98K (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_2" : "CULATA FTAC SPORT COMB",
+		"attach_3" : "LÁSER TÁCTICO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA DE PRECISIÓN"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "KILO 141 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "M13",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "EMPUÑADURA DE GOMA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA ESQUELÉTICA M13"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "M19",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN XRK L SUPER",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "GATILLO LIGERO"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "M4A1 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "M91",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR TÁCTICO",
+		"attach_2" : "CAÑÓN DE INFANTERÍA M91",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "MAGNUM (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "OCULTA DESTELLOS",
+		"attach_2" : "CAÑÓN LARGO .357",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "GATILLO LIGERO"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "MG34",
+		"weapon_id" : 13,
+		"attach_1" : "CAÑÓN CORTO FSS",
+		"attach_2" : "EMPUÑADURA DELANTERA DE OPERADOR \/ MIRA RÉFLEX MINI G.I.",
+		"attach_3" : "CINTA DE 75 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "ADHESIVO DE EMPUÑADURA GRANULADO"
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "MK2 CARBINE",
+		"weapon_id" : 13,
+		"attach_1" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_2" : "CULATA FSS MK2 SPORT COMB",
+		"attach_3" : "LÁSER TÁCTICO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA DE PRECISIÓN \/ MIRA RÉFLEX MINI G.I. \/ NADA"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "MODEL 680 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "ESTRANGULADOR",
+		"attach_2" : "CAÑÓN XRK SPORT DE 76.2 CM",
+		"attach_3" : "LÁSER DE 5mW",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "MP5 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "CULATA PLEGABLE FTAC",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CARGADORES DE 45 BALAS"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "MP7",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN FSS RECON",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "ODEN",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR COLOSSUS",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "EMPUÑADURA DE GOMA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA FTAC XL ELITE COMB"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "ORIGIN 12",
+		"weapon_id" : 13,
+		"attach_1" : "ESTRANGULADOR",
+		"attach_2" : "CAÑÓN FORGE TAC IMPALER",
+		"attach_3" : "CARGADORES DE 12 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "P90",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN FSS PRO DE 26.9 CM",
+		"attach_3" : "EMPUÑADURA DE GOMA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "CULATA FLY STRAP"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "PKM",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR TÁCTICO",
+		"attach_2" : "CAÑÓN COMPACTO DE 46.2 CM",
+		"attach_3" : "EMPUÑADURA SNATCH",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "ADHESIVO DE EMPUÑADURA GRANULADO"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "PP19 BIZON (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN DE ACERO DE 22.1 CM",
+		"attach_3" : "EMPUÑADURA DE GOMA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "R9-0",
+		"weapon_id" : 13,
+		"attach_1" : "ESTRANGULADOR",
+		"attach_2" : "CAÑÓN FORGE TAC SENTRY",
+		"attach_3" : "LÁSER DE 5mW",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "ADHESIVO DE EMPUÑADURA GRANULADO"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "RAAL MG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "EMPUÑADURA PMC",
+		"attach_2" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_3" : "CINTAS DE 50 BALAS",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "RAM-7 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN FSS RANGER",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "ADHESIVO DE EMPUÑADURA GRANULADO"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "RENETTI (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN MK3 BURST MOD",
+		"attach_3" : "EMPUÑADURA XRK SPEED",
+		"attach_4" : "CARGADORES DE 27 BALAS",
+		"attach_5" : "GATILLO LIGERO"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "SA87",
+		"weapon_id" : 13,
+		"attach_1" : "CAÑÓN DE FÁBRICA SA87 DE 31.5 CM",
+		"attach_2" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "MIRA RÉFLEX MINI G.I. \/ MIRA RÉFLEX VIPER"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "STRIKER 45 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN POLI DE 300MM",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "EMPUÑADURA FTAC G-5 EXO"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "SYKOV",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN SOROKIN 140MM AUTO",
+		"attach_3" : "EMPUÑADURA VLK ELITA",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "TAMBORES DE 80 BALAS"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "UZI",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN FSS CARBINE PRO",
+		"attach_3" : "EMPUÑADURA DELANTERA DE COMANDO",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "VLK ROGUE",
+		"weapon_id" : 13,
+		"attach_1" : "BOCA DE CAÑÓN FORGE TAC MARAUDER",
+		"attach_2" : "CAÑÓN VLK CZAR",
+		"attach_3" : "LÁSER DE 5mW",
+		"attach_4" : "PRESTIDIGITACIÓN",
+		"attach_5" : "SIN CULATA"
+	},
+	{
+		"id" : 48,
+		"weapon_name" : "X16",
+		"weapon_id" : 13,
+		"attach_1" : "SILENCIADOR MONOLÍTICO",
+		"attach_2" : "CAÑÓN SINGUARD ARMS ADVANTAGE",
+		"attach_3" : "ADHESIVO DE EMPUÑADURA GRANULADO",
+		"attach_4" : "CARGADORES DE 17 BALAS",
+		"attach_5" : "GATILLO LIGERO"
+	}
+]}

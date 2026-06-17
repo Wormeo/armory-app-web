@@ -1,0 +1,58 @@
+{
+"Ranked": [
+	{
+		"id" : 19,
+		"weapon_name" : "M15 MOD 0",
+		"weapon_id" : 1,
+		"attach_1" : "CAÑÓN BOWEN WATCHTOWER DE 18\"",
+		"attach_2" : "ACOPLE VERTICAL AXIS SHIFT",
+		"attach_3" : "PROYECTILES DE SOBREPRESIÓN 5.56 NATO",
+		"attach_4" : "CARGADOR FLIP BACKLINE",
+		"attach_5" : "MIRA ELO LETHAL TOOLS",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "DRAVEC 45",
+		"weapon_id" : 1,
+		"attach_1" : "BOCA ESTABILIZADORA HAWKER MK.II",
+		"attach_2" : "CAÑÓN EAM HORIZON DE 19\"",
+		"attach_3" : "EMPUÑADURA TRASERA QUIKARM",
+		"attach_4" : "CULATA SERVAL Q-STEP / CARGADOR AMPLIADO GATOR",
+		"attach_5" : "PROYECTILES DE SOBREPRESIÓN CALIBRE .45",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "VS RECON",
+		"weapon_id" : 1,
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"recommended_sight_shooting_style" : null
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 1,
+		"attach_1" : null,
+		"attach_2" : null,
+		"attach_3" : null,
+		"attach_4" : null,
+		"attach_5" : null,
+		"recommended_sight_shooting_style" : null
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "MPC-25",
+		"weapon_id" : 1,
+		"attach_1" : "BOCA COMPENSADORA K&S",
+		"attach_2" : "CAÑÓN VAS ASHE DE 14.5\"",
+		"attach_3" : "ACOPLE DE TOPE DE MANO ZERO SHIFT",
+		"attach_4" : "CARGADOR RÁPIDO COACHWHIP / CARGADOR AMPLIADO SUSTAIN-25",
+		"attach_5" : "EMPUÑADURA TRASERA VASSAL STABILITY",
+		"recommended_sight_shooting_style" : ""
+	}
+]}

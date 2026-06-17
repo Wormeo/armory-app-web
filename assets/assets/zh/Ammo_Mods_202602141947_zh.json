@@ -1,0 +1,59 @@
+{
+"Ammo_Mods": [
+	{
+		"id" : 1,
+		"augment" : "电击电线",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/DeadWire_AmmoMod_Icon_BO6_ln4gd7.png",
+		"minor_augment" : "急速 | + 余震 > BO7",
+		"major_augment" : "闪电打击"
+	},
+	{
+		"id" : 2,
+		"augment" : "冰霜凝结",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/CryoFreeze_AmmoMod_Icon_BO6_gthzdv.png",
+		"minor_augment" : "液氮 | + 延长 > BO7",
+		"major_augment" : "冰云"
+	},
+	{
+		"id" : 3,
+		"augment" : "凝固汽油弹爆发",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/NapalmBurst_AmmoMod_Icon_BO6_jqkzhu.png",
+		"minor_augment" : "燃烧 | + 延长 \/ 回燃 > BO7",
+		"major_augment" : "燃烧弹"
+	},
+	{
+		"id" : 4,
+		"augment" : "脑腐",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/BrainRot_AmmoMod_Icon_BO6_cphnrn.png",
+		"minor_augment" : "爆炸 | + 延长 \/ 急速 > BO7",
+		"major_augment" : "信息素"
+	},
+	{
+		"id" : 5,
+		"augment" : "暗影裂隙",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959419\/ShadowRift_AmmoMod_Icon_BO6_yhaoc2.png",
+		"minor_augment" : "超大质量 | + 任意 > BO7",
+		"major_augment" : "爆炸雨 | BO7 > 重力井"
+	},
+	{
+		"id" : 6,
+		"augment" : "光愈",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959420\/LightMend_AmmoMod_Icon_BO6_bg0ey7.png",
+		"minor_augment" : "额外强度",
+		"major_augment" : "双重效用"
+	},
+	{
+		"id" : 7,
+		"augment" : "粉碎爆破",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758959421\/ShatterBlast_AmmoMod_Icon_BO6_b5gxnr.png",
+		"minor_augment" : "冲击波 \/ 爆炸区域 | + 任意 > BO7",
+		"major_augment" : "连环爆破"
+	},
+	{
+		"id" : 8,
+		"augment" : "烟花",
+		"augment_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763425061\/FireWorks_AmmoMod_Icon_BO7_c5bfsw.webp",
+		"minor_augment" : "短引信 | + 星光 > BO7",
+		"major_augment" : "星爆"
+	}
+]}

@@ -1,0 +1,234 @@
+{
+"Akimbo": [
+	{
+		"id" : 1,
+		"weapon_name" : ".50 GS (MW2)",
+		"weapon_id" : 5,
+		"attach_1" : "EXF FIFTY GS SUPPRESSOR",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "SA HARE TRIGGER",
+		"attach_4" : "10 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "9MM DAEMON",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "RAPID 30 TRIGGER",
+		"attach_4" : "20 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "9MM PM",
+		"weapon_id" : 5,
+		"attach_1" : " SUPPRESSOR \/ RAPID FIRE MOD",
+		"attach_2" : "STEADY AIM LASER",
+		"attach_3" : "CQB REAR GRIP",
+		"attach_4" : "EXTENDED MAG I",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "BASILISK",
+		"weapon_id" : 5,
+		"attach_1" : "10.5\" FTAC ARROW BARREL",
+		"attach_2" : "BASILISK GRIP LASER",
+		"attach_3" : "S40 RAPID LOADER",
+		"attach_4" : "BRYSON HTA TRIGGER",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "COR-45",
+		"weapon_id" : 5,
+		"attach_1" : "FT STEEL FIRE SUPPRESSOR",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "XRK LIGHTNING FIRE TRIGGER",
+		"attach_4" : "18 \/ 30 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "FTAC SIEGE",
+		"weapon_id" : 5,
+		"attach_1" : "XRK SANDSTORM MUZZLE",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "RN5-XV 9MM BARREL",
+		"attach_4" : "50 ROUND DRUM",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "GREKHOVA",
+		"weapon_id" : 5,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "STEADY AIM LASER",
+		"attach_3" : "EXTENDED MAG II",
+		"attach_4" : "RECOIL SPRINGS \/ RAPID FIRE",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "GS MAGNA",
+		"weapon_id" : 5,
+		"attach_1" : "EXF FIFTY GS SUPPRESSOR",
+		"attach_2" : ".50 PISTOL OVERPRESSURED +P ROUNDS",
+		"attach_3" : "13 ROUND MAG",
+		"attach_4" : "AKIMBO REAR GRIP",
+		"attach_5" : "",
+		"build_code" : null
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "GS45",
+		"weapon_id" : 5,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "STEADY AIM LASER",
+		"attach_3" : "LONG BARREL",
+		"attach_4" : "EXTENDED MAG I",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "P890",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "BRUEN EXPRESS TRIGGER",
+		"attach_4" : "10 \/ 12 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "RENETTI (MW3)",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "MLX SHORT COMPETITION BARREL",
+		"attach_3" : "XTEN SIDEARM-L400 LASER",
+		"attach_4" : "30 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "STRYDER .22",
+		"weapon_id" : 5,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "STEADY AIM LASER",
+		"attach_3" : "LONG BARREL",
+		"attach_4" : "RAPID FIRE \/ RECOIL SPRINGS",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "TYR",
+		"weapon_id" : 5,
+		"attach_1" : "ZIU-16 HEAVY LONG BARREL",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "12.7X55MM SNAKE SHOT ROUNDS",
+		"attach_4" : "ULLR'S FURY TRIGGER",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "WSP STINGER",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "HISS SHORT LIGHT BARREL",
+		"attach_3" : "XTEN SIDEARM-L400 LASER",
+		"attach_4" : "32 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "X12",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "XRK LIGHTNING FIRE TRIGGER",
+		"attach_4" : "24 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "X13 AUTO",
+		"weapon_id" : 5,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "XTEN SIDEARM-L400 LASER",
+		"attach_3" : "XRK LUC-9 BARREL",
+		"attach_4" : "33 \/ 50 ROUND MAG",
+		"attach_5" : "AKIMBO REAR GRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 5,
+		"attach_1" : "JAGER ROAR SUPPRESSOR",
+		"attach_2" : "GOLIATH-X EXTENDED MAG",
+		"attach_3" : "VECTOR SYNC LASER",
+		"attach_4" : "MATCH GRADE TRIGGER MOD",
+		"attach_5" : "AKIMBO JAGER 45 STOCK",
+		"build_code" : "P01-AAEER-QIAFQ-11"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_id" : 5,
+		"attach_1" : "GREAVES COVERT SUPPRESSOR",
+		"attach_2" : "DRACO RESERVE EXTENDED MAG",
+		"attach_3" : "VECTOR SYNC LASER",
+		"attach_4" : "PERENNIAL REAR GRIP",
+		"attach_5" : "AKIMBO VELOX 5.7 STOCK",
+		"build_code" : "P02-AABQA-58TFY-11"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "CODA 9",
+		"weapon_id" : 5,
+		"attach_1" : "BOWEN 9MM SUPPRESSOR",
+		"attach_2" : "HELLGATE STICK MAG",
+		"attach_3" : "2MW PINPOINT LASER",
+		"attach_4" : "ST3-GLORIA REAR GRIP",
+		"attach_5" : "AKIMBO CODA 9 STOCK",
+		"build_code" : "P03-AAEC9-2UCH5-11"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "GRAVEMARK .357",
+		"weapon_id" : 5,
+		"attach_1" : "PORTED COMPENSATOR MUZZLE",
+		"attach_2" : "LONG BARREL",
+		"attach_3" : "STEADY AIM LASER",
+		"attach_4" : "RAPID FIRE MOD",
+		"attach_5" : "AKIMBO STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 5,
+		"attach_1" : "P-45 STRIKE COMP SUPPRESSOR",
+		"attach_2" : "VECTOR SYNC LASER",
+		"attach_3" : "SEAR FAST TRIGGER",
+		"attach_4" : "SIRIUS EXTENDED MAG",
+		"attach_5" : "AKIMBO 1911 STOCK",
+		"build_code" : "P07-AABSS-SWT6S-11"
+	}
+]}
