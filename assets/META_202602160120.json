@@ -484,60 +484,60 @@
 		"id" : 82,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "1. VST"
+		"weapon" : "1. CARBON 57"
 	},
 	{
 		"id" : 83,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "2. KOGOT-7"
+		"weapon" : "2. DRAVEC 45"
 	},
 	{
 		"id" : 84,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "3. CARBON 57"
+		"weapon" : "3. VST"
 	},
 	{
 		"id" : 85,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "4. RAZOR 9MM (PRESTIGE)"
+		"weapon" : "4. KOGOT-7"
 	},
 	{
 		"id" : 86,
 		"game" : "BO7",
 		"class_type" : "CLOSE RANGE (WZ)",
-		"weapon" : "5. DRAVEC 45"
+		"weapon" : "CBRS-3"
 	},
 	{
 		"id" : 87,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "1. MK35 ISR"
+		"weapon" : "1. AK-27"
 	},
 	{
 		"id" : 88,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "2. PEACEKEEPER MK1"
+		"weapon" : "2. DS20 MIRAGE"
 	},
 	{
 		"id" : 89,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "3. VOYAK KT-3"
+		"weapon" : "3. MXR-17"
 	},
 	{
 		"id" : 90,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "4. AK-27"
+		"weapon" : "4. VOYAK KT-3"
 	},
 	{
 		"id" : 91,
 		"game" : "BO7",
 		"class_type" : "LONG RANGE (WZ)",
-		"weapon" : "5. EGRT-17"
+		"weapon" : "5. MK35 ISR"
 	}
 ]}

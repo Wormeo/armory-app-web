@@ -1,0 +1,193 @@
+{
+"REBIRTH": [
+	{
+		"id" : 1,
+		"weapon_name" : "KAR98K (MW3)",
+		"weapon_id" : 14,
+		"attach_1" : "Präzisiongewehr 762 长枪管",
+		"attach_2" : "无枪托",
+		"attach_3" : "7.92x57mm 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "Range Caller V3.4 瞄准镜"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "SA-B 50",
+		"weapon_id" : 14,
+		"attach_1" : "FSS ST87 枪机",
+		"attach_2" : "Assault-60 枪托",
+		"attach_3" : ".308 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "SP-R 208 (MW2)",
+		"weapon_id" : 14,
+		"attach_1" : "FSS ST87 枪机",
+		"attach_2" : "ZRL T70 垫层枪托",
+		"attach_3" : "7.62x51mm 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "CARRACK .300",
+		"weapon_id" : 14,
+		"attach_1" : "300 亚音速枪管",
+		"attach_2" : "Lex V14 枪托",
+		"attach_3" : ".300 高初速弹",
+		"attach_4" : "10发弹匣",
+		"attach_5" : "VLK 4.0倍光学瞄准镜"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "FJX IMPERIUM",
+		"weapon_id" : 14,
+		"attach_1" : "Tac-Command 19英寸枪管",
+		"attach_2" : "FJX 爆破枪机",
+		"attach_3" : ".408 高初速弹",
+		"attach_4" : "FJX Kilo Tac 枪托",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "KATT-AMR",
+		"weapon_id" : 14,
+		"attach_1" : "Sonic XL 级消音器",
+		"attach_2" : "战术垫层枪托",
+		"attach_3" : ".50口径高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "KV INHIBITOR",
+		"weapon_id" : 14,
+		"attach_1" : "Sonic L 级消音器",
+		"attach_2" : "XRK Edge BW-4 挡手握把（下挂）",
+		"attach_3" : "FSS Stormender 突击后握把",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "LA-B 330",
+		"weapon_id" : 14,
+		"attach_1" : "16英寸 ZLR Executor 80 枪管",
+		"attach_2" : "ZLR T70 垫层枪托",
+		"attach_3" : ".300 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "FSS ST87 枪机"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "LONGBOW",
+		"weapon_id" : 14,
+		"attach_1" : "XRK Edge BW-4 挡手握把（下挂）",
+		"attach_2" : "SA-M 快速枪机",
+		"attach_3" : "7.62x39mm 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "Demo 650 后握把"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "MCPR-300",
+		"weapon_id" : 14,
+		"attach_1" : "Cronen 平滑枪机",
+		"attach_2" : "FSS Merc 枪托",
+		"attach_3" : ".300 Mag 高初速弹",
+		"attach_4" : "5发弹匣",
+		"attach_5" : "SP-X 80 6.6倍 / Akilina LR-Stalk 瞄准镜"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "MORS",
+		"weapon_id" : 14,
+		"attach_1" : "Downfall 轻型枪管",
+		"attach_2" : "Superlite-90 枪托",
+		"attach_3" : "OP-980 后握把",
+		"attach_4" : "快速枪机",
+		"attach_5" : "Akilina LR-Stalk 瞄准镜"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "SIGNAL 50",
+		"weapon_id" : 14,
+		"attach_1" : "XRK Edge BW-4 挡手握把（下挂）",
+		"attach_2" : "SO Inline 枪托",
+		"attach_3" : ".50口径高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "SP-X 80",
+		"weapon_id" : 14,
+		"attach_1" : "16英寸 ZLR Executor 80 枪管",
+		"attach_2" : "PVZ-890 战术枪托",
+		"attach_3" : ".300 高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "FSS ST87 枪机"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "VICTUS XMR",
+		"weapon_id" : 14,
+		"attach_1" : "Sonic XL 级消音器",
+		"attach_2" : "XRK Rise 50 枪托",
+		"attach_3" : ".50口径高初速弹",
+		"attach_4" : "Kimura RYL33 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "XRK STALKER",
+		"weapon_id" : 14,
+		"attach_1" : "XRK Stalker 原厂后握把",
+		"attach_2" : "Helix LV 轻型枪托",
+		"attach_3" : ".50口径高初速弹",
+		"attach_4" : "SL Razorhawk 激光",
+		"attach_5" : "SP-X 80 6.6倍瞄准镜"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "HAWKER HX",
+		"weapon_id" : 14,
+		"attach_1" : "20.5英寸 Hawker Spring 枪管",
+		"attach_2" : "Underpitch（下挂）",
+		"attach_3" : ".338 LM 高压弹",
+		"attach_4" : "Flatload 快速弹匣",
+		"attach_5" : "Auroral Light 后握把"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "VS RECON",
+		"weapon_id" : 14,
+		"attach_1" : "24.9英寸 Domain 枪管",
+		"attach_2" : "R-1 Shelf 后握把",
+		"attach_3" : "7.62 NATO 高压弹",
+		"attach_4" : "Dashline 快速弹匣",
+		"attach_5" : "1mW Instinct 激光"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "SHADOW SK",
+		"weapon_id" : 14,
+		"attach_1" : "SWF Tishina 消音器",
+		"attach_2" : "17英寸 Thust 枪管",
+		"attach_3" : ".300 WM 高压弹",
+		"attach_4" : "E-3 Billet 镂空后握把",
+		"attach_5" : "Prismatech Turbo 4倍镜 + 隐蔽准星"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "XR-3 ION",
+		"weapon_id" : 14,
+		"attach_1" : "15英寸 Fringe 枪管",
+		"attach_2" : "L.T. Sling 后握把",
+		"attach_3" : "7.62 NATO 高压弹",
+		"attach_4" : "1mW Instinct 激光",
+		"attach_5" : "Prismatech Turbo 4倍镜 + 掩体准星"
+	}
+]}

@@ -1,0 +1,212 @@
+{
+"REBIRTH": [
+	{
+		"id" : 1,
+		"weapon_name" : "KAR98K (MW3)",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN LARGO PRÄZISIONGEWEHR 762",
+		"attach_2" : "SIN CULATA",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD 7.92X57MM",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA RANGE CALLER V3.4",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "SA-B 50",
+		"weapon_id" : 14,
+		"attach_1" : "CERROJO FSS ST87",
+		"attach_2" : "CULATA ASSAULT-60",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .308",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "SP-R 208 (MW2)",
+		"weapon_id" : 14,
+		"attach_1" : "CERROJO FSS ST87",
+		"attach_2" : "CULATA ZRL T70 PAD",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD 7.62X51MM",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "CARRACK .300",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN SUBSOUND .300",
+		"attach_2" : "CULATA LEX V14",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .300",
+		"attach_4" : "CARGADOR DE 10 PROYECTILES",
+		"attach_5" : "MIRA VLK 4.0",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "FJX IMPERIUM",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN TAC-COMMAND DE 19\"",
+		"attach_2" : "CERROJO FJX BLAST",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .408",
+		"attach_4" : "CULATA FJX KILO TAC",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "KATT-AMR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIADOR SONIC XL",
+		"attach_2" : "CULATA TACTICAL PAD",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD CALIBRE .50",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "KV INHIBITOR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIADOR SONIC L",
+		"attach_2" : "TOPE DE MANO XRK EDGE BW-4",
+		"attach_3" : "EMPUÑADURA TRASERA FSS STORMENDER ASSAULT",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "LA-B 330",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN ZLR EXECUTOR 80 DE 16\"",
+		"attach_2" : "CULATA ZLR T70 PAD",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .300",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "CERROJO FSS ST87",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "LONGBOW",
+		"weapon_id" : 14,
+		"attach_1" : "TOPE DE MANO XRK EDGE BW-4",
+		"attach_2" : "CERROJO RÁPIDO SA-M",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD 7.62X39MM",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "EMPUÑADURA TRASERA DEMO 650",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "MCPR-300",
+		"weapon_id" : 14,
+		"attach_1" : "CERROJO CRONEN SMOOTH",
+		"attach_2" : "CULATA FSS MERC",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .300 MAG",
+		"attach_4" : "CARGADOR DE 5 PROYECTILES",
+		"attach_5" : "MIRA SP-X 80 6.6X / AKILINA LR-STALK",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "MORS",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN LIGERO DOWNFALL",
+		"attach_2" : "CULATA SUPERLITE-90",
+		"attach_3" : "EMPUÑADURA TRASERA OP-980",
+		"attach_4" : "CERROJO RÁPIDO",
+		"attach_5" : "MIRA AKILINA LR-STALK",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "SIGNAL 50",
+		"weapon_id" : 14,
+		"attach_1" : "TOPE DE MANO XRK EDGE BW-4",
+		"attach_2" : "CULATA SO INLINE",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD CALIBRE .50",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "SP-X 80",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN ZLR EXECUTOR 80 DE 16\"",
+		"attach_2" : "CULATA PVZ-890 TAC",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD .300",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "CERROJO FSS ST87",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "VICTUS XMR",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIADOR SONIC XL",
+		"attach_2" : "CULATA XRK RISE 50",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD CALIBRE .50",
+		"attach_4" : "LÁSER KIMURA RYL33",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "XRK STALKER",
+		"weapon_id" : 14,
+		"attach_1" : "EMPUÑADURA TRASERA XRK STALKER FACTORY",
+		"attach_2" : "CULATA LIGERA HELIX LV",
+		"attach_3" : "MUNICIÓN DE ALTA VELOCIDAD CALIBRE .50",
+		"attach_4" : "LÁSER SL RAZORHAWK",
+		"attach_5" : "MIRA SP-X 80 6.6X",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "HAWKER HX",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN HAWKER SPRING DE 20.5\"",
+		"attach_2" : "ACOPLE UNDERPITCH",
+		"attach_3" : "PROYECTILES DE SOBREPRESIÓN .338 LM",
+		"attach_4" : "CARGADOR RÁPIDO FLATLOAD",
+		"attach_5" : "EMPUÑADURA TRASERA AURORAL LIGHT",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "VS RECON",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN DOMAIN DE 24.9\"",
+		"attach_2" : "EMPUÑADURA TRASERA R-1 SHELF",
+		"attach_3" : "PROYECTILES DE SOBREPRESIÓN 7.62 NATO",
+		"attach_4" : "CARGADOR RÁPIDO DASHLINE",
+		"attach_5" : "LÁSER 1MW INSTINCT",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "SHADOW SK",
+		"weapon_id" : 14,
+		"attach_1" : "SILENCIADOR SWF TISHINA",
+		"attach_2" : "CAÑÓN THUST DE 17\"",
+		"attach_3" : "PROYECTILES DE SOBREPRESIÓN .300 WM",
+		"attach_4" : "EMPUÑADURA TRASERA E-3 BILLET SKELETON",
+		"attach_5" : "MIRA PRISMATECH TURBO 4X + RETÍCULA COVERT",
+		"recommended_sight_shooting_style" : ""
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "XR-3 ION",
+		"weapon_id" : 14,
+		"attach_1" : "CAÑÓN FRINGE DE 15\"",
+		"attach_2" : "EMPUÑADURA TRASERA L.T. SLING",
+		"attach_3" : "PROYECTILES DE SOBREPRESIÓN 7.62 NATO",
+		"attach_4" : "LÁSER 1MW INSTINCT",
+		"attach_5" : "MIRA PRISMATECH TURBO 4X + RETÍCULA COVER",
+		"recommended_sight_shooting_style" : ""
+	}
+]}

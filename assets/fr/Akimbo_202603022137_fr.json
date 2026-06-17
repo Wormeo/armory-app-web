@@ -1,0 +1,234 @@
+{
+"Akimbo": [
+	{
+		"id" : 1,
+		"weapon_name" : ".50 GS (MW2)",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX EXF FIFTY GS",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "DÉTENTE SA HARE",
+		"attach_4" : "CHARGEUR DE 10 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "9MM DAEMON",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "DÉTENTE RAPIDE 30",
+		"attach_4" : "CHARGEUR DE 20 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "9MM PM",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX / MOD CADENCE DE TIR",
+		"attach_2" : "LASER VISÉE STABLE",
+		"attach_3" : "POIGNÉE ARRIÈRE CQB",
+		"attach_4" : "CHARGEUR GRANDE CAPACITÉ I",
+		"attach_5" : "CROSSE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "BASILISK",
+		"weapon_id" : 5,
+		"attach_1" : "CANON FTAC ARROW 10.5\"",
+		"attach_2" : "LASER DE POIGNÉE BASILISK",
+		"attach_3" : "CHARGEUR RAPIDE S40",
+		"attach_4" : "DÉTENTE BRYSON HTA",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "COR-45",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX FT STEEL FIRE",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "DÉTENTE XRK LIGHTNING FIRE",
+		"attach_4" : "CHARGEUR DE 18 / 30 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "FTAC SIEGE",
+		"weapon_id" : 5,
+		"attach_1" : "BOUCHE XRK SANDSTORM",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "CANON RN5-XV 9MM",
+		"attach_4" : "TAMBOUR DE 50 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "GREKHOVA",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "LASER VISÉE STABLE",
+		"attach_3" : "CHARGEUR GRANDE CAPACITÉ II",
+		"attach_4" : "RESSORTS DE RECUL / TIR RAPIDE",
+		"attach_5" : "CROSSE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "GS MAGNA",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX EXF FIFTY GS",
+		"attach_2" : "BALLES SURPRESSÉES +P .50",
+		"attach_3" : "CHARGEUR DE 13 CARTOUCHES",
+		"attach_4" : "POIGNÉE ARRIÈRE AKIMBO",
+		"attach_5" : "",
+		"build_code" : null
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "GS45",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "LASER VISÉE STABLE",
+		"attach_3" : "CANON LONG",
+		"attach_4" : "CHARGEUR GRANDE CAPACITÉ I",
+		"attach_5" : "CROSSE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "P890",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "DÉTENTE BRUEN EXPRESS",
+		"attach_4" : "CHARGEUR DE 10 / 12 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "RENETTI (MW3)",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "CANON COURT DE COMPÉTITION MLX",
+		"attach_3" : "LASER XTEN SIDEARM-L400",
+		"attach_4" : "CHARGEUR DE 30 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "STRYDER .22",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "LASER VISÉE STABLE",
+		"attach_3" : "CANON LONG",
+		"attach_4" : "TIR RAPIDE / RESSORTS DE RECUL",
+		"attach_5" : "CROSSE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "TYR",
+		"weapon_id" : 5,
+		"attach_1" : "CANON LONG LOURD ZIU-16",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "BALLES SNAKE SHOT 12.7X55MM",
+		"attach_4" : "DÉTENTE ULLR'S FURY",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "WSP STINGER",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "CANON LÉGER COURT HISS",
+		"attach_3" : "LASER XTEN SIDEARM-L400",
+		"attach_4" : "CHARGEUR DE 32 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "X12",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "DÉTENTE XRK LIGHTNING FIRE",
+		"attach_4" : "CHARGEUR DE 24 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "X13 AUTO",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX SONIC XS",
+		"attach_2" : "LASER XTEN SIDEARM-L400",
+		"attach_3" : "CANON XRK LUC-9",
+		"attach_4" : "CHARGEUR DE 33 / 50 CARTOUCHES",
+		"attach_5" : "POIGNÉE ARRIÈRE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX JAGER ROAR",
+		"attach_2" : "CHARGEUR GRANDE CAPACITÉ GOLIATH-X",
+		"attach_3" : "LASER VECTOR SYNC",
+		"attach_4" : "MOD DÉTENTE MATCH",
+		"attach_5" : "CROSSE AKIMBO JAGER 45",
+		"build_code" : "P01-AAEER-QIAFQ-11"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX GREAVES COVERT",
+		"attach_2" : "CHARGEUR GRANDE CAPACITÉ DRACO RESERVE",
+		"attach_3" : "LASER VECTOR SYNC",
+		"attach_4" : "POIGNÉE ARRIÈRE PERENNIAL",
+		"attach_5" : "CROSSE AKIMBO VELOX 5.7",
+		"build_code" : "P02-AABQA-58TFY-11"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "CODA 9",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX BOWEN 9MM",
+		"attach_2" : "CHARGEUR DROIT HELLGATE",
+		"attach_3" : "LASER 2MW PINPOINT",
+		"attach_4" : "POIGNÉE ARRIÈRE ST3-GLORIA",
+		"attach_5" : "CROSSE AKIMBO CODA 9",
+		"build_code" : "P03-AAEC9-2UCH5-11"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "GRAVEMARK .357",
+		"weapon_id" : 5,
+		"attach_1" : "BOUCHE COMPENSATEUR À ÉVENTS",
+		"attach_2" : "CANON LONG",
+		"attach_3" : "LASER VISÉE STABLE",
+		"attach_4" : "MOD TIR RAPIDE",
+		"attach_5" : "CROSSE AKIMBO",
+		"build_code" : null
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "1911 (BO7)",
+		"weapon_id" : 5,
+		"attach_1" : "SILENCIEUX P-45 STRIKE COMP",
+		"attach_2" : "LASER VECTOR SYNC",
+		"attach_3" : "DÉTENTE RAPIDE SEAR",
+		"attach_4" : "CHARGEUR GRANDE CAPACITÉ SIRIUS",
+		"attach_5" : "CROSSE AKIMBO 1911",
+		"build_code" : "P07-AABSS-SWT6S-11"
+	}
+]}

@@ -950,10 +950,21 @@
 		"id" : 94,
 		"weapon_name" : "MXR-17",
 		"mod" : "HAMR CONVERSION KIT",
-		"attach_1" : "REDWELL-90 COMPENSATOR",
+		"attach_1" : "REDWELL-90 COMPENSATOR MUZZLE",
 		"attach_2" : "MXR-17 ANVL CONVERSION BARREL",
 		"attach_3" : "CELERITY REAR GRIP",
 		"attach_4" : "3MW MOTION STRIKE LASER",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO"
+	},
+    {
+		"id" : 95,
+		"weapon_name" : "MK.78",
+		"mod" : "LIGHTWEIGHT CQB CONVERSION",
+		"attach_1" : "RL-7.62 COMPENSATOR MUZZLE",
+		"attach_2" : "TRAILBLAZE REAR GRIP",
+		"attach_3" : "ACCELERATED RECOIL SYSTEM",
+		"attach_4" : "MK.78 LIGHTFRAME PDW STOCK",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO"
 	}

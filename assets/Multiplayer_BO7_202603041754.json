@@ -151,10 +151,10 @@
 		"attach_1" : "M10 CQB CHOKE MUZZLE",
 		"attach_2" : "17.4\" REDWELL-5K BARREL",
 		"attach_3" : "EAM STEADY-90 UNDERBARREL",
-		"attach_4" : "LW SKELETON STOCK",
+		"attach_4" : "M10 BREACHER ARGUS LEVER STOCK",
 		"attach_5" : "CONVERGENCE BOX LASER",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "C01-6AC8C-H4B11"
+		"build_code" : "C01-6AC8C-HN611"
 	},
 	{
 		"id" : 14,
@@ -431,5 +431,53 @@
 		"attach_5" : ".45 CAL OVERPRESSURED ROUNDS",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "P07-2JD6P-5XEB8-8711"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "STRIDER 300",
+		"weapon_id" : 1,
+		"attach_1" : "BOWEN MORPHIC UNDERBARREL",
+		"attach_2" : "HATCH QUICK REAR GRIP",
+		"attach_3" : "HAWKER VIGOR STOCK",
+		"attach_4" : "CARNATION FAST MAG",
+		"attach_5" : "QUICK BOLT MOD",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "R07-3YFX7-KB11"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "KRS-7.62",
+		"weapon_id" : 1,
+		"attach_1" : "REDWELL 7.62 BRAKE MUZZLE",
+		"attach_2" : "16.5\" VAS ALLAY BARREL",
+		"attach_3" : "7.62 NATO OVERPRESSURED ROUNDS",
+		"attach_4" : "VERITY QUICK MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "FANG HOVERPOINT ELO",
+		"build_code" : "M07-2JEZ9-IB4U1-5Q11"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "CBRS-3",
+		"weapon_id" : 1,
+		"attach_1" : "14\" RAKE BARREL",
+		"attach_2" : "LATERAL PRECISION UNDERBARREL",
+		"attach_3" : "SQUALL CONTROL REAR GRIP",
+		"attach_4" : "MFS CAROUSEL FAST MAG",
+		"attach_5" : "BOLT CARRIER GROUP MOD",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S15-858VL-L111"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "VX COMPACT",
+		"weapon_id" : 1,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "15\" BOWEN ELARA BARREL",
+		"attach_3" : "5.7X28MM OVERPRESSURED",
+		"attach_4" : "MFS IMPETUS FAST MAG",
+		"attach_5" : "SIGHT \/ FLOWGUARD UNDERBARREL",
+		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
+		"build_code" : "A14-JDJGJ-3GI3F-3L11"
 	}
 ]}

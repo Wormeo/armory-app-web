@@ -1,0 +1,53 @@
+{
+"Cold_War_Akimbo": [
+	{
+		"id" : 1,
+		"weapon_name" : "1911 (CW)",
+		"weapon_id" : 11,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "CORPS DE LASER SWAT 5MW",
+		"attach_3" : "CHARGEUR RAPIDE DE 14 CARTOUCHES SALVO",
+		"attach_4" : "CROSSE DOUBLE ARME",
+		"attach_5" : ""
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "AMP63",
+		"weapon_id" : 11,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "CORPS DE LASER SWAT 5MW",
+		"attach_3" : "CHARGEUR RAPIDE DE 22 CARTOUCHES SALVO",
+		"attach_4" : "CROSSE DOUBLE ARME",
+		"attach_5" : ""
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "DIAMATTI",
+		"weapon_id" : 11,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "CORPS DE LASER SWAT 5MW",
+		"attach_3" : "CHARGEUR RAPIDE DE 30 CARTOUCHES SALVO",
+		"attach_4" : "CROSSE DOUBLE ARME",
+		"attach_5" : ""
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "MAGNUM (CW)",
+		"weapon_id" : 11,
+		"attach_1" : "SILENCIEUX",
+		"attach_2" : "CANON COURT 4.7\"",
+		"attach_3" : "CORPS DE LASER SWAT 5MW",
+		"attach_4" : "CHARGEUR RAPIDE DE 12 CARTOUCHES SALVO",
+		"attach_5" : "CROSSE DOUBLE ARME"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "MARSHAL",
+		"weapon_id" : 11,
+		"attach_1" : "CANON ALLONGÉ 12.1\"",
+		"attach_2" : "CROSSE DOUBLE ARME",
+		"attach_3" : "",
+		"attach_4" : "",
+		"attach_5" : ""
+	}
+]}

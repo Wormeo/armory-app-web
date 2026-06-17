@@ -1,0 +1,73 @@
+{
+"Field_Upgrades": [
+	{
+		"id" : 1,
+		"upgrade" : "暗影闪光",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/DarkFlare_FieldUpgrade_Icon_Zombies_BO6_dpi9v7.png",
+		"minor_augment" : "延长 | + 重度幽暗 \/ 额外充能 > BO7",
+		"major_augment" : "超新星 \/ 延长"
+	},
+	{
+		"id" : 2,
+		"upgrade" : "能量地雷",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/EnergyMine_FieldUpgrade_Icon_Zombies_BOCW_a5s156.png",
+		"minor_augment" : "海妖 \/ 额外充能 | + 频率提升 > BO7",
+		"major_augment" : "散射 \/ 炮塔"
+	},
+	{
+		"id" : 3,
+		"upgrade" : "狂暴守卫",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/FrenziedGuard_FieldUpgrade_Icon_Zombies_BOCW_y3jkke.png",
+		"minor_augment" : "延长 | + 任意 > BO7",
+		"major_augment" : "狂暴火力"
+	},
+	{
+		"id" : 4,
+		"upgrade" : "治愈光环",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/HealingAura_FieldUpgrade_Icon_Zombies_BOCW_woejng.png",
+		"minor_augment" : "坚毅存在 | + 任意 > BO7",
+		"major_augment" : "韧性 \/ 死灵法师 > BO7"
+	},
+	{
+		"id" : 5,
+		"upgrade" : "以太遮罩",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/AetherShroud_FieldUpgrade_Icon_Zombies_BOCW_n7aq7m.png",
+		"minor_augment" : "延长 | + 额外充能 > BO7",
+		"major_augment" : "爆发冲刺"
+	},
+	{
+		"id" : 6,
+		"upgrade" : "寒霜爆发",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960219\/FrostBlast_FieldUpgrade_Icon_Zombies_BOCW_1_iphjid.png",
+		"minor_augment" : "延长 | + 额外充能 > BO7",
+		"major_augment" : "瞬间冻结"
+	},
+	{
+		"id" : 7,
+		"upgrade" : "特斯拉风暴",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960286\/TeslaStorm_FieldUpgrade_Icon_Zombies_BOCW_weidlo.png",
+		"minor_augment" : "锂电充能 | + 增强 \/ 超频 > BO7",
+		"major_augment" : "致命放电"
+	},
+	{
+		"id" : 8,
+		"upgrade" : "皮克斯先生",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758960221\/MisterPeeks_FieldUpgrade_Icon_Zombies_BO6_1_ibuys9.png",
+		"minor_augment" : "派对达人 | + 社交达人 > BO7",
+		"major_augment" : "舞会 \/ 顶级猎人"
+	},
+	{
+		"id" : 9,
+		"upgrade" : "毒性生长",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763425061\/ToxicGrowth_FieldUpgrade_Icon_Zombies_BOCW_sjz9j6.webp",
+		"minor_augment" : "园艺高手 | + 额外充能 \/ 脚踝粉碎者 > BO7",
+		"major_augment" : "刺激性"
+	},
+	{
+		"id" : 10,
+		"upgrade" : "野火",
+		"upgrade_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1778063983\/WildFire_FieldUpgrade_Icon_Zombies_BO7_wshoqy.webp",
+		"minor_augment" : "氧化剂 | + 熔岩核心 \/ 热浪 > BO7",
+		"major_augment" : "火球 \/ 火箭风暴"
+	}
+]}

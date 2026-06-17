@@ -1,0 +1,88 @@
+{
+	"Perks": [
+		{
+			"id": 1,
+			"perk": "JUGGERNOG",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/Juggernog_HUD_Icon_BOCW_frtgxh.png",
+			"minor_augment": "PLACAS REFORZADAS | + PLACAS DURADERAS > BO7",
+			"major_augment": "ARMADURA REACTIVA"
+		},
+		{
+			"id": 2,
+			"perk": "QUICK REVIVE",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/QuickRevive_HUD_Icon_BOCW_z9qldu.png",
+			"minor_augment": "RECUPERACIÓN VELOZ | + RETORNO KÁRMICO > BO7",
+			"major_augment": "DESEO DE MORIR"
+		},
+		{
+			"id": 3,
+			"perk": "STAMINUP",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/StaminUp_HUD_Icon_BOCW_rcjoqz.png",
+			"minor_augment": "PIES CALIENTES | + CUALQUIERA > BO7",
+			"major_augment": "CORREDOR"
+		},
+		{
+			"id": 4,
+			"perk": "SPEED COLA",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/SpeedCola_HUD_Icon_BOCW_ylmu6w.png",
+			"minor_augment": "RULETA VELOZ \/ CAMBIO RÁPIDO | + PRESTIDIGITACIÓN > BO7",
+			"major_augment": "FÓRMULA CLÁSICA"
+		},
+		{
+			"id": 5,
+			"perk": "MELEE MACCHIATO",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958051\/MeleeMacchiato_HUD_Icon_BO6_zw5v9l.png",
+			"minor_augment": "ENTRENAMIENTO DE FUERZA | + PELEA DE BARISTA > BO7",
+			"major_augment": "EXPRESSO"
+		},
+		{
+			"id": 6,
+			"perk": "PHD FLOPPER",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/PHDSlider_HUD_Icon_BOCW_yrbemo.png",
+			"minor_augment": "TRIBÓLOGO | + TÉCNICO DE EOD > BO7",
+			"major_augment": "PHD SLIDER"
+		},
+		{
+			"id": 7,
+			"perk": "DOUBLE TAP",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/DoubleTapRootBeer_HUD_Icon_BO6_1_hafpzj.png",
+			"minor_augment": "DOBLE TIEMPO | + DOBLE CALIBRE > BO7",
+			"major_augment": "DOBLE IMPACTO"
+		},
+		{
+			"id": 8,
+			"perk": "VULTURE AID",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958057\/VultureAid_HUD_Icon_BO6_vcgqz4.png",
+			"minor_augment": "COMENSAL EXIGENTE | + EQUIPAJE DE CARROÑA > BO7",
+			"major_augment": "OLOR A MUERTE | BO7 > OLOR A MUERTE \/ ARMOR-MATIC"
+		},
+		{
+			"id": 9,
+			"perk": "ELEMENTAL POP",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/ElementalPop_HUD_Icon_BOCW_fvgfi7.png",
+			"minor_augment": "FRIJOL VULNERA | + BAYA FRÍA > BO7",
+			"major_augment": "CEREZA ELÉCTRICA"
+		},
+		{
+			"id": 10,
+			"perk": "DEADSHOT DAQUIRI",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1758958052\/which-deadshot-daiquiri-perk-icon-looks-better-iyo-v0-bnzfkdrv0kdd1_tuxvro.png",
+			"minor_augment": "TIRO MUERTO | + RUPTURA MORTAL > BO7",
+			"major_augment": "DEADHEAD"
+		},
+		{
+			"id": 11,
+			"perk": "WISP TEA",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763424577\/WispTea_HUD_Icon_BO7_muooyk.webp",
+			"minor_augment": "CUALQUIERA | + CUALQUIERA > BO7",
+			"major_augment": "CUALQUIERA"
+		},
+		{
+			"id": 12,
+			"perk": "MULE KICK",
+			"perk_image": "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772423345\/MuleKick_HUD_Icon_BOCW_rs1vtx.webp",
+			"minor_augment": "BOGO | + CUALQUIERA > BO7",
+			"major_augment": "MULTI-PACK \/ MULA DE CARGA"
+		}
+	]
+}

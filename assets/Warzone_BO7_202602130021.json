@@ -7,10 +7,10 @@
 		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
 		"attach_2" : "17.6\" VANDAL HEAVY BARREL",
 		"attach_3" : "ENHANCED CYCLE SYSTEM MOD",
-		"attach_4" : "EPITAPH EXTENDED MAG",
+		"attach_4" : "RIKER FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A02-AUXZ6-DTKF3-1"
+		"build_code" : "A02-AUXZ6-DX4X3-1"
 	},
 	{
 		"id" : 2,
@@ -55,10 +55,10 @@
 		"attach_1" : "VAS 5.56 SUPPRESSOR",
 		"attach_2" : "17.1\" ABDICATOR BARREL",
 		"attach_3" : "FORCE STABILIZER UNDERBARREL",
-		"attach_4" : "ANDEAN EXTENDED MAG",
+		"attach_4" : "PINION FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A05-AV4J8-CYUH1-1"
+		"build_code" : "A05-AV4J8-D3DZ1-1"
 	},
 	{
 		"id" : 6,
@@ -79,10 +79,10 @@
 		"attach_1" : "M10 CQB CHOKE MUZZLE",
 		"attach_2" : "17.4\" REDWELL-5K BARREL",
 		"attach_3" : "EAM STEADY-90 UNDERBARREL",
-		"attach_4" : "LW SKELETON STOCK",
+		"attach_4" : "M10 BREACHER ARGUS LEVER STOCK",
 		"attach_5" : "CONVERGENCE BOX LASER",
 		"recommended_sight_shooting_style" : null,
-		"build_code" : "C01-6AC8C-H4C11"
+		"build_code" : "C01-6AC8C-HN611"
 	},
 	{
 		"id" : 8,
@@ -151,10 +151,10 @@
 		"attach_1" : "GREAVES TI-762 SUPPRESSOR",
 		"attach_2" : "17\" GREAVES SCOURGE BARREL",
 		"attach_3" : "7.62 NATO OVERPRESSURED ROUNDS",
-		"attach_4" : "VAULT EXTENDED MAG",
+		"attach_4" : "TWINPACK FLIP MAGS",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A03-21X3B-DB4XQ-LZ11"
+		"build_code" : "A03-21X3B-DB4XU-6G11"
 	},
 	{
 		"id" : 14,
@@ -331,22 +331,22 @@
 		"attach_1" : "SWF TISHINA-11 SUPPRESSOR",
 		"attach_2" : "17.6\" VANDAL HEAVY BARREL",
 		"attach_3" : "LATERAL PRECISION UNDERBARREL",
-		"attach_4" : "EPITAPH EXTENDED MAG",
+		"attach_4" : "RIKER FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A02-AV4J8-CYUI1-1"
+		"build_code" : "A02-AV1RP-DE7Z1-1"
 	},
 	{
 		"id" : 29,
 		"weapon_name" : "RAZOR 9MM",
 		"weapon_id" : 2,
 		"attach_1" : "10\" RAZOR IMPACT BARREL",
-		"attach_2" : "EAM STEADY-90 UNDERBARREL",
+		"attach_2" : "VAS CONVERGENCE UNDERBARREL",
 		"attach_3" : "EAM PUSHBACK REAR GRIP",
 		"attach_4" : "STRIKEFACE EXTENDED MAG",
 		"attach_5" : "SIGHT",
-		"recommended_sight_shooting_style" : "EAM XL REFLEX",
-		"build_code" : "S03-T46VL-VU5I1-1"
+		"recommended_sight_shooting_style" : "FANG HOVERPOINT ELO",
+		"build_code" : "S03-2W2DB-TYKMC-11"
 	},
 	{
 		"id" : 30,
@@ -475,10 +475,10 @@
 		"attach_1" : "VAS 5.56 SUPPRESSOR",
 		"attach_2" : "ENVOY UNDERBARREL",
 		"attach_3" : "5.56 NATO OVERPRESSURED",
-		"attach_4" : "GEN-X04 EXTENDED MAG",
+		"attach_4" : "SISKIN FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A12-21X3B-HGTSF-J511"
+		"build_code" : "A12-21X3B-HGTSD-RX11"
 	},
 	{
 		"id" : 41,
@@ -487,10 +487,10 @@
 		"attach_1" : "19\" MFS NIGHTFALL SUPPRESSED BARREL",
 		"attach_2" : "ENVOY UNDERBARREL",
 		"attach_3" : "5.56 NATO OVERPRESSURED",
-		"attach_4" : "GEN-X04 EXTENDED MAG",
+		"attach_4" : "SISKIN FLIP MAG",
 		"attach_5" : "SIGHT",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO",
-		"build_code" : "A12-21X3B-HGQMQ-AW11"
+		"build_code" : "A12-21X3B-IUZMG-CG11"
 	},
 	{
 		"id" : 42,
@@ -515,5 +515,53 @@
 		"attach_5" : ".40 CAL OVERPRESSURED ROUNDS",
 		"recommended_sight_shooting_style" : null,
 		"build_code" : "S07-43QCD-FQ3DL-TS11"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "STRIDER 300",
+		"weapon_id" : 2,
+		"attach_1" : "GREAVES A-762 SUPPRESSOR",
+		"attach_2" : "24.1\" SALTIRE DISPATCH BARREL",
+		"attach_3" : "BOWEN MORPHIC UNDERBARREL",
+		"attach_4" : "CARNATION FAST MAG",
+		"attach_5" : "HATCH QUICK REAR GRIP",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "R07-3YHFV-IB11"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "KRS-7.62",
+		"weapon_id" : 2,
+		"attach_1" : "GREAVES A-762 SUPPRESSOR",
+		"attach_2" : "15.9\" BOWEN ASBURY BARREL",
+		"attach_3" : "7.62 NATO OVERPRESSURED ROUNDS",
+		"attach_4" : "VERITY QUICK MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "EAM DUAL ZOOM",
+		"build_code" : "M07-2JE76-FE543-5H11"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "CBRS-3",
+		"weapon_id" : 2,
+		"attach_1" : "BOWEN 9MM SUPPRESSOR",
+		"attach_2" : "14\" RAKE BARREL",
+		"attach_3" : "SAPPER GUARD UNDERBARREL",
+		"attach_4" : "MFS CAROUSEL FAST MAG",
+		"attach_5" : "CASINO LIGHT STOCK",
+		"recommended_sight_shooting_style" : null,
+		"build_code" : "S15-6KCEF-9H11"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "VX COMPACT",
+		"weapon_id" : 2,
+		"attach_1" : "VAS 5.56 SUPPRESSOR",
+		"attach_2" : "14.3\" REDWELL ASCENT BARREL",
+		"attach_3" : "5.7X28MM OVERPRESSURED",
+		"attach_4" : "MFS IMPETUS FAST MAG",
+		"attach_5" : "SIGHT",
+		"recommended_sight_shooting_style" : "LETHAL TOOL S ELO",
+		"build_code" : "A14-2JDGJ-3GI3F-DJ11"
 	}
 ]}
