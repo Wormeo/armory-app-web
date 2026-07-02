@@ -1,0 +1,423 @@
+{
+"Multiplayer_Cold_War": [
+	{
+		"id" : 1,
+		"weapon_name" : ".410 IRONHIDE",
+		"weapon_id" : 9,
+		"attach_1" : "22.3\" RANGER ",
+		"attach_2" : "STEADY AIM LASER",
+		"attach_3" : "STANAG 8 RND TUBE",
+		"attach_4" : "AIRBORNE LEVER WRAP ",
+		"attach_5" : "MARATHON STOCK"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "AK-47 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 7.62",
+		"attach_2" : "15.5\" ULTRALIGHT ",
+		"attach_3" : "AIRBORNE ELASTIC WRAP ",
+		"attach_4" : "GRU MAG CLAMP",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "AK-74U",
+		"weapon_id" : 9,
+		"attach_1" : "9.3\" VDV REINFORCED ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "40 RND SPEED MAG",
+		"attach_5" : "SPETSNAZ PKM STOCK"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "AUG (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "19.6\" MATCH GRADE ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "BULLFROG",
+		"weapon_id" : 9,
+		"attach_1" : "SPETSNAZ COMPENSATOR ",
+		"attach_2" : "6.7\" VDV REINFORCED ",
+		"attach_3" : "FOREGRIP",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "SPETSNAZ STOCK"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "C58",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 7.62",
+		"attach_2" : "SFOD SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "35 RND DRUM",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "CARV.2",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "18.9\" TITANIUM ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "DMR 14",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "BRUISER GRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "EM2",
+		"weapon_id" : 9,
+		"attach_1" : "SFOD SPEEDGRIP",
+		"attach_2" : "SERPENT WRAP ",
+		"attach_3" : "SAS COMBAT STOCK",
+		"attach_4" : "STANAG 40 RND",
+		"attach_5" : "MICROFLEX LED"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "FARA 83",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 5.56",
+		"attach_2" : "SPETSNAZ SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "GRU MAG CLAMP",
+		"attach_5" : "RAIDER STOCK"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "FFAR 1 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SOCOM ELIMINATOR ",
+		"attach_2" : "20.3\" TAKEDOWN ",
+		"attach_3" : "SFOD SPEEDGRIP",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "38 RND SPEED MAG"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "GALLO SA12",
+		"weapon_id" : 9,
+		"attach_1" : "DUCKBILL CHOKE ",
+		"attach_2" : "24.6\" RANGER ",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "STANAG 12 RND TUBE",
+		"attach_5" : "MARATHON STOCK"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "GRAV",
+		"weapon_id" : 9,
+		"attach_1" : "SFOD SPEEDGRIP",
+		"attach_2" : "SERPENT WRAP ",
+		"attach_3" : "SAS COMBAT STOCK",
+		"attach_4" : "40 RND SPEED MAG",
+		"attach_5" : "MICROFLEX LED"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "GROZA",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 7.62",
+		"attach_2" : "SPETSNAZ SPEEDGRIP",
+		"attach_3" : "SERPENT GRIP ",
+		"attach_4" : "GRU MAG CLAMP",
+		"attach_5" : "SPETSNAZ PKM STOCK"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "HAUER 77",
+		"weapon_id" : 9,
+		"attach_1" : "DUCKBILL CHOKE ",
+		"attach_2" : "24.1\" RANGER ",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "STANAG 8 RND TUBE",
+		"attach_5" : "MARATHON STOCK"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "KRIG 6 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "SAS COMBAT STOCK",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "MICROFLEX LED"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "KSP 45",
+		"weapon_id" : 9,
+		"attach_1" : "INFANTRY COMPENSATOR ",
+		"attach_2" : "10.5\" REINFORCED HEAVY ",
+		"attach_3" : "FOREGRIP",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "LAPA",
+		"weapon_id" : 9,
+		"attach_1" : "12.4\" M03 REINFORCED ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "VANDAL SPEED LOADER",
+		"attach_5" : "MICROFLEX LED"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "LC10 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "MUZZLE BRAKE .45 APC",
+		"attach_2" : "11.9\" REINFORCED HEAVY ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "42 RND SPEED MAG",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "LW3 TUNDRA",
+		"weapon_id" : 9,
+		"attach_1" : "28.2\" TIGER TEAM ",
+		"attach_2" : "TIGER TEAM SPOTLIGHT",
+		"attach_3" : "PATROL GRIP",
+		"attach_4" : "7 RND",
+		"attach_5" : "SERPENT WRAP "
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "M16 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "20.5\" MATCH GRADE ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "M60",
+		"weapon_id" : 9,
+		"attach_1" : "22.8\" MATCH GRADE ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "VANDAL SPEED LOADER",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "M82",
+		"weapon_id" : 9,
+		"attach_1" : "22.6\" TIGER TEAM ",
+		"attach_2" : "TIGER TEAM SPOTLIGHT",
+		"attach_3" : "7 RND",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "PATROL GRIP"
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "MAC-10",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 9",
+		"attach_2" : "SFOD SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "43 RND DRUM",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "MG 82",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 5.56",
+		"attach_2" : "17.1\" MATCH GRADE ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "VANDAL SPEED LOADER",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "MILANO 821",
+		"weapon_id" : 9,
+		"attach_1" : "10.1\" REINFORCED HEAVY ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT GRIP ",
+		"attach_4" : "45 RND SPEED MAG",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "MP5 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "9.1\" RIFLED ",
+		"attach_2" : "BRUISER GRIP",
+		"attach_3" : "SERPENT GRIP ",
+		"attach_4" : "40 RND SPEED MAG",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "OTS 9",
+		"weapon_id" : 9,
+		"attach_1" : "7.5\" VDV REINFORCED ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "VDV 32 RND FAST MAG",
+		"attach_5" : "SPETSNAZ STOCK"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "PELINGTON 703",
+		"weapon_id" : 9,
+		"attach_1" : "26.5\" TIGER TEAM ",
+		"attach_2" : "TIGER TEAM SPOTLIGHT",
+		"attach_3" : "PATROL GRIP",
+		"attach_4" : "7 RND",
+		"attach_5" : "SERPENT WRAP "
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "PPSH-41 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "14.9\" REINFORCED HEAVY ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "55 RND DRUM",
+		"attach_5" : "SPETSNAZ STOCK"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "QBZ-83",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "SFOD SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "SAS MAG CLAMP",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "RPD",
+		"weapon_id" : 9,
+		"attach_1" : "INFANTRY COMPENSATOR ",
+		"attach_2" : "20.3\" MATCH GRADE ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "75 RND SPEED MAG",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "STONER 63",
+		"weapon_id" : 9,
+		"attach_1" : "INFANTRY COMPENSATOR ",
+		"attach_2" : "20.7\" MATCH GRADE ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "VANDAL SPEED LOADER",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "STREETSWEEPER",
+		"weapon_id" : 9,
+		"attach_1" : "DUCKBILL CHOKE ",
+		"attach_2" : "14.6\" RANGER ",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "STANAG 18 RND DRUM",
+		"attach_5" : "MARATHON STOCK"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "SWISS K31",
+		"weapon_id" : 9,
+		"attach_1" : "24.9\" TIGER TEAM ",
+		"attach_2" : "TIGER TEAM SPOTLIGHT",
+		"attach_3" : "PATROL BIPOD",
+		"attach_4" : "8 RND",
+		"attach_5" : "SERPENT WRAP "
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "TEC-9",
+		"weapon_id" : 9,
+		"attach_1" : "FULL AUTO REPEATER ",
+		"attach_2" : "7.3\" REINFORCED HEAVY ",
+		"attach_3" : "FOREGRIP",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "30 RND"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "TYPE 63",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "16.4\" TITANIUM ",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "GRU MAG CLAMP",
+		"attach_5" : "SIGHT"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "UGR",
+		"weapon_id" : 9,
+		"attach_1" : "12.8\" VDV REINFORCED ",
+		"attach_2" : "FOREGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "EXPLOSIVE FLECHETTES",
+		"attach_5" : "SPETSNAZ STOCK"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "VARGO 52",
+		"weapon_id" : 9,
+		"attach_1" : " MUZZLE BRAKE 5.45",
+		"attach_2" : "SPETSNAZ SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "GRU MAG CLAMP",
+		"attach_5" : "SAS COMBAT STOCK"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "XM4 (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "INFANTRY COMPENSATOR ",
+		"attach_2" : "SFOD SPEEDGRIP",
+		"attach_3" : "SERPENT WRAP ",
+		"attach_4" : "35 RND SPEED MAG",
+		"attach_5" : "MICROFLEX LED"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "ZRG 20MM",
+		"weapon_id" : 9,
+		"attach_1" : "39.3\" RAPID FIRE ",
+		"attach_2" : "TIGER TEAM SPOTLIGHT",
+		"attach_3" : "PATROL GRIP",
+		"attach_4" : "SERPENT WRAP ",
+		"attach_5" : "4 RND SPEED MAG"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "MAGNUM (CW)",
+		"weapon_id" : 9,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "4.7\" TIGHT SNUB ",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "SALVO 12 RND FAST MAG",
+		"attach_5" : "DUAL WIELD"
+	}
+]}
