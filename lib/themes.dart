@@ -12,7 +12,14 @@ enum ThemeCategory { simple, anemone, premium, neon}
 const Map<String, Map<String, String>> uiTranslations = {
   'es': {
     'SELECT LANGUAGE': 'SELECCIONAR IDIOMA',
+    'EXTENSION': 'EXTENSIÓN',
+    'PLEASE SELECT A LOOKUP SYSTEM': 'POR FAVOR, SELECCIONA UN SISTEMA DE BÚSQUEDA',
     'LANGUAGE:': 'IDIOMA:',
+    '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK: Tiempo para matar en ms. Menor es mejor.',
+    '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: Velocidad de apuntado (ADS). Menor es mejor.',
+    '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: Velocidad de bala. Mayor es mejor.',
+    '• STK: Shots to Kill. Lower is better.': '• STK: Disparos necesarios para matar. Menor es mejor.',
+    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: El alcance al que tu bala conecta instantáneamente con el objetivo. Mayor es mejor.',
     'AEGIS PROTOCOL : ACTIVE': 'PROTOCOLO AEGIS : ACTIVO',
     'RANDOMIZER': 'ALEATORIZADOR',
     'AUGMENT TREE': 'ÁRBOL DE AUMENTOS',
@@ -22,7 +29,7 @@ const Map<String, Map<String, String>> uiTranslations = {
     'HOTFIXES': 'REPARACIONES RÁPIDAS',
     'PATCH NOTES': 'NOTAS DEL PARCHE',
     'REPORT A BUG': 'REPORTAR UN ERROR',
-    'JOIN THE ARMORY DISCORD': 'ÚNETE AL DISCORD DE LA ARMERÍA',
+    'JOIN THE ARMORY DISCORD SERVER': 'ÚNETE AL SERVIDOR DE DISCORD DE ARMORY',
     'TRY ME OUT ON DISCORD': 'PRUÉBAME EN DISCORD',
     'INTRO SCREEN': 'PANTALLA DE INICIO',
     'PREMIUM STATUS: ACTIVE': 'ESTADO PREMIUM: ACTIVO',
@@ -343,7 +350,14 @@ const Map<String, Map<String, String>> uiTranslations = {
   },
   'zh': {
     'SELECT LANGUAGE': '选择语言',
+    'EXTENSION': '扩展',
+    'PLEASE SELECT A LOOKUP SYSTEM': '请选择查询系统',
     'LANGUAGE:': '语言:',
+    '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK: 击杀所需时间 (毫秒). 越低越好.',
+    '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: 开镜速度. 越低越好.',
+    '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: 子弹速度. 越高越好.',
+    '• STK: Shots to Kill. Lower is better.': '• STK: 击杀所需射击次数. 越低越好.',
+    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: 子弹瞬间击中目标的射程. 越高越好.',
     'AEGIS PROTOCOL : ACTIVE': '宙斯盾协议 : 激活',
     'RANDOMIZER': '随机生成器',
     'AUGMENT TREE': '强化树',
@@ -353,7 +367,7 @@ const Map<String, Map<String, String>> uiTranslations = {
     'HOTFIXES': '热更新',
     'PATCH NOTES': '更新日志',
     'REPORT A BUG': '反馈漏洞',
-    'JOIN THE ARMORY DISCORD': '加入军火库 Discord',
+    'JOIN THE ARMORY DISCORD SERVER': '加入 ARMORY DISCORD 服务器',
     'TRY ME OUT ON DISCORD': '在 Discord 上体验',
     'INTRO SCREEN': '启动界面',
     'PREMIUM STATUS: ACTIVE': '高级状态: 激活',
@@ -674,7 +688,14 @@ const Map<String, Map<String, String>> uiTranslations = {
   },
   'fr': {
     'SELECT LANGUAGE': 'SÉLECTIONNER LA LANGUE',
+    'EXTENSION': 'EXTENSION',
+    'PLEASE SELECT A LOOKUP SYSTEM': 'VEUILLEZ SÉLECTIONNER UN SYSTÈME DE RECHERCHE',
     'LANGUAGE:': 'LANGUE :',
+    '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK : Temps de mise à mort en ms. Plus bas est meilleur.',
+    '• ADS: Aim Down Sights speed. Lower is better.': '• ADS : Vitesse de visée (ADS). Plus bas est meilleur.',
+    '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY : Vitesse des balles. Plus élevé est meilleur.',
+    '• STK: Shots to Kill. Lower is better.': '• STK : Balles nécessaires pour éliminer. Plus bas est meilleur.',
+    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN : La portée à laquelle votre balle atteint instantanément la cible. Plus élevé est meilleur.',
     'AEGIS PROTOCOL : ACTIVE': 'PROTOCOLE AEGIS : ACTIF',
     'RANDOMIZER': 'ALÉATORISATEUR',
     'AUGMENT TREE': 'ARBRE D’AUGMENTATIONS',
@@ -684,7 +705,7 @@ const Map<String, Map<String, String>> uiTranslations = {
     'HOTFIXES': 'CORRECTIFS',
     'PATCH NOTES': 'NOTES DE MISE À JOUR',
     'REPORT A BUG': 'SIGNALER UN BOGUE',
-    'JOIN THE ARMORY DISCORD': 'REJOINDRE LE DISCORD DE L’ARMURERIE',
+    'JOIN THE ARMORY DISCORD SERVER': 'REJOIGNEZ LE SERVEUR DISCORD D\'ARMORY',
     'TRY ME OUT ON DISCORD': 'ESSAYEZ-MOI SUR DISCORD',
     'INTRO SCREEN': 'ÉCRAN D’ACCUEIL',
     'PREMIUM STATUS: ACTIVE': 'STATUT PREMIUM : ACTIF',
@@ -1002,6 +1023,371 @@ const Map<String, Map<String, String>> uiTranslations = {
 
     "STAT TERMINOLOGY": "TERMINOLOGIE DES STATS"
   },
+  'de': {
+    'SELECT LANGUAGE': 'SPRACHE WÄHLEN',
+    'EXTENSION': 'ERWEITERUNG',
+    'PLEASE SELECT A LOOKUP SYSTEM': 'BITTE WÄHLE EIN SUCHSYSTEM AUS',
+    'STAT DEFINITIONS': 'STATISTIK-DEFINITIONEN',
+    '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK: Zeit bis zum Kill in ms. Niedriger ist besser.',
+    '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: Zielgeschwindigkeit (ADS). Niedriger ist besser.',
+    '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: Geschossgeschwindigkeit. Höher ist besser.',
+    '• STK: Shots to Kill. Lower is better.': '• STK: Schüsse zum Kill. Niedriger ist besser.',
+    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: El alcance al que tu bala conecta instantáneamente con el objetivo. Mayor es mejor.',
+    'SHOOTING STYLE - ADS': 'SCHIESSSTIL - VISIEREN',
+    'SHOOTING STYLE - TAC STANCE': 'SCHIESSSTIL - TAKTISCHE HALTUNG"',
+    'LANGUAGE:': 'SPRACHE:',
+    'AEGIS PROTOCOL : ACTIVE': 'AEGIS-PROTOKOLL : AKTIV',
+    'RANDOMIZER': 'ZUFALLSGENERATOR',
+    'AUGMENT TREE': 'AUGMENTIERUNGS-BAUM',
+    'META PICKS': 'META-AUSWAHL',
+    'RANKED PLAY': 'RANG-MODUS',
+    'ARMORY DELTA': 'ARMORY DELTA',
+    'HOTFIXES': 'HOTFIXES',
+    'PATCH NOTES': 'PATCH-NOTES',
+    'REPORT A BUG': 'FEHLER MELDEN',
+    'JOIN THE ARMORY DISCORD SERVER': 'TRITT DEM ARMORY DISCORD-SERVER BEI',
+    'TRY ME OUT ON DISCORD': 'PROBIERE MICH AUF DISCORD AUS',
+    'INTRO SCREEN': 'INTRO-BILDSCHIRM',
+    'PREMIUM STATUS: ACTIVE': 'PREMIUM-STATUS: AKTIV',
+    'TERMINATE SESSION': 'SITZUNG BEENDEN',
+    'DISCORD USER ID': 'DISCORD-BENUTZER-ID',
+    'SECRET PIN': 'GEHEIME PIN',
+    'AUTHENTICATE': 'AUTHENTIFIZIEREN',
+    'PURCHASE PREMIUM': 'PREMIUM KAUFEN',
+    'FORGOT PIN?': 'PIN VERGESSEN?',
+    'THE ARMORY DRAWER': 'DIE ARMORY-SCHUBLADE',
+    'THE ARMORY': 'DIE ARMORY',
+    'SYSTEM ONLINE': 'SYSTEM ONLINE',
+    'CORE UNREACHABLE': 'KERN NICHT ERREICHBAR',
+    'LINK OFFLINE': 'VERBINDUNG OFFLINE',
+    'SEARCH WEAPONS OR ARCHETYPES...': 'WAFFEN ODER ARCHETYPEN SUCHEN...',
+    'COMBAT RATING': 'KAMPFBEWERTUNG',
+    'TOP TIER PICK FOR ITS CLASS. RELIABLE AND HARD HITTING.': 'TOP-WAHL FÜR DIESE KLASSE. ZUVERLÄSSIG UND DURCHSCHLAGSKRÄFTIG.',
+    'COMPETITIVE CHOICE, BUT NOT STRONG ENOUGH FOR S TIER.': 'WETTBEWERBSFÄHIGE WAHL, ABER NICHT STARK GENUG FÜR S-TIER.',
+    'USABLE, BUT WILL FEEL NOTICEABLY WEAKER THAN OTHER PICKS.': 'NUTZBAR, ABER FÜHLT SICH DEUTLICH SCHWÄCHER AN ALS ANDERE WAHLEN.',
+    'VASTLY OUTCLASSED. HAVE STEADY AIM IF YOU DARE TRY.': 'DEUTLICH UNTERLEGEN. HABE EINE RUHIGE HAND, WENN DU ES WAGEN WILLST.',
+    'MARKSMAN RIFLE': 'SCHÜTZENGEWEHR',
+    'SNIPER': 'SCHARFSCHÜTZENGEWEHR',
+    'PISTOL': 'PISTOLE',
+    'SHOTGUN': 'FLINTE',
+    'AR RANKING': 'STURMGEWEHR-RANKING',
+    'SMG RANKING': 'MASCHINENPISTOLEN-RANKING',
+    'SHOTGUN RANKING': 'FLINTEN-RANKING',
+    'LMG RANKING': 'LEICHTES MASCHINENGEWEHR-RANKING',
+    'MARKSMAN RIFLE RANKING': 'SCHÜTZENGEWEHR-RANKING',
+    'SNIPER RANKING': 'SCHARFSCHÜTZENGEWEHR-RANKING',
+    'PISTOL RANKING': 'PISTOLEN-RANKING',
+    'BATTLE RIFLE RANKING': 'KAMPFGEWEHR-RANKING',
+    'ADVANCED WEAPON STATS': 'ERWEITERTE WAFFENSTATISTIKEN',
+    'MULTIPLAYER': 'MULTIPLAYER',
+    'ZOMBIES': 'ZOMBIES',
+    'VELOCITY': 'GESCHWINDIGKEIT',
+    'SHOTS TO KILL': 'SCHÜSSE BIS ZUM KILL',
+    'BATTLE RIFLE': 'KAMPFGEWEHR',
+    'TACTICAL RIFLE': 'TAKTISCHES GEWEHR',
+    'SPECIAL': 'SPEZIELL',
+    'FILTER BY GAME': 'NACH SPIEL FILTERN',
+    'FILTER BY CATEGORY': 'NACH KATEGORIE FILTERN',
+    'RESET FILTERS': 'FILTER ZURÜCKSETZEN',
+    'MODULE: RANDOMIZER': 'MODUL: ZUFALLSGENERATOR',
+    'SYSTEM READY: SELECT PARAMETERS': 'SYSTEM BEREIT: PARAMETER WÄHLEN',
+    'ALLOWED GAMES:': 'ZULÄSSIGE SPIELE:',
+    'SEARCH ARMORY...': 'ARMORY DURCHSUCHEN...',
+    'EXCLUSION ZONE': 'AUSSCHLUSS-ZONE',
+    'GAMES TO EXCLUDE': 'AUSZUSCHLIESSENDE SPIELE',
+    'SELECT': 'WÄHLEN',
+    'RANDOM WEAPON': 'ZUFALLSWAFFE',
+    'LOCK WEAPON CHOICE': 'WAFFENAUSWAHL SPERREN',
+    'GAME MODE': 'SPIELMODUS',
+    'CATEGORY': 'KATEGORIE',
+    'QUANTITY': 'MENGE',
+    'INITIALIZE': 'INITIALISIEREN',
+    'TYPE WEAPON NAME...': 'WAFFENNAMEN EINGEBEN...',
+    'NO MATCHES FOUND': 'KEINE ÜBEREINSTIMMUNGEN GEFUNDEN',
+    'PERKS': 'PERKS',
+    'AMMO MODS': 'MUNITIONS-MODS',
+    'FIELD UPGRADES': 'FELDUPGRADES',
+    'CLOSE RANGE (WZ)': 'NAHKAMPF (WZ)',
+    'LONG RANGE (WZ)': 'FERNKAMPF (WZ)',
+    'RANKED': 'RANG-MODUS',
+    'RANKED PROTOCOL': 'RANG-PROTOKOLL',
+    'RANKED LOADOUT': 'RANG-AUSRÜSTUNG',
+    'TAP TO VIEW ATTACHMENTS': 'TIPPEN UM AUFSÄTZE ZU SEHEN',
+    'TAP TO RETURN': 'TIPPEN ZUM ZURÜCKKEHREN',
+    'ATTACHMENTS': 'AUFSÄTZE',
+    'SPECIAL BUILD': 'SPEZIAL-BUILD',
+    'ARMORY COMBAT DELTA': 'ARMORY COMBAT DELTA',
+    'SELECT TWO WEAPONS': 'ZWEI WAFFEN WÄHLEN',
+    'SWIPE FOR AEGIS EYE': 'WISCHEN FÜR AEGIS EYE',
+    'AEGIS EYE': 'AEGIS EYE',
+    'SLOT A': 'SLOT A',
+    'SLOT B': 'SLOT B',
+    'SEARCH FOR WEAPON...': 'NACH WAFFE SUCHEN...',
+    'FULL AUTO': 'VOLLAUTOMATISCH',
+    'WARZONE PRESTIGE': 'WARZONE-PRESTIGE',
+    'STOCK': 'STANDARD',
+    'ARMORY CLASSIC': 'ARMORY KLASSISCH',
+    'DUSK': 'ABENDDÄMMERUNG',
+    'SLATE': 'SCHIEFER',
+    'ROYALTY': 'KÖNIGLICH',
+    'SCARLET ROSE': 'SCHARLACHROTE ROSE',
+    'COFFEE': 'KAFFEE',
+    'LAVENDER': 'LAVENDEL',
+    'PASTEL': 'PASTELL',
+    'SHERBET': 'SORBET',
+    'CHAMELEON': 'CHAMÄLEON',
+    'STRAWBERRY': 'ERDBEERE',
+    'GHOST': 'GEIST',
+    'TOXIN': 'TOXIN',
+    'SYSTEM SHOCK': 'SYSTEMSCHOCK',
+    'COLD SNAP': 'KÄLTESCHOCK',
+    'MAGMA': 'MAGMA',
+    'MOLTEN GOLD': 'GESCHMOLZENES GOLD',
+    'IRIDESCENT': 'IRISIEREND',
+    'RAINBOW': 'REGENBOGEN',
+    'VIPER': 'VIPER',
+    'NEBULA': 'NEBEL',
+    'DARK AETHER': 'DUNKELÄTHER',
+    'OPAL': 'OPAL',
+    'NEON': 'NEON',
+    'ANEMONE': 'ANEMONE',
+    'HOLOGRAPHIC': 'HOLOGRAFISCH',
+    'INTERFACE THEME': 'INTERFACE-THEMA',
+    'CUSTOM NEON ENGINE': 'BENUTZERDEFINIERTE NEON-ENGINE',
+    'HEX': 'HEX',
+    'SYSTEM FONT': 'SYSTEMSCHRIFTART',
+    'SIMPLE': 'EINFACH',
+    '(FAST)': '(SCHNELL)',
+    '(SLOW)': '(LANGSAM)',
+    '(PRESTIGE)': '(PRESTIGE)',
+    'TTK CLOSE': 'TTK NAH',
+    'TTK FAR': 'TTK FERN',
+    'STATS': 'STATISTIKEN',
+    'HITS TO KILL': 'TREFFER BIS KILL',
+    'SINGLE': 'EINZELFEUER',
+    'REBIRTH': 'REBIRTH',
+    'ENDGAME': 'ENDGAME',
+    'SOKOL 545 (FAST)': 'SOKOL 545 (SCHNELL)',
+    'SOKOL 545 (SLOW)': 'SOKOL 545 (LANGSAM)',
+    'STURMWOLF 45 (PRESTIGE)': 'STURMWOLF 45 (PRESTIGE)',
+    'AK-27 (PRESTIGE)': 'AK-27 (PRESTIGE)',
+    'RAZOR 9MM (PRESTIGE)': 'RAZOR 9MM (PRESTIGE)',
+    'NO ATTACHMENTS AVAILABLE': 'KEINE ZUBEHÖRTEILE VERFÜGBAR',
+
+    'BARREL': 'LAUF',
+    'MUZZLE': 'MÜNDUNG',
+    'REAR GRIP': 'HINTERER GRIFF',
+    'OPTIC': 'VISIER',
+    'UNDERBARREL': 'UNTERLAUF',
+    'MAGAZINE': 'MAGAZIN',
+    'LASER': 'LASER',
+    'COMB': 'SCHAFTBACKE',
+    'TRIGGER ACTION': 'ABZUG',
+    'GUARD': 'HANDSCHUTZ',
+    'BOLT': 'VERSCHLUSS',
+    'ARM': 'ARM',
+    'RAIL': 'SCHIENE',
+    'CARRY HANDLE': 'TRAGEGRIFF',
+    'LEVER': 'HEBEL',
+    'LOADER': 'LADER',
+    'WIRE': 'DRAHT',
+    'SLINGS': 'RIEMEN',
+    'FIRE MODS': 'FEUERMODI',
+    'PERK': 'EXTRA',
+    'PUMPS': 'PUMPE',
+    'PUMP GRIP': 'PUMP，“GRIFF”',
+    'AMMUNITION': 'MUNITION',
+
+    '.50 CAL KIT (MW3 MP)': '.50 KALIBER-KIT (MW3 MP)',
+    '.50 CAL KIT (WZ)': '.50 KALIBER-KIT (WZ)',
+    '2 ROUND BURST (MW3 MP)': '2-SCHUSS-FEUERSTOSS (MW3 MP)',
+    '2 ROUND BURST (WZ)': '2-SCHUSS-FEUERSTOSS (WZ)',
+    '3 ROUND BURST (MW3 MP)': '3-SCHUSS-FEUERSTOSS (MW3 MP)',
+    '3 ROUND BURST (WZ)': '3-SCHUSS-FEUERSTOSS (WZ)',
+    'AKIMBO': 'AKIMBO',
+    'AKIMBO (MW3 MP)': 'AKIMBO (MW3 MP)',
+    'AKIMBO MOD (MW3 MP)': 'AKIMBO-MOD (MW3 MP)',
+    'AKIMBO MOD (WZ)': 'AKIMBO-MOD (WZ)',
+    'BINARY TRIGGER': 'BINÄR-ABZUG',
+    'BINARY TRIGGER + ATTACHMENTS (MW3 MP)': 'BINÄR-ABZUG + AUFSÄTZE (MW3 MP)',
+    'BLUNDERBUSS (SHOTGUN - MW3 MP)': 'DONNERBÜCHSE (FLINTE - MW3 MP)',
+    'BLUNDERBUSS (SHOTGUN - WZ)': 'DONNERBÜCHSE (FLINTE - WZ)',
+    'BULLPUP CONVERSION (MW3 MP)': 'BULLPUP-KONVERTIERUNG (MW3 MP)',
+    'BULLPUP CONVERSION (WZ)': 'BULLPUP-KONVERTIERUNG (WZ)',
+    'BULLPUP CONVERSION': 'BULLPUP-KONVERTIERUNG',
+    'BURST MOD': 'FEUERSTOSS-MOD',
+    'BURST MOD (MP)': 'FEUERSTOSS-MOD (MP)',
+    'BURST MOD (MW3 MP)': 'FEUERSTOSS-MOD (MW3 MP)',
+    'BURST MOD (WZ)': 'FEUERSTOSS-MOD (WZ)',
+    'CLOSE-MID RANGE ASSAULT RIFLE (WZ)': 'NAH- BIS MITTELDISTANZ-STURMGEWEHR (WZ)',
+    'DAMAGE INCREASE (MW3 MP)': 'SCHADENSERHÖHUNG (MW3 MP)',
+    'DAMAGE INCREASE (WZ)': 'SCHADENSERHÖHUNG (WZ)',
+    'DOUBLE BARREL MOD': 'DOPPELLAUF-MOD',
+    'DUAL SHOT (MW3 MP)': 'DOPPELSCHUSS (MW3 MP)',
+    'DUAL SHOT (RANGE, ADS - MW3 MP)': 'DOPPELSCHUSS (REICHWEITE, VISIEREN - MW3 MP)',
+    'DUAL SHOT (TAC STANCE - MW3 MP)': 'DOPPELSCHUSS (TAKTISCHE HALTUNG - MW3 MP)',
+    'DUAL SHOT (WZ)': 'DOPPELSCHUSS (WZ)',
+    'EXTREME FIRE RATE INCREASE (MW3 MP)': 'EXTREME FEUERRATEN-ERHÖHUNG (MW3 MP)',
+    'EXTREME FIRE RATE INCREASE (WZ)': 'EXTREME FEUERRATEN-ERHÖHUNG (WZ)',
+    'FULL AUTO (MW3 MP)': 'VOLLAUTOMATISCH (MW3 MP)',
+    'FULL AUTO (WZ)': 'VOLLAUTOMATISCH (WZ)',
+    'FULL AUTO + ATTACHMENTS (MW3 MP)': 'VOLLAUTOMATISCH + AUFSÄTZE (MW3 MP)',
+    'FULL AUTO + ATTACHMENTS (WZ)': 'VOLLAUTOMATISCH + AUFSÄTZE (WZ)',
+    'FULL AUTO DMR': 'VOLLAUTOMATISCHES DMR',
+    'FULL AUTO MID RANGE': 'VOLLAUTOMATISCH MITTELDISTANZ',
+    'FULL AUTO MOD': 'VOLLAUTOMATIK-MOD',
+    'GRADUAL FIRE RATE INCREASE (MP)': 'GRADUELLE FEUERRATEN-ERHÖHUNG (MP)',
+    'GRADUAL FIRE RATE INCREASE (WZ)': 'GRADUELLE FEUERRATEN-ERHÖHUNG (WZ)',
+    'GRADUAL FIRE RATE SPEEDUP (MW3 MP)': 'GRADUELLE FEUERRATEN-BESCHLEUNIGUNG (MW3 MP)',
+    'GRADUAL FIRE RATE SPEEDUP (WZ)': 'GRADUELLE FEUERRATEN-BESCHLEUNIGUNG (WZ)',
+    'HAMR CONVERSION KIT': 'HAMR-KONVERTIERUNGS-KIT',
+    'HEAVY ASSAULT RIFLE (MW3 MP)': 'SCHWERES STURMGEWEHR (MW3 MP)',
+    'HIGH CALIBER CONVERSION': 'GROSSKALIBER-KONVERTIERUNG',
+    'HIGH DAMAGE DMR': 'HOCHSCHADENS-DMR',
+    'HIGH DAMAGE KIT (MW3 MP)': 'HOCHSCHADENS-KIT (MW3 MP)',
+    'HIGH DAMAGE KIT (WZ)': 'HOCHSCHADENS-KIT (WZ)',
+    'JAKOBS SIX SHOOTER (AKIMBO - MW3 MP)': 'JAKOBS SIX SHOOTER (AKIMBO - MW3 MP)',
+    'JAKOBS SIX SHOOTER (MW3 MP)': 'JAKOBS SIX SHOOTER (MW3 MP)',
+    'JAKOBS SIX SHOOTER (WZ)': 'JAKOBS SIX SHOOTER (WZ)',
+    'LASER RIFLE (MW3 MP)': 'LASERGEWEHR (MW3 MP)',
+    'LASER RIFLE (WZ)': 'LASERGEWEHR (WZ)',
+    'LIGHTWEIGHT ASSAULT (MW3 MP)': 'LEICHTES STURMGEWEHR (MW3 MP)',
+    'LIGHTWEIGHT ASSAULT (WZ)': 'LEICHTES STURMGEWEHR (WZ)',
+    'LIGHTWEIGHT CQB CONVERSION': 'LEICHTE CQB-KONVERTIERUNG',
+    'LIGHTWEIGHT MARKSMAN CONVERSION (MW3 MP)': 'LEICHTE SCHÜTZENGEWEHR-KONVERTIERUNG (MW3 MP)',
+    'LIGHTWEIGHT MARKSMAN CONVERSION (WZ)': 'LEICHTE SCHÜTZENGEWEHR-KONVERTIERUNG (WZ)',
+    'LOW RECOIL / LONG RANGE (MW3 MP)': 'GERINGER RÜCKSCHLAG / FERNKAMPF (MW3 MP)',
+    'MID RANGE ASSAULT (MP)': 'MITTELDISTANZ-STURMGEWEHR (MP)',
+    'PNEUMATIC RIVERT LAUNCHER (MW3 MP)': 'PNEUMATISCHER NIETENWERFER (MW3 MP)',
+    'RAPID FIRE': 'SCHNELLFEUER',
+    'RAPID FIRE + MARKSMAN CONVERSION (MW3 MP)': 'SCHNELLFEUER + SCHÜTZENGEWEHR-KONVERTIERUNG (MW3 MP)',
+    'RAPID FIRE + MARKSMAN RIFLE CONVERSION (WZ)': 'SCHNELLFEUER + SCHÜTZENGEWEHR-KONVERTIERUNG (WZ)',
+    'RECOILLESS (MP)': 'RÜCKSCHLAGFREI (MP)',
+    'RECOILLESS (WZ)': 'RÜCKSCHLAGFREI (WZ)',
+    'RIFLE CONVERSION (MW3 MP)': 'GEWEHR-KONVERTIERUNG (MW3 MP)',
+    'RIFLE CONVERSION (WZ)': 'GEWEHR-KONVERTIERUNG (WZ)',
+    'ROCKET LAUNCHER': 'RAKETENWERFER',
+    'SEMI AUTO + DAMAGE INCREASE (WZ)': 'HALBAUTOMATISCH + SCHADENSERHÖHUNG (WZ)',
+    'SEMI AUTO + DAMAGE INCREASE': 'HALBAUTOMATISCH + SCHADENSERHÖHUNG',
+    'SMG CLASS': 'MASCHINENPISTOLEN-KLASSE',
+    'SMG KIT (MW3 MP)': 'MASCHINENPISTOLEN-KIT (MW3 MP)',
+    'SMG KIT (WZ)': 'MASCHINENPISTOLEN-KIT (WZ)',
+    'SNIPER RIFLE (MW3 MP)': 'SCHARFSCHÜTZENGEWEHR (MW3 MP)',
+    'SNIPER RIFLE (WZ)': 'SCHARFSCHÜTZENGEWEHR (WZ)',
+    'SNIPER RIFLE CONVERSION (MW3 MP)': 'SCHARFSCHÜTZENGEWEHR-KONVERTIERUNG (MW3 MP)',
+    'SNIPER RIFLE CONVERSION (RANGE)': 'SCHARFSCHÜTZENGEWEHR-KONVERTIERUNG (REICHWEITE)',
+    'SNIPER SUPPORT (WZ)': 'SCHARFSCHÜTZEN-UNTERSTÜTZUNG (WZ)',
+    'ZERO BLOOM HIPFIRE': 'HÜFTFEUER OHNE STREUUNG',
+
+    'WELCOME TO THE ARMORY': 'WILLKOMMEN IN DER ARMORY',
+    'THE NEXT GENERATION OF THE ARMORY IS HERE. COME ON IN, IT\'S GOOD TO HAVE YOU. LET\'S GET YOU UP TO SPEED ON HOW WE DO IT AROUND HERE.': 'DIE NÄCHSTE GENERATION DER ARMORY IST DA. KOMM REIN, SCHÖN DASS DU DA BIST. LASS UNS DICH DAMIT VERTRAUT MACHEN, WIE WIR HIER ARBEITEN.',
+
+    'HOME SCREEN': 'STARTBILDSCHIRM',
+    'SEARCH WEAPON NAMES, CLASS TYPES OR EVEN A GAME TO SEE ALL OF ITS WEAPONS! UTILIZE THE FILTER BUTTON TO SORT JUST HOW YOU WANT. DON\'T WANT TO SEARCH OR SCROLL EVERYTIME TO GET YOUR FAVOURITES? GO AHEAD AND FAVOURITE THEM SO THEY APPEAR ON TOP!': 'SUCHE NACH WAFFENNAMEN, KLASSENTYPEN ODER SOGAR EINEM SPIEL, UM ALLE DAZUGEHÖRIGEN WAFFEN ZU SEHEN! NUTZE DIE FILTER-TASTE, UM ALLES GENAU NACH DEINEN WÜNSCHEN ZU SORTIEREN. DU MÖCHTEST NICHT JEDES MAL SUCHEN ODER SCROLLEN, UM ZU DEINEN FAVORITEN ZU GELANGEN? SPEICHERE SIE EINFACH ALS FAVORITEN, DAMIT SIE GANZ OBEN ERSCHEINEN!',
+
+    'SETTINGS DRAWER': 'EINSTELLUNGSMENÜ',
+    'ACCESS MODULES, LOG IN TO ACCESS PREMIUM BENEFITS, READ PATCH NOTES, AND MORE. NEED A REFRESHER? COME BACK HERE WITH THE INTRO SCREEN BUTTON IN CASE YOU EVER GET LOST.': 'GREIFE AUF MODULE ZU, LOGGE DICH EIN, UM PREMIUM-VORTEILE ZU NUTZEN, LIES PATCH-NOTES UND MEHR. BRAUCHST DU EINE AUFFRISCHUNG? KOMME MIT DER INTRO-BILDSCHIRM-TASTE HIERHER ZURÜCK, FALLS DU DICH EINMAL VERLÄUFST.',
+
+    'MODULE - META PICKS': 'MODUL - META-AUSWAHL',
+    'STAY ON TOP OF YOUR GAME AT ALL TIMES. NEVER AGAIN WILL YOU WONDER WHAT THE BEST PICKS ARE, OR BE CONFUSED WHAT\'S WORTH USING ANYMORE FROM OLDER TITLES. ONLY THE BEST MAKE IT ON THIS LIST, AND IT\'S ALWAYS UP TO DATE.': 'BLEIBE JEDERZEIT AN DER SPITZE DEINES SPIELS. DU WIRST DICH NIE WIEDER FRAGEN MÜSSEN, WAS DIE BESTEN WAHLEN SIND ODER WAS AUS ÄLTEREN TITELN NOCH LOHNENSWERT IST. NUR DIE BESTEN SCHAFFEN ES AUF DIESE LISTE, UND SIE IST IMMER AUF DEM NEUESTEN STAND.',
+
+    'MODULE - RANDOMIZER': 'MODUL - ZUFALLSGENERATOR',
+    'ADD SOME CHAOS TO GAME NIGHT. GENERATE UP TO 10 WEAPONS AT A TIME, UTILIZE THE EXCLUSION ZONE TO BLOCK ENTIRE GAMES WHEN PICKING WEAPONS, LOCK YOUR CHOICE IN SO YOU ONLY GET RESULTS FOR THE WEAPON YOU WANT, AND MORE.': 'BRINGE ETWAS CHAOS IN DEN SPIELEABEND. GENERIERE BIS ZU 10 WAFFEN GLEICHZEITIG, NUTZE DIE AUSSCHLUSS-ZONE, UM GANZE SPIELE BEI DER WAFFENAUSWAHL ZU SPERREN, VERRIEGE DEINE WAHL, DAMIT DU NUR ERGEBNISSE FÜR DIE VON DIR GEWÜNSCHTE WAFFE ERHÄLST, UND MEHR.',
+
+    'MODULE - COMBAT DELTA / AEGIS EYE': 'MODUL - COMBAT DELTA / AEGIS EYE',
+    'THE ULTIMATE COMPARISON TOOL. DIRECTLY COMPARE WEAPONS TO SEE IF YOUR CONTROLLER WILL ENTER ORBIT DURING A FIGHT OR NOT (LOSING IS TOUGH, WE KNOW). TAP AND HOLD TO REMOVE YOUR PICKS IF YOU CHANGED YOUR MIND. SWIPE THE SCREEN TO ACCESS AEGIS EYE, A GLOBAL STAT TRACKER SORTED HOW YOU WANT. HIGHEST VELOCITY? FASTEST TTK AT RANGE 1? YOU GOT IT. TAP THE STAT NUMBERS TO VIEW MORE DETAILS! DEFAULT STAT IS TTK CLOSE.': 'DAS ULTIMATIVE VERGLEICHSWERKZEUG. VERGLEICHE WAFFEN DIREKT, UM ZU SEHEN, OB DEIN CONTROLLER WÄHREND EINES KAMPFES IN DEN ORBIT EINTRETEN WIRD ODER NICHT (VERLIEREN IST HART, WIR WISSEN ES). TIPPEN UND HALTEN, UM DEINE WAHLEN ZU ENTFERNEN, FALLS DU DEINE MEINUNG GEÄNDERT HAST. WISCHE ÜBER DEN BILDSCHIRM, UM AUF AEGIS EYE ZUZUGREIFEN, EINEN GLOBALEN STATS-TRACKER, SORTIERT WIE DU ES MÖCHTEST. HÖCHSTE GESCHWINDIGKEIT? SCHNELLSTE TTK AUF DISTANZ 1? DU HAST ES. TIPPEN AUF DIE STATS-ZAHLEN, UM MEHR DETAILS ZU SEHEN! DIE STANDARD-STATISTIK IST TTK NAH.',
+
+    'THEMES': 'THEMEN',
+    'MAKE ARMORY APP YOURS. WITH TONS OF THEMES AND EVEN MORE FONT CHOICES, WE TAKE CUSTOMIZATION VERY SERIOUSLY AROUND HERE. PREMIUM MEMBERS WILL HAVE ACCESS TO EXCLUSIVE THEMES THAT TAKE IT A STEP FURTHER.': 'MACH DIE ARMORY APP ZU DEINER. MIT ZAHLREICHEN THEMEN UND NOCH MEHR SCHRIFTARTEN NEHMEN WIR DIE ANPASSBARKEIT HIER SEHR ERNST. PREMIUM-MITGLIEDER ERHALTEN ZUGRIFF AUF EXKLUSIVE THEMEN, DIE NOCH EINEN SCHRITT WEITER GEHEN.',
+
+    'PREMIUM BENEFITS': 'PREMIUM-VORTEILE',
+    'ON TOP OF EXCLUSIVE THEMES, YOU ALSO GET ACCESS TO THE ARMORY\'S ADVANCED WEAPON STATS, A SYSTEM BUILT FOR THOSE THAT REQUIRE ABSOLUTE PRECISION WHEN IT COMES TO MAKING EVERY MILLISECOND IN AN ENGAGEMENT MATTER. HOW FAST WILL THIS GUN DOWN AT 27 METERS? CAN THIS SNIPER ONE SHOT? NOW YOU KNOW.': 'ZUSÄTZLICH ZU EXKLUSIVEN THEMEN ERHÄLTST DU ZUGRIFF AUF DIE ERWEITERTEN WAFFENSTATISTIKEN DER ARMORY, EIN SYSTEM FÜR ALLE, DIE ABSOLUTE PRÄZISION BENÖTIGEN, WENN ES DARAUF ANKOMMT, JEDE MILLISEKUNDE IN EINEM GEFECHT ZU NUTZEN. WIE SCHNELL SCHIESST DIESE WAFFE AUF 27 METER? KANN DIESES SCHARFSCHÜTZENGEWEHR EINEN KILL MIT EINEM SCHUSS ERZIELEN? JETZT WEISST DU ES.',
+
+    'LOGGING IN': 'ANMELDUNG',
+    'IF YOU\'RE A PREMIUM MEMBER WITH ARMORY BOT, YOU\'RE IN LUCK BECAUSE ARMORY APP IS MOVING IN NEXT DOOR AND IS VERY EXCITED TO MINGLE. LOG IN WITH YOUR DISCORD ID AND SECRET PIN TO GET ALL YOUR BENEFITS SYNCED UP ACROSS BOTH SERVICES. HOW DO YOU GET YOUR PIN? HEAD ON OVER TO ARMORY BOT AND USE THE /armorypin COMMAND AND IT WILL GET YOU SORTED.': 'WENN DU EIN PREMIUM-MITGLIED MIT ARMORY BOT BIST, HAST DU GLÜCK, DENN DIE ARMORY APP ZIEHT NEBENAN EIN UND FREUT SICH DARAUF, SICH ZU VERNETZEN. LOGGE DICH MIT DEINER DISCORD-ID UND GEHEIMEN PIN EIN, UM ALLE DEINE VORTEILE ÜBER BEIDE DIENSTE HINWEG ZU SYNCHRONISIEREN. WIE ERHÄLTST DU DEINE PIN? GEHE ZUM ARMORY BOT UND NUTZE DEN /armorypin BEFEHL, DANN WIRD DIR GEHOLFEN.',
+    'TIME TO DEPLOY': 'ZEIT FÜR DEN EINSATZ',
+    'WELL DONE, YOU\'VE PASSED INSPECTION. LET\'S GET YOU KITTED UP AND READY TO HIT THE FIELD SPRINTING. STAY FROSTY, YOUR SQUAD DEPENDS ON IT.': 'GUT GEMACHT, DU HAST DIE INSPEKTION BESTANDEN. LASS UNS DEINE AUSRÜSTUNG ZUSAMMENSTELLEN UND DICH BEREIT MACHEN, UM SOFORT AUF DAS FELD ZU STÜRMEN. BLEIB WACHSAM, DEIN TEAM ZÄHLT AUF DICH.',
+
+    'SYSTEM UPDATES': 'SYSTEM-UPDATES',
+    'ARMORY BUG REPORT': 'ARMORY FEHLERMELDUNG',
+    'DESCRIBE THE ISSUE AND HOW IT OCCURRED.': 'BESCHREIBE DAS PROBLEM UND WIE ES AUFTRAT.',
+    'CANCEL': 'ABBRECHEN',
+    'TRANSMIT': 'ÜBERTRAGEN',
+    'CONNECTING TO ARMORY CORE...': 'VERBINDUNG ZUM ARMORY-KERN...',
+    'LOADING DATA FOR FIRST BOOT': 'LADE DATEN FÜR DEN ERSTEN START',
+    'PURCHASE PREMIUM TO ACCESS ADVANCED WEAPON STATS': 'PREMIUM KAUFEN, UM AUF ERWEITERTE WAFFENSTATISTIKEN ZUZUGREIFEN',
+    'VERIFYING DATA INTEGRITY...': 'ÜBERPRÜFE DATENINTEGRITÄT...',
+    'DOWNLOADING ASSETS...': 'LADE ASSETS HERUNTER...',
+    'PATCH APPLIED. RESTARTING...': 'PATCH ANGEWENDET. STARTE NEU...',
+    'ARMORY HOTFIXES': 'ARMORY-HOTFIXES',
+    'PRELOADING ASSETS...': 'LADE ASSETS VOR...',
+    'INJECTING HOTFIX DATA...': 'INJIZIERE HOTFIX-DATEN...',
+
+    'IF YOU FORGOT YOUR PIN, NO SWEAT. HEAD ON OVER TO A DISCORD SERVER THAT ARMORY BOT IS IN, AND USE THE /ARMORYPIN COMMAND. THIS WILL GRAB YOUR PIN AND DISPLAY IT FOR YOU TO KEEP IN YOUR FANCY NOTEBOOK YOU DEFINITELY REMEMBERED YOU HAD. AND DON\'T WORRY ABOUT SOMEONE STEALING IT, THE MESSAGE IS ONLY VISIBLE TO YOU. THEN, JUST COME ON BACK AND LOG IN!': 'WENN DU DEINE PIN VERGESSEN HAST, KEIN PROBLEM. GEHE AUF EINEN DISCORD-SERVER, AUF DEM SICH DER ARMORY BOT BEFINDET, UND NUTZE DEN /ARMORYPIN BEFEHL. DIESER RUFT DEINE PIN AB UND ZEIGT SIE DIR AN, DAMIT DU SIE IN DEINEM SCHICKEN NOTIZBUCH NOTIEREN KANNST, VON DEM DU SICHERLICH WUSSTEST, DASS DU ES HAST. UND MACH DIR KEINE SORGEN, DASS JEMAND SIE STEHLEN KÖNNTE, DIE NACHRICHT IST NUR FÜR DICH SICHTBAR. DANN KOMM EINFACH ZURÜCK UND LOGGE DICH EIN!',
+    'RECOVER YOUR PIN': 'PIN WIEDERHERSTELLEN',
+    'ACKNOWLEDGED': 'VERSTANDEN',
+    'ACCESS RESTRICTED': 'ZUGRIFF BESCHRÄNKT',
+    'ARMORY DELTA IS A PREMIUM FEATURE.\n PLEASE LOG IN OR PURCHASE PREMIUM TO UNLOCK.': 'ARMORY DELTA IST EINE PREMIUM-FUNKTION.\n BITTE LOGGE DICH EIN ODER KAUFE PREMIUM, UM SIE ZU FREISCHALTEN.',
+    'BACK': 'ZURÜCK',
+    'UPGRADE': 'UPGRADE',
+    'NEXT': 'WEITER',
+    'PREVIOUS': 'ZURÜCK',
+    'RANDOMIZER GUIDE': 'ZUFALLSGENERATOR-ANLEITUNG',
+    'OR': 'ODER',
+    'ENTER DISCORD ID': 'DISCORD-ID EINGEBEN',
+    'PROCEED': 'FORTFAHREN',
+    'PREMIUM ACTIVATED': 'PREMIUM AKTIVIERT',
+    'Your account credentials have been generated:': 'DEINE KONTO-ANMELDEINFORMATIONEN WURDEN GENERIERT:',
+    'DISCORD ID': 'DISCORD-ID',
+    'ACCESS PIN': 'ZUGANGS-PIN',
+    'Please save these. You can now log in.': 'BITTE SPEICHERE DIESE. DU KANNST DICH JETZT EINLOGGEN.',
+    'PROCEED TO LOGIN': 'ZUR ANMELDUNG',
+    'CLOSE': 'SCHLIESSEN',
+    'ALL': 'ALLE',
+    'COMBAT RATINGS': 'KAMPFBEWERTUNGEN',
+    'COMPETITIVE CHOICE, BUT NOT AS STRONG AS S TIER.': 'WETTBEWERBSFÄHIGE WAHL, ABER NICHT SO STARK WIE S-TIER.',
+    'USABLE, BUT WILL FEEL NOTICABLY WEAKER THAN OTHER PICKS.': 'NUTZBAR, ABER FÜHLT SICH DEUTLICH SCHWÄCHER AN ALS ANDERE WAHLEN.',
+    'PREMIUM ACCESS GRANTED': 'PREMIUM-ZUGRIFF GEWÄHRT',
+    'PURCHASE VERIFIED. PLEASE LOGIN TO ACTIVATE.': 'KAUF VERIFIZIERT. BITTE EINLOGGEN ZUM AKTIVIEREN.',
+
+    "ABR A1 FULL AUTO": "ABR A1 AUTOMATISCH",
+    "AEK-973 FULL AUTO MID RANGE": "AEK-973 AUTOMATISCH MITTELDISTANZ",
+    "DG-58 LSW BULLPUP CONVERSION": "DG-58 LSW BULLPUP-KONVERTIERUNG",
+    "M16 (MW2) FULL AUTO": "M16 (MW2) AUTOMATISCH",
+    "M8A1 SNIPER SUPPORT": "M8A1 SCHARFSCHÜTZEN-UNTERSTÜTZUNG",
+    "MCW SNIPER SUPPORT": "MCW SCHARFSCHÜTZEN-UNTERSTÜTZUNG",
+    "RENETTI (MW3) FULL AUTO + ATTACHMENTS": "RENETTI (MW3) AUTOMATISCH + AUFSÄTZE",
+    "RENETTI (MW3) SEMI AUTO + DAMAGE INCREASE": "RENETTI (MW3) HALBAUTOMATISCH + SCHADENSERHÖHUNG",
+    "SVD FULL AUTO DMR": "SVD AUTOMATISCH (DMR)",
+    'SYSTEM UP TO DATE.': 'SYSTEM AUF DEM NEUESTEN STAND.',
+    'PURCHASE PREMIUM TO ACCESS THIS THEME!': 'PREMIUM KAUFEN, UM AUF DIESES THEMA ZUZUGREIFEN!',
+    'FINALIZING WITH ARMORY CORE...': 'FINALISIERUNG MIT ARMORY-KERN...',
+
+    "There is no shortage of options within The Armory's Randomizer. It can be intimidating, so refer back to this handy guide whenever you need a refresher.": "Es gibt keinen Mangel an Optionen im ZUFALLSGENERATOR der Armory. Es kann einschüchternd wirken, also schaue immer wieder in diesen praktischen Leitfaden, wenn du eine Auffrischung brauchst.",
+
+    "This is where you tell the engine \"I don't want to see weapons from this game\". Pick as many as you want, but you need at least one. ": "Hier teilst du der Engine mit: \"Ich möchte keine Waffen aus diesem Spiel sehen\". Wähle so viele du willst, aber du musst mindestens eines behalten.",
+
+    "If you only want to get random attachments for one specific weapon, but don't want to hit the button 4 times to do it, this option is what you need.": "Wenn du nur zufällige Aufsätze für eine bestimmte Waffe erhalten möchtest, aber nicht 4-mal den Knopf drücken willst, ist dies die Option, die du brauchst.",
+
+    "Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n    which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n    So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n    ": "Warzone erlaubt die Auswahl aus jedem Spiel, das du in der AUSSCHLUSS-ZONE zugelassen hast. Im Mehrspielermodus wird das ANKER-SYSTEM verwendet, eine robuste Filterlogik, die als erste Wahl nur Waffen derselben Ära zulässt.\n\nWenn du also zufällig (oder manuell) eine Black Ops 6-Waffe auswählst und mehr als 1 Waffe zur Generierung eingestellt hast, erhältst du nur Waffen aus Black Ops 6. So ist sichergestellt, dass jede Wahl in dem Spiel, das du gerade spielst, auch verwendbar ist.",
+
+    "If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n    For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don't want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?": "Wenn du ZUFALLSWAFFE auswählst, erscheint diese neue Option. Sie teilt der Engine mit, dass du nur diese spezifische Waffenklasse möchtest.\nFür Legacy-Kategorien wird der Spielmodus auf Mehrspieler erzwungen, um die Anker-Logik präzise zu halten und Überschneidungen zu vermeiden, falls du auch andere Nicht-Legacy-Spiele zulässt. Du möchtest schließlich keine Cold War-Flinte, die sich unter dein Black Ops 7-Scharfschützengewehr mischt, oder?",
+
+    "Speed of the bullet. For snipers, higher values means less bullet drop and leading (shooting ahead of a moving target). For other weapons this also applies, but also means you won't have bullet travel time to slow down your TTK, shifting a gunfight into your favour. Higher is better.": "Geschwindigkeit der Kugel. Bei Scharfschützengewehren bedeuten höhere Werte weniger Geschossabfall und Vorhalten (vor ein bewegliches Ziel zielen). Das gilt auch für andere Waffen und bedeutet zudem, dass die Flugzeit der Kugel deine TTK nicht verlangsamt, was den Kampf zu deinen Gunsten verschiebt. Höher ist besser.",
+
+    "ADS SPEED": "VISIERGESCHWINDIGKEIT",
+    "Time between when you hit the aim button, and when you are fully aimed in and ready to fire at 100% accuracy. Lower is better.": "Zeit zwischen dem Drücken der Visier-Taste und dem Moment, in dem du vollständig eingezielt bist und mit 100%iger Genauigkeit feuern kannst. Niedriger ist besser.",
+
+    "TTK CLOSE/FAR": "TTK NAH/FERN",
+    "Time to Kill. 'Close' is how fast you will kill within the first damage range. 'Far' is how fast you will kill within the second damage range. Lower is better.": "Time to Kill. 'Nah' ist die Geschwindigkeit, mit der du innerhalb der ersten Schadensdistanz tötest. 'Fern' ist die Geschwindigkeit innerhalb der zweiten Schadensdistanz. Niedriger ist besser.",
+
+    "The number of shots required to kill at 'Close' and 'Far' range. Lower is better.": "Die Anzahl der Treffer, die benötigt werden, um auf 'Nahe' und 'Ferne' Distanz zu töten. Niedriger ist besser.",
+
+    "HITSCAN": "HITSCAN",
+    "The distance where bullets connect instantly, meaning there is no delay between pressing the fire button, and seeing a hitmarker. Higher is better.": "Die Distanz, auf der Kugeln sofort treffen, was bedeutet, dass es keine Verzögerung zwischen dem Drücken des Abzugs und dem Erscheinen eines Treffermarkers gibt. Höher ist besser.",
+
+    "STAT TERMINOLOGY": "STATISTIK-TERMINOLOGIE"
+  }
 };
 
 class ArmoryTheme {
@@ -1075,8 +1461,8 @@ class ArmoryText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final locale = Provider.of<LocaleController>(context);
-    final String code = locale.languageCode;
+    final aegisArc = Provider.of<AegisArc>(context);
+    final String code = aegisArc.languageCode;
 
     final String displayText = (code != 'en' && uiTranslations[code]?.containsKey(text) == true)
         ? uiTranslations[code]![text]!
@@ -1222,69 +1608,65 @@ class ThemeController extends ChangeNotifier {
   Map<String, dynamic>? get currentPatchData => _currentPatchData;
 
   Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefresh = false}) async {
-    try {
-      if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) {
-        return;
-      }
+  try {
+    if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) return;
 
-      final prefs = await SharedPreferences.getInstance();
-      _lastViewedPatchDate = prefs.getString('last_viewed_patch_date') ?? "";
+    final prefs = await SharedPreferences.getInstance();
+    _lastViewedPatchDate = prefs.getString('last_viewed_patch_date') ?? "";
 
-      final String suffixPath = (langCode == 'en') ? 'hotfixes.json' : '$langCode/hotfixes_$langCode.json';
-      final String cachePrefKey = 'cached_file_$suffixPath';
+    // 1. Determine key based on localized suffix
+    final String suffixPath = (langCode == 'en') ? 'hotfixes.json' : 'hotfixes.json';
+    final String cachePrefKey = 'cached_file_$suffixPath';
 
-      if (prefs.containsKey(cachePrefKey)) {
-        final String? localContent = prefs.getString(cachePrefKey);
-        if (localContent != null && localContent.isNotEmpty) {
-          final data = json.decode(localContent);
-
-          _currentPatchData = data;
-          _currentPatchLang = langCode;
-
-          String serverDate = data['patch_date'] ?? data['date'] ?? "";
-          if (serverDate != _lastViewedPatchDate) {
-            _hasNewPatch = true;
-          }
-
-          debugPrint("🎯 [PATCH SYNC] Instantly loaded web LocalStorage hotfix notes for: $langCode");
-          notifyListeners();
-          return; 
-        }
-      }
-
-      final cleanBaseUrl = serverUrl.endsWith('/') 
-          ? serverUrl.substring(0, serverUrl.length - 1) 
-          : serverUrl;
-
-      final path = (langCode == 'en')
-          ? "$cleanBaseUrl/cdn/hotfixes.json"
-          : "$cleanBaseUrl/cdn/$langCode/hotfixes_$langCode.json";
-
-      debugPrint("🛰️ [PATCH SYNC] Web cache missing. Fetching live patch notes: $path");
-      final response = await http.get(Uri.parse(path)); 
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+    // 2. Attempt local load from SharedPreferences
+    if (!forceRefresh && prefs.containsKey(cachePrefKey)) {
+      final String? localContent = prefs.getString(cachePrefKey);
+      if (localContent != null && localContent.isNotEmpty) {
+        final Map<String, dynamic> data = json.decode(localContent);
 
         _currentPatchData = data;
         _currentPatchLang = langCode;
+        _updatePatchStatus(data);
 
-        String serverDate = data['patch_date'] ?? data['date'] ?? "";
-        if (serverDate != _lastViewedPatchDate) {
-          _hasNewPatch = true;
-        }
-
-        await prefs.setString(cachePrefKey, response.body);
+        debugPrint("🎯 [PATCH SYNC] Instantly loaded file for: $langCode");
         notifyListeners();
-
-      } else if (response.statusCode == 404 && langCode != 'en') {
-        debugPrint("❌ Localized server notes 404'd. Falling back to English master notes.");
-        await syncPatchNotes(serverUrl, 'en', forceRefresh: true);
+        return;
       }
-    } catch (e) {
-      debugPrint("Patch Sync Error: $e");
     }
+
+    // 3. Fetch from CDN
+    final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
+    final String path = "$cleanBaseUrl/cdn/$suffixPath";
+
+    debugPrint("🛰️ [PATCH SYNC] Fetching live patch notes: $path");
+    final response = await http.get(Uri.parse(path));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      _currentPatchData = data;
+      _currentPatchLang = langCode;
+      _updatePatchStatus(data);
+
+      // Save to SharedPreferences (Works for Web & Native)
+      await prefs.setString(cachePrefKey, response.body);
+      notifyListeners();
+    } else if (response.statusCode == 404 && langCode != 'en') {
+      debugPrint("❌ Localized notes 404'd. Falling back to English.");
+      await syncPatchNotes(serverUrl, 'en', forceRefresh: true);
+    }
+  } catch (e) {
+    debugPrint("Patch Sync Error: $e");
   }
+}
+
+// Helper to handle the "is there a new patch" logic cleanly
+void _updatePatchStatus(Map<String, dynamic> data) {
+  String serverDate = data['patch_date'] ?? data['date'] ?? "";
+  if (serverDate.isNotEmpty && serverDate != _lastViewedPatchDate) {
+    _hasNewPatch = true;
+  }
+}
 
   Future<void> markPatchRead() async {
     if (_currentPatchData == null) return;

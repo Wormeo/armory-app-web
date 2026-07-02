@@ -1,0 +1,53 @@
+{
+"Cold_War_Single": [
+	{
+		"id" : 1,
+		"weapon_name" : "1911 (CW)",
+		"weapon_id" : 10,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "6.45\" REINFORCED HEAVY",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "12 RND SPEED MAG",
+		"attach_5" : "SERPENT WRAP"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "AMP63",
+		"weapon_id" : 10,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "6.1\" REINFORCED HEAVY",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "20 RND SPEED MAG",
+		"attach_5" : "SERPENT WRAP"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "DIAMATTI",
+		"weapon_id" : 10,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "6.5\" TAC OPS",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "24 RND SPEED MAG",
+		"attach_5" : "SERPENT WRAP"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "MAGNUM (CW)",
+		"weapon_id" : 10,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "7.2\" TASK FORCE",
+		"attach_3" : "SWAT 5MW LASER SIGHT",
+		"attach_4" : "9 RND SPEED MAG",
+		"attach_5" : "SERPENT GRIP"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "MARSHAL",
+		"weapon_id" : 10,
+		"attach_1" : "12.1\" EXTENDED",
+		"attach_2" : "",
+		"attach_3" : "",
+		"attach_4" : "",
+		"attach_5" : ""
+	}
+]}

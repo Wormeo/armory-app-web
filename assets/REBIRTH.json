@@ -1,0 +1,193 @@
+{
+"REBIRTH": [
+	{
+		"id" : 1,
+		"weapon_name" : "KAR98K",
+		"weapon_id" : 14,
+		"attach_1" : "PRÄZISIONGEWEHR 762 LONG BARREL",
+		"attach_2" : "NO STOCK",
+		"attach_3" : "7.92X57MM HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "RANGE CALLER V3.4 OPTIC"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "SA-B 50",
+		"weapon_id" : 14,
+		"attach_1" : "FSS ST87 BOLT",
+		"attach_2" : "ASSAULT-60 STOCK",
+		"attach_3" : ".308 HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "SP-R 208 (MW2)",
+		"weapon_id" : 14,
+		"attach_1" : "FSS ST87 BOLT",
+		"attach_2" : "ZLR T70 PAD EXTENSION",
+		"attach_3" : "7.62X51MM HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "CARRACK .300",
+		"weapon_id" : 14,
+		"attach_1" : "300 SUBSOUND",
+		"attach_2" : "LEX V14 STOCK",
+		"attach_3" : ".300 HIGH VELOCITY ",
+		"attach_4" : "10 ROUND MAG",
+		"attach_5" : "VLK 4.0 OPTIC"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "FJX IMPERIUM",
+		"weapon_id" : 14,
+		"attach_1" : "TAC-COMMAND 19\"",
+		"attach_2" : "FJX BLAST",
+		"attach_3" : ".408 HIGH VELOCITY ",
+		"attach_4" : "FJX KILO-TAC",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "KATT-AMR",
+		"weapon_id" : 14,
+		"attach_1" : "SONIC SUPPRESSOR XL",
+		"attach_2" : "TACTICAL STOCK PAD",
+		"attach_3" : ".50 CAL HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "KV INHIBITOR",
+		"weapon_id" : 14,
+		"attach_1" : "SONIC SUPPRESSOR L",
+		"attach_2" : "XRK EDGE BW-4 HANDSTOP",
+		"attach_3" : "FSS STORMENDER ASSAULT GRIP",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "LA-B 330",
+		"weapon_id" : 14,
+		"attach_1" : "16\" ZLR EXECUTOR 80 BARREL",
+		"attach_2" : "ZLR T70 PAD EXTENSION",
+		"attach_3" : ".300 HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "FSS ST87 BOLT"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "LONGBOW",
+		"weapon_id" : 14,
+		"attach_1" : "XRK EDGE BW-4 HANDSTOP",
+		"attach_2" : "SA-M QUICKBOLT",
+		"attach_3" : "7.62X39MM HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "DEMO 650 GRIP"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "MCPR-300",
+		"weapon_id" : 14,
+		"attach_1" : "CRONEN SMOOTH BOLT",
+		"attach_2" : "FSS MERC STOCK",
+		"attach_3" : ".300 MAG HIGH VELOCITY ",
+		"attach_4" : "5 ROUND MAG",
+		"attach_5" : "SP-X 80 6.6X \/ AKILINA LR-STALK OPTIC"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "MORS",
+		"weapon_id" : 14,
+		"attach_1" : "DOWNFALL LIGHT BARREL",
+		"attach_2" : "SUPERLITE-90 STOCK",
+		"attach_3" : "OP-980 GRIP",
+		"attach_4" : "QUICK BOLT",
+		"attach_5" : "AKILINA LR-STALK OPTIC"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "SIGNAL 50",
+		"weapon_id" : 14,
+		"attach_1" : "XRK EDGE BW-4 HANDSTOP",
+		"attach_2" : "SO INLINE STOCK",
+		"attach_3" : ".50 CAL HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "SP-X 80",
+		"weapon_id" : 14,
+		"attach_1" : "16\" ZLR EXECUTOR 80 BARREL",
+		"attach_2" : "PVZ-890 TAC STOCK",
+		"attach_3" : ".300 HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "FSS ST87 BOLT"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "VICTUS XMR",
+		"weapon_id" : 14,
+		"attach_1" : "SONIC SUPPRESSOR XL",
+		"attach_2" : "XRK RISE 50",
+		"attach_3" : ".50 CAL HIGH VELOCITY ",
+		"attach_4" : "KIMURA RYL33 LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "XRK STALKER",
+		"weapon_id" : 14,
+		"attach_1" : "XRK STALKER FACTORY",
+		"attach_2" : "HELIX LV LIGHT STOCK",
+		"attach_3" : ".50 CAL HIGH VELOCITY ",
+		"attach_4" : "SL RAZORHAWK LASER LIGHT",
+		"attach_5" : "SP-X 80 6.6X"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "HAWKER HX",
+		"weapon_id" : 14,
+		"attach_1" : "20.5\" HAWKER SPRING BARREL",
+		"attach_2" : "UNDERPITCH GRIP",
+		"attach_3" : ".338 LM OVERPRESSURED ",
+		"attach_4" : "FLATLOAD SPEED MAG",
+		"attach_5" : "AURORAL LIGHT GRIP"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "VS RECON",
+		"weapon_id" : 14,
+		"attach_1" : "24.9\" DOMAIN BARREL",
+		"attach_2" : "R-1 SHELF GRIP",
+		"attach_3" : "7.62 NATO OVERPRESSURED ",
+		"attach_4" : "DASHLINE SPEED MAG",
+		"attach_5" : "1MW INSTINCT LASER ARRAY"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "SHADOW SK",
+		"weapon_id" : 14,
+		"attach_1" : "SWF TISHINA-11",
+		"attach_2" : "17\" THRUST BARREL",
+		"attach_3" : ".300 WM OVERPRESSURED ",
+		"attach_4" : "E-3 BILLET SKELETON GRIP",
+		"attach_5" : "PRISMATECH TURBO 4X SCOPE + COVERT RETICLE"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "XR-3 ION",
+		"weapon_id" : 14,
+		"attach_1" : "15\" FRINGE BARREL",
+		"attach_2" : "L.T. SLING GRIP",
+		"attach_3" : "7.62 NATO OVERPRESSURED ",
+		"attach_4" : "1MW INSTINCT LASER ARRAY",
+		"attach_5" : "PRISMATECH TURBO 4X SCOPE + COVERT RETICLE"
+	}
+]}

@@ -155,7 +155,7 @@ Map<String, String> _archetypeLookup = {};
 
 Future<void> loadMinMaxData(String langCode) async {
   try {
-    final String response = await loadHotfixedJson('assets/MinMax_202603052106.json');
+    final String response = await loadHotfixedJson('assets/MinMax.json');
     
     final Map<String, dynamic> data = json.decode(response);
     final List<dynamic> rows = data['MinMax'];
@@ -286,6 +286,8 @@ class _SyncProviderState extends State<SyncProvider>
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   if (kIsWeb) {
     try {
       final storage = web.window.navigator.storage;
@@ -296,8 +298,6 @@ void main() async {
       debugPrint("Could not request persistence: $e");
     }
   }
-
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   if (defaultTargetPlatform != TargetPlatform.linux || kIsWeb) {
     try {
@@ -319,16 +319,16 @@ void main() async {
   final themeController = ThemeController();
   await themeController.loadSavedTheme();
   
-  final localeController = LocaleController();
-  await localeController.loadSavedLanguage();
+  final aegisArc = AegisArc();
+  await aegisArc.loadSavedLanguage();
 
-  await loadMinMaxData(localeController.languageCode);
+  await loadMinMaxData(aegisArc.languageCode);
   
   runApp(
     AppRestartWrapper(
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider.value(value: localeController),
+          ChangeNotifierProvider.value(value: aegisArc),
           ChangeNotifierProvider.value(value: themeController),
         ],
         child: SyncProvider(
@@ -574,10 +574,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
 Future<void> _performPreload({bool isLanguageSwitch = false}) async {
-  _loadedWeapons.clear();
+    _loadedWeapons.clear();
   setState(() => _dataReady = false);
-  final locale = Provider.of<LocaleController>(context, listen: false);
+
+  final locale = Provider.of<AegisArc>(context, listen: false);
   await locale.loadSavedLanguage();
+  await locale.loadMasterDictionary();
   await Future.delayed(const Duration(milliseconds: 100));
   final String code = locale.languageCode;
 
@@ -588,35 +590,21 @@ Future<void> _performPreload({bool isLanguageSwitch = false}) async {
     }
 
     final List<String> buildFiles = [
-      'assets/Akimbo_202603022137.json', 'assets/Cold_War_Akimbo_202602130024.json',
-      'assets/Cold_War_Single_202602130024.json', 'assets/Endgame_BO7_202602130023.json',
-      'assets/Multiplayer_BO7_202603041754.json', 'assets/Multiplayer_Cold_War_202603041703.json',
-      'assets/Multiplayer_MW19_202602130020.json', 'assets/Multiplayer_MW3_BO6_202602130020.json',
-      'assets/REBIRTH_202602130024.json', 'assets/Single_202602130024.json',
-      'assets/Special_202602130024.json', 'assets/Warzone_BO6_202602130021.json',
-      'assets/Warzone_BO7_202602130021.json', 'assets/Warzone_MW3_MW2_202602130021.json',
-      'assets/Zombies_BO7_202602130022.json', 'assets/Zombies_Cold_War_202602130022.json',
-      'assets/Zombies_MW3_BO6_202602130022.json',
+      'assets/Akimbo.json', 'assets/Cold_War_Akimbo.json',
+      'assets/Cold_War_Single.json', 'assets/Endgame_BO7.json',
+      'assets/Multiplayer_BO7.json', 'assets/Multiplayer_Cold_War.json',
+      'assets/Multiplayer_MW19.json', 'assets/Multiplayer_MW3_BO6.json',
+      'assets/REBIRTH.json', 'assets/Single.json',
+      'assets/Special.json', 'assets/Warzone_BO6.json',
+      'assets/Warzone_BO7.json', 'assets/Warzone_MW3_MW2.json',
+      'assets/Zombies_BO7.json', 'assets/Zombies_Cold_War.json',
+      'assets/Zombies_MW3_BO6.json',
     ];
 
-    Future<String> loadLocalizedJson(String path) async {
-      if (code == 'en') return loadHotfixedJson(path);
-
-      final String fileName = path.split('/').last;
-      final String suffix = (locale.suffix.isEmpty) ? '_$code' : locale.suffix;
-      final String localizedAssetPath = 'assets/$code/${fileName.replaceAll('.json', '$suffix.json')}';
-
-      try {
-        return await rootBundle.loadString(localizedAssetPath);
-      } catch (_) {
-        return await rootBundle.loadString(path);
-      }
-    }
-
-    final List<Future<String>> loadFutures = buildFiles.map((path) => loadLocalizedJson(path)).toList();
-    loadFutures.add(loadLocalizedJson('assets/Weapon_Names_202602160630.json'));
-    loadFutures.add(loadLocalizedJson('assets/Premium_Stats_202602131455.json'));
-    loadFutures.add(loadLocalizedJson('assets/hotfixes.json'));
+    final List<Future<String>> loadFutures = buildFiles.map((path) => loadHotfixedJson(path)).toList();
+    loadFutures.add(loadHotfixedJson('assets/Weapon_Names.json'));
+    loadFutures.add(loadHotfixedJson('assets/Premium_Stats.json'));
+    loadFutures.add(loadHotfixedJson('assets/hotfixes.json'));
 
     final allRawData = await Future.wait(loadFutures);
 
@@ -795,7 +783,7 @@ Future<void> _initializeAegisSource() async {
   final Color accentColor = themeController.activeAccentColor;
   final activeFont = themeController.activeFont;
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
-  final locale = Provider.of<LocaleController>(context);
+  final locale = Provider.of<AegisArc>(context);
   final String code = locale.languageCode;
   const String rawHint = "SEARCH WEAPONS OR ARCHETYPES...";
 
@@ -1153,7 +1141,7 @@ Widget _buildFirstTimeLoadingVisual({Key? key}) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ArmoryText(
-            context.watch<LocaleController>().translate("CONNECTING TO ARMORY CORE..."),
+            context.watch<AegisArc>().translateStatic("CONNECTING TO ARMORY CORE..."),
             themeController: widget.themeController,
             baseFontSize: 14,
             baseStrokeWidth: 2.0,
@@ -1169,7 +1157,7 @@ Widget _buildFirstTimeLoadingVisual({Key? key}) {
           ),
           const SizedBox(height: 20),
           ArmoryText(
-            context.watch<LocaleController>().translate("LOADING DATA FOR FIRST BOOT"),
+            context.watch<AegisArc>().translateStatic("LOADING DATA FOR FIRST BOOT"),
             themeController: widget.themeController,
             baseFontSize: 10,
             baseStrokeWidth: 1.0,
@@ -1190,7 +1178,7 @@ Future<void> _initAppSequence() async {
     final prefs = await SharedPreferences.getInstance();
 
     if (!prefs.containsKey('manifest_version_key')) {
-      const int shippingVersion = 7;
+      const int shippingVersion = 9;
       await prefs.setInt('manifest_version_key', shippingVersion);
       debugPrint("📦 [AEGIS] Fresh install detected. Setting baseline to Version $shippingVersion");
     }
@@ -1232,8 +1220,8 @@ Future<void> _initAppSequence() async {
 
     if (storedId != null) PurchaseService.updateDiscordId(storedId);
 
-    final localeController = Provider.of<LocaleController>(context, listen: false);
-    widget.themeController.syncPatchNotes(_activeBaseUrl, localeController.languageCode);
+    final aegisArc = Provider.of<AegisArc>(context, listen: false);
+    widget.themeController.syncPatchNotes(_activeBaseUrl, aegisArc.languageCode);
     
     _runBootSequence(); 
     _loadFavorites();
@@ -1253,7 +1241,7 @@ void initState() {
   
   WidgetsBinding.instance.addObserver(this);
 
-  final localeController = Provider.of<LocaleController>(context, listen: false);
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
 
   PurchaseService.initialize(_savedDiscordId ?? "guest", (bool success) {
     if (success) {
@@ -1291,43 +1279,27 @@ Future<void> _performPreload({
   bool isLanguageSwitch = false, 
   String? forcedCode, 
   String? forcedSuffix
+  
 }) async {
-  final locale = Provider.of<LocaleController>(context, listen: false);
-  final String activeCode = forcedCode ?? locale.languageCode;
-  final String activeSuffix = forcedSuffix ?? locale.suffix;
+  final locale = Provider.of<AegisArc>(context, listen: false);
+  await locale.loadMasterDictionary();
 
   try {
     final List<String> buildFiles = [
-      'assets/Akimbo_202603022137.json', 'assets/Cold_War_Akimbo_202602130024.json',
-      'assets/Cold_War_Single_202602130024.json', 'assets/Endgame_BO7_202602130023.json',
-      'assets/Multiplayer_BO7_202603041754.json', 'assets/Multiplayer_Cold_War_202603041703.json',
-      'assets/Multiplayer_MW19_202602130020.json', 'assets/Multiplayer_MW3_BO6_202602130020.json',
-      'assets/REBIRTH_202602130024.json', 'assets/Single_202602130024.json',
-      'assets/Special_202602130024.json', 'assets/Warzone_BO6_202602130021.json',
-      'assets/Warzone_BO7_202602130021.json', 'assets/Warzone_MW3_MW2_202602130021.json',
-      'assets/Zombies_BO7_202602130022.json', 'assets/Zombies_Cold_War_202602130022.json',
-      'assets/Zombies_MW3_BO6_202602130022.json',
+      'assets/Akimbo.json', 'assets/Cold_War_Akimbo.json',
+      'assets/Cold_War_Single.json', 'assets/Endgame_BO7.json',
+      'assets/Multiplayer_BO7.json', 'assets/Multiplayer_Cold_War.json',
+      'assets/Multiplayer_MW19.json', 'assets/Multiplayer_MW3_BO6.json',
+      'assets/REBIRTH.json', 'assets/Single.json',
+      'assets/Special.json', 'assets/Warzone_BO6.json',
+      'assets/Warzone_BO7.json', 'assets/Warzone_MW3_MW2.json',
+      'assets/Zombies_BO7.json', 'assets/Zombies_Cold_War.json',
+      'assets/Zombies_MW3_BO6.json',
     ];
 
-    Future<String> loadLocalizedJson(String path) async {
-      if (activeCode == 'en') {
-        return await loadHotfixedJson(path);
-      }
-
-      final String fileName = path.split('/').last;
-      final String localizedPath = 'assets/$activeCode/${fileName.replaceAll('.json', '$activeSuffix.json')}';
-
-      try {
-        return await loadHotfixedJson(localizedPath);
-      } catch (e) {
-        debugPrint("⚠️ Fallback to English for: $path");
-        return await loadHotfixedJson(path);
-      }
-    }
-
-    final List<Future<String>> loadFutures = buildFiles.map((path) => loadLocalizedJson(path)).toList();
-    loadFutures.add(loadLocalizedJson('assets/Weapon_Names_202602160630.json'));
-    loadFutures.add(loadLocalizedJson('assets/Premium_Stats_202602131455.json'));
+    final List<Future<String>> loadFutures = buildFiles.map((path) => loadHotfixedJson(path)).toList();
+    loadFutures.add(loadHotfixedJson('assets/Weapon_Names.json'));
+    loadFutures.add(loadHotfixedJson('assets/Premium_Stats.json'));
     loadFutures.add(loadHotfixedJson('assets/hotfixes.json'));
 
     final allRawData = await Future.wait(loadFutures);
@@ -1339,34 +1311,27 @@ Future<void> _performPreload({
     final String hotfixRaw = allRawData.last;
     final Map<String, dynamic> hotfixData = json.decode(hotfixRaw);
 
-    final processedWeapons = kIsWeb 
-        ? _heavyDataProcessing({
-            'buildJsons': allRawData.sublist(0, buildFiles.length),
-            'namesJson': allRawData[allRawData.length - 3],
-            'statsJson': allRawData[allRawData.length - 2],
-            'filePaths': buildFiles, 
-            'archetypeLookup': _archetypeLookup,
-          })
-        : await compute(_heavyDataProcessing, {
-            'buildJsons': allRawData.sublist(0, buildFiles.length),
-            'namesJson': allRawData[allRawData.length - 3],
-            'statsJson': allRawData[allRawData.length - 2],
-            'filePaths': buildFiles, 
-            'archetypeLookup': _archetypeLookup,
-          });
+    final processedWeapons = await compute(_heavyDataProcessing, {
+      'buildJsons': allRawData.sublist(0, buildFiles.length),
+      'namesJson': allRawData[allRawData.length - 3],
+      'statsJson': allRawData[allRawData.length - 2],
+      'filePaths': buildFiles, 
+      'archetypeLookup': _archetypeLookup,
+    });
 
     if (mounted) {
-      setState(() {
-        _loadedWeapons = processedWeapons;
-        displayList = List.from(_loadedWeapons); 
-        _sortDisplayList();
-        _checkHotfixNotification(hotfixData);
-        _dataReady = true;
-      });
-    }
+    setState(() {
+      _loadedWeapons = processedWeapons;
+      displayList = List.from(_loadedWeapons); 
+      _sortDisplayList();
+      _checkHotfixNotification(hotfixData);
+      _dataReady = true;
+    });
+  }
     
-  } catch (e, stack) {
+    } catch (e, stack) {
     debugPrint("Background Sync Preload Error: $e");
+    
     if (displayList.isEmpty && widget.preloadedData.isNotEmpty) {
       setState(() {
         _loadedWeapons = widget.preloadedData;
@@ -1569,7 +1534,7 @@ Future<void> _runBootSequence() async {
   final Color themeAccent = isCustom ? themeController.activeAccentColor : Theme.of(context).colorScheme.primary;
   final Color accent = widget.themeController.activeAccentColor;
   final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
-  final locale = Provider.of<LocaleController>(context, listen: false);
+  final locale = Provider.of<AegisArc>(context, listen: false);
 
   final statusMessage = ValueNotifier<String>("");
   final statusColor = ValueNotifier<Color>(coreColor);
@@ -1650,22 +1615,22 @@ Future<void> _runBootSequence() async {
   }
 
   initSlipstreamSnack();
-  updateSlipstreamUI(locale.translate("VERIFYING DATA INTEGRITY..."), coreColor);
+  updateSlipstreamUI(locale.translateStatic("VERIFYING DATA INTEGRITY..."), coreColor);
   
   await Future.delayed(const Duration(milliseconds: 800));
 
   await _syncData(onDownloadStarted: () {
     if (mounted) {
-      updateSlipstreamUI(locale.translate("DOWNLOADING ASSETS..."), Colors.amberAccent);
+      updateSlipstreamUI(locale.translateStatic("DOWNLOADING ASSETS..."), Colors.amberAccent);
     }
   });
 
   if (_weaponDataUpdated) {
-    updateSlipstreamUI(locale.translate("PRELOADING ASSETS..."), Colors.cyanAccent);
+    updateSlipstreamUI(locale.translateStatic("PRELOADING ASSETS..."), Colors.cyanAccent);
     await Future.delayed(const Duration(milliseconds: 200));
     await _performPreload();
     
-    updateSlipstreamUI(locale.translate("PATCH APPLIED. RESTARTING..."), coreColor);
+    updateSlipstreamUI(locale.translateStatic("PATCH APPLIED. RESTARTING..."), coreColor);
     await Future.delayed(const Duration(milliseconds: 2000)); 
     
     if (mounted) {
@@ -1675,7 +1640,7 @@ Future<void> _runBootSequence() async {
   }
 
   if (_hotfixUpdated) {
-  updateSlipstreamUI(locale.translate("INJECTING HOTFIX DATA..."), Colors.cyanAccent);
+  updateSlipstreamUI(locale.translateStatic("INJECTING HOTFIX DATA..."), Colors.cyanAccent);
   
   await _loadHotfixData(); 
 
@@ -1720,15 +1685,7 @@ Future<void> _runBootSequence() async {
   
 Future<void> _loadHotfixData() async {
   try {
-    final localeController = Provider.of<LocaleController>(context, listen: false);
-    final String activeCode = localeController.languageCode;
-    final String suffix = (localeController.suffix.isEmpty) ? '_$activeCode' : localeController.suffix;
-
-    final String path = activeCode == 'en'
-        ? 'assets/hotfixes.json'
-        : 'assets/$activeCode/hotfixes$suffix.json';
-
-    final String jsonString = await loadHotfixedJson(path);
+    final String jsonString = await loadHotfixedJson('assets/hotfixes.json');
     final Map<String, dynamic> data = json.decode(jsonString);
 
     final prefs = await SharedPreferences.getInstance();
@@ -1738,11 +1695,9 @@ Future<void> _loadHotfixData() async {
     if (mounted) {
       setState(() {
         _hotfixData = data;
-        _hasNewHotfix = (currentVersion > lastAcknowledgedVersion);
+        _hasNewHotfix = currentVersion > lastAcknowledgedVersion;
       });
     }
-    
-    debugPrint("Hotfix System: Version $currentVersion loaded for [$activeCode]. (Last Ack: $lastAcknowledgedVersion)");
   } catch (e) {
     debugPrint("Hotfix System Load Error: $e");
   }
@@ -2411,7 +2366,7 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
           title: Column(
             children: [
               ArmoryText(
-                "${context.read<LocaleController>().translate("SYSTEM UPDATES")} | PRE-RELEASE 2.8 ECLIPSE",
+                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.0 SOLAR",
                 themeController: widget.themeController,
                 baseFontSize: 14,
                 baseStrokeWidth: isNeon ? 3.0 : 2.5,
@@ -2504,30 +2459,22 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
 }
 
 Future<void> prepareAndShowPatchNotes(BuildContext context, String langCode) async {
-  List<String> notes = [];
-  
-  final String dynamicPath = 'assets/patch/patch_notes_$langCode.json';
-  const String fallbackPath = 'assets/patch/patch_notes_en.json';
+  const String path = 'assets/patch_notes.json';
+  final String key = langCode.toLowerCase();
 
   try {
-    debugPrint("Loading dynamic language: $dynamicPath");
-    final String response = await rootBundle.loadString(dynamicPath);
+    final String response = await rootBundle.loadString(path);
     final data = json.decode(response);
-    notes = List<String>.from(data['patch_notes']);
-  } catch (e) {
-    debugPrint("Language '$langCode' not found. Falling back to English.");
-    try {
-      final String response = await rootBundle.loadString(fallbackPath);
-      final data = json.decode(response);
-      notes = List<String>.from(data['patch_notes']);
-    } catch (fallbackError) {
-      debugPrint("Critical Error: No patch notes found at $fallbackPath");
-      return;
-    }
-  }
+    
+    final Map<String, dynamic> allNotes = Map<String, dynamic>.from(data['notes']);
+    
+    final List<String> notes = List<String>.from(allNotes[key] ?? allNotes['en']);
 
-  if (context.mounted && notes.isNotEmpty) {
-    _showPatchNotes(context, notes);
+    if (context.mounted && notes.isNotEmpty) {
+      _showPatchNotes(context, notes);
+    }
+  } catch (e) {
+    debugPrint("Critical Error: Failed to load patch notes from $path: $e");
   }
 }
 
@@ -2887,7 +2834,7 @@ void _showPurchaseSuccessDialog(String id, String pin) {
 }
 
 Widget _credentialRow(String label, String value, Color color) {
-  final locale = Provider.of<LocaleController>(context, listen: false);
+  final locale = Provider.of<AegisArc>(context, listen: false);
 
   return Container(
     padding: const EdgeInsets.all(10),
@@ -2899,8 +2846,8 @@ Widget _credentialRow(String label, String value, Color color) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(locale.translate(label), style: const TextStyle(color: Colors.white38, fontSize: 10)),
-        Text(locale.translate(value), style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14)),
+        Text(locale.translateStatic(label), style: const TextStyle(color: Colors.white38, fontSize: 10)),
+        Text(locale.translateStatic(value), style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 14)),
       ],
     ),
   );
@@ -3114,7 +3061,7 @@ void _showBugReportDialog() {
             fontSize: 13
           ),
           decoration: InputDecoration(
-            hintText: context.read<LocaleController>().translate("Describe the issue and how it occurred."),
+            hintText: context.read<AegisArc>().translateStatic("Describe the issue and how it occurred."),
             hintStyle: TextStyle(
               fontFamily: widget.themeController.activeFont, 
               color: Colors.white38,
@@ -3307,7 +3254,7 @@ Widget _buildMainScaffold({Key? key}) {
   final bool isCustom = activeTheme.id == 'neon_custom';
   final Color accentColor = themeController.activeAccentColor;
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
-  final locale = Provider.of<LocaleController>(context);
+  final locale = Provider.of<AegisArc>(context);
 
   return Scaffold(
     key: const ValueKey('main_armory_ui'),
@@ -3491,7 +3438,7 @@ Widget _buildMainScaffold({Key? key}) {
                         ),
                         const SizedBox(height: 24),
                         ArmoryText(
-                          locale.translate("SYNCHRONIZING DATA..."),
+                          locale.translateStatic("SYNCHRONIZING DATA..."),
                           themeController: themeController,
                           baseFontSize: 14,
                           baseStrokeWidth: 2.0,
@@ -3601,29 +3548,32 @@ Widget _buildSettingsDrawer() {
                 icon: Icons.cached_rounded,
                 themeController: themeController,
                 isPremiumUser: _isPremiumUser,
-                onTap: () => Navigator.push(
-                  context, 
-                  PageRouteBuilder(
-                    transitionDuration: const Duration(milliseconds: 400),
-                    reverseTransitionDuration: const Duration(milliseconds: 400),
-                    pageBuilder: (context, animation, secondaryAnimation) => 
-                        RandomLoadoutScreen(themeController: widget.themeController),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                    var begin = const Offset(1.0, 0.0); 
-                    var end = Offset.zero;
+                onTap: () {
+                  final aegisArc = Provider.of<AegisArc>(context, listen: false);
 
-                    var curve = Curves.ease; 
+                  Navigator.push(
+                    context, 
+                    PageRouteBuilder(
+                      transitionDuration: const Duration(milliseconds: 400),
+                      reverseTransitionDuration: const Duration(milliseconds: 400),
+                      pageBuilder: (context, animation, secondaryAnimation) => RandomLoadoutScreen(
+                        themeController: widget.themeController,
+                        aegisArc: aegisArc,
+                      ),
+                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                        var begin = const Offset(1.0, 0.0); 
+                        var end = Offset.zero;
+                        var curve = Curves.ease; 
+                        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-                    var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                    return SlideTransition(
-                      position: animation.drive(tween),
-                      child: child,
-                    );
-                  }
-                  ),
-                ),
-              ),
+                        return SlideTransition(
+                          position: animation.drive(tween),
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
+                }),
               const SizedBox(height: 15),
 
               TacticalModuleButton(
@@ -3755,14 +3705,14 @@ Widget _buildSettingsDrawer() {
               const SizedBox(height: 15),
 
               TacticalModuleButton(
-                label: "${context.watch<LocaleController>().translate("LANGUAGE:")} ${context.watch<LocaleController>().languageCode.toUpperCase()}",
+                label: "${context.watch<AegisArc>().translateStatic("LANGUAGE:")} ${context.watch<AegisArc>().languageCode.toUpperCase()}",
                 icon: Icons.language_rounded,
                 themeController: themeController,
                 isPremiumUser: _isPremiumUser,
                 onTap: () {
                   HapticFeedback.mediumImpact(); 
                   
-                  final locale = Provider.of<LocaleController>(context, listen: false);
+                  final locale = Provider.of<AegisArc>(context, listen: false);
                   final accentColor = themeController.activeAccentColor;
                   final isCustom = themeController.activeTheme.id == 'neon_custom';
                   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
@@ -3770,7 +3720,7 @@ Widget _buildSettingsDrawer() {
                   final List<Map<String, String>> languages = [
                     {'code': 'en', 'title': 'ENGLISH'},
                     {'code': 'fr', 'title': 'FRANÇAIS'},
-                    // {'code': 'de', 'title': 'DEUTSCH'},
+                    {'code': 'de', 'title': 'DEUTSCH'},
                     {'code': 'es', 'title': 'ESPAÑOL'},
                     // {'code': 'pt', 'title': 'PORTUGUÊS'},
                     // {'code': 'ru', 'title': 'РУССКИЙ'},
@@ -3855,47 +3805,44 @@ Widget _buildSettingsDrawer() {
         _buildMinorDrawerTile(
           label: "HOTFIXES",
           icon: Icons.terminal_outlined,
-          onTap: () {
-            final lang = context.read<LocaleController>().languageCode;
-
+          onTap: () async {
+            final lang = context.read<AegisArc>().languageCode;
             final themeController = widget.themeController;
 
-            final bool shouldFetch =
-                themeController.currentPatchData == null ||
-                themeController.currentPatchLang != lang;
+            final bool shouldFetch = themeController.currentPatchData == null ||
+                                    themeController.currentPatchLang != lang;
 
-              HapticFeedback.mediumImpact();
-              _markHotfixRead();
+            HapticFeedback.mediumImpact();
+            _markHotfixRead();
 
-              if (shouldFetch) {
-                themeController
-                    .syncPatchNotes(globalNgrokUrl, lang, forceRefresh: true)
-                    .then((_) {
-                      if (context.mounted) {
-                        _showHotFixesDialog(context, null);
-                      }
-                    });
-              } else {
+            if (shouldFetch) {
+              await themeController.syncPatchNotes(globalNgrokUrl, lang, forceRefresh: true);
+              
+              if (context.mounted) {
                 _showHotFixesDialog(context, null);
               }
-            },
-          trailing: _hasNewHotfix 
-            ? Container(
-                width: 6,
-                height: 6,
-                decoration: const BoxDecoration(
-                  color: Colors.orange,
-                  shape: BoxShape.circle,
-                ),
-              )
-            : null,
+            } else {
+              // Data is already in memory, show immediately
+              _showHotFixesDialog(context, null);
+            }
+          },
+          trailing: _hasNewHotfix
+              ? Container(
+                  width: 6,
+                  height: 6,
+                  decoration: const BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
+                  ),
+                )
+              : null,
         ),
         _buildMinorDrawerTile(
           label: "PATCH NOTES",
           icon: Icons.terminal_outlined,
           onTap: () {
             HapticFeedback.mediumImpact(); 
-            final String currentLang = context.read<LocaleController>().languageCode; 
+            final String currentLang = context.read<AegisArc>().languageCode; 
             prepareAndShowPatchNotes(context, currentLang);
           }
         ),
@@ -3909,7 +3856,7 @@ Widget _buildSettingsDrawer() {
           },
         ),
         _buildMinorDrawerTile(
-          label: "JOIN THE ARMORY SERVER",
+          label: "JOIN THE ARMORY DISCORD SERVER",
           icon: Icons.discord, 
           onTap: () {
             HapticFeedback.mediumImpact(); 
@@ -3918,7 +3865,7 @@ Widget _buildSettingsDrawer() {
         ),
 
         _buildMinorDrawerTile(
-          label: "TRY ARMORY BOT ON DISCORD",
+          label: "TRY ME OUT ON DISCORD",
           icon: Icons.discord_rounded,
           onTap: () { 
             HapticFeedback.mediumImpact(); 
@@ -4012,7 +3959,7 @@ void _showPremiumLockDialog(BuildContext context) {
   final accentColor = widget.themeController.activeAccentColor;
   final isCustom = widget.themeController.activeTheme.id == 'neon_custom';
   final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
-  final locale = Provider.of<LocaleController>(context, listen: false);
+  final locale = Provider.of<AegisArc>(context, listen: false);
 
   showDialog(
     context: context,
@@ -4026,14 +3973,14 @@ void _showPremiumLockDialog(BuildContext context) {
         borderRadius: BorderRadius.circular(24),
       ),
       title: ArmoryText(
-        locale.translate("ACCESS RESTRICTED"),
+        locale.translateStatic("ACCESS RESTRICTED"),
         themeController: widget.themeController, 
         baseFontSize: 18, 
         color: Colors.white,
         textAlign: TextAlign.center,
       ),
       content: ArmoryText(
-        locale.translate("ARMORY DELTA IS A PREMIUM FEATURE.\n PLEASE LOG IN OR PURCHASE PREMIUM TO UNLOCK."),
+        locale.translateStatic("ARMORY DELTA IS A PREMIUM FEATURE.\n PLEASE LOG IN OR PURCHASE PREMIUM TO UNLOCK."),
         themeController: widget.themeController, 
         baseFontSize: 12, 
         color: Colors.white70,
@@ -4043,7 +3990,7 @@ void _showPremiumLockDialog(BuildContext context) {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            locale.translate("BACK"),
+            locale.translateStatic("BACK"),
             style: const TextStyle(color: Colors.white24)
           ),
         ),
@@ -4053,7 +4000,7 @@ void _showPremiumLockDialog(BuildContext context) {
             _openCommunityLink();
           },
           child: ArmoryText(
-            locale.translate("UPGRADE"),
+            locale.translateStatic("UPGRADE"),
             themeController: widget.themeController, 
             baseFontSize: 12, 
             color: isCustom ? coreColor : accentColor
@@ -4627,7 +4574,7 @@ Widget _buildAuthSection() {
 void _showForgotPinDialog() {
   HapticFeedback.lightImpact();
   
-  final locale = Provider.of<LocaleController>(context, listen: false);
+  final locale = Provider.of<AegisArc>(context, listen: false);
   
   showDialog(
     context: context,
@@ -4640,7 +4587,7 @@ void _showForgotPinDialog() {
           side: const BorderSide(color: Color.fromRGBO(55, 87, 193, 1), width: 1.5),
         ),
         title: ArmoryText(
-          locale.translate("RECOVER YOUR PIN"),
+          locale.translateStatic("RECOVER YOUR PIN"),
           themeController: widget.themeController,
           baseFontSize: 16,
           color: Colors.white,
@@ -4660,7 +4607,7 @@ void _showForgotPinDialog() {
             Container(
               constraints: const BoxConstraints(maxWidth: 300),
               child: ArmoryText(
-                locale.translate(
+                locale.translateStatic(
                   "If you forgot your pin, no sweat. Head on over to a Discord server that Armory Bot is in, and use the /armorypin command. "
                   "This will grab your pin and display it for you to keep in your fancy notebook you definitely remembered you had. And don't worry about someone stealing it, "
                   "the message is only visible to you. Then, just come on back and log in!"
@@ -4678,7 +4625,7 @@ void _showForgotPinDialog() {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: ArmoryText(
-              locale.translate("ACKNOWLEDGED"),
+              locale.translateStatic("ACKNOWLEDGED"),
               themeController: widget.themeController,
               baseFontSize: 12,
               color: const Color(0xFF448AFF),
@@ -4692,11 +4639,12 @@ void _showForgotPinDialog() {
 
 void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
   final patchData = widget.themeController.currentPatchData ?? data;
-  final localeController = Provider.of<LocaleController>(context, listen: false);
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
+  final String lang = aegisArc.languageCode.toLowerCase();
 
   if (patchData == null) {
     widget.themeController
-        .syncPatchNotes(_activeBaseUrl, localeController.languageCode)
+        .syncPatchNotes(_activeBaseUrl, aegisArc.languageCode)
         .then((_) {
           if (context.mounted) {
             _showHotFixesDialog(context, null);
@@ -4704,6 +4652,10 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
         });
     return;
   }
+
+  // Extract the notes map and get the list for the current language
+  final Map<String, dynamic> notesMap = Map<String, dynamic>.from(patchData['notes'] ?? {});
+  final List<String> localizedNotes = List<String>.from(notesMap[lang] ?? notesMap['en'] ?? []);
 
   final themeController = widget.themeController;
   final activeTheme = themeController.activeTheme;
@@ -4718,93 +4670,93 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
   HapticFeedback.lightImpact();
 
   showDialog(
-  context: context,
-  barrierDismissible: false,
-  builder: (context) => PopScope(
-    canPop: false,
-    child: BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: AlertDialog(
-        backgroundColor: isCustom ? const Color(0xFF000000) : primaryFaded,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-          side: BorderSide(
-            color: isCustom ? coreColor : Theme.of(context).colorScheme.primary, 
-            width: 1.5
-          ),
-        ),
-        title: Column(
-          children: [
-            ArmoryText(
-              "ARMORY HOTFIXES",
-              themeController: themeController,
-              baseFontSize: 16,
-              color: Colors.white,
-              textAlign: TextAlign.center,
+    context: context,
+    barrierDismissible: false,
+    builder: (context) => PopScope(
+      canPop: false,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+        child: AlertDialog(
+          backgroundColor: isCustom ? const Color(0xFF000000) : primaryFaded,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: BorderSide(
+              color: isCustom ? coreColor : Theme.of(context).colorScheme.primary, 
+              width: 1.5
             ),
-            const SizedBox(height: 4),
-            ArmoryText(
-              patchData['patch_date'] ?? "LATEST UPDATE",
-              themeController: themeController,
-              baseFontSize: 10,
-              color: Colors.white.withOpacity(0.5),
-              textAlign: TextAlign.center,
+          ),
+          title: Column(
+            children: [
+              ArmoryText(
+                "ARMORY HOTFIXES",
+                themeController: themeController,
+                baseFontSize: 16,
+                color: Colors.white,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              ArmoryText(
+                patchData['patch_date'] ?? "LATEST UPDATE",
+                themeController: themeController,
+                baseFontSize: 10,
+                color: Colors.white.withOpacity(0.5),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          content: Container(
+            constraints: const BoxConstraints(maxWidth: 300),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: localizedNotes.map((note) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: ArmoryText(
+                      "• $note",
+                      themeController: themeController,
+                      baseFontSize: 11,
+                      color: Colors.white.withOpacity(0.9),
+                      textAlign: TextAlign.center,
+                      allowWrap: true,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                HapticFeedback.heavyImpact();
+                Navigator.pop(context);
+                widget.themeController.markPatchRead(); 
+                await _markHotfixRead(); 
+              },
+              child: ArmoryText(
+                "ACKNOWLEDGED",
+                themeController: themeController,
+                baseFontSize: 13,
+                color: isCustom ? coreColor : accentColor,
+              ),
             ),
           ],
         ),
-        content: Container(
-          constraints: const BoxConstraints(maxWidth: 300),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: ((patchData['notes'] as List?) ?? []).map((note) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ArmoryText(
-                    "• ${note.toString()}",
-                    themeController: themeController,
-                    baseFontSize: 11,
-                    color: Colors.white.withOpacity(0.9),
-                    textAlign: TextAlign.center,
-                    allowWrap: true,
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              HapticFeedback.heavyImpact();
-              Navigator.pop(context);
-              widget.themeController.markPatchRead(); 
-              await _markHotfixRead(); 
-            },
-            child: ArmoryText(
-              "ACKNOWLEDGED",
-              themeController: themeController,
-              baseFontSize: 13,
-              color: isCustom ? coreColor : accentColor,
-            ),
-          ),
-        ],
       ),
     ),
-  ),
- );
+  );
 }
 
 Widget _buildLanguageSelectionScreen({Key? key}) { 
-  final locale = Provider.of<LocaleController>(context, listen: false);
+  final locale = Provider.of<AegisArc>(context, listen: false);
   final theme = widget.themeController;
   const Color armoryBlue = Color.fromRGBO(55, 87, 193, 1);
 
   final List<Map<String, String>> languages = [
     {'code': 'en', 'title': 'ENGLISH'},
     {'code': 'fr', 'title': 'FRANÇAIS'},
-    // {'code': 'de', 'title': 'DEUTSCH'},
+    {'code': 'de', 'title': 'DEUTSCH'},
     {'code': 'es', 'title': 'ESPAÑOL'},
     // {'code': 'pt', 'title': 'PORTUGUÊS'},
     // {'code': 'ru', 'title': 'РУССКИЙ'},
@@ -4837,15 +4789,6 @@ Widget _buildLanguageSelectionScreen({Key? key}) {
                   style: TextStyle(
                     color: Colors.white38,
                     fontSize: 12,
-                    letterSpacing: 2,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "(MORE COMING SOON)",
-                  style: TextStyle(
-                    color: Colors.white38,
-                    fontSize: 10,
                     letterSpacing: 2,
                   ),
                 ),
@@ -5177,7 +5120,7 @@ Future<void> _calculateRankings(String targetSearchName) async {
   setState(() => isRankingLoading = true);
 
   try {
-    final String statsRaw = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
+    final String statsRaw = await loadHotfixedJson('assets/Premium_Stats.json');
     final String archetypesRaw = await loadHotfixedJson('assets/archetypes.json');
     
     final Map<String, dynamic> statsJson = json.decode(statsRaw);
@@ -5306,7 +5249,8 @@ Widget build(BuildContext context) {
   final bool isHolographic = activeTheme.isHolographic;
   final bool isCustom = activeTheme.id == 'neon_custom';
   final Color accentColor = widget.themeController.activeAccentColor;
-  final locale = Provider.of<LocaleController>(context);
+  final locale = Provider.of<AegisArc>(context);
+  final Color primaryBorder = Color.lerp(Theme.of(context).colorScheme.primary, Colors.white, 0.3)!;
 
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
 
@@ -5414,9 +5358,10 @@ Widget build(BuildContext context) {
                 icon: const Icon(Icons.analytics_outlined, color: Colors.white24, size: 18),
                 onPressed: () {
                   HapticFeedback.heavyImpact();
+                  ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      backgroundColor: const Color(0xFF0D0D0D),
+                      backgroundColor: Theme.of(context).colorScheme.surface,
                       behavior: SnackBarBehavior.fixed,
                       elevation: 0,
                       shape: Border(
@@ -5525,7 +5470,7 @@ Widget build(BuildContext context) {
                         decoration: BoxDecoration(
                           color: (isCustom && sel) 
                               ? const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9)
-                              : (sel ? buildAccent.withOpacity(0.7) : theme.colorScheme.surface.withOpacity(0.9)),
+                              : (sel ? buildAccent : theme.colorScheme.surface.withOpacity(0.9)),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: (isCustom && sel) ? coreColor : (sel ? Colors.white : buildAccent.withOpacity(0.3)),
@@ -5552,7 +5497,7 @@ Widget build(BuildContext context) {
                 
               Expanded(
                 child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
                   children: [
                     if (shouldShowToggle) _CombatRatingDisplay(stats: displayStats, themeController: widget.themeController),
                     if (showStats && widget.isPremiumUser)
@@ -5567,7 +5512,7 @@ Widget build(BuildContext context) {
                       // Special Box
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 4, bottom: 4), 
+                        padding: const EdgeInsets.only(top: 4, bottom: 4, right: 10, left: 10), 
                         child: AnimatedContainer(
                           duration: const Duration(milliseconds: 300),
                           width: double.infinity,
@@ -5578,7 +5523,7 @@ Widget build(BuildContext context) {
                                 : theme.colorScheme.surface.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(
-                              color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.8), 
+                              color: isCustom ? coreColor : primaryBorder, 
                               width: isCustom ? 2.5 : 1.5,
                             ),
                             boxShadow: isCustom ? [
@@ -5621,8 +5566,8 @@ Widget build(BuildContext context) {
 
                     const SizedBox(height: 10),
 
-                    ...currentBuild.attachments.map((att) => _AttachmentTile(
-                      text: att, 
+                    ...currentBuild.attachments.map((att) => AttachmentTile(
+                      text: att,
                       isStarred: currentBuild.starredAttachments.contains(att),
                       themeController: widget.themeController
                     )),
@@ -5742,112 +5687,6 @@ Widget _buildArchetypeBadge(String label, bool isCustom, Color coreColor, ThemeD
       border: Border.all(color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.5), width: 1.5),
     ),
     child: ArmoryText(label.toUpperCase(), themeController: widget.themeController, baseFontSize: 9),
-  );
-}
-
-Widget _AttachmentTile({
-  required String text, 
-  required bool isStarred, 
-  required ThemeController themeController
-}) {
-  final activeTheme = themeController.activeTheme;
-  final theme = activeTheme.themeData;
-  final bool isHolographic = activeTheme.isHolographic;
-  final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
-  final bool isCustom = activeTheme.id == 'neon_custom';
-  final Color accentColor = themeController.activeAccentColor;
-
-  Widget tileContent = Container(
-    margin: EdgeInsets.zero, 
-    decoration: BoxDecoration(
-      color: theme.colorScheme.surface.withOpacity(0.9),
-      borderRadius: BorderRadius.circular(18),
-      border: (isAnemone || isHolographic || isCustom) ? null : Border.all(
-        color: theme.colorScheme.primary.withOpacity(0.8),
-        width: 2.0,
-      ),
-    ),
-    child: ListTile(
-      dense: true,
-      contentPadding: const EdgeInsets.only(right: 12, left: 12, bottom: 0.5),
-      visualDensity: const VisualDensity(horizontal: 0, vertical: -2), 
-      leading: Icon(
-        isStarred ? Icons.star : Icons.api_sharp,
-        color: isStarred ? Colors.amber : (isCustom ? accentColor : theme.colorScheme.primary),
-        size: 16,
-      ),
-      title: ArmoryText(
-        text.toUpperCase(),
-        themeController: themeController,
-        baseFontSize: 13,
-        baseStrokeWidth: 2.5,
-        color: Colors.white,
-        overrideStrokeColor: Colors.black,
-        letterSpacing: 0.5,
-      ),
-    ),
-  );
-
-  Widget finalWidget;
-
-  if (isHolographic) {
-    finalWidget = _InternalAnimatedBorder(
-      colors: activeTheme.refractionColors,
-      borderRadius: 18,
-      strokeWidth: 3.5,
-      child: tileContent,
-    );
-  } else if (isAnemone) {
-    finalWidget = ArmoryGradientBorder(
-      gradientColors: activeTheme.borderGradient,
-      borderRadius: 18,
-      strokeWidth: 3.0,
-      child: tileContent,
-    );
-  } else if (isCustom) {
-    final Color coreColor = Color.lerp(accentColor, Colors.white, 0.45)!;
-    finalWidget = Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: coreColor, width: 2.0),
-        boxShadow: [
-          BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
-          BoxShadow(color: accentColor.withOpacity(0.3), blurRadius: 15, spreadRadius: 2),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(18),
-        child: Container(
-          color: Colors.black.withOpacity(0.92),
-          child: ListTile(
-            dense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-            visualDensity: const VisualDensity(horizontal: 0, vertical: -2), 
-            leading: Icon(
-              isStarred ? Icons.star : Icons.api_sharp,
-              color: isStarred ? Colors.amber : coreColor, 
-              size: 16,
-            ),
-            title: ArmoryText(
-              text.toUpperCase(),
-              themeController: themeController,
-              baseFontSize: 13,
-              baseStrokeWidth: 2.5,
-              color: Colors.white, 
-              overrideStrokeColor: Colors.black, 
-              letterSpacing: 0.5,
-            ),
-          ),
-        ),
-      ),
-    );
-  } else {
-    finalWidget = tileContent;
-  }
-
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10.0), 
-    child: finalWidget,
   );
 }
 }
@@ -6084,6 +5923,64 @@ class _PremiumStatCard extends StatelessWidget {
     return v.isNotEmpty && v != "-" && v.toLowerCase() != "null";
   }
 
+  void _showStatDefinitions(BuildContext context) {
+  final bool isCustom = themeController.activeTheme.id == 'neon_custom';
+  final Color coreColor = Color.lerp(themeController.activeAccentColor, Colors.white, 0.35)!;
+
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+        side: BorderSide(color: themeController.activeAccentColor),
+      ),
+      title: ArmoryText(
+        "STAT DEFINITIONS",
+        themeController: themeController,
+        baseFontSize: 14,
+        textAlign: TextAlign.center,
+        color:Colors.white,
+        overrideStrokeColor: Colors.black,
+        baseStrokeWidth: 2.5,
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildDefinition("• TTK: Time to kill in milliseconds. Lower is better."),
+          _buildDefinition("• ADS: Aim Down Sights speed. Lower is better."),
+          _buildDefinition("• VELOCITY: Bullet speed. Higher is better."),
+          _buildDefinition("• STK: Shots to Kill. Lower is better."),
+          _buildDefinition("• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better."),
+        ],
+      ),
+      actions: [
+        Center(
+          child: TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("CLOSE", style: TextStyle(color: Colors.white)),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget _buildDefinition(String text) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    child: ArmoryText(
+      text,
+      themeController: themeController,
+      baseFontSize: 10,
+      textAlign: TextAlign.center,
+      allowWrap: true,
+      color: Colors.white70,
+      overrideStrokeColor: Colors.black,
+    ),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     final activeTheme = themeController.activeTheme;
@@ -6098,7 +5995,7 @@ class _PremiumStatCard extends StatelessWidget {
       listenable: themeController,
       builder: (context, _) {
         return Container(
-          margin: const EdgeInsets.only(top: 6, bottom: 10),
+          margin: const EdgeInsets.only(top: 6, bottom: 10, left: 10, right: 10),
           width: double.infinity,
           decoration: BoxDecoration(
             color: isCustom 
@@ -6117,15 +6014,25 @@ class _PremiumStatCard extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: ArmoryText(
-                  "ADVANCED WEAPON STATS",
-                  themeController: themeController,
-                  baseFontSize: 10,
-                  baseStrokeWidth: 2.2,
-                  color: isCustom ? Colors.black : coreColor,
-                  overrideStrokeColor: isCustom ? coreColor : Colors.black,
-                  letterSpacing: 2.0,
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 40), // Offset to counter-balance the button
+                    ArmoryText(
+                      "ADVANCED WEAPON STATS",
+                      themeController: themeController,
+                      baseFontSize: 10,
+                      baseStrokeWidth: 2.2,
+                      color: isCustom ? Colors.black : coreColor,
+                      overrideStrokeColor: isCustom ? coreColor : Colors.black,
+                      letterSpacing: 2.0,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.info_outline, size: 16, color: isCustom ? coreColor : accentColor),
+                      onPressed: () => _showStatDefinitions(context),
+                    ),
+                  ],
                 ),
               ),
               Padding(
@@ -6142,9 +6049,9 @@ class _PremiumStatCard extends StatelessWidget {
                     const SizedBox(width: 2),
                     if (_hasData(stats.ttk2)) _buildExpandedStat((stats.range1 == stats.range2) ? "TTK ${stats.range1}+" : "TTK ${stats.range1}-${stats.range2}", stats.ttk2),
                     const SizedBox(width: 2),
-                    _buildExpandedStat("ADS SPEED", stats.adsSpeed),
+                    _buildExpandedStat("ADS", stats.adsSpeed),
                     _buildExpandedStat("VELOCITY", stats.bulletVelocity),
-                    _buildExpandedStat("HITS TO KILL", stats.shotsToKill),
+                    _buildExpandedStat("STK", stats.shotsToKill),
                     if (!_hasData(stats.ttk2) && _hasData(stats.range2)) _buildExpandedStat("DROP", stats.range2),
                     _buildExpandedStat("HITSCAN", stats.hitscanRange),
                     if (stats.shotRange != null && _hasData(stats.shotRange)) _buildExpandedStat("ONE SHOT", stats.shotRange!),
@@ -6175,11 +6082,11 @@ class _PremiumStatCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildRankElement("TTK CLOSE", "ttkClose", ratingColor),
-                      _buildRankElement("TTK FAR", "ttkFar", ratingColor),
-                      _buildRankElement("ADS SPEED", "adsSpeed", ratingColor),
-                      _buildRankElement("VELOCITY", "velocity", ratingColor),
-                      _buildRankElement("SHOTS TO KILL", "stk", ratingColor),
+                      Expanded(child: _buildRankElement("TTK CLOSE", "ttkClose", ratingColor)),
+                      Expanded(child: _buildRankElement("TTK FAR", "ttkFar", ratingColor)),
+                      Expanded(child: _buildRankElement("ADS", "adsSpeed", ratingColor)), // Abbreviated
+                      Expanded(child: _buildRankElement("VELOCITY", "velocity", ratingColor)),
+                      Expanded(child: _buildRankElement("STK", "stk", ratingColor)), // Abbreviated
                     ],
                   ),
                 ),
@@ -6204,7 +6111,7 @@ class _PremiumStatCard extends StatelessWidget {
         ArmoryText(
               label,
               themeController: themeController,
-              baseFontSize: 7,
+              baseFontSize: 8,
               baseStrokeWidth: 2.5,
               color: coreColor,
               overrideStrokeColor: Colors.black,
@@ -6320,44 +6227,120 @@ class _StatItem extends StatelessWidget {
   }
 }
 
-class _AttachmentTile extends StatelessWidget {
-  final String text; 
+class AttachmentTile extends StatelessWidget {
+  final String text;
   final bool isStarred;
   final ThemeController themeController;
 
-  const _AttachmentTile({
-    required this.text, 
+  const AttachmentTile({
+    super.key,
+    required this.text,
     this.isStarred = false,
     required this.themeController,
   });
 
+  bool _isMagazinePattern(String text) {
+    final regex = RegExp(r'^\d+\s*/\s*\d+');
+    return regex.hasMatch(text);
+  }
+
+  String getTranslatedSubtitle(String text, AegisArc locale) {
+    
+    if (_isMagazinePattern(text)) {
+      return locale.translate("MAGAZINE").translatedText;
+    }
+
+    final parts = text.split('/');
+    final translatedParts = parts.map((part) {
+      final cleanPart = part.trim();
+      final res = locale.translate(cleanPart);
+      
+      return (res.category == "UNKNOWN" || res.category.isEmpty) ? "" : res.category;
+    }).toList();
+
+    final result = translatedParts.where((s) => s.isNotEmpty).join(' / ');
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final primaryBlue = const Color.fromRGBO(2, 91, 207, 1);
-    
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8), 
-      decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A), 
-        borderRadius: BorderRadius.circular(18)
-      ), 
-      child: ListTile(
-        dense: true, 
-        leading: Icon(
-          isStarred ? Icons.star : Icons.api_sharp, 
-          size: 18, 
-          color: isStarred ? Colors.amber : primaryBlue,
-        ), 
+    final locale = Provider.of<AegisArc>(context);
 
-        title: ArmoryText(
-          text.toUpperCase(),
-          themeController: themeController,
-          baseFontSize: 13,
-          baseStrokeWidth: 2.0,
-          color: isStarred ? Colors.amber[100]! : Colors.white,
+    final TranslationResult result = locale.translate(text);
+    final bool isMagPattern = _isMagazinePattern(text);
+
+    final String subtitleText = getTranslatedSubtitle(text, locale);
+    final bool isWord = result.category.isEmpty;
+    final String resolvedCategory = isMagPattern ? "MAGAZINE" : result.category;
+
+    final activeTheme = themeController.activeTheme;
+    final theme = activeTheme.themeData;
+    final accentColor = themeController.activeAccentColor;
+    final coreColor = Color.lerp(accentColor, Colors.white, 0.4)!;
+    
+    final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+    final bool isHolo = activeTheme.isHolographic;
+    final bool isCustom = activeTheme.id == 'neon_custom';
+    final bool isNeon = isAnemone || isHolo || isCustom;
+        
+
+    final Widget tileContent = ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      child: Container(
+        color: isCustom ? const Color.fromARGB(255, 0, 0, 0).withOpacity(0.9) : theme.colorScheme.surface.withOpacity(0.7),
+        child: ListTile(
+          dense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          visualDensity: const VisualDensity(horizontal: 0, vertical: -2),
+          leading: Icon(
+            isStarred ? Icons.star : (isWord ? Icons.text_fields : Icons.api_sharp),
+            color: isStarred ? Colors.amber : (isCustom ? coreColor.withOpacity(0.5) : theme.colorScheme.primary),
+            size: 16,
+          ),
+          title: ArmoryText(
+            result.translatedText.toUpperCase(),
+            themeController: themeController,
+            baseFontSize: 13,
+            baseStrokeWidth: 2.5,
+            color: Colors.white,
+            overrideStrokeColor: Colors.black,
+            letterSpacing: 0.5,
+          ),
+          subtitle: subtitleText.isEmpty ? null : Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: ArmoryText(
+              subtitleText.toUpperCase(),
+              themeController: themeController,
+              baseFontSize: 9,
+              baseStrokeWidth: 1.5,
+              color: Colors.white.withOpacity(0.7),
+              overrideStrokeColor: Colors.black,
+            ),
+          ),
         ),
       ),
     );
+
+    Widget wrappedTile;
+    if (isHolo) {
+      wrappedTile = _InternalAnimatedBorder(colors: activeTheme.refractionColors, borderRadius: 24, strokeWidth: 3.0, child: tileContent);
+    } else if (isAnemone) {
+      wrappedTile = RepaintBoundary(child: ArmoryGradientBorder(gradientColors: activeTheme.borderGradient, borderRadius: 24, strokeWidth: 2.5, child: tileContent));
+    } else {
+      wrappedTile = Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(color: isCustom ? coreColor : theme.colorScheme.primary.withOpacity(0.7), width: 2.0),
+          boxShadow: isCustom ? [
+            BoxShadow(color: accentColor.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
+            BoxShadow(color: accentColor.withOpacity(0.3), blurRadius: 15, spreadRadius: 2),
+          ] : [],
+        ),
+        child: tileContent,
+      );
+    }
+
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5), child: wrappedTile);
   }
 }
 
@@ -6655,14 +6638,14 @@ class _SmartImage extends StatelessWidget {
 
 class RandomLoadoutScreen extends StatefulWidget {
   final ThemeController themeController;
-  const RandomLoadoutScreen({super.key, required this.themeController});
+  final AegisArc aegisArc;
+  const RandomLoadoutScreen({super.key, required this.themeController, required this.aegisArc});
 
   @override
   State<RandomLoadoutScreen> createState() => _RandomLoadoutScreenState();
 }
 
 class _RandomLoadoutScreenState extends State<RandomLoadoutScreen> with SingleTickerProviderStateMixin {
-
   final Random _rng = Random(); 
   
   List<dynamic> _allWeaponData = [];
@@ -6907,74 +6890,39 @@ Future<void> _saveSettings() async {
   }
 
   Future<void> _loadCADData() async {
-    try {
-      // 1. Load your CAD Data using the hotfix tracker (looks for hotfixes first, then bundle)
-      final String cadResponse = await loadHotfixedJson('assets/CAD_202602140253.json');
-      final Map<String, dynamic> cadJson = json.decode(cadResponse);
-      final List<dynamic> cadList = cadJson['CAD'] ?? [];
+    final String cadResponse = await rootBundle.loadString('assets/CAD.json');
+    final Map<String, dynamic> cadJson = json.decode(cadResponse);
+    final List<dynamic> cadList = cadJson['CAD'];
 
-      // 2. Fetch the correct localized weapon names file dynamically based on active locale
-      final localeController = Provider.of<LocaleController>(context, listen: false);
-      final String activeCode = localeController.languageCode;
-      final String suffix = (localeController.suffix.isEmpty) ? '_$activeCode' : localeController.suffix;
-      
-      // Resolves to assets/es/Weapon_Names_..._es.json when in Spanish!
-      final String localizedNamesPath = activeCode == 'en' 
-          ? 'assets/Weapon_Names_202602160630.json'
-          : 'assets/$activeCode/Weapon_Names_202602160630$suffix.json';
+    final String namesResponse = await rootBundle.loadString('assets/Weapon_Names.json');
+    final Map<String, dynamic> namesJson = json.decode(namesResponse);
+    final List<dynamic> namesData = namesJson['Weapon_Names'] ?? [];
+    final String archResponse = await rootBundle.loadString('assets/archetypes.json');
+    final Map<String, dynamic> archJson = json.decode(archResponse);
 
-      final String namesResponse = await loadHotfixedJson(localizedNamesPath);
-      final Map<String, dynamic> namesJson = json.decode(namesResponse);
-      final List<dynamic> namesData = namesJson['Weapon_Names'] ?? [];
+    List<dynamic> enrichedPool = cadList.map((cadWeapon) {
+      final metadata = namesData.firstWhere(
+        (n) => n['weapon_name'].toString().trim().toLowerCase() == 
+               cadWeapon['weapon_name'].toString().trim().toLowerCase(),
+        orElse: () => null,
+      );
+      return {
+        ...cadWeapon,
+        'game_image': metadata != null ? metadata['game_image'] : '',
+      };
+    }).toList();
 
-      // 3. Load Archetypes through the hotfix manager
-      final String localizedArchPath = activeCode == 'en'
-          ? 'assets/archetypes.json'
-          : 'assets/$activeCode/archetypes$suffix.json';
-          
-      final String archResponse = await loadHotfixedJson(localizedArchPath);
-      final Map<String, dynamic> archJson = json.decode(archResponse);
-
-      // 4. Enrich the pool safely
-      List<dynamic> enrichedPool = cadList.map((cadWeapon) {
-        // Clean up the base search key from your English CAD file
-        final String cadWeaponName = cadWeapon['weapon_name'].toString().trim().toLowerCase();
-
-        // Look for the metadata entry. 
-        // NOTE: If your localized weapon_name changes string values, 
-        // make sure your JSON metadata contains an 'id' or 'base_name' key to match against!
-        final metadata = namesData.firstWhere(
-          (n) => n['weapon_name'].toString().trim().toLowerCase() == cadWeaponName,
-          orElse: () => null,
-        );
-
-        return {
-          ...cadWeapon,
-          // Fallback to a placeholder or cad key if metadata isn't matched yet
-          'game_image': metadata != null ? (metadata['game_image'] ?? '') : '',
-          // If you want the localized display name to show up in the UI, swap it here:
-          'display_name': metadata != null ? metadata['weapon_name'] : cadWeapon['weapon_name'],
-        };
-      }).toList();
-
-      setState(() {
-        _allWeaponData = enrichedPool;
-        // Use the display name or weapon name for sorting
-        _weaponNames = _allWeaponData.map((w) => (w['display_name'] ?? w['weapon_name']).toString()).toList()..sort();
-        
-        _archetypeMap = (archJson['archetypes'] as Map<String, dynamic>).map(
-          (key, value) => MapEntry(key, List<String>.from(value))
-        );
-      });
-      
-      debugPrint("⚔️ CAD Core Data successfully synced and loaded for locale: $activeCode");
-    } catch (e, stacktrace) {
-      debugPrint("❌ Error initializing CAD localized data assembly: $e");
-      debugPrint("$stacktrace");
-    }
-  }
+    setState(() {
+      _allWeaponData = enrichedPool;
+      _weaponNames = _allWeaponData.map((w) => w['weapon_name'].toString()).toList()..sort();
+      _archetypeMap = (archJson['archetypes'] as Map<String, dynamic>).map(
+        (key, value) => MapEntry(key, List<String>.from(value))
+      );
+    });
+}
 
 Future<void> _generate() async {
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
   ScaffoldMessenger.of(context).clearSnackBars();
 
   if (!_isRandomWeapon && _selectedWeapon == null) {
@@ -7106,7 +7054,7 @@ Future<void> _generate() async {
       }
     }
 
-    List<String> categories = ['barrel', 'stock', 'muzzle', 'rear grip', 'optic', 'underbarrel', 'magazine', 'laser', 'comb', 'trigger action', 'guard', 'bolt', 'arm', 'rail', 'carry handle', 'lever', 'loader', 'wire', 'slings', 'fire mods', 'perk', 'pumps', 'pump grip', 'ammunition'];
+    List<String> categories = ['barrel', 'stock', 'muzzle', 'rear grip', 'optic', 'underbarrel', 'magazine', 'laser', 'comb', 'trigger action', 'guard', 'bolt', 'arm', 'rail', 'carry handle', 'lever', 'loader', 'wire', 'sling', 'fire mod', 'perk', 'pumps', 'pump grip', 'ammunition'];
     categories.shuffle();
     Map<String, String> picks = {};
     int count = 0;
@@ -7116,7 +7064,12 @@ Future<void> _generate() async {
       String? options = weapon[cat]; 
       if (options != null && options.trim().isNotEmpty) {
         var list = options.split(',').map((e) => e.trim()).toList();
-        picks[cat.replaceAll('_', ' ').toUpperCase()] = list[_rng.nextInt(list.length)];
+        String rawAttachment = list[_rng.nextInt(list.length)];
+        
+        final translatedCat = aegisArc.translate(cat).translatedText;
+        final translatedAttachment = aegisArc.translate(rawAttachment).translatedText;
+        
+        picks[translatedCat.toUpperCase()] = translatedAttachment;
         count++;
       }
     }
@@ -7130,18 +7083,20 @@ Future<void> _generate() async {
         )
         .key;
 
+    final weaponNameRes = widget.aegisArc.translate(weapon['weapon_name']);
+
     tempResults.add({
       'id': 'gen_${timestamp}_$i', 
-      'weapon_name': weapon['weapon_name'], 
-      'archetype': foundArchetype,
+      'weapon_name': weaponNameRes.translatedText,
+      'archetype': widget.aegisArc.translateStatic(foundArchetype),
       'game': _getGameFromUrl(weapon['game_image']).toUpperCase(), 
       'attachments': picks
     });
-  }
 
   setState(() {
     _generatedLoadouts = tempResults;
   });
+}
 }
 
 List<String> _getAvailableCategories() {
@@ -7193,7 +7148,7 @@ Widget build(BuildContext context) {
       elevation: 0,
       centerTitle: true,
       title: ArmoryText(
-        "RANDOMIZER",
+        "MODULE: RANDOMIZER",
         themeController: widget.themeController,
         baseFontSize: 14,
         baseStrokeWidth: isNeon ? 2.5 : 2.0,
@@ -7459,10 +7414,10 @@ Widget _buildOptimizedSearch(ThemeData theme) {
     onTap: () => _showWeaponSearchSheet(context, theme),
     child: Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(12),
         color: isNeon ? const Color.fromARGB(255, 0, 0, 0) : primaryFaded,
         border: Border.all(
-          color: isNeon ? coreColor.withOpacity(0.4) : theme.colorScheme.primary.withOpacity(0.6),
+          color: isNeon ? coreColor.withOpacity(0.4) : theme.colorScheme.primary.withOpacity(0.4),
           width: 1.0,
         ),
       ),
@@ -7480,7 +7435,7 @@ Widget _buildOptimizedSearch(ThemeData theme) {
               _selectedWeapon?.toUpperCase() ?? "SEARCH ARMORY...",
               themeController: themeController,
               baseFontSize: 11,
-              color: _selectedWeapon != null ? Colors.white : Colors.white70,
+              color: _selectedWeapon != null ? Colors.white : Colors.white30,
             ),
           ),
           if (_selectedWeapon != null)
@@ -7498,7 +7453,7 @@ Widget _buildOptimizedSearch(ThemeData theme) {
 }
 
 void _showWeaponSearchSheet(BuildContext context, ThemeData theme) {
-  final localeController = Provider.of<LocaleController>(context, listen: false);
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
   final themeController = widget.themeController;
   final bool isNeon = themeController.activeTheme.id == 'neon_custom';
   final Color coreColor = Color.lerp(themeController.activeAccentColor, Colors.white, 0.35)!;
@@ -7549,7 +7504,7 @@ void _showWeaponSearchSheet(BuildContext context, ThemeData theme) {
                     style: const TextStyle(color: Colors.white, fontSize: 13),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
-                      hintText: localeController.translate("TYPE WEAPON NAME..."),
+                      hintText: context.watch<AegisArc>().translateStatic("TYPE WEAPON NAME..."),
                       hintStyle: const TextStyle(color: Colors.white30),
                       prefixIcon: Icon(Icons.search, color: coreColor),
                       filled: true,
@@ -7581,7 +7536,7 @@ void _showWeaponSearchSheet(BuildContext context, ThemeData theme) {
                               "NO MATCHES FOUND",
                               themeController: themeController,
                               baseFontSize: 12,
-                              color: Colors.white,
+                              color: Colors.white24,
                             ),
                           )
                         : ListView.builder(
@@ -7658,7 +7613,7 @@ Widget _buildStatusHeader(ThemeData theme) {
               color: isCustom ? coreColor.withOpacity(0.4) : primaryColor.withOpacity(0.6),
               width: isCustom ? 1.5 : 1.0,
             ),
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(12),
             boxShadow: isCustom ? [
               BoxShadow(color: accentColor.withOpacity(0.1), blurRadius: 10, spreadRadius: -2)
             ] : null,
@@ -8094,6 +8049,7 @@ Widget _buildInitializeButton(ArmoryTheme activeTheme, ThemeData theme) {
     child: ElevatedButton(
       onPressed: () {
         FocusManager.instance.primaryFocus?.unfocus();
+
         HapticFeedback.heavyImpact();
 
         if (_isRandomWeapon || _selectedWeapon == null) {
@@ -8107,7 +8063,7 @@ Widget _buildInitializeButton(ArmoryTheme activeTheme, ThemeData theme) {
         shadowColor: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 15),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(12),
           side: !isHolographic 
               ? BorderSide(color: borderFill, width: isCustom ? 2 : 1.5) 
               : BorderSide.none,
@@ -8137,17 +8093,13 @@ Widget _buildInitializeButton(ArmoryTheme activeTheme, ThemeData theme) {
       colors: activeTheme.refractionColors.isNotEmpty 
           ? activeTheme.refractionColors 
           : activeTheme.borderGradient,
-      borderRadius: 24,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(24),
-        child: button,
-      ),
+      child: button,
     );
   }
 
   return Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(24),
+      borderRadius: BorderRadius.circular(12),
       boxShadow: [
         if (isCustom) ...[
           BoxShadow(color: accent.withOpacity(0.8), blurRadius: 1, spreadRadius: 0.5),
@@ -8160,10 +8112,7 @@ Widget _buildInitializeButton(ArmoryTheme activeTheme, ThemeData theme) {
         ],
       ],
     ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(24),
-      child: button,
-    ),
+    child: button,
   );
 }
 
@@ -8679,12 +8628,12 @@ class _AugmentTreeScreenState extends State<AugmentTreeScreen> {
   String key = activeCategory == "PERKS" ? "Perks" : 
                activeCategory == "AMMO MODS" ? "Ammo_Mods" : "Field_Upgrades";
   
-  final localeController = Provider.of<LocaleController>(context, listen: false);
-  String lang = localeController.languageCode;
-  String suffix = localeController.suffix;
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
+  String lang = aegisArc.languageCode;
+  String suffix = aegisArc.suffix;
 
-  String folder = lang == 'en' ? 'assets/' : 'assets/$lang/';
-  String fileName = "${key}_202602141947$suffix.json";
+  String folder = 'assets/';
+  String fileName = "$key.json";
   String fullPath = "$folder$fileName";
 
   try {
@@ -8770,9 +8719,11 @@ Widget build(BuildContext context) {
   final themeController = widget.themeController;
   final bool isCustom = themeController.activeTheme.id == 'neon_custom';
   final Color accentColor = themeController.activeAccentColor;
+  final locale = Provider.of<AegisArc>(context);
   final Color coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
   final Color primaryFaded = Color.alphaBlend(
     Theme.of(context).colorScheme.surface.withOpacity(0.8), 
+  
     Colors.black
   );
 
@@ -8855,19 +8806,28 @@ class _AugmentCard extends StatelessWidget {
 
   const _AugmentCard({super.key, required this.item, required this.themeController});
 
-  Map<String, dynamic> _parseAugment(String raw) {
+  Map<String, dynamic> _parseAugment(String raw, AegisArc locale) {
     String clean = raw.replaceAll(RegExp(r'>?\s?BO7\s?|BO7\s?>?|>'), "").trim();
     List<String> parts = clean.split("|");
+
+    String translateAndFormat(String text) {
+        List<String> options = text.split("/");
+        List<String> translatedOptions = options.map((opt) => 
+            locale.translate(opt.trim()).translatedText
+        ).toList();
+        
+        return translatedOptions.join(" [OR] ");
+    }
+
     String baseRaw = parts[0].trim();
     String? bo7Raw = parts.length > 1 ? parts[1].trim() : null;
-    String formatChoice(String text) => text.replaceAll("/", " [OR] ").trim();
 
     return {
-      "base": formatChoice(baseRaw),
-      "bo7": bo7Raw != null ? formatChoice(bo7Raw.replaceAll("+", "")) : null,
+      "base": translateAndFormat(baseRaw),
+      "bo7": bo7Raw != null ? translateAndFormat(bo7Raw.replaceAll("+", "")) : null,
       "isReplacement": raw.contains("BO7 >"),
     };
-  }
+}
 
   bool get _isNeon => themeController.activeTheme.id == 'neon_custom';
   bool get _isHolo => themeController.activeTheme.isHolographic;
@@ -8929,6 +8889,7 @@ class _AugmentCard extends StatelessWidget {
     final Color coreColor = _getCore(accent);
     final bool useBlackFill = _isNeon; 
     final Color activeColor = _useBlueprint ? coreColor : fallbackColor;
+    
     
     final Color fill = useBlackFill 
         ? Colors.black.withOpacity(0.98) 
@@ -9020,12 +8981,25 @@ class _AugmentCard extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
+  // 1. Get the locale controller
+  final locale = Provider.of<AegisArc>(context);
+  
   final activeTheme = themeController.activeTheme;
   final bool isHolo = activeTheme.isHolographic;
   final bool isAnemone = activeTheme.category == ThemeCategory.anemone || activeTheme.borderGradient.isNotEmpty;
   
   final accent = themeController.activeAccentColor;
   final Color coreColor = _getCore(accent);
+
+  // 2. Prepare translated UI Labels
+  final String minorLabel = locale.translate("MINOR AUGMENT").translatedText;
+  final String majorLabel = locale.translate("MAJOR AUGMENT").translatedText;
+
+  final minorData = _parseAugment(item.minor, locale);
+  final majorData = _parseAugment(item.major, locale);
+  
+  final String minorContent = locale.translate(minorData['base']!).translatedText;
+  final String majorContent = locale.translate(majorData['base']!).translatedText;
 
   const double outerRadius = 28.0;
   const double innerRadius = 28.0; 
@@ -9058,7 +9032,7 @@ Widget build(BuildContext context) {
           const SizedBox(height: 20),
           Center(
             child: ArmoryText(
-              item.name.toUpperCase(), 
+              locale.translate(item.name).translatedText.toUpperCase(), 
               themeController: themeController, 
               baseFontSize: 20, 
               baseStrokeWidth: (_isNeon || isHolo || isAnemone) ? 4.0 : 3.0,
@@ -9066,9 +9040,17 @@ Widget build(BuildContext context) {
             )
           ),
           const SizedBox(height: 25),
-          _buildStandardBox("MINOR AUGMENT", _parseAugment(item.minor)['base']!, Theme.of(context).colorScheme.primary),
-          _buildStandardBox("MAJOR AUGMENT", _parseAugment(item.major)['base']!, Colors.purpleAccent),
-          _buildBO7Box(_parseAugment(item.minor), _parseAugment(item.major)),
+          _buildStandardBox(
+            minorLabel, 
+            _parseAugment(item.minor, locale)['base'],
+            Theme.of(context).colorScheme.primary
+          ),
+          _buildStandardBox(
+            majorLabel, 
+            _parseAugment(item.major, locale)['base'],
+            Colors.purpleAccent
+          ),
+          _buildBO7Box(_parseAugment(item.minor, locale), _parseAugment(item.major, locale)),
         ],
       ),
     ),
@@ -9155,14 +9137,14 @@ Future<void> _loadMetaData() async {
 
   try {
 
-    final String weaponResponse = await loadHotfixedJson('assets/Weapon_Names_202602160630.json');
+    final String weaponResponse = await loadHotfixedJson('assets/Weapon_Names.json');
     final Map<String, dynamic> weaponData = json.decode(weaponResponse);
     final List<dynamic> weaponList = weaponData['Weapon_Names'] ?? [];
 
     String? cwLogo = weaponList.firstWhere((w) => w['weapon_name'].toString().contains('(CW)'), orElse: () => null)?['game_image'];
     String? mw3Logo = weaponList.firstWhere((w) => w['weapon_name'].toString().contains('MW3'), orElse: () => null)?['game_image'];
 
-    final String metaResponse = await loadHotfixedJson('assets/META_202602160120.json');
+    final String metaResponse = await loadHotfixedJson('assets/META.json');
     final metaData = json.decode(metaResponse);
 
     setState(() {
@@ -9523,45 +9505,33 @@ class _MetaCardState extends State<_MetaCard> {
 }
 
   String _getTargetJsonPath() {
-  final localeController = Provider.of<LocaleController>(context, listen: false);
-  final String lang = localeController.languageCode;
-  final String suffix = localeController.suffix;
-
-  String getPath(String fileName) {
-    if (lang == 'en') return 'assets/$fileName';
-    String nameWithoutExtension = fileName.split('.').first;
-    return 'assets/$lang/$nameWithoutExtension$suffix.json';
-  }
-
   final game = widget.weapon.game;
   final type = widget.weapon.classType;
 
-  if (type == "SPECIAL") {
-    return getPath('Special_202602130024.json');
-  }
+  if (type == "SPECIAL") return 'assets/Special.json';
 
   if (type.contains("(WZ)")) {
-    if (game == "BO7") return getPath('Warzone_BO7_202602130021.json');
-    if (game == "BO6") return getPath('Warzone_BO6_202602130021.json');
-    if (game == "MW2") return getPath('Warzone_MW3_MW2_202602130021.json');
-    if (game == "MW3") return getPath('Warzone_MW3_MW2_202602130021.json');
+    if (game == "BO7") return 'assets/Warzone_BO7.json';
+    if (game == "BO6") return 'assets/Warzone_BO6.json';
+    if (game == "MW2") return 'assets/Warzone_MW3_MW2.json';
+    if (game == "MW3") return 'assets/Warzone_MW3_MW2.json';
   } 
     
   if (type == "MULTIPLAYER") {
-    if (game == "BO7") return getPath('Multiplayer_BO7_202603041754.json');
-    if (game == "BO6") return getPath('Multiplayer_MW3_BO6_202602130020.json');
-    if (game == "CW") return getPath('Multiplayer_Cold_War_202603041703.json');
-    if (game == "MW2") return getPath('Multiplayer_MW3_BO6_202602130020.json');
-    if (game == "MW3") return getPath('Multiplayer_MW3_BO6_202602130020.json');
-    if (game == "MW19") return getPath('Multiplayer_MW19_202602130020.json');
+    if (game == "BO7") return 'assets/Multiplayer_BO7.json';
+    if (game == "BO6") return 'assets/Multiplayer_MW3_BO6.json';
+    if (game == "CW") return 'assets/Multiplayer_Cold_War.json';
+    if (game == "MW2") return 'assets/Multiplayer_MW3_BO6.json';
+    if (game == "MW3") return 'assets/Multiplayer_MW3_BO6.json';
+    if (game == "MW19") return 'assets/Multiplayer_MW19.json';
   }
 
   if (type == "ZOMBIES") {
-    if (game == "BO7") return getPath('Zombies_BO7_202602130022.json');
-    if (game == "BO6") return getPath('Zombies_MW3_BO6_202602130022.json');
-    if (game == "CW") return getPath('Zombies_Cold_War_202602130022.json');
-    if (game == "MW2") return getPath('Zombies_MW3_BO6_202602130022.json');
-    if (game == "MW3") return getPath('Zombies_MW3_BO6_202602130022.json');
+    if (game == "BO7") return 'assets/Zombies_BO7.json';
+    if (game == "BO6") return 'assets/Zombies_MW3_BO6.json';
+    if (game == "CW") return 'assets/Zombies_Cold_War.json';
+    if (game == "MW2") return 'assets/Zombies_MW3_BO6.json';
+    if (game == "MW3") return 'assets/Zombies_MW3_BO6.json';
   }
   
   throw UnimplementedError("No absolute path defined for Game: $game, Type: $type");
@@ -9573,7 +9543,6 @@ Future<void> _fetchLoadout() async {
 
   try {
     final String cardName = widget.weapon.searchKey.toUpperCase();
-
     final bool isSpecialWarzone = cardName.contains('(WZ)') && 
                                  (cardName.contains('SNIPER SUPPORT') || cardName.contains('MOD'));
 
@@ -9581,21 +9550,10 @@ Future<void> _fetchLoadout() async {
     final primaryPath = _getTargetJsonPath();
 
     if (isSpecialWarzone) {
-      debugPrint("🎯 Warzone Special Detected: $cardName. Checking Special JSON...");
-      final localeController = Provider.of<LocaleController>(context, listen: false);
-      final String lang = localeController.languageCode;
-      final String suffix = localeController.suffix;
-      
-      final String specialPath = lang == 'en' 
-          ? 'assets/Special_202602130024.json'
-          : 'assets/$lang/Special_202602130024$suffix.json';
-
       try {
-          final response = await loadHotfixedJson(specialPath);
-          final List<dynamic> specialData = _parseJsonList(json.decode(response));
-
+        final response = await loadHotfixedJson('assets/Special.json');
+        final List<dynamic> specialData = _parseJsonList(json.decode(response));
         match = specialData.firstWhere((item) {
-
           String combined = "${item['weapon_name']} ${item['mod']}".toUpperCase().trim();
           return combined == cardName || combined.contains(cardName);
         }, orElse: () => null);
@@ -9603,22 +9561,17 @@ Future<void> _fetchLoadout() async {
         debugPrint("Special JSON lookup failed: $e");
       }
     }
+
     if (match == null) {
       try {
         final response = await loadHotfixedJson(primaryPath);
         final List<dynamic> data = _parseJsonList(json.decode(response));
         
         match = data.firstWhere((item) {
-        String itemName = (item['weapon_name'] ?? item['name'] ?? "").toString().toUpperCase().trim();
-        
-        String target = cardName.toUpperCase().trim();
-
-        if (itemName == target) return true;
-
-        if (itemName.contains(target) || target.contains(itemName)) return true;
-
-        return false;
-      }, orElse: () => null);
+          String itemName = (item['weapon_name'] ?? item['name'] ?? "").toString().toUpperCase().trim();
+          String target = cardName.toUpperCase().trim();
+          return itemName == target || itemName.contains(target) || target.contains(itemName);
+        }, orElse: () => null);
       } catch (e) {
         debugPrint("Primary JSON lookup failed: $e");
       }
@@ -9629,7 +9582,6 @@ Future<void> _fetchLoadout() async {
         _foundLoadout = match;
         _isSearching = false;
       });
-      if (match == null) debugPrint("❌ TOTAL MISS: No match for $cardName");
     }
   } catch (e) {
     debugPrint("Global Search error: $e");
@@ -9829,6 +9781,7 @@ Widget _buildBack(Color primary) {
   final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
   final bool isHolo = activeTheme.isHolographic;
   final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+  final aegisArc = Provider.of<AegisArc>(context, listen: false);
   
   final Color accent = widget.themeController.activeAccentColor;
   final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
@@ -9893,7 +9846,7 @@ Widget _buildBack(Color primary) {
                         "NO DATA FOUND",
                         themeController: widget.themeController,
                         baseFontSize: 10,
-                        color: Colors.white,
+                        color: Colors.white10,
                       ),
                     )
                   : ListView.builder(
@@ -9911,7 +9864,7 @@ Widget _buildBack(Color primary) {
                               const SizedBox(width: 14),
                               Expanded( 
                                 child: ArmoryText(
-                                  attachments[i].toUpperCase(),
+                                  aegisArc.translate(attachments[i].toUpperCase()).translatedText,
                                   themeController: widget.themeController,
                                   baseFontSize: 11,
                                   color: Colors.white,
@@ -10821,42 +10774,37 @@ class _RankedPlayPageState extends State<RankedPlayPage> {
   }
 
   Future<void> _loadIndependentRankedData() async {
-    try {
-      final localeController = Provider.of<LocaleController>(context, listen: false);
-      final String lang = localeController.languageCode;
-      final String suffix = localeController.suffix;
+  try {
+    final String rankedPath = 'assets/Ranked.json';
+    final String namesPath = 'assets/Weapon_Names.json';
 
-      String getPath(String fileName) {
-        if (lang == 'en') return 'assets/$fileName';
-        String nameWithoutExtension = fileName.split('.').first;
-        return 'assets/$lang/$nameWithoutExtension$suffix.json';
-      }
+    final String rankedResponse = await loadHotfixedJson(rankedPath);
+    final String namesResponse = await loadHotfixedJson(namesPath);
+    
+    final Map<String, dynamic> rankedDecoded = json.decode(rankedResponse);
+    final Map<String, dynamic> namesDecoded = json.decode(namesResponse);
+    
+    final List<dynamic> rankedData = rankedDecoded['Ranked'] ?? [];
+    final List<dynamic> masterNamesList = namesDecoded['Weapon_Names'] ?? [];
 
-      final String rankedPath = getPath('Ranked_202602202346.json');
-      final String namesPath = getPath('Weapon_Names_202602160630.json');
-
-      final String rankedResponse = await loadHotfixedJson(rankedPath);
-      final String namesResponse = await loadHotfixedJson(namesPath);
+    List<Weapon> tempWeapons = rankedData.where((item) {
+      final String availability = (item['availability'] ?? "YES").toString().toUpperCase();
+      return availability == "YES";
+    }).map((item) {
+      // Use the translated name if available, or fallback to rawName
+      final String rawName = (item['weapon_name'] ?? "UNKNOWN").toString().trim();
       
-      final Map<String, dynamic> rankedDecoded = json.decode(rankedResponse);
-      final Map<String, dynamic> namesDecoded = json.decode(namesResponse);
+      // Perform translation for the weapon name dynamically
+      final aegisArc = Provider.of<AegisArc>(context, listen: false);
+      final String displayName = aegisArc.translate(rawName).translatedText;
+
+      final String searchKey = (item['english_name'] ?? rawName)
+          .toString()
+          .replaceAll(RegExp(r'[^a-zA-Z0-9]'), '')
+          .toUpperCase();
       
-      final List<dynamic> rankedData = rankedDecoded['Ranked'] ?? [];
-      final List<dynamic> masterNamesList = namesDecoded['Weapon_Names'] ?? [];
-
-      List<Weapon> tempWeapons = rankedData.where((item) {
-        final String availability = (item['availability'] ?? "YES").toString().toUpperCase();
-        return availability == "YES";
-      }).map((item) {
-        final String rawName = (item['weapon_name'] ?? "UNKNOWN").toString().trim();
-
-        final String searchKey = (item['english_name'] ?? rawName)
-            .toString()
-            .replaceAll(RegExp(r'[^a-zA-Z0-9]'), '')
-            .toUpperCase();
-        
-        String? foundImageUrl;
-        String? foundLogoUrl;
+      String? foundImageUrl;
+      String? foundLogoUrl;
 
         try {
           final matchingWeapon = widget.allWeapons.firstWhere((w) {
@@ -11189,6 +11137,7 @@ Widget _buildFront(Color primary) {
   final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
   final bool isHolo = activeTheme.isHolographic;
   final bool isAnemone = activeTheme.category == ThemeCategory.anemone;
+  final locale = Provider.of<AegisArc>(context);
   
   final Color accent = widget.themeController.activeAccentColor;
   final Color coreColor = Color.lerp(accent, Colors.white, 0.35)!;
@@ -11253,6 +11202,9 @@ Widget _buildFront(Color primary) {
                     padding: const EdgeInsets.only(top: 5), 
                     itemCount: attachments.length,
                     itemBuilder: (context, i) {
+                      final rawAttach = attachments[i];
+                      final translatedAttach = locale.translate(rawAttach).translatedText;
+
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 9), 
                         child: Row(
@@ -11265,7 +11217,8 @@ Widget _buildFront(Color primary) {
                             const SizedBox(width: 14),
                             Expanded( 
                               child: ArmoryText(
-                                attachments[i].toUpperCase(),
+                                // 3. Display the translated text
+                                translatedAttach.toUpperCase(),
                                 themeController: widget.themeController,
                                 baseFontSize: 11,
                                 color: Colors.white,
@@ -11647,7 +11600,7 @@ void initState() {
 }
 
 Future<void> _initCompatibilityData() async {
-  final String response = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
+  final String response = await loadHotfixedJson('assets/Premium_Stats.json');
   final Map<String, dynamic> data = json.decode(response);
   final List<dynamic> premiumList = data['Premium_Stats'];
   
@@ -11699,7 +11652,7 @@ void _openWeaponSelector(String slot) async {
   _searchQuery = "";
   _searchController.clear();
 
-  final String response = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
+  final String response = await loadHotfixedJson('assets/Premium_Stats.json');
   final Map<String, dynamic> data = json.decode(response);
   final List<dynamic> premiumList = data['Premium_Stats'];
   
@@ -11722,7 +11675,7 @@ void _openWeaponSelector(String slot) async {
         final accentColor = widget.themeController.activeAccentColor;
         final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
         final activeFont = widget.themeController.activeFont;
-        final localeController = Provider.of<LocaleController>(context);
+        final aegisArc = Provider.of<AegisArc>(context);
         final Color primaryFaded = Color.alphaBlend(
         Theme.of(context).colorScheme.surface.withOpacity(0.2), 
         Colors.black
@@ -11772,7 +11725,7 @@ void _openWeaponSelector(String slot) async {
                   onChanged: (val) => setModalState(() => _searchQuery = val),
                   style: TextStyle(color: Colors.white, fontSize: 13, fontFamily: activeFont),
                   decoration: InputDecoration(
-                    hintText: localeController.translate("SEARCH FOR WEAPON..."),
+                    hintText: aegisArc.translateStatic("SEARCH FOR WEAPON..."),
                     hintStyle: const TextStyle(color: Colors.white30, fontSize: 11),
                     prefixIcon: Icon(Icons.search, color: accentColor, size: 18),
                     filled: true,
@@ -11798,7 +11751,7 @@ void _openWeaponSelector(String slot) async {
                     return GestureDetector(
                       onTap: () async {
                         HapticFeedback.lightImpact();
-                        final String response = await loadHotfixedJson('assets/Premium_Stats_202602131455.json');
+                        final String response = await loadHotfixedJson('assets/Premium_Stats.json');
                         final Map<String, dynamic> data = json.decode(response);
                         final List<dynamic> premiumList = data['Premium_Stats'];
                         final String weaponNameLower = w.name.toLowerCase().trim();
@@ -12885,8 +12838,8 @@ WeaponStats? _extractBaseStats(
 
   Future<void> _loadArchetypes() async {
   try {
-    final localeController = Provider.of<LocaleController>(context, listen: false);
-    final String lang = localeController.languageCode;
+    final aegisArc = Provider.of<AegisArc>(context, listen: false);
+    final String lang = aegisArc.languageCode;
 
     String getAssetPath(String fileName) {
       if (lang == 'en') {
@@ -12899,7 +12852,7 @@ WeaponStats? _extractBaseStats(
     }
 
     final String archetypesAssetPath = getAssetPath('archetypes.json');
-    final String statsAssetPath = getAssetPath('Premium_Stats_202602131455.json');
+    final String statsAssetPath = getAssetPath('Premium_Stats.json');
 
     final String archetypesResponse = await loadHotfixedJson(archetypesAssetPath);
     final data = json.decode(archetypesResponse);
@@ -13272,7 +13225,7 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
   final accentColor = widget.themeController.activeAccentColor;
   final isCustom = activeTheme.id == 'neon_custom';
   final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
-  final localeController = Provider.of<LocaleController>(context);
+  final aegisArc = Provider.of<AegisArc>(context);
 
   final int totalCount = _getSortedWeapons().length; 
   
@@ -13691,31 +13644,106 @@ Map<String, ArchetypeRank> calculateArchetypeRankings({
   return rankings;
 }
 
-class LocaleController extends ChangeNotifier {
+class TranslationResult {
+  final String translatedText;
+  final String category;
+
+  TranslationResult(this.translatedText, this.category);
+
+@override
+  String toString() => translatedText;
+}
+
+class AegisArc extends ChangeNotifier {
   String _currentLocale = 'en';
+  Map<String, dynamic> _masterDict = {};
+
   String get languageCode => _currentLocale;
-  String translate(String key) {
+
+  Future<void> loadMasterDictionary() async {
+    final String content = await rootBundle.loadString('assets/master.json');
+    _masterDict = json.decode(content);
+    
+    notifyListeners();
+  }
+
+String translateStatic(String key) {
   final langMap = uiTranslations[_currentLocale];
   if (langMap == null) return key; 
 
   final String upperKey = key.toUpperCase().trim();
 
-  if (langMap.containsKey(upperKey)) {
-    return langMap[upperKey]!;
-  }
+  if (langMap.containsKey(upperKey)) return langMap[upperKey]!;
 
   for (String dictKey in langMap.keys) {
     if (upperKey.contains(dictKey)) {
       return upperKey.replaceAll(dictKey, langMap[dictKey]!);
     }
   }
-
   return key;
 }
 
+  TranslationResult translate(String key) {
+    final String upperKey = key.toUpperCase().trim();
+
+    if (_currentLocale == 'en') {
+      return TranslationResult(key, _getCategoryFor(upperKey));
+    }
+
+    if (upperKey.contains('/')) {
+      final parts = upperKey.split('/');
+      
+      final translatedParts = parts
+          .map((p) {
+            final partKey = p.trim();
+            final res = _translateSingle(partKey);
+            return res.translatedText;
+          })
+          .join(' / ');
+          
+      return TranslationResult(translatedParts, _getCategoryFor(parts.first.trim()));
+    }
+
+    return _translateSingle(upperKey);
+  }
+
+  TranslationResult _translateSingle(String key) {
+  final String upperKey = key.toUpperCase().trim();
+
+  for (var entry in _masterDict.entries) {
+    if (entry.value is Map && entry.value.containsKey(upperKey)) {
+      String translation = entry.value[upperKey][_currentLocale.toUpperCase()] ?? key;
+
+      String categoryKey = entry.key;
+
+      String translatedCategory = categoryKey;
+      if (_masterDict.containsKey("WORDS") && _masterDict["WORDS"].containsKey(categoryKey)) {
+        translatedCategory = _masterDict["WORDS"][categoryKey][_currentLocale.toUpperCase()] ?? categoryKey;
+      }
+
+      if (categoryKey == "WORDS") {
+        return TranslationResult(translation, "");
+      }
+
+      return TranslationResult(translation, translatedCategory);
+    }
+  }
+
+  return TranslationResult(key, "UNKNOWN");
+}
+
+  String _getCategoryFor(String upperKey) {
+    for (var entry in _masterDict.entries) {
+      if (entry.value is Map && entry.value.containsKey(upperKey)) {
+        return entry.key;
+      }
+    }
+    return "UNKNOWN";
+  }
+
   bool get isSpanish => _currentLocale == 'es';
 
-  LocaleController() {
+  AegisArc() {
     _loadFromPrefs();
   }
 

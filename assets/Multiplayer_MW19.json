@@ -1,0 +1,483 @@
+{
+"Multiplayer_MW19": [
+	{
+		"id" : 1,
+		"weapon_name" : "725",
+		"weapon_id" : 13,
+		"attach_1" : "CHOKE",
+		"attach_2" : "SAWED-OFF STOCK  \/ 5MW LASER",
+		"attach_3" : "TEMPUS SLIMGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "SAWED-OFF STOCK"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "1911 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "1911 STALKER ",
+		"attach_3" : "15 ROUND MAGS",
+		"attach_4" : "STIPPLED GRIP TAPE",
+		"attach_5" : "LIGHTWEIGHT TRIGGER"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : ".50 GS (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FORGE TAC ENFORCER ",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "LIGHTWEIGHT TRIGGER \/ G.I. MINI REFLEX "
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "AK-47 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "SKELETON STOCK",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "5.45X39MM 30-ROUND MAGS"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "AN-94 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "AS VAL (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "COMMANDO FOREGRIP",
+		"attach_2" : "STOVL 6P30 SKELET",
+		"attach_3" : "RUBBERIZED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "30 ROUND MAGS"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "AUG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FORGE TAC CQB COMB",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "32 ROUND MAGS"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "BRUEN MK9 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "TACTICAL SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "60 ROUND MAGS",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "CR-56 AMAX (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "XRK ZODIAC S440 ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "CR-56 EXO"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "CROSSBOW",
+		"weapon_id" : 13,
+		"attach_1" : "FTAC SPEED GRIP",
+		"attach_2" : "FORGE TAC SPEEDTRAK \/ SIGHT",
+		"attach_3" : "XRK QUILL 100 LB ",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "28-STRAND CABLE"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "CX-9",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "30 ROUND MAGS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "CX-9 TAC GRIP"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "EBR-14 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FSS RAIDER CHASSIS ELITE",
+		"attach_3" : "20 ROUND MAGS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "VIPER REFLEX SIGHT  \/ VARIABLE ZOOM SCOPE"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "FAL",
+		"weapon_id" : 13,
+		"attach_1" : "TACTICAL SUPPRESSOR",
+		"attach_2" : "XRK MARKSMAN ",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "FENNEC (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "ZLR SABRE",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "40 ROUND MAGS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "FiNN LMG",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FACTORY ADVERSE ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "5.56 CT 100-ROUND BELTS",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "FN SCAR 17",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "30 ROUND MAGS"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "FR 5.56 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "FSS TAC-WRAP"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "GRAU 5.56",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "TEMPUS 26.4\" ARCHANGEL ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "XRK VOID II"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "HOLGER-26 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "TACTICAL SUPPRESSOR",
+		"attach_2" : "XRK AXIS",
+		"attach_3" : "30 ROUND MAGS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "ISO (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "50 ROUND DRUMS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "ISO COLLAPSIBLE"
+	},
+	{
+		"id" : 21,
+		"weapon_name" : "JAK-12",
+		"weapon_id" : 13,
+		"attach_1" : "CHOKE",
+		"attach_2" : "ZLR J-2800 INFLUX ",
+		"attach_3" : "5MW LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "20 ROUND MAGS"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "KAR98K (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "STIPPLED GRIP TAPE",
+		"attach_2" : "FTAC SPORT COMB",
+		"attach_3" : "TAC LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "SNIPER SCOPE"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "KILO 141 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "M13",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "RUBBERIZED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "M13 SKELETON STOCK"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "M19",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "XRK L SUPER ",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "LIGHTWEIGHT TRIGGER"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "M4A1 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "M91",
+		"weapon_id" : 13,
+		"attach_1" : "TACTICAL SUPPRESSOR",
+		"attach_2" : "M91 INFANTRY ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "MAGNUM (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "FLASH GUARD",
+		"attach_2" : ".357 LONG ",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "LIGHTWEIGHT TRIGGER"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "MG34",
+		"weapon_id" : 13,
+		"attach_1" : "FSS STUBBY ",
+		"attach_2" : "OPERATOR FOREGRIP \/ G.I. MINI REFLEX",
+		"attach_3" : "75 ROUND BELT",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "STIPPLED GRIP TAPE"
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "MK2 CARBINE",
+		"weapon_id" : 13,
+		"attach_1" : "STIPPLED GRIP TAPE",
+		"attach_2" : "FSS MK2 SPORT COMB",
+		"attach_3" : "TAC LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "SNIPER SCOPE \/ G.I. MINI REFLEX  \/ NOTHING"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "MODEL 680 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "CHOKE",
+		"attach_2" : "XRK 30.0\" SPORT ",
+		"attach_3" : "5MW LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "MP5 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "FTAC COLLAPSIBLE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "45 ROUND MAGS"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "MP7",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FSS RECON ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "ODEN",
+		"weapon_id" : 13,
+		"attach_1" : "COLOSSUS SUPPRESSOR",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "RUBBERIZED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "FTAC XL ELITE COMB"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "ORIGIN 12",
+		"weapon_id" : 13,
+		"attach_1" : "CHOKE",
+		"attach_2" : "FORGE TAC IMPALER ",
+		"attach_3" : "12 ROUND MAGS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "P90",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FSS 10.6\" PRO ",
+		"attach_3" : "RUBBERIZED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "FLY STRAP"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "PKM",
+		"weapon_id" : 13,
+		"attach_1" : "TACTICAL SUPPRESSOR",
+		"attach_2" : "18.2\" COMPACT BARREL",
+		"attach_3" : "SNATCH GRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "STIPPLED GRIP TAPE"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "PP19 BIZON (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "8.7\" STEEL ",
+		"attach_3" : "RUBBERIZED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "R9-0",
+		"weapon_id" : 13,
+		"attach_1" : "CHOKE",
+		"attach_2" : "FORGE TAC SENTRY ",
+		"attach_3" : "5MW LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "STIPPLED GRIP TAPE"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "RAAL MG (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "PMC GRIP",
+		"attach_2" : "STIPPLED GRIP TAPE",
+		"attach_3" : "50 ROUND BELTS",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "RAM-7 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FSS RANGER ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "STIPPLED GRIP TAPE"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "RENETTI (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "MK3 BURST MOD ",
+		"attach_3" : "XRK SPEED GRIP",
+		"attach_4" : "27 ROUND MAGS",
+		"attach_5" : "LIGHTWEIGHT TRIGGER"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "SA87",
+		"weapon_id" : 13,
+		"attach_1" : "SA87 12.4\" FACTORY ",
+		"attach_2" : "COMMANDO FOREGRIP",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "G.I. MINI REFLEX \/ VIPER REFLEX SIGHT "
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "STRIKER 45 (MW19)",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "300MM POLY BARREL",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "FTAC G-5 EXO"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "SYKOV",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "SOROKIN 140MM AUTO ",
+		"attach_3" : "VLK ELITA",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "80 ROUND DRUMS"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "UZI",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "FSS CARBINE PRO ",
+		"attach_3" : "COMMANDO FOREGRIP",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "VLK ROGUE",
+		"weapon_id" : 13,
+		"attach_1" : "FORGE TAC MARAUDER",
+		"attach_2" : "VLK CZAR ",
+		"attach_3" : "5MW LASER",
+		"attach_4" : "SLEIGHT OF HAND",
+		"attach_5" : "NO STOCK"
+	},
+	{
+		"id" : 48,
+		"weapon_name" : "X16",
+		"weapon_id" : 13,
+		"attach_1" : "MONOLITHIC SUPPRESSOR",
+		"attach_2" : "SINGUARD ARMS ADVANTAGE ",
+		"attach_3" : "STIPPLED GRIP TAPE",
+		"attach_4" : "17 ROUND MAGS",
+		"attach_5" : "LIGHTWEIGHT TRIGGER"
+	}
+]}

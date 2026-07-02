@@ -1,0 +1,212 @@
+{
+"Single": [
+	{
+		"id" : 1,
+		"weapon_name" : ".50 GS (MW2)",
+		"weapon_id" : 6,
+		"attach_1" : "SA LONGSHOT-50",
+		"attach_2" : "SA HARE TRIGGER",
+		"attach_3" : "GS .50 WOOD GRAIN",
+		"attach_4" : "10 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "9MM DAEMON",
+		"weapon_id" : 6,
+		"attach_1" : "EXF OPAL-9",
+		"attach_2" : "RAPID 30 TRIGGER",
+		"attach_3" : "SGT GRIP",
+		"attach_4" : "20 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "9MM PM",
+		"weapon_id" : 6,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "LONG BARREL",
+		"attach_3" : "9X18MM MAKAROV OVERPRESSURED",
+		"attach_4" : "EXTENDED MAG I",
+		"attach_5" : "KEPLER MICROFLEX",
+		"build_code" : null
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "BASILISK",
+		"weapon_id" : 6,
+		"attach_1" : "10.5\" FTAC ARROW",
+		"attach_2" : "BRYSON HTA",
+		"attach_3" : "SO RO-99 GRIP",
+		"attach_4" : "BASILISK GRIP LASER",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "COR-45",
+		"weapon_id" : 6,
+		"attach_1" : "HMRES MOD SUPPRESSOR XS",
+		"attach_2" : "FJX DIOD-70",
+		"attach_3" : "XRK LIGHTNING FIRE",
+		"attach_4" : "18 ROUND MAG",
+		"attach_5" : "SIGHT",
+		"build_code" : null
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "FTAC SIEGE",
+		"weapon_id" : 6,
+		"attach_1" : "RATCHET BE TAC",
+		"attach_2" : "FTAC FOLDER",
+		"attach_3" : "FTAC STEAD",
+		"attach_4" : "50 ROUND DRUM",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "GREKHOVA",
+		"weapon_id" : 6,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "REINFORCED BARREL",
+		"attach_3" : "EXTENDED MAG I \/ II",
+		"attach_4" : "QUICKDRAW GRIP",
+		"attach_5" : "KEPLER MICROFLEX",
+		"build_code" : null
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "GS MAGNA",
+		"weapon_id" : 6,
+		"attach_1" : "SA TYRANT FIFTY",
+		"attach_2" : "SL SKELETAL VERTICAL GRIP",
+		"attach_3" : "EXF RESISTANCE GRIP",
+		"attach_4" : "10 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "GS45",
+		"weapon_id" : 6,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "REINFORCED BARREL",
+		"attach_3" : "EXTENDED MAG I",
+		"attach_4" : "RECOIL SPRINGS",
+		"attach_5" : "KEPLER MICROFLEX \/ ERGONOMICGRIP",
+		"build_code" : null
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "P890",
+		"weapon_id" : 6,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "BRUEN EXPRESS",
+		"attach_3" : "FJX DVF60 GRIP",
+		"attach_4" : "10 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "RENETTI (MW3)",
+		"weapon_id" : 6,
+		"attach_1" : "CORVUS SERIES-D",
+		"attach_2" : "MK2 RENETTI LONG BARREL",
+		"attach_3" : "BRUEN ONSLAUGHT ASSAULT GRIP",
+		"attach_4" : "30 ROUND MAG",
+		"attach_5" : "SIGHT",
+		"build_code" : null
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "STRYDER .22",
+		"weapon_id" : 6,
+		"attach_1" : "SUPPRESSOR",
+		"attach_2" : "REINFORCED BARREL",
+		"attach_3" : "FAST MAG I",
+		"attach_4" : ".22WMR OVERPRESSURED",
+		"attach_5" : "KEPLER MICROFLEX",
+		"build_code" : null
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "TYR",
+		"weapon_id" : 6,
+		"attach_1" : "L4R FLASH HIDER",
+		"attach_2" : "ZIU-16 HEAVY LONG BARREL",
+		"attach_3" : "EIR'S RESPITE",
+		"attach_4" : "ULR'S FURY",
+		"attach_5" : "SIGHT",
+		"build_code" : null
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "WSP STINGER",
+		"weapon_id" : 6,
+		"attach_1" : "T4LR SABER COMPENSATOR S",
+		"attach_2" : "HISS SHORT LIGHT BARREL",
+		"attach_3" : "FJX DIOD-70",
+		"attach_4" : "32 ROUND MAG",
+		"attach_5" : "WSP FACTORY STOCK",
+		"build_code" : null
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "X12",
+		"weapon_id" : 6,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "XRK LIGHTNING FIRE",
+		"attach_3" : "XRK LUC-9",
+		"attach_4" : "24 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : null
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "X13 AUTO",
+		"weapon_id" : 6,
+		"attach_1" : "SONIC SUPPRESSOR XS",
+		"attach_2" : "9MM OVERPRESSURED",
+		"attach_3" : "CRONEN LIMA-6",
+		"attach_4" : "33 ROUND MAG",
+		"attach_5" : "SLATE REFLECTOR",
+		"build_code" : ""
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "JAGER 45",
+		"weapon_id" : 6,
+		"attach_1" : "JAGER ROAR SUPPRESSOR",
+		"attach_2" : "8.7\" EAM VOYAGER BARREL",
+		"attach_3" : ".45 CAL OVERPRESSURED",
+		"attach_4" : "WARPATH CAPACITY MAG",
+		"attach_5" : "VAS LED",
+		"build_code" : "P01-21XAP-KACRM-W111"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_id" : 6,
+		"attach_1" : "GREAVES COVERT-5",
+		"attach_2" : "5.2\" LX-3M BARREL",
+		"attach_3" : "PERENNIAL GRIP",
+		"attach_4" : "CORVUS EXTENDED MAG",
+		"attach_5" : "5.7X28MM OVERPRESSURED",
+		"build_code" : "P02-21WSG-FL163-VN11"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "CODA 9",
+		"weapon_id" : 6,
+		"attach_1" : "BOWEN 9MM SUPPRESSOR",
+		"attach_2" : "5\" LTI EPSILON-1 BARREL",
+		"attach_3" : "ST3-GLORIA GRIP",
+		"attach_4" : "HELLGATE STICK MAG",
+		"attach_5" : "9MM PARABELLUM OVERPRESSURED",
+		"build_code" : "P03-21WSG-FL163-VN11"
+	}
+]}
