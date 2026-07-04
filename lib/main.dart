@@ -2366,7 +2366,7 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
           title: Column(
             children: [
               ArmoryText(
-                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.0 SOLAR",
+                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.1.0 SOLAR",
                 themeController: widget.themeController,
                 baseFontSize: 14,
                 baseStrokeWidth: isNeon ? 3.0 : 2.5,
@@ -3930,7 +3930,7 @@ Widget _buildLanguageOption({
         color: isCustom ? Colors.black : Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isSelected ? coreColor : _ArmoryOnboardingState.armoryBlue,
+          color: isSelected ? coreColor : accentColor,
           width: isSelected ? 2 : 1,
         ),
       ),
@@ -9789,6 +9789,7 @@ Widget _buildBack(Color primary) {
   const double outerRadius = 28.0;
   const double innerRadius = 28.0;
   const double strokeWidth = 3.0;
+  const double borderWidth = 3.0;
 
   bool isRanked = widget.weapon.rank != null;
   
@@ -9917,8 +9918,10 @@ Widget _buildBack(Color primary) {
   } else if (isAnemone) {
     finalCard = ArmoryGradientBorder(
       gradientColors: activeTheme.borderGradient,
-      strokeWidth: strokeWidth,
+      strokeWidth: borderWidth,
       borderRadius: outerRadius,
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
       child: cardContent,
     );
   } else {

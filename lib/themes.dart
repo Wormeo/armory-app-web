@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_final_fields
 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -14,12 +16,16 @@ const Map<String, Map<String, String>> uiTranslations = {
     'SELECT LANGUAGE': 'SELECCIONAR IDIOMA',
     'EXTENSION': 'EXTENSIÓN',
     'PLEASE SELECT A LOOKUP SYSTEM': 'POR FAVOR, SELECCIONA UN SISTEMA DE BÚSQUEDA',
-    'LANGUAGE:': 'IDIOMA:',
+    'STAT DEFINITIONS': 'DEFINICIONES DE ESTADÍSTICAS',
     '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK: Tiempo para matar en ms. Menor es mejor.',
     '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: Velocidad de apuntado (ADS). Menor es mejor.',
     '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: Velocidad de bala. Mayor es mejor.',
     '• STK: Shots to Kill. Lower is better.': '• STK: Disparos necesarios para matar. Menor es mejor.',
     '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: El alcance al que tu bala conecta instantáneamente con el objetivo. Mayor es mejor.',
+    'SHOOTING STYLE - ADS': 'ESTILO DE DISPARO - APUNTAR',
+    'SHOOTING STYLE - TAC STANCE': 'ESTILO DE DISPARO - POSTURA TÁCTICA',
+    'NO ATTACHMENTS AVAILABLE': 'NO HAY ACCESORIOS DISPONIBLES',
+    'LANGUAGE:': 'IDIOMA:',
     'AEGIS PROTOCOL : ACTIVE': 'PROTOCOLO AEGIS : ACTIVO',
     'RANDOMIZER': 'ALEATORIZADOR',
     'AUGMENT TREE': 'ÁRBOL DE AUMENTOS',
@@ -156,6 +162,30 @@ const Map<String, Map<String, String>> uiTranslations = {
     'STURMWOLF 45 (PRESTIGE)': 'STURMWOLF 45 (PRESTIGIO)',
     'AK-27 (PRESTIGE)': 'AK-27 (PRESTIGIO)',
     'RAZOR 9MM (PRESTIGE)': 'RAZOR 9MM (PRESTIGIO)',
+
+    'BARREL': 'CAÑÓN',
+    'MUZZLE': 'BOCACHA',
+    'REAR GRIP': 'EMPUÑADURA TRASERA',
+    'OPTIC': 'ÓPTICA',
+    'UNDERBARREL': 'ACOPLE',
+    'MAGAZINE': 'CARGADOR',
+    'LASER': 'LÁSER',
+    'COMB': 'CARRILLERA',
+    'TRIGGER ACTION': 'GATILLO',
+    'GUARD': 'GUARDAMANOS',
+    'BOLT': 'CERROJO',
+    'ARM': 'BRAZO',
+    'RAIL': 'RAÍL',
+    'CARRY HANDLE': 'ASA DE TRANSPORTE',
+    'LEVER': 'PALANCA',
+    'LOADER': 'CARGADOR',
+    'WIRE': 'CABLE',
+    'SLINGS': 'CORREA',
+    'FIRE MODS': 'MODOS DE DISPARO',
+    'PERK': 'VENTAJA',
+    'PUMPS': 'BOMBA',
+    'PUMP GRIP': 'EMPUÑADURA DE BOMBA',
+    'AMMUNITION': 'MUNICIÓN',
 
     '.50 CAL KIT (MW3 MP)': 'KIT CALIBRE .50 (MW3 MP)',
     '.50 CAL KIT (WZ)': 'KIT CALIBRE .50 (WZ)',
@@ -329,9 +359,9 @@ const Map<String, Map<String, String>> uiTranslations = {
 
     "If you only want to get random attachments for one specific weapon, but don't want to hit the button 4 times to do it, this option is what you need.": "Si solo quieres obtener accesorios aleatorios para una arma específica, pero no quieres presionar el botón 4 veces para hacerlo, esta opción es lo que necesitas.",
 
-    "Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ": "Warzone permitirá que se elijan opciones de cada juego que hayas permitido en la Zona de Exclusión. El modo Multijugador utilizará el sistema de anclaje, una robusta lógica de filtrado que solo elegirá armas de la misma era que la primera elección.\n\nAsí que si seleccionas aleatoriamente (o manualmente) un arma de Black Ops 6, y has elegido generar más de 1 arma, solo obtendrás armas de Black Ops 6, asegurando que cada elección sea utilizable en el juego que estás jugando.",
+    'Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ': 'Warzone permitirá realizar selecciones de cada juego que hayas permitido en la Zona de Exclusión. El modo Multijugador utilizará el sistema de anclaje,\n      una lógica de filtrado robusta que solo elegirá armas de la misma era que la primera selección.\n\n      Así que, si seleccionas aleatoriamente (o manualmente) un arma de Black Ops 6 y has elegido generar más de 1 arma, solo obtendrás armas de Black Ops 6, asegurando que cada elección sea utilizable en el juego que estás jugando.\n      ',
 
-    "If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don't want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?": "Si seleccionas ARMA ALEATORIA, verás aparecer esta nueva opción. Esto le dirá al motor que solo quieres esa clase de arma específica.\nPara las categorías heredadas, el modo de juego se fuerza a Multijugador para utilizar la lógica de anclaje y mantenerse preciso, eliminando el solapamiento si también permites otros juegos no heredados. No querrías una escopeta de Cold War mezclada con tu francotirador de Black Ops 7, ¿verdad?",
+    'If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don\'t want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?': 'Si seleccionas ARMA ALEATORIA, verás aparecer esta nueva opción. Esto le indicará al motor que solo quieres esa clase de arma específica.\n      Para las categorías heredadas, el modo de juego se fuerza a Multijugador para utilizar la lógica de anclaje y mantener la precisión, y para eliminar superposiciones si también permites otros juegos no heredados. No querrías una escopeta de Cold War mezclada con tu francotirador de Black Ops 7, ¿verdad?',
 
     "Speed of the bullet. For snipers, higher values means less bullet drop and leading (shooting ahead of a moving target). For other weapons this also applies, but also means you won't have bullet travel time to slow down your TTK, shifting a gunfight into your favour. Higher is better.": "Velocidad de la bala. Para francotiradores, valores altos significan menos caída de bala y menor necesidad de compensar el movimiento del objetivo. En otras armas, reduce el tiempo de viaje de la bala, mejorando tu TTK. Cuanto más alto, mejor.",
 
@@ -350,14 +380,18 @@ const Map<String, Map<String, String>> uiTranslations = {
   },
   'zh': {
     'SELECT LANGUAGE': '选择语言',
-    'EXTENSION': '扩展',
     'PLEASE SELECT A LOOKUP SYSTEM': '请选择查询系统',
-    'LANGUAGE:': '语言:',
+    'EXTENSION': '扩展',
+    'STAT DEFINITIONS': '属性定义',
     '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK: 击杀所需时间 (毫秒). 越低越好.',
     '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: 开镜速度. 越低越好.',
     '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: 子弹速度. 越高越好.',
     '• STK: Shots to Kill. Lower is better.': '• STK: 击杀所需射击次数. 越低越好.',
     '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: 子弹瞬间击中目标的射程. 越高越好.',
+    'SHOOTING STYLE - ADS': '风格 - 瞄准射击',
+    'SHOOTING STYLE - TAC STANCE': '射击风格 - 战术姿态"',
+    'NO ATTACHMENTS AVAILABLE': '无可用附件',
+    'LANGUAGE:': '语言:',
     'AEGIS PROTOCOL : ACTIVE': '宙斯盾协议 : 激活',
     'RANDOMIZER': '随机生成器',
     'AUGMENT TREE': '强化树',
@@ -494,6 +528,30 @@ const Map<String, Map<String, String>> uiTranslations = {
     'STURMWOLF 45 (PRESTIGE)': 'STURMWOLF 45 (威望)',
     'AK-27 (PRESTIGE)': 'AK-27 (威望)',
     'RAZOR 9MM (PRESTIGE)': 'RAZOR 9MM (威望)',
+
+    'BARREL': '枪管',
+    'MUZZLE': '枪口',
+    'REAR GRIP': '后握把',
+    'OPTIC': '瞄准镜',
+    'UNDERBARREL': '下挂',
+    'MAGAZINE': '弹匣',
+    'LASER': '激光',
+    'COMB': '贴腮板',
+    'TRIGGER ACTION': '扳机组',
+    'GUARD': '护手',
+    'BOLT': '枪栓',
+    'ARM': '支架',
+    'RAIL': '导轨',
+    'CARRY HANDLE': '提把',
+    'LEVER': '杠杆',
+    'LOADER': '装弹器',
+    'WIRE': '线材',
+    'SLINGS': '枪带',
+    'FIRE MODS': '射击模式',
+    'PERK': '特长',
+    'PUMPS': '泵筒',
+    'PUMP GRIP': '泵动护木',
+    'AMMUNITION': '弹药',
 
     '.50 CAL KIT (MW3 MP)': '.50 口径套件 (MW3 多人)',
     '.50 CAL KIT (WZ)': '.50 口径套件 (战区)',
@@ -667,10 +725,8 @@ const Map<String, Map<String, String>> uiTranslations = {
 
     "If you only want to get random attachments for one specific weapon, but don't want to hit the button 4 times to do it, this option is what you need.": "如果你只想为某件特定武器随机生成配件，而不想重复点击按钮，这个选项就是你需要的。",
 
-    "Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ": "“战区”模式将从你在排除区域中允许的每个游戏中挑选。 “多人模式”将使用锚定系统，这是一种强大的过滤逻辑，只会选择与首选武器同时代的作品。\n\n因此，如果你随机（或手动）选择了一件《黑色行动 6》武器，并且你选择生成多件武器，系统将只会生成《黑色行动 6》武器，确保每件武器都能在你正在玩的游戏中使用。",
-
-    "If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don't want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?": "如果你选择了“随机武器”，就会出现这个新选项。它会告诉引擎你只需要特定的武器类别。\n\n对于旧版类别，游戏模式将强制设定为“多人模式”以使用锚定逻辑并保持准确性，同时消除与其他非旧版游戏的重叠。你肯定不想在《黑色行动 7》的狙击枪里混入一把《冷战》的散弹枪，对吧？",
-    
+    'Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ': 'Warzone 将允许从你已在“排除区域”中启用的每个游戏中进行选择。多人模式将利用锚点系统，\n      这是一种强大的过滤逻辑，它将只选择与第一把武器相同时代的武器。\n\n      因此，如果你随机（或手动）选择了 Black Ops 6 的武器，并且你选择了生成超过 1 把武器，那么你只会获得 Black Ops 6 的武器，确保每把选中的武器都能在你正在游玩的游戏中使用。\n      ',
+    'If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don\'t want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?': '如果你选择“随机武器”，你将看到这个新选项出现。这会告诉引擎你只需要该特定的武器类别。\n      对于经典（Legacy）类别，游戏模式会被强制设为多人模式，以利用锚点逻辑并保持准确性，同时避免在你允许其他非经典游戏时出现重叠。你肯定不想在 Black Ops 7 的狙击手中混入一把 Cold War 的霰弹枪，对吧？',
     "Speed of the bullet. For snipers, higher values means less bullet drop and leading (shooting ahead of a moving target). For other weapons this also applies, but also means you won't have bullet travel time to slow down your TTK, shifting a gunfight into your favour. Higher is better.": "子弹的速度。对于狙击手来说，数值越高意味着子弹下坠越小，且更易于“预判”（射击移动目标的前方）。对于其他武器同样适用，这也意味着子弹飞行时间不会拖慢你的 TTK（击杀时间），从而让交火对你更有利。数值越高越好。",
 
     "ADS SPEED": "开镜速度",
@@ -690,12 +746,16 @@ const Map<String, Map<String, String>> uiTranslations = {
     'SELECT LANGUAGE': 'SÉLECTIONNER LA LANGUE',
     'EXTENSION': 'EXTENSION',
     'PLEASE SELECT A LOOKUP SYSTEM': 'VEUILLEZ SÉLECTIONNER UN SYSTÈME DE RECHERCHE',
-    'LANGUAGE:': 'LANGUE :',
+    'STAT DEFINITIONS': 'DÉFINITIONS DES STATS',
     '• TTK: Time to kill in milliseconds. Lower is better.': '• TTK : Temps de mise à mort en ms. Plus bas est meilleur.',
     '• ADS: Aim Down Sights speed. Lower is better.': '• ADS : Vitesse de visée (ADS). Plus bas est meilleur.',
     '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY : Vitesse des balles. Plus élevé est meilleur.',
     '• STK: Shots to Kill. Lower is better.': '• STK : Balles nécessaires pour éliminer. Plus bas est meilleur.',
     '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN : La portée à laquelle votre balle atteint instantanément la cible. Plus élevé est meilleur.',
+    'SHOOTING STYLE - ADS': 'STYLE DE TIR - VISÉE',
+    'SHOOTING STYLE - TAC STANCE': 'STYLE DE TIR - POSITION TACTIQUE"',
+    'NO ATTACHMENTS AVAILABLE': 'AUCUN ACCESSOIRE DISPONIBLE',
+    'LANGUAGE:': 'LANGUE :',
     'AEGIS PROTOCOL : ACTIVE': 'PROTOCOLE AEGIS : ACTIF',
     'RANDOMIZER': 'ALÉATORISATEUR',
     'AUGMENT TREE': 'ARBRE D’AUGMENTATIONS',
@@ -832,6 +892,30 @@ const Map<String, Map<String, String>> uiTranslations = {
     'STURMWOLF 45 (PRESTIGE)': 'STURMWOLF 45 (PRESTIGE)',
     'AK-27 (PRESTIGE)': 'AK-27 (PRESTIGE)',
     'RAZOR 9MM (PRESTIGE)': 'RAZOR 9MM (PRESTIGE)',
+
+    'BARREL': 'CANON',
+    'MUZZLE': 'BOUCHE',
+    'REAR GRIP': 'POIGNÉE ARRIÈRE',
+    'OPTIC': 'LUNETTE',
+    'UNDERBARREL': 'ACCESSOIRE DE CANON',
+    'MAGAZINE': 'CHARGEUR',
+    'LASER': 'LASER',
+    'COMB': 'APPUIE-JOUE',
+    'TRIGGER ACTION': 'DÉTENTE',
+    'GUARD': 'GARDE-MAIN',
+    'BOLT': 'CULASSE',
+    'ARM': 'BRAS',
+    'RAIL': 'RAIL',
+    'CARRY HANDLE': 'POIGNÉE DE TRANSPORT',
+    'LEVER': 'LEVIER',
+    'LOADER': 'CHARGEUR',
+    'WIRE': 'CÂBLE',
+    'SLINGS': 'BRETELLE',
+    'FIRE MODS': 'MODES DE TIR',
+    'PERK': 'ATOUT',
+    'PUMPS': 'POMPE',
+    'PUMP GRIP': 'POIGNÉE DE POMPE',
+    'AMMUNITION': 'MUNITIONS',
 
     '.50 CAL KIT (MW3 MP)': 'KIT CALIBRE .50 (MW3 MP)',
     '.50 CAL KIT (WZ)': 'KIT CALIBRE .50 (WZ)',
@@ -1004,9 +1088,9 @@ const Map<String, Map<String, String>> uiTranslations = {
 
     "If you only want to get random attachments for one specific weapon, but don't want to hit the button 4 times to do it, this option is what you need.": "Si vous souhaitez uniquement obtenir des accessoires aléatoires pour une arme spécifique, sans avoir à appuyer 4 fois sur le bouton, cette option est ce qu'il vous faut.",
 
-    "Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ": "Warzone permettra de choisir des options dans chaque jeu que vous avez autorisé dans la Zone d'Exclusion. Le mode Multijoueur utilisera le système d'ancrage, une logique de filtrage robuste qui ne choisira que des armes de la même époque que le premier choix.\n\nAinsi, si vous sélectionnez de manière aléatoire (ou manuelle) une arme de Black Ops 6 et que vous avez choisi de générer plus d'une arme, vous n'obtiendrez que des armes de Black Ops 6, garantissant que chaque choix est utilisable dans le jeu auquel vous jouez.",
+    'Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ': 'Warzone permettra des choix parmi chaque jeu que vous avez autorisé dans la Zone d\'Exclusion. Le mode Multijoueur utilisera le système d\'ancrage,\n      une logique de filtrage robuste qui ne sélectionnera que des armes de la même époque que le premier choix.\n\n      Donc, si vous sélectionnez aléatoirement (ou manuellement) une arme de Black Ops 6 et que vous avez choisi de générer plus d\'une arme, vous n\'obtiendrez que des armes de Black Ops 6, garantissant que chaque choix est utilisable dans le jeu auquel vous jouez.\n      ',
 
-    "If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don't want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?": "Si vous sélectionnez ARME ALÉATOIRE, vous verrez apparaître cette nouvelle option. Cela indiquera au moteur que vous ne voulez que cette classe d'arme spécifique.\nPour les catégories héritées, le mode de jeu est forcé en Multijoueur pour utiliser la logique d'ancrage et rester précis, et pour éliminer les chevauchements si vous autorisez également d'autres jeux non hérités. Vous ne voudriez pas d'un fusil à pompe de Cold War mélangé à votre sniper de Black Ops 7, n'est-ce pas ?",
+    'If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don\'t want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?': 'Si vous sélectionnez ARME ALÉATOIRE, cette nouvelle option apparaîtra. Elle indiquera au moteur que vous ne voulez que cette classe d\'arme spécifique.\n      Pour les catégories héritées, le mode de jeu est forcé sur Multijoueur pour utiliser la logique d\'ancrage et rester précis, et pour éviter les chevauchements si vous autorisez d\'autres jeux non-hérités. Vous ne voulez pas d\'un fusil à pompe de Cold War mélangé à votre sniper de Black Ops 7, n\'est-ce pas ?',
 
     "Speed of the bullet. For snipers, higher values means less bullet drop and leading (shooting ahead of a moving target). For other weapons this also applies, but also means you won't have bullet travel time to slow down your TTK, shifting a gunfight into your favour. Higher is better.": "Vitesse de la balle. Pour les snipers, une valeur élevée réduit la chute de balle et facilite l'anticipation du tir. Pour les autres armes, cela réduit le temps de trajet de la balle, améliorant votre TTK et vous donnant l'avantage. Plus c'est élevé, mieux c'est.",
 
@@ -1032,7 +1116,7 @@ const Map<String, Map<String, String>> uiTranslations = {
     '• ADS: Aim Down Sights speed. Lower is better.': '• ADS: Zielgeschwindigkeit (ADS). Niedriger ist besser.',
     '• VELOCITY: Bullet speed. Higher is better.': '• VELOCITY: Geschossgeschwindigkeit. Höher ist besser.',
     '• STK: Shots to Kill. Lower is better.': '• STK: Schüsse zum Kill. Niedriger ist besser.',
-    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: El alcance al que tu bala conecta instantáneamente con el objetivo. Mayor es mejor.',
+    '• HITSCAN: The range at which your bullet will instantly connect with the target. Higher is better.': '• HITSCAN: Die Reichweite, bei der deine Kugel das Ziel sofort trifft. Höher ist besser.',
     'SHOOTING STYLE - ADS': 'SCHIESSSTIL - VISIEREN',
     'SHOOTING STYLE - TAC STANCE': 'SCHIESSSTIL - TAKTISCHE HALTUNG"',
     'LANGUAGE:': 'SPRACHE:',
@@ -1369,9 +1453,9 @@ const Map<String, Map<String, String>> uiTranslations = {
 
     "If you only want to get random attachments for one specific weapon, but don't want to hit the button 4 times to do it, this option is what you need.": "Wenn du nur zufällige Aufsätze für eine bestimmte Waffe erhalten möchtest, aber nicht 4-mal den Knopf drücken willst, ist dies die Option, die du brauchst.",
 
-    "Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n    which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n    So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n    ": "Warzone erlaubt die Auswahl aus jedem Spiel, das du in der AUSSCHLUSS-ZONE zugelassen hast. Im Mehrspielermodus wird das ANKER-SYSTEM verwendet, eine robuste Filterlogik, die als erste Wahl nur Waffen derselben Ära zulässt.\n\nWenn du also zufällig (oder manuell) eine Black Ops 6-Waffe auswählst und mehr als 1 Waffe zur Generierung eingestellt hast, erhältst du nur Waffen aus Black Ops 6. So ist sichergestellt, dass jede Wahl in dem Spiel, das du gerade spielst, auch verwendbar ist.",
+   'Warzone will allow choices to be picked from each game you have allowed from the Exclusion Zone. Multiplayer will utilize the anchor system,\n      which is a robust filtering logic that will only choose same-era weapons as the first pick.\n\n      So if you randomly (or manually) select a Black Ops 6 weapon, and you have chosen more than 1 weapon to generate, you will only get Black Ops 6 weapons, ensuring that each pick is usable in the game that you are playing.\n      ': 'Warzone ermöglicht die Auswahl aus jedem Spiel, das du in der Exclusion Zone erlaubt hast. Der Multiplayer nutzt das Anker-System,\n      eine robuste Filterlogik, die nur Waffen aus der gleichen Ära wie die erste Wahl zulässt.\n\n      Wenn du also zufällig (oder manuell) eine Black Ops 6-Waffe auswählst und mehr als 1 Waffe generieren möchtest, erhältst du nur Waffen aus Black Ops 6. So wird sichergestellt, dass jede Auswahl in dem Spiel, das du gerade spielst, verwendbar ist.\n      ',
 
-    "If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n    For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don't want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?": "Wenn du ZUFALLSWAFFE auswählst, erscheint diese neue Option. Sie teilt der Engine mit, dass du nur diese spezifische Waffenklasse möchtest.\nFür Legacy-Kategorien wird der Spielmodus auf Mehrspieler erzwungen, um die Anker-Logik präzise zu halten und Überschneidungen zu vermeiden, falls du auch andere Nicht-Legacy-Spiele zulässt. Du möchtest schließlich keine Cold War-Flinte, die sich unter dein Black Ops 7-Scharfschützengewehr mischt, oder?",
+    'If you select RANDOM WEAPON, you will see this new option appear. This will tell the engine that you only want that specific weapon class.\n      For legacy categories, the game mode is forced to Multiplayer to utilize the anchor logic and stay accurate, and to elminate overlap if you also allow other non-legacy games. You don\'t want a Cold War shotgun mixed in with your Black Ops 7 sniper now do you?': 'Wenn du ZUFALLSWAFFE auswählst, erscheint diese neue Option. Dies teilt der Engine mit, dass du nur diese spezifische Waffenklasse möchtest.\n      Bei Legacy-Kategorien wird der Spielmodus auf Multiplayer erzwungen, um die Anker-Logik präzise zu nutzen und Überschneidungen zu vermeiden, falls du auch andere Nicht-Legacy-Spiele erlaubst. Du willst doch keine Cold War-Schrotflinte in deinem Black Ops 7-Scharfschützengewehr haben, oder?',
 
     "Speed of the bullet. For snipers, higher values means less bullet drop and leading (shooting ahead of a moving target). For other weapons this also applies, but also means you won't have bullet travel time to slow down your TTK, shifting a gunfight into your favour. Higher is better.": "Geschwindigkeit der Kugel. Bei Scharfschützengewehren bedeuten höhere Werte weniger Geschossabfall und Vorhalten (vor ein bewegliches Ziel zielen). Das gilt auch für andere Waffen und bedeutet zudem, dass die Flugzeit der Kugel deine TTK nicht verlangsamt, was den Kampf zu deinen Gunsten verschiebt. Höher ist besser.",
 
@@ -1595,7 +1679,6 @@ class ThemeController extends ChangeNotifier {
 
   Color _customColor = const Color(0xFF00FFCC); 
   Color get customColor => _customColor;
-  Color get neonBorderCoreColor => Color.lerp(_customColor, Colors.white, 0.35)!;
 
   String _activeFont = 'Stock';
   String get activeFont => _activeFont;
@@ -1607,77 +1690,66 @@ class ThemeController extends ChangeNotifier {
   bool get hasNewPatch => _hasNewPatch;
   Map<String, dynamic>? get currentPatchData => _currentPatchData;
 
-  Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefresh = false}) async {
+Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefresh = false}) async {
   try {
     if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) return;
 
-    final prefs = await SharedPreferences.getInstance();
-    _lastViewedPatchDate = prefs.getString('last_viewed_patch_date') ?? "";
+    final directory = await getApplicationDocumentsDirectory();
+    final File localFile = File('${directory.path}/hotfixes.json');
 
-    // 1. Determine key based on localized suffix
-    final String suffixPath = (langCode == 'en') ? 'hotfixes.json' : 'hotfixes.json';
-    final String cachePrefKey = 'cached_file_$suffixPath';
-
-    // 2. Attempt local load from SharedPreferences
-    if (!forceRefresh && prefs.containsKey(cachePrefKey)) {
-      final String? localContent = prefs.getString(cachePrefKey);
-      if (localContent != null && localContent.isNotEmpty) {
-        final Map<String, dynamic> data = json.decode(localContent);
-
-        _currentPatchData = data;
-        _currentPatchLang = langCode;
-        _updatePatchStatus(data);
-
-        debugPrint("🎯 [PATCH SYNC] Instantly loaded file for: $langCode");
-        notifyListeners();
-        return;
-      }
-    }
-
-    // 3. Fetch from CDN
-    final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
-    final String path = "$cleanBaseUrl/cdn/$suffixPath";
-
-    debugPrint("🛰️ [PATCH SYNC] Fetching live patch notes: $path");
-    final response = await http.get(Uri.parse(path));
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
+    if (await localFile.exists()) {
+      final String localContent = await localFile.readAsString();
+      final Map<String, dynamic> data = json.decode(localContent);
 
       _currentPatchData = data;
       _currentPatchLang = langCode;
+
       _updatePatchStatus(data);
 
-      // Save to SharedPreferences (Works for Web & Native)
-      await prefs.setString(cachePrefKey, response.body);
+      debugPrint("🎯 [PATCH SYNC] Instantly loaded central hotfix file for: $langCode");
       notifyListeners();
-    } else if (response.statusCode == 404 && langCode != 'en') {
-      debugPrint("❌ Localized notes 404'd. Falling back to English.");
-      await syncPatchNotes(serverUrl, 'en', forceRefresh: true);
+      return;
+    }
+
+    final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
+    final String url = "$cleanBaseUrl/cdn/hotfixes.json";
+
+    debugPrint("🛰️ [PATCH SYNC] Fetching from: $url");
+    final response = await http.get(Uri.parse(url)); 
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      _currentPatchData = data;
+      _currentPatchLang = langCode;
+      _updatePatchStatus(data);
+      await localFile.writeAsString(response.body);
+      notifyListeners();
+    } else {
+
+      debugPrint("❌ [PATCH SYNC] Failed: Status ${response.statusCode} for URL: $url");
     }
   } catch (e) {
     debugPrint("Patch Sync Error: $e");
   }
 }
 
-// Helper to handle the "is there a new patch" logic cleanly
 void _updatePatchStatus(Map<String, dynamic> data) {
-  String serverDate = data['patch_date'] ?? data['date'] ?? "";
-  if (serverDate.isNotEmpty && serverDate != _lastViewedPatchDate) {
+  String serverDate = data['patch_date'] ?? "";
+  if (serverDate != _lastViewedPatchDate) {
     _hasNewPatch = true;
   }
 }
 
-  Future<void> markPatchRead() async {
-    if (_currentPatchData == null) return;
-    
-    final prefs = await SharedPreferences.getInstance();
-    String serverDate = _currentPatchData!['patch_date'] ?? _currentPatchData!['date'] ?? "";
-    
-    await prefs.setString('last_viewed_patch_date', serverDate);
-    _hasNewPatch = false;
-    notifyListeners();
-  }
+Future<void> markPatchRead() async {
+  if (_currentPatchData == null) return;
+  
+  final prefs = await SharedPreferences.getInstance();
+  String serverDate = _currentPatchData!['patch_date'];
+  
+  await prefs.setString('last_viewed_patch_date', serverDate);
+  _hasNewPatch = false;
+  notifyListeners();
+}
 
   Future<void> resetToDefault() async {
     _activeTheme = allThemes.first; 
@@ -1706,21 +1778,21 @@ void _updatePatchStatus(Map<String, dynamic> data) {
     await prefs.setInt(_colorKey, newColor.toARGB32());
   }
 
-  static const Map<String, FontSpecs> fontConfigs = {
-    'Black Ops One': FontSpecs(sizeScale: 1.05, strokeScale: 0.8, spacingAdd: 0.5),
-    'Braah One': FontSpecs(sizeScale: 1.2, strokeScale: 0.9, spacingAdd: 0.0),
-    'Bungee': FontSpecs(sizeScale: 1.0, strokeScale: 0.7, spacingAdd: 0.2),
-    'Stock': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
-    'Fugaz One': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
-    'Germania One': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
-    'Kaushan Script': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
-    'Orbitron': FontSpecs(sizeScale: 0.9, strokeScale: 1.0, spacingAdd: 1.2),
-    'Permanent Marker': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
-    'Quantico': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.8),
-    'Racing Sans': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
-    'Silkscreen': FontSpecs(sizeScale: 1, strokeScale: 0.5, spacingAdd: 0.0),
-    'Vast Shadow': FontSpecs(sizeScale: 0.85, strokeScale: 0.6, spacingAdd: 0.1),
-  };
+static const Map<String, FontSpecs> fontConfigs = {
+  'Black Ops One': FontSpecs(sizeScale: 1.05, strokeScale: 0.8, spacingAdd: 0.5),
+  'Braah One': FontSpecs(sizeScale: 1.2, strokeScale: 0.9, spacingAdd: 0.0),
+  'Bungee': FontSpecs(sizeScale: 1.0, strokeScale: 0.7, spacingAdd: 0.2),
+  'Stock': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+  'Fugaz One': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.0),
+  'Germania One': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+  'Kaushan Script': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+  'Orbitron': FontSpecs(sizeScale: 0.9, strokeScale: 1.0, spacingAdd: 1.2),
+  'Permanent Marker': FontSpecs(sizeScale: 1.1, strokeScale: 0.8, spacingAdd: 0.0),
+  'Quantico': FontSpecs(sizeScale: 1.1, strokeScale: 1.0, spacingAdd: 0.8),
+  'Racing Sans': FontSpecs(sizeScale: 1.2, strokeScale: 1.0, spacingAdd: 0.0),
+  'Silkscreen': FontSpecs(sizeScale: 1, strokeScale: 0.5, spacingAdd: 0.0),
+  'Vast Shadow': FontSpecs(sizeScale: 0.85, strokeScale: 0.6, spacingAdd: 0.1),
+};
 
   static const List<String> availableFonts = [
     'Stock',
@@ -1950,6 +2022,28 @@ void _updatePatchStatus(Map<String, dynamic> data) {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(255, 198, 238, 1),
           surface: Color.fromRGBO(89, 65, 85, 1)
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'wine',
+      name: 'WINE',
+      pickerBoxColor: Color.fromRGBO(157, 26, 35, 1),
+      pickerBorderColor: Color.fromRGBO(157, 26, 35, 1),
+      pickerTextColor: Colors.white,
+      useWhiteSearch: true,
+      category: ThemeCategory.simple,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1783187486/7d6ae8dde4b16ac65221ace8ba8633e3_iz2iut.jpg',
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(157, 26, 35, 1),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(157, 26, 35, 1),
+          surface: Color.fromRGBO(31, 14, 16, 1)
         ),
         useMaterial3: true,
         fontFamily: 'Days One'
@@ -2231,6 +2325,44 @@ void _updatePatchStatus(Map<String, dynamic> data) {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(254, 108, 144, 1),
           surface: Color.fromRGBO(91, 57, 66, 1)
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One'
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'anemone_blood_moon',
+      name: 'BLOOD MOON',
+      pickerGradient: [
+        const Color.fromRGBO(41, 3, 6, 1),
+        const Color.fromRGBO(65, 2, 8,1),
+        Color.fromARGB(255, 96, 14, 14),
+        const Color.fromRGBO(158, 18, 20, 1),
+        const Color.fromRGBO(200, 36, 39, 1),
+        const Color.fromRGBO(244, 16, 18, 1),
+
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.anemone,
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1783188357/b47fe109331be4051960adf8f3a53d98_m23rur.jpg',
+      borderGradient: [
+        const Color.fromRGBO(244, 16, 18, 1),
+        const Color.fromRGBO(200, 36, 39, 1),
+        const Color.fromRGBO(158, 18, 20, 1),
+        const Color.fromARGB(255, 96, 14, 14),
+        const Color.fromRGBO(65, 2, 8,1),
+        const Color.fromRGBO(41, 3, 6, 1),
+
+      ],
+
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: const Color.fromRGBO(158, 18, 20, 1),
+        scaffoldBackgroundColor: const Color(0xFF0D0D0D),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(158, 18, 20, 1),
+          surface: Color.fromRGBO(33, 16, 17, 1)
         ),
         useMaterial3: true,
         fontFamily: 'Days One'
@@ -2530,6 +2662,46 @@ void _updatePatchStatus(Map<String, dynamic> data) {
         colorScheme: const ColorScheme.dark(
           primary: Color.fromRGBO(142, 184, 245, 1),
           surface: Color.fromRGBO(44, 44, 44, 1),
+        ),
+        useMaterial3: true,
+        fontFamily: 'Days One',
+      ),
+    ),
+
+    ArmoryTheme(
+      id: 'holographic_fracture',
+      name: 'FRACTURE',
+      pickerGradient: [
+        Color.fromRGBO(250, 27, 1, 1),
+        Color.fromRGBO(177, 2, 17, 1),
+        Color.fromRGBO(113, 1, 11, 1),
+        Color.fromRGBO(59, 22, 26, 1),
+        Color.fromRGBO(37, 34, 44, 1),
+        Color.fromRGBO(26, 27, 32, 1),
+        Color.fromRGBO(250, 27, 1, 1),
+      ],
+      pickerTextColor: Colors.white,
+      category: ThemeCategory.premium,
+      isHolographic: true,
+      refractionColors: [
+        Color.fromRGBO(250, 27, 1, 1),
+        Color.fromRGBO(177, 2, 17, 1),
+        Color.fromRGBO(113, 1, 11, 1),
+        Color.fromRGBO(48, 17, 20, 1),
+        Color.fromRGBO(24, 22, 29, 1),
+        Color.fromRGBO(48, 17, 20, 1),
+        Color.fromRGBO(113, 1, 11, 1),
+        Color.fromRGBO(177, 2, 17, 1),
+        Color.fromRGBO(250, 27, 1, 1),
+      ],
+      backgroundUrl: 'https://res.cloudinary.com/dctlpj7fg/image/upload/v1783187474/2c3751100db4602dc3238c4f50871dd9_yu2ei8.jpg',
+      borderGradient: [Colors.purple, Colors.black],
+      themeData: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color.fromRGBO(177, 2, 17, 1),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromRGBO(140, 8, 19, 1),
+          surface: Color.fromRGBO(41, 9, 12, 1),
         ),
         useMaterial3: true,
         fontFamily: 'Days One',
