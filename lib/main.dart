@@ -1243,26 +1243,27 @@ void initState() {
 
   final aegisArc = Provider.of<AegisArc>(context, listen: false);
 
-  PurchaseService.initialize(_savedDiscordId ?? "guest", (bool success) {
-    if (success) {
-      _handlePurchaseSuccess();
-    } else { 
-      _hideLoadingOverlay(); 
-      _showErrorSnackBar("PURCHASE CANCELLED OR FAILED"); 
-    }
-  });
+  if (!kIsWeb) {
+    PurchaseService.initialize(_savedDiscordId ?? "guest", (bool success) {
+      if (success) {
+        _handlePurchaseSuccess();
+      } else { 
+        _hideLoadingOverlay(); 
+        _showErrorSnackBar("PURCHASE CANCELLED OR FAILED"); 
+      }
+    });
+  } else {
+    debugPrint("🌐 Web Target: PurchaseService initialization bypassed.");
+  }
 
   _initAppSequence();
 
-  // Guard Connectivity streams for web compatibility
   if (kIsWeb) {
-    // Web handles online tracking gracefully via HTML window states
     debugPrint("🌐 Web Target: Using browser window metrics for network updates.");
     if (_activeBaseUrl.isNotEmpty) {
       _checkConnection();
     }
   } else {
-    // Mobile platforms can still leverage the native platform channels safely
     _connectivitySubscription = Connectivity().onConnectivityChanged.listen((results) {
       if (results.contains(ConnectivityResult.none)) {
         setState(() => _connectionStatus = ConnectionStatus.offline);

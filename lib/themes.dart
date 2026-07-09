@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:armory_app/main.dart';
+import 'package:flutter/foundation.dart';
 
 enum ThemeCategory { simple, anemone, premium, neon}
 
@@ -1694,40 +1695,56 @@ Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefres
   try {
     if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) return;
 
-    final directory = await getApplicationDocumentsDirectory();
-    final File localFile = File('${directory.path}/hotfixes.json');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    const String storageKey = 'cached_hotfixes';
+    
+    // 1. Try to load from Local Storage (Universal)
+    String? localContent;
+    
+    if (kIsWeb) {
+      localContent = prefs.getString(storageKey);
+    } else {
+      // ONLY execute this on non-web platforms
+      final directory = await getApplicationDocumentsDirectory();
+      final File localFile = File('${directory.path}/hotfixes.json');
+      if (await localFile.exists()) {
+        localContent = await localFile.readAsString();
+      }
+    }
 
-    if (await localFile.exists()) {
-      final String localContent = await localFile.readAsString();
+    if (localContent != null) {
       final Map<String, dynamic> data = json.decode(localContent);
-
       _currentPatchData = data;
       _currentPatchLang = langCode;
-
       _updatePatchStatus(data);
-
-      debugPrint("🎯 [PATCH SYNC] Instantly loaded central hotfix file for: $langCode");
+      debugPrint("🎯 [PATCH SYNC] Loaded from local storage for: $langCode");
       notifyListeners();
       return;
     }
 
+    // 2. Fallback to Network
     final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
     final String url = "$cleanBaseUrl/cdn/hotfixes.json";
 
-    debugPrint("🛰️ [PATCH SYNC] Fetching from: $url");
-    final response = await http.get(Uri.parse(url)); 
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       _currentPatchData = data;
       _currentPatchLang = langCode;
       _updatePatchStatus(data);
-      await localFile.writeAsString(response.body);
-      notifyListeners();
-    } else {
 
-      debugPrint("❌ [PATCH SYNC] Failed: Status ${response.statusCode} for URL: $url");
+      // Save to local storage
+    if (kIsWeb) {
+      await prefs.setString(storageKey, response.body);
+    } else {
+      // ONLY execute this on non-web platforms
+      final directory = await getApplicationDocumentsDirectory();
+      await File('${directory.path}/hotfixes.json').writeAsString(response.body);
     }
+  }
+    
+    notifyListeners();
   } catch (e) {
     debugPrint("Patch Sync Error: $e");
   }
