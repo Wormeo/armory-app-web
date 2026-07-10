@@ -130,12 +130,12 @@ const Map<String, String> _legacyArchetypes = {
   "MARSHAL": "Pistol",
 };
 
-Future<String> loadHotfixedJson(String assetPath, {bool forceRefresh = false}) async {
+Future<String> loadHotfixedJson(String assetPath) async {
   try {
     final prefs = await SharedPreferences.getInstance();
     String keyName = 'cached_file_${assetPath.replaceFirst('assets/', '')}';
-
-    if (!forceRefresh && prefs.containsKey(keyName)) {
+    
+    if (prefs.containsKey(keyName)) {
       String? cachedData = prefs.getString(keyName);
       if (cachedData != null && cachedData.isNotEmpty) {
         return cachedData;
@@ -145,12 +145,7 @@ Future<String> loadHotfixedJson(String assetPath, {bool forceRefresh = false}) a
     debugPrint("⚠️ Web cache read failed, falling back to asset bundle: $e");
   }
 
-  final String data = await rootBundle.loadString(assetPath);
-  
-  final prefs = await SharedPreferences.getInstance();
-  await prefs.setString('cached_file_${assetPath.replaceFirst('assets/', '')}', data);
-  
-  return data;
+  return await rootBundle.loadString(assetPath);
 }
 
 Map<String, Map<String, double>>? minMaxAnchors;
@@ -744,8 +739,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   ConnectionStatus _connectionStatus = ConnectionStatus.offline;
   Timer? _statusTimer;
-  String _activeBaseUrl = "https://wormeo.github.io/armory-data-web";
-  final String _fallbackProdUrl = "https://wormeo.github.io/armory-data-web";
+  String _activeBaseUrl = "https://wormeo.github.io/armory-data";
+  final String _fallbackProdUrl = "https://wormeo.github.io/armory-data";
   final String _devNgrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
   final bool _isDevMode = false; 
 
@@ -1627,6 +1622,7 @@ Future<void> _runBootSequence() async {
       updateSlipstreamUI(locale.translateStatic("DOWNLOADING ASSETS..."), Colors.amberAccent);
     }
   });
+      await Future.delayed(const Duration(milliseconds: 500));
 
   if (_weaponDataUpdated) {
       if (mounted) {
@@ -1647,69 +1643,51 @@ Future<void> _runBootSequence() async {
   }
 
 if (_hotfixUpdated) {
-  // This runs if _syncData found a new hotfix file
-  if (mounted) updateSlipstreamUI(locale.translateStatic("INJECTING HOTFIX DATA..."), coreColor);
-  await _loadHotfixData(); 
-  
-  // Mark as acknowledged so it doesn't loop
-  final prefs = await SharedPreferences.getInstance();
-  int currentVersion = int.tryParse(_hotfixData?['version']?.toString() ?? "0") ?? 0;
-  await prefs.setInt('key_hotfix_acknowledged_version', currentVersion);
-  await prefs.setBool('pending_hotfix_alert', false);
-
-  if (mounted) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    // Null-safe dialog trigger
-    if (_hotfixData != null) {
-      _showHotFixesDialog(context, _hotfixData!);
-    } else {
-      debugPrint("⚠️ Critical: Hotfix data was null after sync.");
-    }
-  }
-} else {
-  // This runs if no files were downloaded
-  await _loadHotfixData();
-  if (mounted) {
-    final prefs = await SharedPreferences.getInstance();
+    if (mounted) updateSlipstreamUI(locale.translateStatic("INJECTING HOTFIX DATA..."), Colors.cyanAccent);
+    await _loadHotfixData(); 
+    await widget.themeController.syncPatchNotes(_activeBaseUrl, locale.languageCode, forceRefresh: true);
     
-    // If _hasNewHotfix is true here, it means we missed the _syncData trigger 
-    // or the user restarted before acknowledging.
-    if (_hasNewHotfix && _hotfixData != null) {
-      _showHotFixesDialog(context, _hotfixData!);
-      
-      // Auto-acknowledge so it doesn't show again
-      int currentVersion = int.tryParse(_hotfixData?['version']?.toString() ?? "0") ?? 0;
-      await prefs.setInt('key_hotfix_acknowledged_version', currentVersion);
-    } else {
-      updateSlipstreamUI("SYSTEM UP TO DATE.", coreColor);
-      await Future.delayed(const Duration(seconds: 2));
-      if (mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    if (mounted) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        _showHotFixesDialog(context, _hotfixData);
     }
+} else {
+    await _loadHotfixData();
+    if (mounted) {
+        final prefs = await SharedPreferences.getInstance();
+        bool hasPendingAlert = prefs.getBool('pending_hotfix_alert') ?? false;
 
-    if (displayList.isEmpty && mounted) {
-      setState(() {
-        displayList = List.from(_loadedWeapons);
-        _sortDisplayList();
-      });
+        if (hasPendingAlert) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            _showHotFixesDialog(context, _hotfixData);
+            await prefs.setBool('pending_hotfix_alert', false);
+        } else {
+            updateSlipstreamUI("SYSTEM UP TO DATE.", coreColor);
+            await Future.delayed(const Duration(seconds: 2));
+            if (mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }
+
+        if (displayList.isEmpty && mounted) {
+            setState(() {
+                displayList = List.from(_loadedWeapons);
+                _sortDisplayList();
+            });
+        }
     }
-  }
 }
   
-_hasRunBootSequence = true;
+  _hasRunBootSequence = true;
 }
   
 Future<void> _loadHotfixData() async {
   try {
-    // 1. Force fetch the latest hotfix from CDN
-    final String jsonString = await loadHotfixedJson('assets/hotfixes.json', forceRefresh: true);
+    final String jsonString = await loadHotfixedJson('assets/hotfixes.json');
     final Map<String, dynamic> data = json.decode(jsonString);
-    
-    // 2. Get the last acknowledged version from SHARERPREFS
+
     final prefs = await SharedPreferences.getInstance();
     int lastAcknowledgedVersion = prefs.getInt('key_hotfix_acknowledged_version') ?? 0;
     int currentVersion = int.tryParse(data['version']?.toString() ?? "0") ?? 0;
 
-    // 3. IMPORTANT: Only update _hasNewHotfix if it's strictly greater
     if (mounted) {
       setState(() {
         _hotfixData = data;
