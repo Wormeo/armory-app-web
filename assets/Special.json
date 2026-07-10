@@ -569,7 +569,7 @@
 		"attach_2" : "COMMANDO GRIP",
 		"attach_3" : "9MM PM SKULL SPLITTER BARREL",
 		"attach_4" : "SKULL SPLITTER EXTENDED MAG",
-		"attach_5" : "SIGHT \/ 9X18MM MAKAROV OVERPRESSURED ",
+		"attach_5" : " \/ 9X18MM MAKAROV OVERPRESSURED ",
 		"recommended_sight_shooting_style" : "KEPLER MICROFLEX"
 	},
 	{
@@ -967,5 +967,27 @@
 		"attach_4" : "MK.78 LIGHTFRAME PDW CONVERSION",
 		"attach_5" : "",
 		"recommended_sight_shooting_style" : "LETHAL TOOLS ELO"
+	},
+	{
+		"id" : 96,
+		"weapon_name" : "XR-3 ION",
+		"mod" : "MINIGUN",
+		"attach_1" : "TRISHOT COMPENSATOR",
+		"attach_2" : "XR-INITIALIZE GRIP",
+		"attach_3" : "EXPOSED-73 STOCK",
+		"attach_4" : "CONVERGENCE BOX LASER",
+		"attach_5" : "XR-3 ION VULCAN MINIGUN",
+		"recommended_sight_shooting_style" : null
+	},
+	{
+		"id" : 97,
+		"weapon_name" : "VELOX 5.7",
+		"mod" : "FULL AUTO",
+		"attach_1" : "GREAVES COVERT-5",
+		"attach_2" : "EAM STEADY-90 GRIP",
+		"attach_3" : "VELOX 5.7 CARBINE CHASSIS",
+		"attach_4" : "DRACO RESERVE EXTENDED",
+		"attach_5" : "FANG HOVERPOINT ELO",
+		"recommended_sight_shooting_style" : null
 	}
 ]}

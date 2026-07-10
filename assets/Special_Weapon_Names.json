@@ -1,0 +1,345 @@
+{
+"Special_Weapon_Names": [
+	{
+		"id" : 1,
+		"weapon_name" : "AEK-973",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177849\/AEK_fjmxsd.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 2,
+		"weapon_name" : "AK-74 (BO6)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177849\/AK74_ictx5x.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 3,
+		"weapon_name" : "AMR9",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188628\/AMR9_pl0lzz.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 4,
+		"weapon_name" : "BAL-27",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188628\/BAL_27_cdjj3r.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 5,
+		"weapon_name" : "BAS-B",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188630\/BAS_B_qdystz.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 6,
+		"weapon_name" : "BASILISK",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188634\/BASILISK_wgsc0p.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 7,
+		"weapon_name" : "BP50",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188635\/BP50_zlqjoo.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 8,
+		"weapon_name" : "BRUEN MK9 (MW3)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188639\/BRUEN_MK9_eopcqw.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 9,
+		"weapon_name" : "COR-45",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749195178\/COR-45_wmfo5e.avif",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 10,
+		"weapon_name" : "D1.3 SECTOR",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177864\/D13SECTOR_nlmteo.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 11,
+		"weapon_name" : "DG-58 LSW",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188651\/DG-58_LSW_i792nz.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 12,
+		"weapon_name" : "FJX HORUS",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188667\/FJX_HORUS_niwwwj.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 13,
+		"weapon_name" : "HAYMAKER",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194525\/HAYMAKER_qidh8w.jpg",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 14,
+		"weapon_name" : "HOLGER 26 (MW3)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188693\/HOLGER_26_kjlfpf.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 15,
+		"weapon_name" : "HOLGER 556",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188694\/HOLGER_556_mlebgw.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 16,
+		"weapon_name" : "KASTOV 762",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188710\/KASTOV_762_g7jvsv.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 17,
+		"weapon_name" : "KATT-AMR",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188719\/KATT-AMR_l8csvc.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 18,
+		"weapon_name" : "KOMPAKT 92",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177901\/KOMAPKT_v5uqwh.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 19,
+		"weapon_name" : "KV BROADSIDE",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194964\/KV_BROADSIDE_e8a95l.webp",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 20,
+		"weapon_name" : "KV INHIBITOR",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188729\/KV_INHIBITOR_kllns6.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 22,
+		"weapon_name" : "LONGBOW",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188760\/LONGBOW_i0ui2x.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 23,
+		"weapon_name" : "M16 (MW2)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188773\/M16_ej7b4t.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 24,
+		"weapon_name" : "M4",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188773\/M4_unywmn.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 25,
+		"weapon_name" : "MCW",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188785\/MCW_n7uroz.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 26,
+		"weapon_name" : "MORS",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188797\/MORS_hejrpu.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 27,
+		"weapon_name" : "MTZ-762",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188797\/MTZ-762_hx5v20.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 28,
+		"weapon_name" : "MX GUARDIAN",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194516\/MX_GUARDIAN_xpdwqn.jpg",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 29,
+		"weapon_name" : "RAAL MG (MW2)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188824\/RAAL_MG_mrtl6k.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 30,
+		"weapon_name" : "RECLAIMER 18",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749194518\/RECLAIMER_18_feq5bc.jpg",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 31,
+		"weapon_name" : "RENETTI (MW3)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188839\/RENETTI_mbwhpf.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 32,
+		"weapon_name" : "RIVAL-9",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188852\/RIVAL-9_nvlxyn.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 33,
+		"weapon_name" : "RPK",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188852\/RPK_fxhlwf.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749198150\/MW2_dzgfag.jpg"
+	},
+	{
+		"id" : 34,
+		"weapon_name" : "SAUG",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177931\/SAUG_itishu.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 35,
+		"weapon_name" : "SIDEWINDER",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188870\/SIDEWINDER_fntlqi.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 36,
+		"weapon_name" : "SIRIN 9MM",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177932\/SIRIN_mcd53z.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 37,
+		"weapon_name" : "SWAT 5.56",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177939\/SWAT_leg4cb.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 38,
+		"weapon_name" : "TANTO .22",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177939\/TANTO_lp4fpq.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 39,
+		"weapon_name" : "TR2",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177940\/TR2_zyzpga.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 40,
+		"weapon_name" : "TYR",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749188985\/TYR_jooa34.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 41,
+		"weapon_name" : "WSP SWARM",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749189008\/WSP_SWARM_b7mxsk.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 42,
+		"weapon_name" : "WSP-9",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749189017\/WSP-9_zkhqe1.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197997\/MW3_1_kgnldj.png"
+	},
+	{
+		"id" : 43,
+		"weapon_name" : "XM4 (BO6)",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177949\/XM4_er5wqp.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 44,
+		"weapon_name" : "9MM PM",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177848\/9MMPM_lkv62i.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 45,
+		"weapon_name" : "ABR A1",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177849\/ABRA1_ikjydk.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 46,
+		"weapon_name" : "GPR 91",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177883\/GPR91_ovsybe.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 47,
+		"weapon_name" : "GPMG-7",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177883\/GPMG_jowcvq.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 48,
+		"weapon_name" : "AKITA",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229660\/AKITA_u2gnwi.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 49,
+		"weapon_name" : "AK-27",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229660\/AK27_cudu2i.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 50,
+		"weapon_name" : "M8A1",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229681\/M8A1_sdribb.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 51,
+		"weapon_name" : "MPC-25",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229696\/MPC25_fizh5a.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 52,
+		"weapon_name" : "SVD",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1772177934\/SVD_zbrppk.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1749197657\/BO6_LOGO_kaxpln.png"
+	},
+	{
+		"id" : 53,
+		"weapon_name" : "XM325",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229722\/XM325_mbr9re.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 54,
+		"weapon_name" : "RAZOR 9MM",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229702\/RAZOR9MM_d30owr.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 55,
+		"weapon_name" : "MXR-17",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229697\/MXR17_syvgy4.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 56,
+		"weapon_name" : "MK.78",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771719133\/MK78_pmhtbt.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 57,
+		"weapon_name" : "XR-3 ION",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229725\/XR3ION_iwux0d.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	},
+	{
+		"id" : 58,
+		"weapon_name" : "VELOX 5.7",
+		"weapon_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1771229711\/VELOX57_jtuevh.png",
+		"game_image" : "https:\/\/res.cloudinary.com\/dctlpj7fg\/image\/upload\/v1763257596\/BO7_mzvevs.png"
+	}
+]}

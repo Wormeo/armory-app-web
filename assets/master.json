@@ -15714,6 +15714,13 @@
       "ZH": "M8A1 AUTOSTRIKE 枪管",
       "DE": "M8A1 AUTOSTRIKE LAUF"
     },
+    "VELOX 5.7 CARBINE CHASSIS": {
+      "EN": "VELOX 5.7 CARBINE CHASSIS",
+      "FR": "CHÂSSIS DE CARABINE VELOX 5.7",
+      "ES": "CHASIS DE CARABINA VELOX 5.7",
+      "ZH": "VELOX 5.7 卡宾枪底盘",
+      "DE": "VELOX 5.7 KARABINER-GEHÄUSE"
+    },
     "16\" ZLR EXECUTION BARREL": {
       "EN": "16\" ZLR EXECUTION BARREL",
       "FR": "CANON ZLR EXECUTION 16\"",
@@ -23815,6 +23822,13 @@
       "ES": "JAK SLASH",
       "ZH": "JAK SLASH",
       "DE": "JAK SLASH"
+    },
+    "XR-3 ION VULCAN MINIGUN": {
+      "EN": "XR-3 ION VULCAN MINIGUN",
+      "FR": "MINIGUN VULCAN À IONS XR-3",
+      "ES": "AMETRALLADORA VULCAN DE IONES XR-3",
+      "ZH": "XR-3 离子火神机关枪",
+      "DE": "XR-3 IONEN-VULCAN-MINIGUN"
     },
     "40MM CONCUSSIVE": {
       "EN": "40MM CONCUSSIVE",

@@ -133,7 +133,6 @@ const Map<String, String> _legacyArchetypes = {
 Future<String> loadHotfixedJson(String assetPath) async {
   try {
     final prefs = await SharedPreferences.getInstance();
-    // Match the storage naming structure used in _syncData
     String keyName = 'cached_file_${assetPath.replaceFirst('assets/', '')}';
     
     if (prefs.containsKey(keyName)) {
@@ -145,8 +144,7 @@ Future<String> loadHotfixedJson(String assetPath) async {
   } catch (e) {
     debugPrint("⚠️ Web cache read failed, falling back to asset bundle: $e");
   }
-  
-  // Fallback to embedded web assets if no hotfix is cached
+
   return await rootBundle.loadString(assetPath);
 }
 
@@ -302,8 +300,7 @@ void main() async {
   if (defaultTargetPlatform != TargetPlatform.linux || kIsWeb) {
     try {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-      
-      // Only set up Crashlytics if we are NOT on the web
+
       if (!kIsWeb) {
         FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
       } else {
@@ -321,6 +318,8 @@ void main() async {
   
   final aegisArc = AegisArc();
   await aegisArc.loadSavedLanguage();
+
+  await aegisArc.loadTranslations();
 
   await loadMinMaxData(aegisArc.languageCode);
   
@@ -615,7 +614,6 @@ Future<void> _performPreload({bool isLanguageSwitch = false}) async {
     await Future.delayed(const Duration(milliseconds: 600));
     await loadArchetypeData();
 
-    // Strictly Web: Removed 'await' since _heavyDataProcessing runs synchronously inline
     _loadedWeapons = _heavyDataProcessing({
       'buildJsons': allRawData.sublist(0, buildFiles.length),
       'namesJson': allRawData[allRawData.length - 3],
@@ -628,7 +626,7 @@ Future<void> _performPreload({bool isLanguageSwitch = false}) async {
       setState(() => _dataReady = true);
       _checkTransition();
     }
-  } catch (e) { // Removed unused ', stack' parameter
+  } catch (e) {
     debugPrint("Background Sync Preload Error: $e");
     if (mounted) {
       setState(() => _dataReady = true);
@@ -734,15 +732,15 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   bool _isManualReplay = false;
   final Set<String> _selectedArchetypes = {};
 
-  bool _hotfixUpdated = false;
-  bool _weaponDataUpdated = false;
+  final bool _hotfixUpdated = false;
+  final bool _weaponDataUpdated = false;
 
   final TextEditingController _searchController = TextEditingController();
 
   ConnectionStatus _connectionStatus = ConnectionStatus.offline;
   Timer? _statusTimer;
-  String _activeBaseUrl = "https://wormeo.github.io/armory-data";
-  final String _fallbackProdUrl = "https://wormeo.github.io/armory-data";
+  String _activeBaseUrl = "https://wormeo.github.io/armory-data-web";
+  final String _fallbackProdUrl = "https://wormeo.github.io/armory-data-web";
   final String _devNgrokUrl = "https://cherty-frowningly-rickie.ngrok-free.dev";
   final bool _isDevMode = false; 
 
@@ -787,8 +785,8 @@ Future<void> _initializeAegisSource() async {
   final String code = locale.languageCode;
   const String rawHint = "SEARCH WEAPONS OR ARCHETYPES...";
 
-  final String translatedHint = (code != 'en' && uiTranslations[code]?.containsKey(rawHint) == true)
-      ? uiTranslations[code]![rawHint]!
+  final String translatedHint = (code != 'en' && locale.translationMap[code]?.containsKey(rawHint) == true)
+      ? locale.translationMap[code]![rawHint]!
       : rawHint;
 
   final bool hasSpecialWrapper = _isPremiumUser && (isHolographic || isAnemone || isCustom);
@@ -1340,7 +1338,6 @@ Future<void> _performPreload({
       });
     }
     
-    // Web Safe Guard: Prevent Crashlytics assertion errors from stopping execution
     if (!kIsWeb) {
       FirebaseCrashlytics.instance.recordError(e, stack, reason: 'Sync Preload Failed');
     }
@@ -1627,59 +1624,56 @@ Future<void> _runBootSequence() async {
   });
 
   if (_weaponDataUpdated) {
-    updateSlipstreamUI(locale.translateStatic("PRELOADING ASSETS..."), Colors.cyanAccent);
-    await Future.delayed(const Duration(milliseconds: 200));
-    await _performPreload();
-    
-    updateSlipstreamUI(locale.translateStatic("PATCH APPLIED. RESTARTING..."), coreColor);
-    await Future.delayed(const Duration(milliseconds: 2000)); 
-    
-    if (mounted) {
-      AppRestartWrapper.restartApp(context);
-    }
-    return;
+      if (mounted) {
+          updateSlipstreamUI(locale.translateStatic("PRELOADING ASSETS..."), Colors.cyanAccent);
+      }
+      await Future.delayed(const Duration(milliseconds: 500)); 
+      await _performPreload();
+
+      if (mounted) {
+          updateSlipstreamUI(locale.translateStatic("PATCH APPLIED. RESTARTING..."), coreColor);
+      }
+      await Future.delayed(const Duration(milliseconds: 1000)); 
+      
+      if (mounted) {
+          AppRestartWrapper.restartApp(context);
+      }
+      return;
   }
 
-  if (_hotfixUpdated) {
-  updateSlipstreamUI(locale.translateStatic("INJECTING HOTFIX DATA..."), Colors.cyanAccent);
-  
-  await _loadHotfixData(); 
-
-  await widget.themeController.syncPatchNotes(
-    _activeBaseUrl, 
-    locale.languageCode, 
-    forceRefresh: true
-  );
-  
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  if (mounted) {
-    _showHotFixesDialog(context, _hotfixData);
-  }
-} else {
-    await _loadHotfixData();
-
+if (_hotfixUpdated) {
+    if (mounted) updateSlipstreamUI(locale.translateStatic("INJECTING HOTFIX DATA..."), Colors.cyanAccent);
+    await _loadHotfixData(); 
+    await widget.themeController.syncPatchNotes(_activeBaseUrl, locale.languageCode, forceRefresh: true);
+    
     if (mounted) {
-      final prefs = await SharedPreferences.getInstance();
-      bool hasPendingAlert = prefs.getBool('pending_hotfix_alert') ?? false;
-
-      if (hasPendingAlert) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         _showHotFixesDialog(context, _hotfixData);
-        await prefs.setBool('pending_hotfix_alert', false);
-      } else {
-        updateSlipstreamUI("SYSTEM UP TO DATE.", coreColor);
-        await Future.delayed(const Duration(seconds: 2));
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      }
-
-      if (displayList.isEmpty) {
-        setState(() {
-          displayList = List.from(_loadedWeapons);
-          _sortDisplayList();
-        });
-      }
     }
-  }
+} else {
+    await _loadHotfixData();
+    if (mounted) {
+        final prefs = await SharedPreferences.getInstance();
+        bool hasPendingAlert = prefs.getBool('pending_hotfix_alert') ?? false;
+
+        if (hasPendingAlert) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            _showHotFixesDialog(context, _hotfixData);
+            await prefs.setBool('pending_hotfix_alert', false);
+        } else {
+            updateSlipstreamUI("SYSTEM UP TO DATE.", coreColor);
+            await Future.delayed(const Duration(seconds: 2));
+            if (mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }
+
+        if (displayList.isEmpty && mounted) {
+            setState(() {
+                displayList = List.from(_loadedWeapons);
+                _sortDisplayList();
+            });
+        }
+    }
+}
   
   _hasRunBootSequence = true;
 }
@@ -2206,97 +2200,64 @@ void _openColorPickerDialog(BuildContext context, ThemeController controller) {
 }
 
 Future<bool> _syncData({Function? onDownloadStarted}) async {
-  bool performedActualUpdate = false;
-  _hotfixUpdated = false;
-  _weaponDataUpdated = false;
-  Function? notifyUI = onDownloadStarted;
-
-  List<Future<void>> asyncTasks = [];
-
   try {
     final manifestUri = Uri.parse("$_activeBaseUrl/cdn/manifest.json?t=${DateTime.now().millisecondsSinceEpoch}");
-    debugPrint("🛰️ [SLIPSTREAM] Fetching Manifest from: $manifestUri");
+    final response = await http.get(manifestUri, headers: _getHeaders()).timeout(const Duration(seconds: 15));
 
-    final response = await http.get(
-      manifestUri,
-      headers: _getHeaders()
-    ).timeout(const Duration(seconds: 15));
+    if (response.statusCode != 200) return false;
 
-    if (response.statusCode == 200) {
-      final manifest = json.decode(response.body);
-      final int remoteManifestVersion = manifest['version'] ?? 0;
-      final remoteFiles = manifest['files'] as Map<String, dynamic>;
-      
-      final prefs = await SharedPreferences.getInstance();
+    final manifest = json.decode(response.body);
+    final remoteFiles = manifest['files'] as Map<String, dynamic>;
+    final prefs = await SharedPreferences.getInstance();
 
-      int localManifestVersion = prefs.getInt('manifest_version_key') ?? 0;
-      bool forceGlobalUpdate = remoteManifestVersion > localManifestVersion;
+    List<String> dataFiles = [];
+    List<String> hotfixFiles = [];
 
-      for (String fileName in remoteFiles.keys) {
-        int remoteFileVersion = int.tryParse(remoteFiles[fileName].toString()) ?? 0;
-        String storageKey = 'key_$fileName';
-        int localVersion = forceGlobalUpdate ? -1 : (prefs.getInt(storageKey) ?? 0);
-
-        if (remoteFileVersion > localVersion) {
-          performedActualUpdate = true;
-          if (notifyUI != null) { notifyUI(); notifyUI = null; }
-
-          asyncTasks.add(() async {
-            try {
-              final fileUri = Uri.parse("$_activeBaseUrl/cdn/$fileName");
-              final fileResponse = await http.get(fileUri, headers: _getHeaders());
-
-              if (fileResponse.statusCode == 200) {
-                // Strictly Web: Store the raw file payload directly into browser localStorage
-                final String webContentString = utf8.decode(fileResponse.bodyBytes);
-                String dataStoreKey = 'cached_file_$fileName';
-                await prefs.setString(dataStoreKey, webContentString);
-                await prefs.setInt(storageKey, remoteFileVersion);
-
-                if (fileName.contains('hotfixes')) {
-                  _hotfixUpdated = true;
-                  await prefs.setBool('pending_hotfix_alert', true); 
-
-                  String fileLang = 'en';
-                  if (fileName.contains('/')) {
-                    fileLang = fileName.split('/').first;
-                  }
-
-                  await widget.themeController.syncPatchNotes(
-                    _activeBaseUrl, 
-                    fileLang, 
-                    forceRefresh: true
-                  );
-                  debugPrint("🚀 [SLIPSTREAM] Hot-swapped active cache memory state inside ThemeController for: $fileLang");
-                } else {
-                  _weaponDataUpdated = true;
-                }
-              } else {
-                debugPrint("❌ [SLIPSTREAM] Failed to download $fileName: ${fileResponse.statusCode}");
-              }
-            } catch (e) {
-              debugPrint("❌ [SLIPSTREAM] Task failed for $fileName: $e");
-            }
-          }());
-        }
+    for (String fileName in remoteFiles.keys) {
+      int remoteVersion = int.tryParse(remoteFiles[fileName].toString()) ?? 0;
+      int localVersion = prefs.getInt('key_$fileName') ?? 0;
+      if (remoteVersion > localVersion) {
+        if (fileName.contains('hotfixes')) hotfixFiles.add(fileName);
+        else dataFiles.add(fileName);
       }
-
-      if (asyncTasks.isNotEmpty) {
-        await Future.wait(asyncTasks);
-        await prefs.setInt('manifest_version_key', remoteManifestVersion);
-      } else if (forceGlobalUpdate) {
-        await prefs.setInt('manifest_version_key', remoteManifestVersion);
-      }
-
-    } else {
-      debugPrint("❌ [SLIPSTREAM] Manifest error: Status ${response.statusCode}");
     }
-    
-    return performedActualUpdate; 
-    
+
+    if (dataFiles.isNotEmpty) {
+      if (onDownloadStarted != null) onDownloadStarted();
+      for (String fileName in dataFiles) {
+        await _downloadAndCache(fileName, remoteFiles[fileName], prefs);
+      }
+      await prefs.setInt('manifest_version_key', manifest['version']);
+
+      AppRestartWrapper.restartApp(context); 
+      return true;
+    }
+
+    if (hotfixFiles.isNotEmpty) {
+      for (String fileName in hotfixFiles) {
+        await _downloadAndCache(fileName, remoteFiles[fileName], prefs);
+        
+        await prefs.setBool('pending_hotfix_alert', true);
+        String lang = fileName.contains('/') ? fileName.split('/').first : 'en';
+        
+        await widget.themeController.syncPatchNotes(_activeBaseUrl, lang, forceRefresh: true);
+      }
+      await prefs.setInt('manifest_version_key', manifest['version']);
+      return true;
+    }
+
+    return false;
   } catch (e) {
     debugPrint("⚠️ [SLIPSTREAM] Exception: $e");
     return false;
+  }
+}
+
+Future<void> _downloadAndCache(String fileName, dynamic version, SharedPreferences prefs) async {
+  final fileResponse = await http.get(Uri.parse("$_activeBaseUrl/cdn/$fileName"), headers: _getHeaders());
+  if (fileResponse.statusCode == 200) {
+    await prefs.setString('cached_file_$fileName', utf8.decode(fileResponse.bodyBytes));
+    await prefs.setInt('key_$fileName', int.tryParse(version.toString()) ?? 0);
   }
 }
 
@@ -2367,7 +2328,7 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
           title: Column(
             children: [
               ArmoryText(
-                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.1.0 SOLAR",
+                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.1.1 SOLAR",
                 themeController: widget.themeController,
                 baseFontSize: 14,
                 baseStrokeWidth: isNeon ? 3.0 : 2.5,
@@ -3823,7 +3784,7 @@ Widget _buildSettingsDrawer() {
                 _showHotFixesDialog(context, null);
               }
             } else {
-              // Data is already in memory, show immediately
+
               _showHotFixesDialog(context, null);
             }
           },
@@ -4654,7 +4615,6 @@ void _showHotFixesDialog(BuildContext context, Map<String, dynamic>? data) {
     return;
   }
 
-  // Extract the notes map and get the list for the current language
   final Map<String, dynamic> notesMap = Map<String, dynamic>.from(patchData['notes'] ?? {});
   final List<String> localizedNotes = List<String>.from(notesMap[lang] ?? notesMap['en'] ?? []);
 
@@ -6019,7 +5979,7 @@ Widget _buildDefinition(String text) {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(width: 40), // Offset to counter-balance the button
+                    const SizedBox(width: 40),
                     ArmoryText(
                       "ADVANCED WEAPON STATS",
                       themeController: themeController,
@@ -6085,9 +6045,9 @@ Widget _buildDefinition(String text) {
                     children: [
                       Expanded(child: _buildRankElement("TTK CLOSE", "ttkClose", ratingColor)),
                       Expanded(child: _buildRankElement("TTK FAR", "ttkFar", ratingColor)),
-                      Expanded(child: _buildRankElement("ADS", "adsSpeed", ratingColor)), // Abbreviated
+                      Expanded(child: _buildRankElement("ADS", "adsSpeed", ratingColor)),
                       Expanded(child: _buildRankElement("VELOCITY", "velocity", ratingColor)),
-                      Expanded(child: _buildRankElement("STK", "stk", ratingColor)), // Abbreviated
+                      Expanded(child: _buildRankElement("STK", "stk", ratingColor)),
                     ],
                   ),
                 ),
@@ -8982,7 +8942,6 @@ class _AugmentCard extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
-  // 1. Get the locale controller
   final locale = Provider.of<AegisArc>(context);
   
   final activeTheme = themeController.activeTheme;
@@ -8991,8 +8950,6 @@ Widget build(BuildContext context) {
   
   final accent = themeController.activeAccentColor;
   final Color coreColor = _getCore(accent);
-
-  // 2. Prepare translated UI Labels
   final String minorLabel = locale.translate("MINOR AUGMENT").translatedText;
   final String majorLabel = locale.translate("MAJOR AUGMENT").translatedText;
 
@@ -11221,7 +11178,6 @@ Widget _buildFront(Color primary) {
                             const SizedBox(width: 14),
                             Expanded( 
                               child: ArmoryText(
-                                // 3. Display the translated text
                                 translatedAttach.toUpperCase(),
                                 themeController: widget.themeController,
                                 baseFontSize: 11,
@@ -12842,21 +12798,8 @@ WeaponStats? _extractBaseStats(
 
   Future<void> _loadArchetypes() async {
   try {
-    final aegisArc = Provider.of<AegisArc>(context, listen: false);
-    final String lang = aegisArc.languageCode;
-
-    String getAssetPath(String fileName) {
-      if (lang == 'en') {
-        return 'assets/$fileName';
-      } else {
-
-        String nameWithoutExtension = fileName.split('.').first;
-        return 'assets/$lang/${nameWithoutExtension}_$lang.json';
-      }
-    }
-
-    final String archetypesAssetPath = getAssetPath('archetypes.json');
-    final String statsAssetPath = getAssetPath('Premium_Stats.json');
+    final String archetypesAssetPath = 'archetypes.json';
+    final String statsAssetPath = 'Premium_Stats.json';
 
     final String archetypesResponse = await loadHotfixedJson(archetypesAssetPath);
     final data = json.decode(archetypesResponse);
@@ -13660,24 +13603,50 @@ class TranslationResult {
 
 class AegisArc extends ChangeNotifier {
   String _currentLocale = 'en';
+
   Map<String, dynamic> _masterDict = {};
+  Map<String, dynamic> _uiTranslations = {};
+  Map<String, dynamic> get translationMap => _uiTranslations;
+
+  Future<void> loadTranslations() async {
+  try {
+    final String content = await loadHotfixedJson('assets/translations.json');
+
+    if (content.isEmpty) {
+      debugPrint("❌ [DICT] CRITICAL: Content string is EMPTY.");
+      return;
+    }
+
+    _uiTranslations = json.decode(content);
+    
+    notifyListeners();
+  } catch (e) {
+    debugPrint("❌ [DICT] Failed to load translations: $e");
+  }
+}
 
   String get languageCode => _currentLocale;
 
   Future<void> loadMasterDictionary() async {
-    final String content = await rootBundle.loadString('assets/master.json');
-    _masterDict = json.decode(content);
+  try {
+    final String content = await loadHotfixedJson('assets/master.json');
     
+    _masterDict = json.decode(content);
+
+    notifyListeners();
+  } catch (e) {
+    debugPrint("❌ [DICT] Failed to load master dictionary: $e");
+    _masterDict = {};
     notifyListeners();
   }
+}
 
 String translateStatic(String key) {
-  final langMap = uiTranslations[_currentLocale];
-  if (langMap == null) return key; 
+    final langMap = _uiTranslations[_currentLocale];
+    if (langMap == null) return key;
 
-  final String upperKey = key.toUpperCase().trim();
-
-  if (langMap.containsKey(upperKey)) return langMap[upperKey]!;
+    final String upperKey = key.toUpperCase().trim();
+    if (langMap.containsKey(upperKey)) return langMap[upperKey]!;
 
   for (String dictKey in langMap.keys) {
     if (upperKey.contains(dictKey)) {
