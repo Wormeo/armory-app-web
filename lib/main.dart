@@ -2260,7 +2260,9 @@ Future<bool> _syncData({Function? onDownloadStarted}) async {
 }
 
 Future<void> _downloadAndCache(String fileName, dynamic version, SharedPreferences prefs) async {
-  final fileResponse = await http.get(Uri.parse("$_activeBaseUrl/cdn/$fileName"), headers: _getHeaders());
+  final String url = "$_activeBaseUrl/cdn/$fileName?cb=${DateTime.now().millisecondsSinceEpoch}";
+  final fileResponse = await http.get(Uri.parse(url), headers: _getHeaders());
+  
   if (fileResponse.statusCode == 200) {
     await prefs.setString('cached_file_$fileName', utf8.decode(fileResponse.bodyBytes));
     await prefs.setInt('key_$fileName', int.tryParse(version.toString()) ?? 0);

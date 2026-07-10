@@ -231,36 +231,41 @@ class ThemeController extends ChangeNotifier {
 
 Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefresh = false}) async {
   try {
-    if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) return;
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final int manifestVersion = prefs.getInt('manifest_version_key') ?? 0;
     const String storageKey = 'cached_hotfixes';
 
-    String? localContent;
-    
-    if (kIsWeb) {
-      localContent = prefs.getString(storageKey);
-    } else {
-      final directory = await getApplicationDocumentsDirectory();
-      final File localFile = File('${directory.path}/hotfixes.json');
-      if (await localFile.exists()) {
-        localContent = await localFile.readAsString();
-      }
-    }
-
-    if (localContent != null) {
-      final Map<String, dynamic> data = json.decode(localContent);
-      _currentPatchData = data;
-      _currentPatchLang = langCode;
-      _updatePatchStatus(data);
-      debugPrint("🎯 [PATCH SYNC] Loaded from local storage for: $langCode");
-      notifyListeners();
+    if (!forceRefresh && _currentPatchLang == langCode && _currentPatchData != null) {
       return;
     }
 
-    final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
-    final String url = "$cleanBaseUrl/cdn/hotfixes.json";
+    if (!forceRefresh) {
+      String? localContent;
+      if (kIsWeb) {
+        localContent = prefs.getString(storageKey);
+      } else {
+        final directory = await getApplicationDocumentsDirectory();
+        final File localFile = File('${directory.path}/hotfixes.json');
+        if (await localFile.exists()) {
+          localContent = await localFile.readAsString();
+        }
+      }
 
+      if (localContent != null) {
+        final Map<String, dynamic> data = json.decode(localContent);
+        _currentPatchData = data;
+        _currentPatchLang = langCode;
+        _updatePatchStatus(data);
+        debugPrint("🎯 [PATCH SYNC] Loaded from local storage (v$manifestVersion)");
+        notifyListeners();
+        return;
+      }
+    }
+
+    final cleanBaseUrl = serverUrl.endsWith('/') ? serverUrl.substring(0, serverUrl.length - 1) : serverUrl;
+    final String url = "$cleanBaseUrl/cdn/hotfixes.json?v=$manifestVersion";
+    
+    debugPrint("🌐 [PATCH SYNC] Fetching fresh data from: $url");
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -269,17 +274,18 @@ Future<void> syncPatchNotes(String serverUrl, String langCode, {bool forceRefres
       _currentPatchLang = langCode;
       _updatePatchStatus(data);
 
-    if (kIsWeb) {
-      await prefs.setString(storageKey, response.body);
-    } else {
-      final directory = await getApplicationDocumentsDirectory();
-      await File('${directory.path}/hotfixes.json').writeAsString(response.body);
+      if (kIsWeb) {
+        await prefs.setString(storageKey, response.body);
+      } else {
+        final directory = await getApplicationDocumentsDirectory();
+        await File('${directory.path}/hotfixes.json').writeAsString(response.body);
+      }
+      debugPrint("✅ [PATCH SYNC] Successfully updated to v$manifestVersion");
     }
-  }
     
     notifyListeners();
   } catch (e) {
-    debugPrint("Patch Sync Error: $e");
+    debugPrint("❌ Patch Sync Error: $e");
   }
 }
 
