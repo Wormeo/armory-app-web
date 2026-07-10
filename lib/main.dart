@@ -1622,7 +1622,6 @@ Future<void> _runBootSequence() async {
       updateSlipstreamUI(locale.translateStatic("DOWNLOADING ASSETS..."), Colors.amberAccent);
     }
   });
-      await Future.delayed(const Duration(milliseconds: 500));
 
   if (_weaponDataUpdated) {
       if (mounted) {
@@ -1666,7 +1665,7 @@ if (_hotfixUpdated) {
             await Future.delayed(const Duration(seconds: 2));
             if (mounted) ScaffoldMessenger.of(context).hideCurrentSnackBar();
         }
-
+        
         if (displayList.isEmpty && mounted) {
             setState(() {
                 displayList = List.from(_loadedWeapons);
@@ -1697,6 +1696,12 @@ Future<void> _loadHotfixData() async {
   } catch (e) {
     debugPrint("Hotfix System Load Error: $e");
   }
+}
+
+List<String> _getCurrentHotfixNotes(String langCode) {
+  if (_hotfixData == null) return [];
+  final Map<String, dynamic> notesMap = Map<String, dynamic>.from(_hotfixData!['notes']);
+  return List<String>.from(notesMap[langCode.toLowerCase()] ?? notesMap['en']);
 }
 
 Future<void> _markHotfixRead() async {
@@ -3769,6 +3774,7 @@ Widget _buildSettingsDrawer() {
           label: "HOTFIXES",
           icon: Icons.terminal_outlined,
           onTap: () async {
+            
             final lang = context.read<AegisArc>().languageCode;
             final themeController = widget.themeController;
 
@@ -3779,14 +3785,24 @@ Widget _buildSettingsDrawer() {
             _markHotfixRead();
 
             if (shouldFetch) {
-              await themeController.syncPatchNotes(globalNgrokUrl, lang, forceRefresh: true);
               
-              if (context.mounted) {
-                _showHotFixesDialog(context, null);
+              try {
+                await themeController.syncPatchNotes(globalNgrokUrl, lang, forceRefresh: true);
+              } catch (e) {
+                debugPrint("DEBUG: syncPatchNotes failed with error: $e");
               }
             } else {
+              debugPrint("DEBUG: Skipping fetch, using cached patch data.");
+            }
 
-              _showHotFixesDialog(context, null);
+            if (context.mounted) {
+              final dataToShow = themeController.currentPatchData;
+              
+              if (dataToShow != null) {
+                _showHotFixesDialog(context, dataToShow);
+              } else {
+                debugPrint("DEBUG: Cannot show dialog, data is null.");
+              }
             }
           },
           trailing: _hasNewHotfix
