@@ -1622,12 +1622,13 @@ Future<void> _runBootSequence() async {
       updateSlipstreamUI(locale.translateStatic("DOWNLOADING ASSETS..."), Colors.amberAccent);
     }
   });
+  await Future.delayed(const Duration(milliseconds: 500));
 
   if (_weaponDataUpdated) {
       if (mounted) {
           updateSlipstreamUI(locale.translateStatic("PRELOADING ASSETS..."), Colors.cyanAccent);
       }
-      await Future.delayed(const Duration(milliseconds: 500)); 
+      await Future.delayed(const Duration(milliseconds: 800)); 
       await _performPreload();
 
       if (mounted) {
