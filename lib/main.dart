@@ -2337,7 +2337,7 @@ void _showPatchNotes(BuildContext context, List<String> notes) {
           title: Column(
             children: [
               ArmoryText(
-                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.1.1 SOLAR",
+                "${context.watch<AegisArc>().translateStatic("SYSTEM UPDATES")} | PRE-RELEASE 3.2.0 SOLAR",
                 themeController: widget.themeController,
                 baseFontSize: 14,
                 baseStrokeWidth: isNeon ? 3.0 : 2.5,
@@ -5156,7 +5156,6 @@ Future<void> _calculateRankings(String targetSearchName) async {
       }
     }
 
-    int realTotal = peerStatsPool.length;
     Map<String, ArchetypeRank> results = {};
     Map<String, String> keyMap = {
       'ttkClose': 'ttk1', 
@@ -5166,49 +5165,90 @@ Future<void> _calculateRankings(String targetSearchName) async {
       'stk': 'shots_to_kill'
     };
 
+    // Helper to extract values
     double clean(dynamic val, String key) {
-      if (val == null || val == "-") return (key == 'bullet_velocity') ? 0.0 : 9999.0;
+      if (val == null || val == "-" || val.toString().isEmpty) {
+        return (key == 'bullet_velocity') ? 0.0 : 9999.0;
+      }
+      
       String s = val.toString().trim();
 
-      if (key == 'shots_to_kill') {
-        if (s.contains('-')) {
-          List<String> parts = s.split('-');
-          double close = double.tryParse(parts[0].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
-          double far = double.tryParse(parts[1].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
-          return (close * 100) + far;
-        }
-        double single = double.tryParse(s.replaceAll(RegExp(r'[^0-9.]'), '')) ?? 99.0;
-        return (single * 100) + single;
+      // STK Composite Logic: Treat "7-10" as "7.10"
+      if (key == 'shots_to_kill' && s.contains('-')) {
+        List<String> parts = s.split('-');
+        String close = parts[0].replaceAll(RegExp(r'[^0-9]'), '');
+        String far = parts[1].replaceAll(RegExp(r'[^0-9]'), '');
+        
+        // Combine to create a unique float: "7-10" becomes 7.10
+        // "7-9" becomes 7.09 (ensuring 7.10 > 7.09 for sorting)
+        String composite = "$close.${far.padLeft(2, '0')}";
+        return double.tryParse(composite) ?? 9999.0;
       }
 
-      String cleaned = s.split('-')[0].replaceAll(RegExp(r'[^0-9.]'), '');
+      // Range Logic for others
+      if (s.contains('-')) {
+        List<String> parts = s.split('-');
+        double val1 = double.tryParse(parts[0].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
+        double val2 = double.tryParse(parts[1].replaceAll(RegExp(r'[^0-9.]'), '')) ?? 0.0;
+        
+        if (key == 'bullet_velocity') return val1 > val2 ? val1 : val2;
+        return val1 < val2 ? val1 : val2;
+      }
+
+      // Standard clean
+      String cleaned = s.replaceAll(RegExp(r'[^0-9.]'), '');
       return double.tryParse(cleaned) ?? 0.0;
     }
 
+    // Dense Ranking Loop
     for (var entry in keyMap.entries) {
       List<Map<String, dynamic>> sortedPool = List.from(peerStatsPool);
+      
+      // Define directionality: true = Lower is better, false = Higher is better
+      bool isLowerBetter = entry.key != 'velocity'; 
 
       sortedPool.sort((a, b) {
         double vA = clean(a[entry.value], entry.value);
         double vB = clean(b[entry.value], entry.value);
         
-        if (entry.value == 'bullet_velocity') {
-          if (vA == 0) return 1;
-          if (vB == 0) return -1;
-          return vB.compareTo(vA);
-        } 
-
-        if (vA >= 9999) return 1;
-        if (vB >= 9999) return -1;
-        
-        return vA.compareTo(vB);
+        // Explicit Sort Direction
+        if (isLowerBetter) {
+          // Lower is better (TTK, ADS, STK)
+          // If values are 9999 (invalid), push them to the end
+          if (vA >= 9999 && vB < 9999) return 1;
+          if (vB >= 9999 && vA < 9999) return -1;
+          return vA.compareTo(vB); 
+        } else {
+          // Higher is better (Velocity)
+          // If values are 0 (invalid), push them to the end
+          if (vA == 0 && vB > 0) return 1;
+          if (vB == 0 && vA > 0) return -1;
+          return vB.compareTo(vA); 
+        }
       });
 
-      int rankIndex = sortedPool.indexWhere(
-        (s) => s['weapon_name']?.toString().toUpperCase().trim() == searchName
-      );
+      // Calculate Dense Ranks
+      int currentDenseRank = 1;
+      int foundRank = -1;
 
-      results[entry.key] = ArchetypeRank(rankIndex == -1 ? realTotal : rankIndex + 1, realTotal);
+      for (int i = 0; i < sortedPool.length; i++) {
+        if (i > 0) {
+          double prevVal = clean(sortedPool[i - 1][entry.value], entry.value);
+          double currVal = clean(sortedPool[i][entry.value], entry.value);
+          
+          // If the current value is different from the previous, increment rank
+          if (currVal != prevVal) {
+            currentDenseRank++;
+          }
+        }
+        
+        if (sortedPool[i]['weapon_name']?.toString().toUpperCase().trim() == searchName) {
+          foundRank = currentDenseRank;
+          break;
+        }
+      }
+
+      results[entry.key] = ArchetypeRank(foundRank == -1 ? peerStatsPool.length : foundRank, peerStatsPool.length);
     }
 
     if (mounted) {
@@ -12766,6 +12806,24 @@ double _parse(dynamic val) {
   return double.tryParse(clean) ?? 0.0;
 }
 
+int calculateWeightedStk(WeaponStats s) {
+  final raw = s.shotsToKill.toString().trim();
+  if (raw.isEmpty || raw == "-") return 9999;
+  
+  if (raw.contains("-")) {
+    final parts = raw.split("-");
+    final close = parts[0].replaceAll(RegExp(r'[^0-9]'), '');
+    final far = parts[1].replaceAll(RegExp(r'[^0-9]'), '');
+
+    String composite = "$close.${far.padLeft(2, '0')}";
+
+    return (double.parse(composite) * 100).round();
+  }
+  
+  final val = int.tryParse(raw.replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
+  return (val * 100);
+}
+
 WeaponStats? _extractBaseStats(
   Weapon weapon, {
   String? targetSpecificName, 
@@ -12865,6 +12923,10 @@ WeaponStats? _extractBaseStats(
 @override
 Widget build(BuildContext context) {
   final sortedWeapons = _getSortedWeapons();
+  
+  // 1. Calculate the map once per build
+  final Map<String, int> rankMap = _calculateDenseRanks(sortedWeapons);
+  
   final activeTheme = widget.themeController.activeTheme;
   final bool isNeon = activeTheme.name.toLowerCase().contains('neon') || activeTheme.isCustom;
   final Color coreColor = Color.lerp(widget.themeController.activeAccentColor, Colors.white, 0.35)!;
@@ -12888,7 +12950,8 @@ Widget build(BuildContext context) {
                 index, 
                 item.displayName, 
                 item.stats, 
-                item.weapon
+                item.weapon,
+                rankMap // 2. Pass the map here
               );
             }
           ),
@@ -12897,7 +12960,6 @@ Widget build(BuildContext context) {
     ),
   );
 }
-
 Widget _buildCustomAppBar(bool isCustom, Color coreColor) {
   final accentColor = widget.themeController.activeAccentColor;
 
@@ -13187,50 +13249,37 @@ Widget _buildModernFilterBar() {
     );
   }
 
-Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon weapon) {
+Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon weapon, Map<String, int> rankMap) {
   final activeTheme = widget.themeController.activeTheme;
   final accentColor = widget.themeController.activeAccentColor;
   final isCustom = activeTheme.id == 'neon_custom';
   final coreColor = Color.lerp(accentColor, Colors.white, 0.35)!;
-  final aegisArc = Provider.of<AegisArc>(context);
 
-  final int totalCount = _getSortedWeapons().length; 
-  
-  int rank;
-  
-  if (_sortMode == SortMode.none) {
-    rank = index + 1;
-  } 
-  else if (_currentFilter == "VELOCITY") {
-    rank = (_sortMode == SortMode.highToLow) 
-        ? (index + 1) 
-        : (totalCount - index);
-  } 
-  else {
-    rank = (_sortMode == SortMode.lowToHigh) 
-        ? (index + 1) 
-        : (totalCount - index);
-  }
+  // 1. DENSE RANKING: Use the map directly. If it's not in the map, default to 1.
+  final int rank = rankMap[displayName] ?? 1;
+
+  // 2. TIE DETECTION: Check how many weapons share this specific rank
+  final bool isTied = rankMap.values.where((r) => r == rank).length > 1;
 
   String displayValue = _extractValue(stats);
-
   bool isTTK = _currentFilter == "TTK CLOSE" || _currentFilter == "TTK FAR";
   bool isFlipped = _flippedIndex == index && isTTK;
 
   if (isFlipped) {
-    if (_currentFilter == "TTK CLOSE") {
-      displayValue = "0 - ${stats.range1}";
-    } else {
-      displayValue = "${stats.range1}+";
-    }
+    displayValue = (_currentFilter == "TTK CLOSE") ? "0 - ${stats.range1}" : "${stats.range1}+";
   }
 
+  // 3. UI: Apply the neon border if it's tied
   Widget cardContent = Container(
     height: 50,
     padding: const EdgeInsets.symmetric(horizontal: 8),
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color: Colors.black,
-      borderRadius: BorderRadius.all(Radius.circular(24)),
+      borderRadius: const BorderRadius.all(Radius.circular(24)),
+      // ADDED: The neon tie-indicator border
+      border: (isCustom && isTied) 
+          ? Border.all(color: coreColor, width: 1.5) 
+          : null,
     ),
     child: Row(
       children: [
@@ -13242,13 +13291,9 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
             customText: rank.toString(), 
           )
         else
-          const SizedBox(
-            width: 32, 
-            child: Icon(Icons.remove, color: Colors.white10, size: 16)
-          ),
+          const SizedBox(width: 32, child: Icon(Icons.remove, color: Colors.white10, size: 16)),
 
         const SizedBox(width: 12),
-
         Expanded(
           child: ArmoryText(
             displayName.toUpperCase(),
@@ -13256,7 +13301,6 @@ Widget _buildStatBlade(int index, String displayName, WeaponStats stats, Weapon 
             baseFontSize: 13,
           ),
         ),
-
         const SizedBox(width: 18),
         
         GestureDetector(
@@ -13476,20 +13520,7 @@ List<SortedItem> _getSortedWeapons() {
           comparison = _parse(a.stats.ttk2).compareTo(_parse(b.stats.ttk2));
           break;
         case "STK":
-          int calculateWeightedStk(WeaponStats s) {
-            final raw = s.shotsToKill.toString().trim();
-            if (raw.isEmpty || raw == "-") return 9999;
-            
-            if (raw.contains("-")) {
-              final parts = raw.split("-");
-              final close = int.tryParse(parts[0].replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
-              final far = int.tryParse(parts[1].replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
-              return (close * 100) + far;
-            }
-            
-            final val = int.tryParse(raw.replaceAll(RegExp(r'[^0-9]'), '')) ?? 99;
-            return (val * 100) + val;
-          }
+  
           comparison = calculateWeightedStk(a.stats).compareTo(calculateWeightedStk(b.stats));
           break;
       }
@@ -13504,6 +13535,52 @@ List<SortedItem> _getSortedWeapons() {
   });
   
   return items;
+}
+
+Map<String, int> _calculateDenseRanks(List<SortedItem> sortedItems) {
+  Map<String, int> ranks = {};
+  if (sortedItems.isEmpty) return ranks;
+
+  // 1. Define the logic to get the raw performance value
+  double getSortValue(SortedItem item) {
+    switch (_currentFilter) {
+      case "STK": return calculateWeightedStk(item.stats).toDouble();
+      case "VELOCITY": return _parse(item.stats.bulletVelocity);
+      case "ADS SPEED": return _parse(item.stats.adsSpeed);
+      case "TTK CLOSE": return _parse(item.stats.ttk1);
+      case "TTK FAR": return _parse(item.stats.ttk2);
+      default: return 0.0;
+    }
+  }
+
+  // 2. Determine if the current filter prefers lower numbers (e.g., STK, TTK)
+  bool isLowerBetter = ["STK", "TTK CLOSE", "TTK FAR", "ADS SPEED"].contains(_currentFilter);
+
+  // 3. Create a version of the list strictly sorted from BEST to WORST
+  // This ensures Rank #1 is always the best, regardless of how the UI list is sorted
+  List<SortedItem> bestToWorst = List.from(sortedItems);
+  bestToWorst.sort((a, b) {
+    double valA = getSortValue(a);
+    double valB = getSortValue(b);
+    return isLowerBetter ? valA.compareTo(valB) : valB.compareTo(valA);
+  });
+
+  // 4. Calculate Dense Ranks based on the "Best to Worst" order
+  int currentRank = 1;
+  ranks[bestToWorst[0].displayName] = currentRank;
+
+  for (int i = 1; i < bestToWorst.length; i++) {
+    double prevVal = getSortValue(bestToWorst[i - 1]);
+    double currVal = getSortValue(bestToWorst[i]);
+
+    if (currVal != prevVal) {
+      currentRank++;
+    }
+    
+    ranks[bestToWorst[i].displayName] = currentRank;
+  }
+  
+  return ranks;
 }
 
 void _showCategoryDialog(BuildContext context, Color coreColor) {
